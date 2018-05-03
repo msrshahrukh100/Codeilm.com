@@ -15,10 +15,12 @@
       <a href="#!" class="brand-logo">Logo</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
+        <li>
+          <div class="chip transparent dropdown-trigger" data-target='dropdown1'>
+            <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="Contact Person">
+            Mohammad Shahrukh
+          </div>
+        </li>
       </ul>
       </div>
       <div class="nav-content">
@@ -30,6 +32,15 @@
       </a>
       </div>
     </nav>
+
+    <ul id='dropdown1' class='dropdown-content'>
+      <li><a href="#!">one</a></li>
+      <li><a href="#!">two</a></li>
+      <li class="divider" tabindex="-1"></li>
+      <li><a href="#!">three</a></li>
+      <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+      <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+    </ul>
 
   <ul class="sidenav" id="mobile-demo">
     <li><a href="sass.html">Sass</a></li>
@@ -134,8 +145,8 @@
  <!-- Page Layout here -->
     <div class="row">
 
-      <div class="col s4">
-        <p>Recent Activities</p>
+      <div class="col s4" style="display:block;height:700px;overflow:auto;">
+        <p class="grey-text">Recent Activities</p>
          <ul class="collection" style="border: none;">
           <li class="collection-item avatar" style="border: none;">
             <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
@@ -185,6 +196,7 @@
             </p>
             <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
           </li>
+          {% include "temp.html" %}
           <li class="collection-item avatar" style="border: none;">
             <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
             <span class="title">Mohammad Shahrukh</span>
@@ -200,7 +212,61 @@
       </div>
 
       <div class="col s8">
+        <form action="#">
+          <div class="row">
+            <div class="input-field col s8 offset-s2">
+              <i class="material-icons prefix">update</i>
+              <input id="status_input" type="text" class="validate">
+              <label for="status_input">Update Your status</label>
+            </div>
+            <div class="input-field col s8 offset-s2 hide show-on-status-focus">
+              <select class="icons">
+                <option value="" disabled selected>Choose your option</option>
+                <option value="" data-icon="images/sample-1.jpg">example 1</option>
+                <option value="" data-icon="images/office.jpg">example 2</option>
+                <option value="" data-icon="images/yuna.jpg">example 3</option>
+              </select>
+              <label>Images in select</label>
+            </div>
+            
+          </div>
+          <div class="row hide show-on-status-focus">
+            <div class="col s12 center-align">
+              <button class="btn waves-effect waves-light" type="submit" name="action">Update
+                <i class="material-icons right">send</i>
+              </button>
+            </div>
+          </div>    
+        </form>
+        <div class="divider hide show-on-status-focus"></div>
+
         <ul class="collection" style="border: none;">
+          <li class="collection-item avatar" style="border: none;">
+            <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
+            <span class="title"><b>Mohammad Shahrukh</b></span>
+              <div class="row">
+                <div class="col s10">
+                  <div class="progress">
+                    <div class="determinate" style="width: 70%"></div>
+                  </div>
+                </div>
+                <div class="col s2">
+                    <i class="material-icons amber-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am a tooltip">sentiment_very_satisfied</i>
+                    <i class="material-icons amber-text tooltipped" data-position="bottom" data-delay="50" data-tooltip="I am a tooltip">plus_one</i>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col s6">
+                  Memorized 5 ayats
+                </div>
+                <div class="col s6 pulse">
+                  <a class="btn-floating red add-pulse tooltipped" data-position="bottom" data-tooltip="Motivate this person"><i class="material-icons">thumb_up</i></a>
+                  <a class="btn-floating add-pulse tooltipped" data-position="bottom" data-tooltip="Motivate this person"><i class="material-icons">add</i></a>
+                  <a class="btn-floating add-pulse tooltipped" data-position="bottom" data-tooltip="Motivate this person"><i class="material-icons">send</i></a>
+                </div>
+              </div>
+            
+          </li>
           <li class="collection-item avatar" style="border: none;">
             <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
             <span class="title"><b>Mohammad Shahrukh</b></span>
@@ -245,6 +311,18 @@
      $('.tooltipped').tooltip();
      $('.modal').modal();
      $('.tabs').tabs();
+     $('.dropdown-trigger').dropdown({coverTrigger: false});
+     $('select').formSelect();
+     $('.add-pulse').hover(
+      function(){
+      $(this).toggleClass("pulse")
+     });
+     $('#status_input').on('focus', function(){
+      $('.show-on-status-focus').removeClass('hide')
+     })
+     $('#status_input').on('blur', function(){
+      $('.show-on-status-focus').addClass('hide')
+     })
   });
     </script>
   </body>
