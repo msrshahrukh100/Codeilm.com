@@ -1,0 +1,29 @@
+{% extends "base_template.html" %}
+{% load static %}
+    {% block css %}
+    {% endblock %}
+
+    {% block title %}
+    {% endblock %}
+
+    {% block content %}
+    <nav class="nav-extended transparent">
+      <div class="nav-wrapper">
+      <a href="#!" class="brand-logo center">Logo</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li>
+          <div class="chip transparent">
+            <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="Contact Person">
+            Mohammad Shahrukh
+          </div>
+        </li>
+      </ul>
+      </div>
+    </nav>
+
+     {% include "partials/community_slider.html" %}
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}

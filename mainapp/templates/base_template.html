@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    {% block css %}
+    {% endblock %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% block title %}
+    {% endblock %}
+  </head>
+
+  <body>
+
+    {% block content %}
+    
+    {% endblock %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script src="{% static 'js/materialize-include.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>
