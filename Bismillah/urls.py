@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+import notifications.urls
 
 urlpatterns = [
 
@@ -26,6 +27,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('mainapp.urls')),
     path('ramzaan/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
+    path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]
 
 if settings.DEBUG:

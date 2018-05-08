@@ -16,7 +16,10 @@ class RamzaanUserProgress(basemodels.UserProgress):
 	group = models.ForeignKey(RamzaanGroup, related_name="ramzaan_userprogressgroup", help_text="The group in which the user make a progress", on_delete=models.CASCADE)
 
 	def __str__(self):
-		return self.user.user_name
+		return self.user.username
+
+	def get_progress(self):
+		return int((self.at_unit / self.group.total_units) * 100)
 
 
 class RamzaanUnitDescription(basemodels.UnitDescription):

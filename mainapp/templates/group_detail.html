@@ -33,7 +33,15 @@
       </div>
     </nav>
 
-    
+    {% if messages %}
+    {% for message in messages %}
+    <div class="row">
+      <div class="col s12 {{ message.tags }}">
+        <p class="center-align">{{ message }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
 
   <!-- Modal Structure -->
   <div id="modal2" class="modal bottom-sheet">
