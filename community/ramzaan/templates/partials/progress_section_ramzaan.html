@@ -1,3 +1,4 @@
+{% load static %}
 <div class="col s8">
   {% include "partials/forms/status_update_form.html" %}
   <div class="divider hide show-on-status-focus"></div>
@@ -33,9 +34,7 @@
           
         </div>
         <div class="card-action">
-          <a class="btn-floating red add-pulse tooltipped" data-position="bottom" data-tooltip="Motivate this person"><i class="material-icons">thumb_up</i></a>
-          <a class="btn-floating add-pulse tooltipped" data-position="bottom" data-tooltip="Motivate this person"><i class="material-icons">add</i></a>
-          <a class="btn-floating add-pulse tooltipped" data-position="bottom" data-tooltip="Motivate this person"><i class="material-icons">send</i></a>
+          <a class="btn-small transparent black-text tooltipped z-depth-0 send-motivation" data-position="bottom" data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-tooltip="Motivate this person" style="text-transform: none;"><i class="material-icons left">cloud</i>Motivate</a>
         </div>
       </div>
     </div>

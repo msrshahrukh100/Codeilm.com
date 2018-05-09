@@ -166,6 +166,7 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = "Bismillah.com"
 ACCOUNT_USERNAME_REQUIRED = False
 
 
+NOTIFY_USE_JSONFIELD = True
 MESSAGE_TAGS = {
     messages.INFO: 'green',
     50: 'critical',

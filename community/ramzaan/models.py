@@ -21,6 +21,9 @@ class RamzaanUserProgress(basemodels.UserProgress):
 	def get_progress(self):
 		return int((self.at_unit / self.group.total_units) * 100)
 
+	def get_motivate_url(self):
+		return reverse("ramzaan:send_motivation", kwargs={"id": self.group.id, "slug": self.group.slug, "to_user_id": self.user.id})
+
 
 class RamzaanUnitDescription(basemodels.UnitDescription):
 	group = models.ForeignKey(RamzaanGroup, related_name="ramzaan_unitdescription", help_text="The group for which the unit description is entered", on_delete=models.CASCADE)
