@@ -157,8 +157,11 @@ def live_unread_notification_list(request):
         num_to_fetch = 5  # If casting to an int fails, just make it 5.
 
     unread_list = []
+    qs = request.user.notifications.not_displayed()
+    if qs.exists():
+        qs.mark_all_as_displayed()
 
-    for n in request.user.notifications.unread()[0:num_to_fetch]:
+    for n in qs:  # [0:num_to_fetch]
         struct = model_to_dict(n)
         struct['slug'] = id2slug(n.id)
         if n.actor:
@@ -173,7 +176,7 @@ def live_unread_notification_list(request):
         if request.GET.get('mark_as_read'):
             n.mark_as_read()
     data = {
-        'unread_count': request.user.notifications.unread().count(),
+        'unread_count': qs.count(),
         'unread_list': unread_list
     }
     return JsonResponse(data)

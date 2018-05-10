@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponsePermanentRedirect, JsonResponse
 from notifications.signals import notify
+from django.contrib.auth.decorators import login_required
+
 
 def group_list(request):
 	groups = RamzaanGroup.objects.filter(is_inactive=False)
@@ -30,6 +32,7 @@ def group_detail(request, id, slug):
 	return render(request, "group_detail_ramzaan.html", context)
 
 
+@login_required
 def group_join(request, id, slug):
 	user = request.user
 	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
@@ -48,5 +51,5 @@ def send_motivation(request, id, slug, to_user_id):
 		user = request.user
 		notify.send(user, recipient=user, verb='Motivated you', age="21")
 
-		print("yes post")
-	return JsonResponse({"status": "Success"})
+		return JsonResponse({"status": "Success"})
+	return JsonResponse({"status": "Failure"})

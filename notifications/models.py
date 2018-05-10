@@ -47,6 +47,12 @@ class NotificationQuerySet(models.query.QuerySet):
     def sent(self):
         return self.filter(emailed=True)
 
+    def displayed(self):
+        return self.filter(displayed=True)
+
+    def not_displayed(self):
+        return self.filter(displayed=False)
+
     def unread(self, include_deleted=False):
         """Return only unread items in the current queryset"""
         if is_soft_delete() and not include_deleted:
@@ -66,6 +72,31 @@ class NotificationQuerySet(models.query.QuerySet):
             In this case, to improve query performance, don't filter by 'deleted' field
             """
             return self.filter(unread=False)
+
+    def mark_all_as_displayed(self, recipient=None):
+        """Mark as read any unread messages in the current queryset.
+
+        Optionally, filter these by recipient first.
+        """
+        # We want to filter out read ones, as later we will store
+        # the time they were marked as read.
+        qs = self.not_displayed(True)
+        if recipient:
+            qs = qs.filter(recipient=recipient)
+
+        return qs.update(displayed=True)
+
+    def mark_all_as_not_displayed(self, recipient=None):
+        """Mark as unread any read messages in the current queryset.
+
+        Optionally, filter these by recipient first.
+        """
+        qs = self.displayed(True)
+
+        if recipient:
+            qs = qs.filter(recipient=recipient)
+
+        return qs.update(displayed=False)
 
     def mark_all_as_read(self, recipient=None):
         """Mark as read any unread messages in the current queryset.
@@ -171,6 +202,7 @@ class Notification(models.Model):
 
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, blank=False, related_name='notifications', on_delete=models.CASCADE)
     unread = models.BooleanField(default=True, blank=False, db_index=True)
+    displayed = models.BooleanField(default=False, blank=False, db_index=True)
 
     actor_content_type = models.ForeignKey(ContentType, related_name='notify_actor', on_delete=models.CASCADE)
     actor_object_id = models.CharField(max_length=255)

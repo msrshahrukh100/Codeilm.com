@@ -25,7 +25,7 @@ urlpatterns = [
     path('dashboard/', TemplateView.as_view(template_name="index2.html")),
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
-    path('', include('mainapp.urls')),
+    path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('ramzaan/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
 ]

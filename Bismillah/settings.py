@@ -156,7 +156,6 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
-
 # django all auth settings
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_REQUIRED = True
@@ -166,7 +165,7 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = "Bismillah.com"
 ACCOUNT_USERNAME_REQUIRED = False
 
 
-NOTIFY_USE_JSONFIELD = True
+NOTIFICATIONS_USE_JSONFIELD = True
 MESSAGE_TAGS = {
     messages.INFO: 'green',
     50: 'critical',
