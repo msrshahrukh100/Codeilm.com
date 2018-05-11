@@ -47,6 +47,8 @@ function register_notifier(func) {
     registered_functions.push(func);
 }
 
+var first_request = true;
+
 function fetch_api_data() {
     if (registered_functions.length > 0) {
         //only fetch data if a function is setup
@@ -62,7 +64,8 @@ function fetch_api_data() {
                 }
             }
         })
-        r.open("GET", notify_api_url+'?max='+notify_fetch_count, true);
+        r.open("GET", notify_api_url+'?max='+notify_fetch_count+"&first_request="+first_request, true);
+        first_request = ""
         r.send();
     }
     if (consecutive_misfires < 10) {

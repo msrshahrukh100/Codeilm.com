@@ -80,7 +80,7 @@ class NotificationQuerySet(models.query.QuerySet):
         """
         # We want to filter out read ones, as later we will store
         # the time they were marked as read.
-        qs = self.not_displayed(True)
+        qs = self.not_displayed()
         if recipient:
             qs = qs.filter(recipient=recipient)
 

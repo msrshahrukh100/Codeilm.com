@@ -1,10 +1,7 @@
 
 
-	$('#status_input_form').on('focus', function(){
+	$('#status_input').on('focus', function(){
 		$('.show-on-status-focus').removeClass('hide')
-	})
-	$('#status_input_form').on('blur', function(){
-		$('.show-on-status-focus').addClass('hide')
 	})
 
 
@@ -25,24 +22,32 @@
 	}
 
 	function my_notification_callback(data) {
-	for (var i=0; i < data.unread_list.length; i++) {
-	    msg = data.unread_list[i];
-	    console.log(msg);
-	    var notification = "<li><a href='#!'>" + msg.actor + " " + msg.verb + "</a></li>"
-	    $('#dropdown-notifications').append(notification)
-	    }
+		$('#dropdown-notifications').html("")
+		$('#dropdown-no-notification').html("")
+		for (var i=0; i < data.unread_list.length; i++) {
+		    msg = data.unread_list[i];
+		    var notification = "<li><a href='#!'>" + msg.actor + " " + msg.verb + "</a></li>"
+		    $('#dropdown-notifications').append(notification)
+		    }
+
+		for (var i=0; i < data.last_notifications_list.length; i++) {
+		    msg = data.last_notifications_list[i];
+		    console.log(msg);
+		    var notification = "<li><a href='#!'>" + msg.actor + " " + msg.verb + "</a></li>"
+		    $('#dropdown-no-notification').append(notification)
+		    }
 	}
 
 	function my_fill_notification_badge(data) {
 	    console.log(data)
 	    if(data.unread_count !== 0){
-	        $('#notifications-count-active').show()
 	        $('#no-notification').hide()
-	        $('#notifications-count').html(data.unread_count + " new")
+	        $('#notifications-count-active').fadeIn()
+	        $('#notifications-count').html(data.unread_count)
 	    }
 	    else{
 	        $('#notifications-count-active').hide()
-	        $('#no-notification').show()
+	        $('#no-notification').fadeIn()
 	    }
 	}
 

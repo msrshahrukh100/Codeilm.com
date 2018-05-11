@@ -22,7 +22,7 @@ def home(request):
 def mark_notifications_read(request):
 	if request.method == "POST":
 		user = request.user
-		qs = user.notifications.sent()
+		qs = user.notifications.unread()
 		if qs.exists():
 			qs.mark_all_as_read()
 		return JsonResponse({"status": "success", "msg": "Marked as read"})

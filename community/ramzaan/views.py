@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import RamzaanGroup, RamzaanUserProgress
 from django.urls import reverse
 from django.contrib import messages
-from django.http import HttpResponsePermanentRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from notifications.signals import notify
 from django.contrib.auth.decorators import login_required
 
@@ -34,16 +34,18 @@ def group_detail(request, id, slug):
 
 @login_required
 def group_join(request, id, slug):
+	print("coming to funciton")
 	user = request.user
 	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
 	if user in group.users.all():
+		print("coming here")
 		messages.info(request, 'You are already part of this group')
 	else:
 		group.users.add(user)
 		obj = RamzaanUserProgress.objects.create(user=user, group=group)
 		obj.save()
 		messages.success(request, 'You have successfully joined this group')
-	return HttpResponsePermanentRedirect(reverse("ramzaan:group_detail", kwargs={"id": id, "slug": slug}))
+	return HttpResponseRedirect(reverse("ramzaan:group_detail", kwargs={"id": id, "slug": slug}))
 
 
 def send_motivation(request, id, slug, to_user_id):
