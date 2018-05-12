@@ -1,10 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-from .models import RamzaanGroup, RamzaanUserProgress
-from django.urls import reverse
 from django.contrib import messages
-from django.http import HttpResponseRedirect, JsonResponse
-from notifications.signals import notify
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
+from feedback.tasks import add_activity
+from notifications.signals import notify
+from .models import RamzaanGroup, RamzaanStatusUpdate
+from . import utils
+from . import tasks
 
 
 def group_list(request):
@@ -34,24 +37,33 @@ def group_detail(request, id, slug):
 
 @login_required
 def group_join(request, id, slug):
-	print("coming to funciton")
 	user = request.user
 	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
 	if user in group.users.all():
-		print("coming here")
 		messages.info(request, 'You are already part of this group')
 	else:
-		group.users.add(user)
-		obj = RamzaanUserProgress.objects.create(user=user, group=group)
-		obj.save()
-		messages.success(request, 'You have successfully joined this group')
+		utils.add_user_to_group(request, user, group)
+
 	return HttpResponseRedirect(reverse("ramzaan:group_detail", kwargs={"id": id, "slug": slug}))
 
 
 def send_motivation(request, id, slug, to_user_id):
 	if request.method == "POST":
 		user = request.user
-		notify.send(user, recipient=user, verb='Motivated you', age="21")
-
+		tasks.send_motivation(user.id)
 		return JsonResponse({"status": "Success"})
 	return JsonResponse({"status": "Failure"})
+
+
+@login_required
+def post_status_update(request, id=None, slug=None):
+	get_object_or_404(RamzaanGroup, id=id, slug=slug)
+	if request.method == 'POST':
+		user = request.user
+		data = request.POST.dict()
+		data.pop('csrfmiddlewaretoken')
+		data.pop('action')
+		obj = RamzaanStatusUpdate.objects.create(**data)
+		obj.save()
+		add_activity(user.id, 'ramzaan-status-update')
+	return JsonResponse({"msg": "nice"})

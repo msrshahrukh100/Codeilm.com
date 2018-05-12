@@ -49,10 +49,13 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
     'notifications',
+    'background_task',
 
     # custom apps
     'community.ramzaan',
-    'mainapp'
+    'mainapp',
+    'feedback',
+    'usermanagement'
 ]
 
 MIDDLEWARE = [
@@ -165,8 +168,13 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = "Bismillah.com"
 ACCOUNT_USERNAME_REQUIRED = False
 
 
+# Django notifications settings
 NOTIFICATIONS_USE_JSONFIELD = True
 MESSAGE_TAGS = {
     messages.INFO: 'green',
     50: 'critical',
 }
+
+# Django background tasks settings
+BACKGROUND_TASK_RUN_ASYNC = True
+                                           

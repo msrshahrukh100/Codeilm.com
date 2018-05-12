@@ -1,20 +1,22 @@
 
-<form action="#">
+<form method="POST" action="{% url 'ramzaan:post_status_update' id=group.id slug=group.slug %}">
+  {% csrf_token %}
+  <input type="hidden" name="user_id" value="{{ request.user.id }}">
   <div class="row">
     <div class="input-field col s8 offset-s2">
       <i class="material-icons prefix">update</i>
-      <input id="status_input" type="text" class="validate">
+      <input id="status_input" type="text" class="validate" name="content">
       <label for="status_input">Update Your status</label>
     </div>
   </div>
   <div class="row">
     <div class="input-field col s8 offset-s2 hide show-on-status-focus">
       <i class="material-icons prefix">update</i>
-      <select class="icons">
-        <option value="" disabled selected>Choose your option</option>
-        <option value="" data-icon="images/sample-1.jpg">example 1</option>
-        <option value="" data-icon="images/office.jpg">example 2</option>
-        <option value="" data-icon="images/yuna.jpg">example 3</option>
+      <select class="icons" name="on_unit">
+        <option value="0" disabled selected>Choose your option</option>
+        <option value="1" data-icon="images/sample-1.jpg">example 1</option>
+        <option value="2" data-icon="images/office.jpg">example 2</option>
+        <option value="3" data-icon="images/yuna.jpg">example 3</option>
       </select>
       <label>Images in select</label>
     </div>
