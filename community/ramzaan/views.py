@@ -10,6 +10,13 @@ from . import utils
 from . import tasks
 
 
+def get_status_updates(request):
+	page_no = request.GET.get('page')
+	status_updates = utils.get_status_updates_page(page_no)
+	context = {"status_updates": status_updates}
+	return render(request, "partials/recent_activities_ramzaan_list.html", context)
+
+
 def group_list(request):
 	groups = RamzaanGroup.objects.filter(is_inactive=False)
 	context = {
@@ -30,7 +37,8 @@ def group_detail(request, id, slug):
 		"logged_in_user": user,
 		"group": group,
 		"users": users,
-		"is_member": is_member
+		"is_member": is_member,
+		"status_updates": utils.get_status_updates_page(1)
 	}
 	return render(request, "group_detail_ramzaan.html", context)
 

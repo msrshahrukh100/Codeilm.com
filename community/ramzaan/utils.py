@@ -1,5 +1,6 @@
-from .models import RamzaanUserProgress
 from django.contrib import messages
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from .models import RamzaanUserProgress, RamzaanStatusUpdate
 
 
 def add_user_to_group(request, user, group):
@@ -9,5 +10,8 @@ def add_user_to_group(request, user, group):
 		messages.success(request, 'You have successfully joined this group')
 
 
-
-# def send_motivation_to_user(user_id)
+def get_status_updates_page(page_no):
+	qs = RamzaanStatusUpdate.objects.all()
+	paginator = Paginator(qs, 2)
+	status_updates = paginator.get_page(page_no)
+	return status_updates

@@ -1,0 +1,22 @@
+{% for status_update in status_updates %}
+<li class="collection-item avatar" style="border: none;">
+  <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
+  <span class="title"><b>Mohammad Shahrukh</b></span>
+  <p>Made Progress, Learnt 2 More ayats <br>
+     On Ayat 3{{ status_update.on_unit }}
+  </p>
+  <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+</li>
+{% endfor %}
+{% if status_updates.has_next %}
+<li class="collection-item avatar center temp-content" style="border: none;">
+  <a class="waves-effect waves-light btn load-more-status" data-href="{% url 'ramzaan:get_status_updates' %}?page={{ status_updates.next_page_number }}">Load More</a>
+  <div class="hide show-more-status-preloader">
+  {% include "partials/preloader_small.html" %}
+  </div>
+</li>
+{% else %}
+<li class="collection-item avatar center" style="border: none;">
+  No more updates for you
+</li>
+{% endif %}
