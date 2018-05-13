@@ -2,6 +2,7 @@
 <form method="POST" action="{% url 'ramzaan:post_status_update' id=group.id slug=group.slug %}">
   {% csrf_token %}
   <input type="hidden" name="user_id" value="{{ request.user.id }}">
+  <input type="hidden" name="group_id" value="{{ group.id }}">
   <div class="row">
     <div class="input-field col s8 offset-s2">
       <i class="material-icons prefix">update</i>

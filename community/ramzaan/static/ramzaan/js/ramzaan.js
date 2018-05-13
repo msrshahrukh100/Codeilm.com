@@ -8,7 +8,6 @@ $('.send-motivation').on('click', function(){
             url: actionurl,
             timeout: 4000,
             success: function(data) {
-                console.log(data)
                 M.toast({html: 'Motivation Sent!', classes: "green"})
 
             },
@@ -45,7 +44,6 @@ $('.status-list').on('click', '.load-more-status', function(){
         url: actionurl,
         timeout: 4000,
         success: function(data) {
-            console.log(data)
             $('.temp-content').remove();
             $('.status-list').append(data);
         },
@@ -53,9 +51,6 @@ $('.status-list').on('click', '.load-more-status', function(){
             console.log("error")
         },
         beforeSend: function(xhr) {
-            // $('.user-section-preloader-'+userid).removeClass('hide');
-            // var csrftoken = getCookie('csrftoken');
-            // xhr.setRequestHeader('X-CSRFToken', csrftoken);
             el.hide()
             $('.show-more-status-preloader').removeClass('hide');
 

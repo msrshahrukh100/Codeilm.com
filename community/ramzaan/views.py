@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from feedback.tasks import add_activity
 from notifications.signals import notify
 from .models import RamzaanGroup, RamzaanStatusUpdate
@@ -13,7 +14,9 @@ from . import tasks
 def get_status_updates(request):
 	page_no = request.GET.get('page')
 	status_updates = utils.get_status_updates_page(page_no)
-	context = {"status_updates": status_updates}
+	context = {
+		"status_updates": status_updates,
+	}
 	return render(request, "partials/recent_activities_ramzaan_list.html", context)
 
 
@@ -30,6 +33,7 @@ def group_detail(request, id, slug):
 	user = request.user
 	users = group.users.all()
 	is_member = False
+
 	if user in users:
 		is_member = True
 
@@ -38,7 +42,7 @@ def group_detail(request, id, slug):
 		"group": group,
 		"users": users,
 		"is_member": is_member,
-		"status_updates": utils.get_status_updates_page(1)
+		"status_updates": utils.get_status_updates_page(1),
 	}
 	return render(request, "group_detail_ramzaan.html", context)
 
@@ -65,13 +69,11 @@ def send_motivation(request, id, slug, to_user_id):
 
 @login_required
 def post_status_update(request, id=None, slug=None):
-	get_object_or_404(RamzaanGroup, id=id, slug=slug)
+	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
 	if request.method == 'POST':
 		user = request.user
 		data = request.POST.dict()
 		data.pop('csrfmiddlewaretoken')
 		data.pop('action')
-		obj = RamzaanStatusUpdate.objects.create(**data)
-		obj.save()
-		add_activity(user.id, 'ramzaan-status-update')
-	return JsonResponse({"msg": "nice"})
+		utils.update_user_status(user, group, **data)
+		return HttpResponseRedirect(reverse('ramzaan:group_detail', kwargs={"id": group.id, "slug": group.slug}))

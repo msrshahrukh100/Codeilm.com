@@ -35,6 +35,10 @@ class RamzaanUserProgress(basemodels.UserProgress):
 
 class RamzaanStatusUpdate(basemodels.StatusUpdate):
 	on_unit = models.PositiveIntegerField()
+	group = models.ForeignKey(RamzaanGroup, related_name="status_updates", on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.user.username
+
+	class Meta:
+		ordering = ['-created_at']
