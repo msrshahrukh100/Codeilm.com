@@ -1,5 +1,6 @@
 {% extends "base_template.html" %}
 {% load notifications_tags %}
+{% load ramzaan_extras %}
 {% load static %}
 {% block title %}
 {% endblock %}
@@ -24,8 +25,8 @@
         </li>
         <li>
           <div class="chip transparent dropdown-trigger" data-target='dropdown1'>
-            <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="Contact Person">
-            Mohammad Shahrukh
+            <img src="{{ request.user|profile_pic_url }}" alt="Contact Person">
+            {{ user.get_full_name }}
           </div>
         </li>
         <li>

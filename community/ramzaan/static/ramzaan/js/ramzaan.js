@@ -1,21 +1,32 @@
 
-$('.send-motivation').on('click', function(){
-	actionurl = $(this).data('url')
-    userid = $(this).data('userid')
-	console.log(actionurl)
+$('.action-buttons').on('click', function(){
+    el = $(this)
+	actionurl = el.data('url')
+    userid = el.data('userid')
+    success_message = el.data('successmessage')
+	type = el.data('type')
 	$.ajax({
             type: 'POST',
             url: actionurl,
             timeout: 4000,
             success: function(data) {
-                M.toast({html: 'Motivation Sent!', classes: "green"})
-
+                M.toast({html: success_message, classes: "green"})
+                if(type === "follow"){
+                    el.remove()
+                }
             },
             fail: function() {
                 console.log("error")
+                if(type === "follow"){
+                    el.show()    
+                }
+                
             },
             beforeSend: function(xhr) {
                 $('.user-section-preloader-'+userid).removeClass('hide');
+                if(type === "follow"){
+                    el.hide()    
+                }
             	var csrftoken = getCookie('csrftoken');
                 xhr.setRequestHeader('X-CSRFToken', csrftoken);
             },
@@ -25,6 +36,9 @@ $('.send-motivation').on('click', function(){
             error: function(x, t, m) {
                 if(t==="timeout") {
                     M.toast({html: 'Connection Error', classes: "red"})
+                    if(type === "follow"){
+                        el.show()    
+                    }
                 }
                 else {
                     alert(t);
