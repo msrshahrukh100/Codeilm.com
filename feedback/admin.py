@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserActivity, FeedbackEvent, ClickResponse
+from .models import UserActivity, FeedbackEvent, ClickResponse, FeedbackResponse
 # Register your models here.
 
 
@@ -26,6 +26,12 @@ class ClickResponseAdmin(admin.ModelAdmin):
 	list_filter = ['event', 'response', 'created_at']
 
 
+class FeedbackResponseAdmin(admin.ModelAdmin):
+	list_display = ['event', 'key', 'value', 'created_at', 'updated_at']
+	list_filter = ['event', 'updated_at']
+
+
 admin.site.register(UserActivity, UserActivityAdmin)
 admin.site.register(FeedbackEvent, FeedbackEventAdmin)
 admin.site.register(ClickResponse, ClickResponseAdmin)
+admin.site.register(FeedbackResponse, FeedbackResponseAdmin)

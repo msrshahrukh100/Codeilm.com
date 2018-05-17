@@ -9,7 +9,7 @@ $('.submit-click-response').on('click', function(){
             timeout: 4000,
             success: function(data) {
                 M.toast({html: "Thanks for your response", classes: "green"})
-                
+                $('.feedback-form-content').removeClass('hide')
             },
             fail: function() {
                 console.log("error")

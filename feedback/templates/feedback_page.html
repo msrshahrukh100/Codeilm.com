@@ -19,42 +19,32 @@
         {{ rendered_click_response_html|safe }}
         <div class="row">
           <div class="s12">
-            <div class="response-preloader ">
+            <div class="response-preloader hide">
               {% include "partials/preloader_small.html" %}
-              <div class="row">
-                <div class="col s6">
-                  <a style="border-radius: 50px; text-transform: none;" data-url='{% url "feedback:store_click_response" id=feedback_event.id slug=feedback_event.slug %}' data-value="Yes" class="waves-effect green darken-1 waves-light btn btn-large submit-click-response"> <i class="fa fa-google-plus-official fa-2x left" aria-hidden="true"></i></i>
-                    Yes this sounds exciting
-                  </a>
-                </div>
-                <div class="col s6">
-                  <a style="border-radius: 50px; text-transform: none;" data-url='{% url "feedback:store_click_response" id=feedback_event.id slug=feedback_event.slug %}' data-value="No" class="waves-effect red darken-1 waves-light btn btn-large submit-click-response"> <i class="fa fa-fb-official fa-2x left" aria-hidden="true"></i></i>
-                    No
-                  </a>
-                </div>
-              </div>
-              <div class="row feedback-form-content">
+            </div>
+             <div class="row feedback-form-content hide">
                 <h6>Please let us know your email id so that we could send Salaam and let you know when we launch</h6>
-                <div class="col s12">
-                   <form>
+                <div class="col s12 center">
+                   <form method="POST" action="{% url 'feedback:feedback_page' id=feedback_event.id slug=feedback_event.slug %}">{% csrf_token %}
                       <div class="row">
-                        <div class="input-field col s6">
+                        <div class="input-field col s6 offset-s3">
                           <i class="material-icons prefix">email</i>
-                          <input id="icon_telephone" type="tel" class="validate">
+                          <input id="icon_telephone" type="email" class="validate" name="value">
                           <label for="icon_telephone">Email</label>
                         </div>
-                        <div class="col s6">
+                      </div>
+                      <input type="hidden" name="key" value="email">
+                      <div class="row">
+                        <div class="col s6 offset-s3">
                              <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                               <i class="material-icons right">send</i>
                             </button>
-                                  
                         </div>
                       </div>
                     </form>
                 </div>
-
               </div>
-            </div>
+
           </div>
         </div>
       </div>

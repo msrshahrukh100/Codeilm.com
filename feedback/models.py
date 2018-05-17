@@ -55,3 +55,17 @@ class ClickResponse(models.Model):
 	response = models.CharField(max_length=255, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.event.name
+
+
+class FeedbackResponse(models.Model):
+	event = models.ForeignKey(FeedbackEvent, on_delete=models.CASCADE, help_text="Form responses of feedback")
+	key = models.TextField()
+	value = models.TextField()
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.event.name
