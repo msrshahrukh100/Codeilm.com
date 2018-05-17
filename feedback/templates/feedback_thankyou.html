@@ -1,0 +1,27 @@
+{% extends "base_template.html" %}
+{% load static %}
+    {% block css %}
+    {% endblock %}
+
+    {% block title %}
+    {% endblock %}
+
+    {% block content %}
+
+
+   <div class="slider fullscreen" style="z-index: -100;">
+    <ul class="slides">
+      <li>
+        <img src="{{ feedback_event.image.url }}"> <!-- random image -->
+        <div class="caption center-align">
+          <h1>Thank you for your response</h3>
+          
+        </div>
+
+      </li>
+    </ul>
+  </div>
+    {% endblock %}
+
+    {% block scripts %}
+    {% endblock %}

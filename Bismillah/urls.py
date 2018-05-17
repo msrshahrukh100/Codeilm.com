@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
+    path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
     path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
     path('ramzaan/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
