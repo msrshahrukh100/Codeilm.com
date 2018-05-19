@@ -21,11 +21,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = bool(os.environ.get('BISMILLAH_SECRET_KEY', False))
+SECRET_KEY = os.environ.get('BISMILLAH_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['SETTINGS_DEBUG']
+DEBUG = bool(os.environ.get('SETTINGS_DEBUG', False))
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split()
 SITE_ID = 1
@@ -117,7 +117,7 @@ DATABASES = {
         'PASSWORD': os.environ['MYSQL_DATABASE_PASSWORD'],
         'HOST': os.environ['MYSQL_DATABASE_HOST'],
         'PORT': os.environ['MYSQL_DATABASE_PORT'],
-        'CONN_MAX_AGE': os.environ['CONN_MAX_AGE'],
+        'CONN_MAX_AGE': int(os.environ['CONN_MAX_AGE']),
     }
 }
 
