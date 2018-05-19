@@ -8,5 +8,5 @@ class RamzaanStatusUpdateAdmin(admin.ModelAdmin):
 
 
 admin.site.register(RamzaanGroup)
-admin.site.register(RamzaanUserProgress)
 admin.site.register(RamzaanStatusUpdate, RamzaanStatusUpdateAdmin)
+admin.site.register(RamzaanUserProgress)

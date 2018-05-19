@@ -15,21 +15,21 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 import notifications.urls
+from mainapp.views import opensearch
 
 urlpatterns = [
 
-    path('dashboard/', TemplateView.as_view(template_name="index2.html")),
-    path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
+    path('accounts/', include('allauth.urls')),
+    path('admin/', admin.site.urls),
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
-    path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
-    path('ramzaan/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    path('ramzaan/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
+    path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
+    path('open-search.xml', opensearch, name="opensearch"),
 ]
 
 if settings.DEBUG:

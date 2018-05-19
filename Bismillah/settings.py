@@ -21,14 +21,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['BISMILLAH_SECRET_KEY']
-
+SECRET_KEY = bool(os.environ.get('BISMILLAH_SECRET_KEY', False))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['SETTINGS_DEBUG']
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split()
 SITE_ID = 1
 
 # Application definition
@@ -103,10 +102,22 @@ WSGI_APPLICATION = 'Bismillah.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ['MYSQL_DATABASE_NAME'],
+        'USER': os.environ['MYSQL_DATABASE_USER'],
+        'PASSWORD': os.environ['MYSQL_DATABASE_PASSWORD'],
+        'HOST': os.environ['MYSQL_DATABASE_HOST'],
+        'PORT': os.environ['MYSQL_DATABASE_PORT'],
+        'CONN_MAX_AGE': os.environ['CONN_MAX_AGE'],
     }
 }
 
@@ -177,4 +188,36 @@ MESSAGE_TAGS = {
 
 # Django background tasks settings
 BACKGROUND_TASK_RUN_ASYNC = True
-                                           
+
+
+if not DEBUG:
+    SECURE_CONTENT_TYPE_NOSNIFF = bool(os.environ['SECURE_CONTENT_TYPE_NOSNIFF'])
+    SECURE_BROWSER_XSS_FILTER = bool(os.environ['SECURE_BROWSER_XSS_FILTER'])
+    SESSION_COOKIE_SECURE = bool(os.environ['SESSION_COOKIE_SECURE'])
+    CSRF_COOKIE_SECURE = bool(os.environ['CSRF_COOKIE_SECURE'])
+    CSRF_COOKIE_HTTPONLY = bool(os.environ['CSRF_COOKIE_HTTPONLY'])
+    COMPRESS_ENABLED = True
+else:
+    COMPRESS_ENABLED = False
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': os.environ['LOG_LEVEL'],
+            'class': 'logging.FileHandler',
+            'filename': os.environ['LOG_FILE'],
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': os.environ['LOG_LEVEL'],
+            'propagate': True,
+        },
+    },
+}
+
+ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'towardslight52@gmail.com')]

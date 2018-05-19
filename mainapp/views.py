@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+def opensearch(request):
+	return render(request, 'open_search.xml', content_type="application/xhtml+xml")
+
 def home(request):
 	communities = Community.objects.all()
 	context = {
