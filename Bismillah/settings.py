@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('BISMILLAH_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get('SETTINGS_DEBUG', False))
+DEBUG = bool(int(os.environ.get('SETTINGS_DEBUG')))
 
 ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split()
 SITE_ID = 1
