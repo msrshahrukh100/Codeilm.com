@@ -197,6 +197,7 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = bool(os.environ['CSRF_COOKIE_SECURE'])
     CSRF_COOKIE_HTTPONLY = bool(os.environ['CSRF_COOKIE_HTTPONLY'])
     COMPRESS_ENABLED = True
+    X_FRAME_OPTIONS = os.environ['X_FRAME_OPTIONS']
 else:
     COMPRESS_ENABLED = False
 
