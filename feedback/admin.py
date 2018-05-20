@@ -22,13 +22,38 @@ class FeedbackEventAdmin(admin.ModelAdmin):
 
 
 class ClickResponseAdmin(admin.ModelAdmin):
-	list_display = ['event', 'response', 'created_at']
+	list_display = ['event', 'response', 'city', 'country_name', 'time_zone', 'region', 'created_at']
 	list_filter = ['event', 'response', 'created_at']
+
+	def city(self, obj):
+		return obj.request_ip_info.city
+
+	def country_name(self, obj):
+		return obj.request_ip_info.country_name
+
+	def time_zone(self, obj):
+		return obj.request_ip_info.time_zone
+
+	def region(self, obj):
+		return obj.request_ip_info.region
 
 
 class FeedbackResponseAdmin(admin.ModelAdmin):
-	list_display = ['event', 'key', 'value', 'created_at', 'updated_at']
+	list_display = ['event', 'key', 'value', 'city', 'country_name', 'time_zone', 'region', 'created_at', 'updated_at']
 	list_filter = ['event', 'updated_at']
+
+	def city(self, obj):
+		return obj.request_ip_info.city
+
+	def country_name(self, obj):
+		return obj.request_ip_info.country_name
+
+	def time_zone(self, obj):
+		return obj.request_ip_info.time_zone
+
+	def region(self, obj):
+		return obj.request_ip_info.region
+
 
 
 admin.site.register(UserActivity, UserActivityAdmin)

@@ -38,3 +38,21 @@ class Community(models.Model):
 
 	def get_community_url(self):
 		return reverse('mainapp:community_mapper', slug=self.slug)
+
+
+class RequestIpInfo(models.Model):
+	city = models.CharField(max_length=255, null=True, blank=True)
+	country_code = models.CharField(max_length=255, null=True, blank=True)
+	country_name = models.CharField(max_length=255, null=True, blank=True)
+	dma_code = models.CharField(max_length=255, null=True, blank=True)
+	latitude = models.CharField(max_length=255, null=True, blank=True)
+	longitude = models.CharField(max_length=255, null=True, blank=True)
+	postal_code = models.CharField(max_length=255, null=True, blank=True)
+	region = models.CharField(max_length=255, null=True, blank=True)
+	time_zone = models.CharField(max_length=255, null=True, blank=True)
+
+	def __str__(self):
+		return self.city
+
+	def get_city(self):
+		return self.city

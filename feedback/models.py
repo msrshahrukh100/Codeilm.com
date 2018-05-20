@@ -2,6 +2,7 @@ from autoslug import AutoSlugField
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from mainapp.models import RequestIpInfo
 # Create your models here.
 # Possible activities
 # ramzaan-status-update --> Status Updated in the ramzaan app
@@ -53,6 +54,7 @@ class ClickResponse(models.Model):
 	# holds the click response
 	event = models.ForeignKey(FeedbackEvent, on_delete=models.CASCADE, help_text="The event corresponding to which the click response is collected")
 	response = models.CharField(max_length=255, null=True, blank=True)
+	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.CASCADE, related_name="click_response", null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -64,6 +66,7 @@ class FeedbackResponse(models.Model):
 	event = models.ForeignKey(FeedbackEvent, on_delete=models.CASCADE, help_text="Form responses of feedback")
 	key = models.TextField()
 	value = models.TextField()
+	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.CASCADE, related_name="feedback_response", null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

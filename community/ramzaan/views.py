@@ -21,7 +21,7 @@ def get_status_updates(request):
 
 
 def group_list(request):
-	groups = RamzaanGroup.objects.filter(is_inactive=False)
+	groups = RamzaanGroup.objects.filter(is_active=True)
 	context = {
 		"groups": groups
 	}

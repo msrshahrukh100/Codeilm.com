@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Community
+from .models import Community, RequestIpInfo
 # Register your models here.
 
 
@@ -15,4 +15,10 @@ class CommunityAdmin(admin.ModelAdmin):
 			obj.save()
 
 
+class RequestIpInfoAdmin(admin.ModelAdmin):
+	list_display = ['city', 'country_code', 'country_name', 'dma_code', 'latitude', 'longitude', 'postal_code', 'region', 'time_zone']
+	list_filter = ['city', 'country_code']
+
+
 admin.site.register(Community, CommunityAdmin)
+admin.site.register(RequestIpInfo, RequestIpInfoAdmin)

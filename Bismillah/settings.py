@@ -201,24 +201,26 @@ if not DEBUG:
 else:
     COMPRESS_ENABLED = False
 
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': os.environ['LOG_LEVEL'],
-            'class': 'logging.FileHandler',
-            'filename': os.environ['LOG_FILE'],
+if not DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': os.environ['LOG_LEVEL'],
+                'class': 'logging.FileHandler',
+                'filename': os.environ['LOG_FILE'],
+            },
         },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': os.environ['LOG_LEVEL'],
-            'propagate': True,
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': os.environ['LOG_LEVEL'],
+                'propagate': True,
+            },
         },
-    },
-}
+    }
 
 ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'towardslight52@gmail.com')]
+
+GEOIP_PATH = os.path.join(BASE_DIR, 'geo-ip-db')
