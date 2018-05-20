@@ -12,7 +12,8 @@ class FeedbackEventAdmin(admin.ModelAdmin):
 	list_display = ['name', 'question', 'feedback_url', 'created_by', 'created_at', 'modified_by', 'updated_at']
 
 	def save_model(self, request, obj, form, change):
-		obj.feedback_url = request.build_absolute_uri(obj.get_feedback_page_url())
+		if obj.id:
+			obj.feedback_url = request.build_absolute_uri(obj.get_feedback_page_url())
 		if change:
 			obj.modified_by = request.user
 		else:

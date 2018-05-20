@@ -40,8 +40,8 @@ class FeedbackEvent(models.Model):
 	feedback_url = models.URLField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	created_by = models.ForeignKey(User, related_name="feedbackevent_created", on_delete=models.CASCADE)
-	modified_by = models.ForeignKey(User, on_delete=models.CASCADE)
+	created_by = models.ForeignKey(User, editable=False, related_name="feedbackevent_created", on_delete=models.CASCADE)
+	modified_by = models.ForeignKey(User, editable=False, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.name
