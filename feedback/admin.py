@@ -27,33 +27,48 @@ class ClickResponseAdmin(admin.ModelAdmin):
 	list_filter = ['event', 'response', 'created_at']
 
 	def city(self, obj):
-		return obj.request_ip_info.city
+		if obj.request_ip_info:
+			return obj.request_ip_info.city
+		return None
 
 	def country_name(self, obj):
-		return obj.request_ip_info.country_name
+		if obj.request_ip_info:
+			return obj.request_ip_info.country_name
+		return None
 
 	def time_zone(self, obj):
-		return obj.request_ip_info.time_zone
+		if obj.request_ip_info:
+			return obj.request_ip_info.time_zone
+		return None
 
 	def region(self, obj):
-		return obj.request_ip_info.region
-
+		if obj.request_ip_info:
+			return obj.request_ip_info.region
+		return None
 
 class FeedbackResponseAdmin(admin.ModelAdmin):
 	list_display = ['event', 'key', 'value', 'city', 'country_name', 'time_zone', 'region', 'created_at', 'updated_at']
 	list_filter = ['event', 'updated_at']
 
 	def city(self, obj):
-		return obj.request_ip_info.city
+		if obj.request_ip_info:
+			return obj.request_ip_info.city
+		return None
 
 	def country_name(self, obj):
-		return obj.request_ip_info.country_name
+		if obj.request_ip_info:
+			return obj.request_ip_info.country_name
+		return None
 
 	def time_zone(self, obj):
-		return obj.request_ip_info.time_zone
+		if obj.request_ip_info:
+			return obj.request_ip_info.time_zone
+		return None
 
 	def region(self, obj):
-		return obj.request_ip_info.region
+		if obj.request_ip_info:
+			return obj.request_ip_info.region
+		return None
 
 
 
