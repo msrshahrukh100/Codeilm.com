@@ -21,7 +21,7 @@ class UserActivity(models.Model):
 
 
 def upload_location(instance, filename):
-	return "feedback_even_banners/%s/%s" % (instance.name, filename)
+	return "feedback_event_banners/%s/%s" % (instance.name, filename)
 
 
 class FeedbackEvent(models.Model):
