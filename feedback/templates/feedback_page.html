@@ -18,8 +18,10 @@
       <img src="{{ feedback_event.image.url }}"> <!-- random image -->
       <div class="caption center-align">
         <h2>{{ feedback_event.name }}</h2>
-        <h4 class="light grey-text text-lighten-3">{{ feedback_event.question|markdown }}</h4>
-        {{ rendered_click_response_html|safe }}
+        <div class="first-content">
+          <h4 class="light grey-text text-lighten-3">{{ feedback_event.question|markdown }}</h4>
+          {{ rendered_click_response_html|safe }}
+        </div>
         <div class="row">
           <div class="s12">
             <div class="response-preloader hide">
