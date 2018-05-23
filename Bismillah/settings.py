@@ -195,7 +195,6 @@ if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = bool(int(os.environ['SECURE_BROWSER_XSS_FILTER']))
     SESSION_COOKIE_SECURE = bool(int(os.environ['SESSION_COOKIE_SECURE']))
     CSRF_COOKIE_SECURE = bool(int(os.environ['CSRF_COOKIE_SECURE']))
-    CSRF_COOKIE_HTTPONLY = bool(int(os.environ['CSRF_COOKIE_HTTPONLY']))
     COMPRESS_ENABLED = True
     X_FRAME_OPTIONS = os.environ['X_FRAME_OPTIONS']
 else:
