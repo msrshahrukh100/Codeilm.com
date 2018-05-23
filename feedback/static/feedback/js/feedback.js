@@ -21,6 +21,7 @@ $('.submit-click-response').on('click', function(){
             beforeSend: function(xhr) {
                 $('.response-preloader').removeClass('hide');
             	var csrftoken = getCookie('csrftoken');
+                console.log("csrf token is " + csrftoken)
                 xhr.setRequestHeader('X-CSRFToken', csrftoken);
             },
             complete: function(){
