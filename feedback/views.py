@@ -16,7 +16,7 @@ def feedback_page(request, id=None, slug=None):
 		logger.info("POST request in the feedback_page view")
 		utils.save_feedback_response(request, feedback_event)
 		logger.info("Feedback response saved")
-		return render(request, "feedback_thankyou.html", {})
+		return render(request, "feedback_thankyou.html", {"feedback_event": feedback_event})
 	template = Template(feedback_event.click_response_html)
 	context_for_click_response_html = Context({"feedback_event": feedback_event})
 	context = {
