@@ -1,13 +1,14 @@
-<meta name="description" content="{{ meta_description }}">
-<meta name="keywords" content="{{ meta_keywords }}">
-<link rel="canonical" href="{{ canonical_url }}" />
+{% load static %}
+<meta name="description" content="Imagine having a friend circle, where we motivate each other to achive something. Allywith provides you a platform where users meet and achieve a common target.">
+<meta name="keywords" content="Ally, Achieve, Together, Collaborate">
+<link rel="canonical" href="{{ request.build_absolute_uri }}" />
 
 <meta property="og:site_name" content="Allywith">
-<meta property="og:url"           content="{{ canonical_url }}" />
+<meta property="og:url"           content="{{ request.build_absolute_uri }}" />
 <meta property="og:type"          content="website" />
-<meta property="og:title"         content="{{ title }}" />
-<meta property="og:description"   content="{{ meta_description }}" />
-<meta property="og:image"         content="{{ top_image_path }}" />
+<meta property="og:title"         content="Allywith" />
+<meta property="og:description"   content="Imagine having a friend circle, where we motivate each other to achive something. Allywith provides you a platform where users meet and achieve a common target." />
+<meta property="og:image"         content="https://{{ request.get_host }}{% static 'images/first-image.png' %}" />
 <meta property="og:image:width" content="1600" />
 <meta property="og:image:height" content="836" />
 
