@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'notifications',
     'background_task',
+    'markdown_deux',
 
     # custom apps
     'community.ramzaan',

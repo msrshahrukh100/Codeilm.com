@@ -1,4 +1,5 @@
 {% extends "base_template.html" %}
+{% load markdown_deux_tags %}
 {% load static %}
     {% block css %}
     {% endblock %}
@@ -17,7 +18,7 @@
       <img src="{{ feedback_event.image.url }}"> <!-- random image -->
       <div class="caption center-align">
         <h1>{{ feedback_event.name }}</h1>
-        <h3 class="light grey-text text-lighten-3">{{ feedback_event.question }}</h3>
+        <h3 class="light grey-text text-lighten-3">{{ feedback_event.question|markdown }}</h3>
         {{ rendered_click_response_html|safe }}
         <div class="row">
           <div class="s12">

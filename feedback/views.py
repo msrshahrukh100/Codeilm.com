@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 def feedback_page(request, id=None, slug=None):
-	feedback_event = get_object_or_404(FeedbackEvent, id=id, slug=slug)
+	feedback_event = get_object_or_404(FeedbackEvent, id=id)
 	logger.info("Feedback page request reached")
 	if request.method == "POST":
 		logger.info("POST request in the feedback_page view")

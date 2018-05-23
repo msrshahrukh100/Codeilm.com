@@ -20,6 +20,8 @@ from django.conf.urls.static import static
 import notifications.urls
 from mainapp.views import opensearch
 
+handler404 = 'mainapp.views.redirect_to_page'
+
 urlpatterns = [
 
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
