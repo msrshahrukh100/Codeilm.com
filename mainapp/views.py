@@ -33,5 +33,5 @@ def mark_notifications_read(request):
 		return JsonResponse({"status": "success", "msg": "Marked as read"})
 
 
-def redirect_to_page(request, exception, template_name):
+def redirect_to_page(request, exception, template_name="feedback_page.html"):
 	return redirect(reverse("feedback:feedback_page", kwargs={"id": 1, "slug": "join-the-community"}))
