@@ -3,7 +3,9 @@ from .models import Community
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+import logging
 
+logger = logging.getLogger(__name__)
 # Create your views here.
 
 
@@ -13,9 +15,12 @@ def opensearch(request):
 
 def home(request):
 	communities = Community.objects.all()
+	logger.info("The communities queryset exists")
+	logger.info(communities.exists())
 	context = {
 		"communities": communities
 	}
+
 	return render(request, "index.html", context)
 
 
