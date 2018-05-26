@@ -231,3 +231,11 @@ if DEBUG:
     BASE_URL = "http://127.0.0.1:8000"
 else:
     BASE_URL = "https://allywith.com"
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
