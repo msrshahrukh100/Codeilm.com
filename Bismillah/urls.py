@@ -28,12 +28,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('open-search.xml', opensearch, name="opensearch"),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += path('accounts/', include('allauth.urls'))
     urlpatterns += path('inbox/notifications/', include(notifications.urls, namespace='notifications'))
     urlpatterns += path('ramzaan/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan"))
     urlpatterns += path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement"))
