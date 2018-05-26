@@ -9,7 +9,7 @@ class UserActivityAdmin(admin.ModelAdmin):
 
 
 class FeedbackEventAdmin(admin.ModelAdmin):
-	list_display = ['name', 'question', 'feedback_url', 'created_by', 'created_at', 'modified_by', 'updated_at']
+	list_display = ['name', 'slug', 'question', 'feedback_url', 'created_by', 'created_at', 'modified_by', 'updated_at']
 
 	def save_model(self, request, obj, form, change):
 		if obj.id:

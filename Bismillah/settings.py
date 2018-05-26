@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'notifications',
     'background_task',
     'markdown_deux',
+    'sorl.thumbnail',
 
     # custom apps
     'community.ramzaan',
@@ -176,8 +177,9 @@ ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_CONFIRM_EMAIL_ON_GET (=False)
 # ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse("homepage:dashboard")
-ACCOUNT_EMAIL_SUBJECT_PREFIX = "Bismillah.com"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "allywith.com"
 ACCOUNT_USERNAME_REQUIRED = False
+LOGIN_REDIRECT_URL = "/"
 
 
 # Django notifications settings
@@ -224,3 +226,8 @@ if not DEBUG:
 ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'towardslight52@gmail.com')]
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'geo-ip-db')
+
+if DEBUG:
+    BASE_URL = "http://127.0.0.1:8000"
+else:
+    BASE_URL = "https://allywith.com"

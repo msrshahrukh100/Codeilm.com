@@ -1,27 +1,67 @@
 {% extends "base_template.html" %}
 {% load static %}
+{% load thumbnail %}
     {% block css %}
+    {% endblock %}
+
+    {% block meta_tags %}
+    {% include "partials/meta_tags_homepage.html" %}
     {% endblock %}
 
     {% block title %}
     {% endblock %}
 
-    {% block content %}
-    <nav class="nav-extended transparent">
+    {% block content %} <!-- blue lime -->
+    <nav class="nav-extended amber">
       <div class="nav-wrapper">
-      <a href="#!" class="brand-logo center">Logo</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <a href="/" class="brand-logo left hide-on-med-and-down">
+        <img class="responsive-img" src="{% static 'images/logo/logo-transparent.png' %}" style="padding-top: 5px;" height="200" width="200">
+      </a>
+      <a href="/" class="brand-logo center hide-on-large-only">
+        <img class="responsive-img" src="{% static 'images/logo/logo-transparent.png' %}" style="padding-top: 5px;" height="200" width="200">
+      </a>
+      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li>
-          <div class="chip transparent">
-            <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="Contact Person">
-            Mohammad Shahrukh
+          <div class="chip transparent dropdown-trigger" data-target='dropdown-useroptions'>
+            {% thumbnail request.user.user_profile.first.get_profile_pic_url "40x40" as im %}
+                <img src="{{ im.url }}" alt="{{ request.user.get_full_name }}">
+            {% endthumbnail %}
+            {{ request.user.get_full_name }}
           </div>
         </li>
       </ul>
       </div>
     </nav>
 
+    <ul id="slide-out" class="sidenav">
+      <li><div class="user-view">
+        <div class="background">
+          <img src="{% static 'images/user_background_image/user_background.jpg' %}">
+        </div>
+        <a>
+          {% thumbnail request.user.user_profile.first.get_profile_pic_url "40x40" as im %}
+              <img class="circle" src="{{ im.url }}" alt="{{ request.user.get_full_name }}">
+          {% endthumbnail %}
+        </a>
+        <a href="#name"><span class="white-text name">{{ request.user.get_full_name }} </span></a>
+      </div></li>
+      <li><a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a></li>
+      <li><div class="divider"></div></li>
+      <form method="POST" id="logout-form-small" action="{% url 'account_logout' %}">
+         {% csrf_token %}
+        <li><a onclick="document.getElementById('logout-form-small').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
+      </form>
+    </ul>
+
+    <ul id='dropdown-useroptions' class='dropdown-content'>
+      <li><a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a></li>
+      <li class="divider" tabindex="-1"></li>
+      <form method="POST" id="logout-form" action="{% url 'account_logout' %}">
+         {% csrf_token %}
+        <li><a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
+      </form>
+    </ul>
      {% include "partials/community_slider.html" %}
     {% endblock %}
 
