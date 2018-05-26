@@ -1,11 +1,14 @@
 {% load account socialaccount %}
 {% providers_media_js %}
+{% load thumbnail %}
 
  <div class="slider fullscreen" style="z-index: -100;">
     <ul class="slides">
       {% for community in communities %}
       <li>
-        <img src="{{ community.image.url }}"> <!-- random image -->
+        {% thumbnail community.image "1200x1000" as im %}
+            <img src="{{ im.url }}">
+        {% endthumbnail %}
         <div class="caption center-align">
           <h3 class="black-text">{{ community.name }}</h3>
           <h5 class="light black-text">{{ community.description }}</h5>
