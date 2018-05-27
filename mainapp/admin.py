@@ -4,7 +4,7 @@ from .models import Community, RequestIpInfo
 
 
 class CommunityAdmin(admin.ModelAdmin):
-	list_display = ['name', 'slug', 'heading', 'created_by', 'created_at', 'updated_at', 'updated_by']
+	list_display = ['name', 'slug', 'created_by', 'created_at', 'updated_at', 'updated_by']
 
 	def save_model(self, request, obj, form, change):
 		if change:

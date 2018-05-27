@@ -9,10 +9,11 @@ class UserActivityAdmin(admin.ModelAdmin):
 
 
 class FeedbackEventAdmin(admin.ModelAdmin):
-	list_display = ['name', 'question', 'feedback_url', 'created_by', 'created_at', 'modified_by', 'updated_at']
+	list_display = ['name', 'slug', 'question', 'feedback_url', 'created_by', 'created_at', 'modified_by', 'updated_at']
 
 	def save_model(self, request, obj, form, change):
-		obj.feedback_url = request.build_absolute_uri(obj.get_feedback_page_url())
+		if obj.id:
+			obj.feedback_url = request.build_absolute_uri(obj.get_feedback_page_url())
 		if change:
 			obj.modified_by = request.user
 		else:
@@ -26,33 +27,48 @@ class ClickResponseAdmin(admin.ModelAdmin):
 	list_filter = ['event', 'response', 'created_at']
 
 	def city(self, obj):
-		return obj.request_ip_info.city
+		if obj.request_ip_info:
+			return obj.request_ip_info.city
+		return None
 
 	def country_name(self, obj):
-		return obj.request_ip_info.country_name
+		if obj.request_ip_info:
+			return obj.request_ip_info.country_name
+		return None
 
 	def time_zone(self, obj):
-		return obj.request_ip_info.time_zone
+		if obj.request_ip_info:
+			return obj.request_ip_info.time_zone
+		return None
 
 	def region(self, obj):
-		return obj.request_ip_info.region
-
+		if obj.request_ip_info:
+			return obj.request_ip_info.region
+		return None
 
 class FeedbackResponseAdmin(admin.ModelAdmin):
 	list_display = ['event', 'key', 'value', 'city', 'country_name', 'time_zone', 'region', 'created_at', 'updated_at']
 	list_filter = ['event', 'updated_at']
 
 	def city(self, obj):
-		return obj.request_ip_info.city
+		if obj.request_ip_info:
+			return obj.request_ip_info.city
+		return None
 
 	def country_name(self, obj):
-		return obj.request_ip_info.country_name
+		if obj.request_ip_info:
+			return obj.request_ip_info.country_name
+		return None
 
 	def time_zone(self, obj):
-		return obj.request_ip_info.time_zone
+		if obj.request_ip_info:
+			return obj.request_ip_info.time_zone
+		return None
 
 	def region(self, obj):
-		return obj.request_ip_info.region
+		if obj.request_ip_info:
+			return obj.request_ip_info.region
+		return None
 
 
 

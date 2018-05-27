@@ -10,6 +10,7 @@ $('.submit-click-response').on('click', function(){
             success: function(data) {
                 M.toast({html: "Thanks for your response", classes: "green"})
                 $('.feedback-form-content').removeClass('hide')
+                $('.first-content').addClass('hide')
             },
             fail: function() {
                 console.log("error")

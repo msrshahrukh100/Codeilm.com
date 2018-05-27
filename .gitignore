@@ -1,1 +1,5 @@
 *.pyc
+media/*
+.DS_Store
+db.sqlite3
+website.log
