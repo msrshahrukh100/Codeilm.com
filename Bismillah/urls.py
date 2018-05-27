@@ -25,7 +25,7 @@ handler404 = 'mainapp.views.redirect_to_page'
 urlpatterns = [
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
     path('admin/', admin.site.urls),
-    path('open-search.xml', opensearch, name="opensearch"),
+    path('ally_search.xml/', opensearch, name="opensearch"),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('accounts/', include('allauth.urls')),
 ]
