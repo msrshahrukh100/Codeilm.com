@@ -5,7 +5,15 @@ import mainapp.basemodels as basemodels
 # Create your models here.
 
 
+class RamzaanGroupUser(basemodels.GroupUser):
+
+	def __str__(self):
+		return self.user.username
+
+
 class RamzaanGroup(basemodels.Group):
+	users = models.ManyToManyField(RamzaanGroupUser, related_name="ramzaan_groupusers", help_text="The users who are part of this group")
+
 	def __str__(self):
 		return self.name
 
@@ -42,3 +50,4 @@ class RamzaanStatusUpdate(basemodels.StatusUpdate):
 
 	class Meta:
 		ordering = ['-created_at']
+

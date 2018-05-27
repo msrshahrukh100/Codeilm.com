@@ -30,19 +30,25 @@ def group_list(request):
 
 def group_detail(request, id, slug):
 	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
-	user = request.user
-	users = group.users.all()
+	user = request.user  # the current logged in user
+	group_users = group.users.all()  # query set of group user objects
 	is_member = False
-
+	users = [obj.user for obj in group_users]
+	# checking permissions
 	if user in users:
 		is_member = True
+	if user.is_authenticated:
+		is_logged_in = True
 
 	context = {
 		"logged_in_user": user,
 		"group": group,
-		"users": users,
-		"is_member": is_member,
+		"group_users": group_users,
 		"status_updates": utils.get_status_updates_page(1),
+		"users": users,
+		# permissions context data
+		"is_member": is_member,
+		"is_logged_in": is_logged_in,
 	}
 	return render(request, "group_detail_ramzaan.html", context)
 

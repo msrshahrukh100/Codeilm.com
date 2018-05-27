@@ -1,15 +1,22 @@
 {% extends "base_template.html" %}
 {% load notifications_tags %}
 {% load ramzaan_extras %}
+{% load thumbnail %}
 {% load static %}
-{% block title %}
+{% block meta_tags %}
+    {% include "partials/meta_tags_homepage.html" %}
+{% endblock %}
+  {% block title %}
+Allywith | {{ group.name }}
 {% endblock %}
 
 {% block content %}
 
-    <nav class="nav-extended">
+    <nav class="nav-extended amber">
       <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Logo</a>
+      <a href="#!" class="brand-logo">
+        <img class="responsive-img" src="{% static 'images/logo/logo-transparent.png' %}" style="padding-top: 5px;" height="200" width="200">
+      </a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li id="notifications-count-active" style="display: none;">
@@ -24,9 +31,11 @@
           </a>
         </li>
         <li>
-          <div class="chip transparent dropdown-trigger" data-target='dropdown1'>
-            <img src="{{ request.user|profile_pic_url }}" alt="Contact Person">
-            {{ user.get_full_name }}
+          <div class="chip transparent dropdown-trigger" style="cursor: pointer;" data-target='dropdown-useroptions'>
+            {% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" as im %}
+                <img src="{{ im.url }}" alt="{{ request.user.get_full_name }}">
+            {% endthumbnail %}
+            {{ request.user.get_full_name }}
           </div>
         </li>
         <li>
@@ -36,7 +45,7 @@
       </div>
       <div class="nav-content center-align">
         <a class="modal-trigger" href="#modal2">
-          <span class="nav-title">Title</span>
+          <span class="nav-title black-text">{{ group.name }}</span>
         </a>
      <!--  <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal modal-trigger" href="#modal1">
         <i class="material-icons">add</i>
@@ -113,12 +122,14 @@
 
  <!-- Page Layout here -->
     <div class="row">
-      {% include "partials/recent_activities_ramzaan.html" %}
 
-      {% if user.is_authenticated %}
-      {% include "partials/progress_section_ramzaan.html" %}
+
+      {% if is_logged_in and is_member %}
+        {% include "partials/recent_activities_ramzaan.html" %}
+        {% include "partials/progress_section_ramzaan.html" %}
       {% else %}
-      {% include "partials/non-loggedin-right-panel.html" %}
+        {% include "partials/non-member-left-panel.html" %}
+        {% include "partials/non-member-right-panel.html" %}
       {% endif %}
 
     </div>

@@ -1,5 +1,6 @@
 {% load static %}
 {% load ramzaan_extras %}
+{% load thumbnail %}
 <div class="col s8">
   {% include "partials/forms/status_update_form.html" %}
   <div class="divider hide show-on-status-focus"></div>
@@ -12,10 +13,13 @@
           <span class="right new badge" data-badge-caption="custom caption">4</span>
           <div class="row valign-wrapper">
             <div class="col s1">
-              <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle responsive-img right"> <!-- notice the "circle" class -->
+              {% thumbnail user.user_profile.first.get_profile_pic_url "55x55" as im %}
+                <img src="{{ im.url }}" class="circle" alt="{{ user.get_full_name }}">
+              {% endthumbnail %}
+
             </div>
             <div class="col s10">
-              <span class="card-title" style="margin-left: -45px;">
+              <span class="card-title">
                 {{ user.get_full_name }}
               </span>
             </div>

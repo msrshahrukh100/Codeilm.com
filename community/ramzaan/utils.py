@@ -1,15 +1,19 @@
 from django.contrib import messages
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.paginator import Paginator
 from django.utils import timezone
 from feedback.tasks import add_activity
-from .models import RamzaanUserProgress, RamzaanStatusUpdate
+from .models import RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser
+from mainapp.utils import save_request_ip_info
 
 
 def add_user_to_group(request, user, group):
-		group.users.add(user)
-		obj = RamzaanUserProgress.objects.create(user=user, group=group)
-		obj.save()
-		messages.success(request, 'You have successfully joined this group')
+	request_ip_info_obj = save_request_ip_info(request)
+	ramzaangroupuser_object = RamzaanGroupUser.objects.create(user=user, request_ip_info=request_ip_info_obj)
+	ramzaangroupuser_object.save()
+	group.users.add(ramzaangroupuser_object)
+	obj = RamzaanUserProgress.objects.create(user=user, group=group)
+	obj.save()
+	messages.success(request, 'You have successfully joined this group')
 
 
 def get_post_age(date):

@@ -1,6 +1,7 @@
 from autoslug import AutoSlugField
 from django.db import models
 from django.contrib.auth.models import User
+from .models import RequestIpInfo
 # Create your models here.
 
 
@@ -21,7 +22,6 @@ class Group(models.Model):
 	height_field = models.IntegerField(default=0, blank=True, null=True)
 	width_field = models.IntegerField(default=0, blank=True, null=True)
 	target_statement = models.TextField(help_text="What the user wants to achieve while forming this group")
-	users = models.ManyToManyField(User, related_name="%(app_label)s_groupusers", help_text="The users who are part of this group")
 	unit_name = models.CharField(max_length=255, help_text="Unit of work, eg. chapters when reading a book")
 	total_units = models.PositiveIntegerField(help_text="The total number of units in the task")
 	start_date = models.DateTimeField(help_text="The start date for the task")
@@ -70,3 +70,14 @@ class UserProgress(models.Model):
 
 	class Meta:
 		abstract = True
+
+
+class GroupUser(models.Model):
+	user = models.ForeignKey(User, related_name="%(app_label)s_groupusers", help_text="The user in a particular group", on_delete=models.CASCADE)
+	request_ip_info = models.ForeignKey(RequestIpInfo, null=True, blank=True, related_name="%(app_label)s_requestipinfos", on_delete=models.SET_NULL)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		abstract = True
+

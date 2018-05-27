@@ -1,0 +1,18 @@
+<div class="col s8" style="padding-top: 100px;">
+	<h4 class="grey-text center">In this group</h4>
+	<div class="container">
+		{% for user in users %}
+		<div class="chip blue">
+	        <img src="{{ user.user_profile.first.get_profile_pic_url }}" alt="Contact Person">
+	        {{ user.get_full_name }}
+	    </div>
+		{% endfor %}
+		{% if is_logged_in %}
+		<p class="center">
+			<a href="{% url 'ramzaan:group_join' id=group.id slug=group.slug %}" class="waves-effect waves-light btn amber" style="text-transform: none;"><i class="material-icons left">group_add</i>Join Group</a>
+		</p>
+		{% else %}
+			Login to Join this group
+		{% endif %}
+	</div>
+</div>
