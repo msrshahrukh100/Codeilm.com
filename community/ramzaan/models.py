@@ -50,4 +50,3 @@ class RamzaanStatusUpdate(basemodels.StatusUpdate):
 
 	class Meta:
 		ordering = ['-created_at']
-

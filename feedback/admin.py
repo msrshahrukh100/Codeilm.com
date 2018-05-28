@@ -46,6 +46,7 @@ class ClickResponseAdmin(admin.ModelAdmin):
 			return obj.request_ip_info.region
 		return None
 
+
 class FeedbackResponseAdmin(admin.ModelAdmin):
 	list_display = ['event', 'key', 'value', 'city', 'country_name', 'time_zone', 'region', 'created_at', 'updated_at']
 	list_filter = ['event', 'updated_at']
@@ -69,7 +70,6 @@ class FeedbackResponseAdmin(admin.ModelAdmin):
 		if obj.request_ip_info:
 			return obj.request_ip_info.region
 		return None
-
 
 
 admin.site.register(UserActivity, UserActivityAdmin)

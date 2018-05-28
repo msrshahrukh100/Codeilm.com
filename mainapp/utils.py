@@ -1,5 +1,8 @@
 from django.contrib.gis.geoip2 import GeoIP2
 from .models import RequestIpInfo
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def get_client_ip(request):
@@ -17,6 +20,7 @@ def get_ip_info(request):
 	try:
 		data = g.city(ip)
 	except Exception as e:
+		logger.error(e)
 		data = None
 	return data
 

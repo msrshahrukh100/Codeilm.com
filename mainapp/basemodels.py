@@ -64,7 +64,6 @@ class UnitDescription(models.Model):
 
 class UserProgress(models.Model):
 	user = models.ForeignKey(User, related_name="%(app_label)s_userprogressuser", help_text="The user who makes the progress in the group", on_delete=models.CASCADE)  # community - userprogress
-	progress = models.FloatField(default=0, help_text="The progress of the user") # remove
 	at_unit = models.PositiveIntegerField(default=0, help_text="The current state of the user, eg. at chapter 2")
 	last_progress_made = models.DateTimeField(auto_now=True, help_text="The last date the user made progress")
 

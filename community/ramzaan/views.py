@@ -3,10 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.utils import timezone
-from feedback.tasks import add_activity
-from notifications.signals import notify
-from .models import RamzaanGroup, RamzaanStatusUpdate
+from .models import RamzaanGroup
 from . import utils
 from . import tasks
 
@@ -32,11 +29,9 @@ def group_detail(request, id, slug):
 	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
 	user = request.user  # the current logged in user
 	group_users = group.users.all()  # query set of group user objects
-	is_member = False
 	users = [obj.user for obj in group_users]
+
 	# checking permissions
-	if user in users:
-		is_member = True
 	if user.is_authenticated:
 		is_logged_in = True
 
@@ -47,7 +42,7 @@ def group_detail(request, id, slug):
 		"status_updates": utils.get_status_updates_page(1),
 		"users": users,
 		# permissions context data
-		"is_member": is_member,
+		"is_member": utils.check_user_in_group(request, group),
 		"is_logged_in": is_logged_in,
 	}
 	return render(request, "group_detail_ramzaan.html", context)
@@ -57,7 +52,8 @@ def group_detail(request, id, slug):
 def group_join(request, id, slug):
 	user = request.user
 	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
-	if user in group.users.all():
+	is_member = utils.check_user_in_group(request, group)
+	if is_member:
 		messages.info(request, 'You are already part of this group')
 	else:
 		utils.add_user_to_group(request, user, group)

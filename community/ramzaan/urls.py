@@ -1,4 +1,4 @@
-from django.urls import include, path
+from django.urls import path
 from .views import group_list, group_detail, group_join, send_motivation, post_status_update, get_status_updates
 
 urlpatterns = [

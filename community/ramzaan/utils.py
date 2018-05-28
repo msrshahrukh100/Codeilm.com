@@ -16,6 +16,13 @@ def add_user_to_group(request, user, group):
 	messages.success(request, 'You have successfully joined this group')
 
 
+def check_user_in_group(request, group):
+	user_group_qs = group.users.all()
+	users = [obj.user for obj in user_group_qs]
+	user = request.user
+	return user in users
+
+
 def get_post_age(date):
 	old_post = 0
 	time_delta = timezone.now() - date
@@ -40,5 +47,3 @@ def update_user_status(user, group, **data):
 	user_progress_obj.at_unit = obj.on_unit
 	user_progress_obj.save()
 	add_activity(user.id, 'ramzaan-status-update')
-
-
