@@ -26,14 +26,13 @@ def group_list(request):
 
 
 def group_detail(request, id, slug):
-	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
+	group = get_object_or_404(RamzaanGroup, id=id)
 	user = request.user  # the current logged in user
 	group_users = group.users.all()  # query set of group user objects
 	users = [obj.user for obj in group_users]
 
 	# checking permissions
-	if user.is_authenticated:
-		is_logged_in = True
+	is_logged_in = user.is_authenticated
 
 	context = {
 		"logged_in_user": user,
@@ -51,7 +50,7 @@ def group_detail(request, id, slug):
 @login_required
 def group_join(request, id, slug):
 	user = request.user
-	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
+	group = get_object_or_404(RamzaanGroup, id=id)
 	is_member = utils.check_user_in_group(request, group)
 	if is_member:
 		messages.info(request, 'You are already part of this group')
@@ -71,7 +70,7 @@ def send_motivation(request, id, slug, to_user_id):
 
 @login_required
 def post_status_update(request, id=None, slug=None):
-	group = get_object_or_404(RamzaanGroup, id=id, slug=slug)
+	group = get_object_or_404(RamzaanGroup, id=id)
 	if request.method == 'POST':
 		user = request.user
 		data = request.POST.dict()

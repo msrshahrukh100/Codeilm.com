@@ -1,9 +1,9 @@
-{% extends "account/base.html" %}
+{% extends "base_template.html" %}
 
 {% load i18n %}
 {% load account socialaccount %}
-
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% load material_form %}
+{% block title %}{% trans "Sign In" %}{% endblock %}
 
 {% block breadcumb %}
 <div class="col s12" style="padding-left:50px;">
@@ -13,6 +13,15 @@
 {% endblock %}
 
 {% block content %}
+<style type="text/css">
+  input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: rgb(250, 200, 100) !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0) !important;
+}
+</style>
+{% include "mainapp/partials/simple-navbar.html" %}
+
 <div class="container">
   <h5>{% trans "Sign In" %}</h5>
   {% get_providers as socialaccount_providers %}
@@ -21,7 +30,7 @@
 
       <form class="login" method="POST" action="{% url 'account_login' %}">
         {% csrf_token %} 
-  {{ form.as_p }}
+{% form form=form %}{% endform %}
   
   {% if redirect_field_value %}
         <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
@@ -74,11 +83,6 @@
   here.
 </p>
 </div>
-<script type="text/javascript">
-$(function(){
-    $("#id_login").removeAttr('placeholder');
-    $("#id_password").removeAttr('placeholder');
-});
-</script>
+
 </div>
 {% endblock %}

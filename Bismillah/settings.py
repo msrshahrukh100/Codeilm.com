@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'background_task',
     'markdown_deux',
     'sorl.thumbnail',
+    'material',
 
     # custom apps
     'community.ramzaan',
@@ -84,7 +85,7 @@ AUTHENTICATION_BACKENDS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],  # os.path.join(BASE_DIR, "templates"), os.path.join(BASE_DIR, "templates", "allauth")],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), os.path.join(BASE_DIR, "templates", "allauth")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

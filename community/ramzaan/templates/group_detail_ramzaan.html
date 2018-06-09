@@ -4,7 +4,7 @@
 {% load thumbnail %}
 {% load static %}
 {% block meta_tags %}
-    {% include "partials/meta_tags_homepage.html" %}
+    {% include "mainapp/partials/meta_tags_homepage.html" %}
 {% endblock %}
   {% block title %}
 Allywith | {{ group.name }}
@@ -12,53 +12,11 @@ Allywith | {{ group.name }}
 
 {% block content %}
 
-    <nav class="nav-extended amber">
-      <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">
-        <img class="responsive-img" src="{% static 'images/logo/logo-transparent.png' %}" style="padding-top: 5px;" height="200" width="200">
-      </a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li id="notifications-count-active" style="display: none;">
-          <a class="waves-effect waves-light dropdown-trigger-notification btn-small red pulse" style="border-radius: 20px;" data-target='dropdown-notifications'>
-            <i class="material-icons right">notifications_active</i>
-            <span id="notifications-count">4 new</span>
-          </a>
-        </li>
-        <li id="no-notification">
-          <a class="dropdown-trigger btn-small red transparent z-depth-0" data-target='dropdown-no-notification'>
-            <i class="material-icons right black-text">notifications</i>
-          </a>
-        </li>
-        <li>
-          <div class="chip transparent dropdown-trigger" style="cursor: pointer;" data-target='dropdown-useroptions'>
-            {% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" as im %}
-                <img src="{{ im.url }}" alt="{{ request.user.get_full_name }}">
-            {% endthumbnail %}
-            {{ request.user.get_full_name }}
-          </div>
-        </li>
-        <li>
-          <a class="waves-effect waves-light btn dropdown-trigger transparent z-depth-0 black-text" style="text-transform: none;" data-target='dropdown2'><i class="material-icons right">arrow_drop_down</i>Show updates for</a>
-        </li>
-      </ul>
-      </div>
-      <div class="nav-content center-align">
-        <a class="modal-trigger" href="#modal2">
-          <span class="nav-title black-text">{{ group.name }}</span>
-        </a>
-     <!--  <a class="btn-floating btn-large halfway-fab waves-effect waves-light teal modal-trigger" href="#modal1">
-        <i class="material-icons">add</i>
-      </a> -->
-       
-
-      </div>
-    </nav>
+   
+    {% include "ramzaan/partials/nav-bar.html" %}
 
     {% if messages %}
     {% for message in messages %}
-     
-
     <div class="row">
       <div class="col s12 center">
         <p class="center-align"></p>
@@ -71,65 +29,17 @@ Allywith | {{ group.name }}
     {% endfor %}
     {% endif %}
 
-  <!-- Modal Structure -->
-  <div id="modal2" class="modal bottom-sheet">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
-
-    <ul id='dropdown1' class='dropdown-content'>
-      <li><a href="#!">one</a></li>
-      <li><a href="#!">two</a></li>
-      <li class="divider" tabindex="-1"></li>
-      <li><a href="#!">three</a></li>
-      <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-      <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
-    </ul>
-
-    <ul id='dropdown2' class='dropdown-content'>
-      <li><a href="#!">msr</a></li>
-      <li><a href="#!">shahrukh</a></li>
-      <li class="divider" tabindex="-1"></li>
-      <li><a href="#!">three</a></li>
-      <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
-      <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
-    </ul>
-
-    <ul id='dropdown-notifications' class='dropdown-content'>
-      
-    </ul>
-
-    <ul id='dropdown-no-notification' class='dropdown-content'>
-      
-      <li><a href="#!" class="grey-text"><i class="material-icons green-text">sentiment_satisfied_alt</i>No new Notification</a></li>
-      <li class="divider" tabindex="-1"></li>
-      <li><a href="#!"><i class="material-icons">list</i>See all your notifications</a></li>
-    </ul>
-
-  <ul class="sidenav" id="mobile-demo">
-    <li><a href="sass.html">Sass</a></li>
-    <li><a href="badges.html">Components</a></li>
-    <li><a href="collapsible.html">Javascript</a></li>
-    <li><a href="mobile.html">Mobile</a></li>
-  </ul>
-          
-
 
  <!-- Page Layout here -->
     <div class="row">
 
 
       {% if is_logged_in and is_member %}
-        {% include "partials/recent_activities_ramzaan.html" %}
-        {% include "partials/progress_section_ramzaan.html" %}
+        {% include "ramzaan/partials/recent_activities_ramzaan.html" %}
+        {% include "ramzaan/partials/progress_section_ramzaan.html" %}
       {% else %}
-        {% include "partials/non-member-left-panel.html" %}
-        {% include "partials/non-member-right-panel.html" %}
+        {% include "ramzaan/partials/non-member-left-panel.html" %}
+        {% include "ramzaan/partials/non-member-right-panel.html" %}
       {% endif %}
 
     </div>

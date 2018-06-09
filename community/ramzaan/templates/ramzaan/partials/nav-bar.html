@@ -1,0 +1,81 @@
+{% load static %}
+{% load thumbnail %}
+<nav class="nav-extended amber">
+	<div class="nav-wrapper">
+		<a href="#!" class="brand-logo">
+			<img class="responsive-img" src="{% static 'images/logo/logo-transparent.png' %}" style="padding-top: 5px;" height="200" width="200">
+		</a>
+		<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		<!-- sidenav content -->
+		<ul class="sidenav" id="mobile-demo">
+		  <li><a href="sass.html">Sass</a></li>
+		  <li><a href="badges.html">Components</a></li>
+		  <li><a href="collapsible.html">Javascript</a></li>
+		  <li><a href="mobile.html">Mobile</a></li>
+		</ul>
+		<!-- sidenav content -->
+		<ul class="right hide-on-med-and-down">
+			<li id="notifications-count-active" style="display: none;">
+				<a class="waves-effect waves-light dropdown-trigger-notification dropdown-trigger btn-small red pulse" style="border-radius: 20px;" data-target='dropdown-notifications'>
+					<i class="material-icons right">notifications_active</i>
+					<span id="notifications-count">4 new</span>
+				</a>
+				<!-- dropdown content -->
+				<ul id='dropdown-notifications' class='dropdown-content'>
+  
+				</ul>
+				<!-- dropdown content -->
+
+			</li>
+			<li id="no-notification">
+				<a class="dropdown-trigger btn-small red transparent z-depth-0" data-target='dropdown-no-notification'>
+					<i class="material-icons right black-text">notifications</i>
+				</a>
+				<!-- dropdown content -->
+				<ul id='dropdown-no-notification' class='dropdown-content'>
+				  <li><a href="#!" class="grey-text"><i class="material-icons green-text">sentiment_satisfied_alt</i>No new Notification</a></li>
+				  <li class="divider" tabindex="-1"></li>
+				  <li><a href="#!"><i class="material-icons">list</i>See all your notifications</a></li>
+				</ul>
+				<!-- dropdown content -->
+			</li>
+			<li>
+				<div class="chip transparent dropdown-trigger" style="cursor: pointer;" data-target='dropdown-useroptions'>
+					{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" as im %}
+					<img src="{{ im.url }}" alt="{{ request.user.get_full_name }}">
+					{% endthumbnail %}
+					{{ request.user.get_full_name }}
+				</div>
+				<!-- dropdown content -->
+				<ul id='dropdown-useroptions' class='dropdown-content'>
+					<li><a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a></li>
+					<li class="divider" tabindex="-1"></li>
+					<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
+						{% csrf_token %}
+						<li><a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
+					</form>
+				</ul>
+				<!-- dropdown content -->
+			</li>
+		</ul>
+	</div>
+	<div class="nav-content center-align">
+		<a class="modal-trigger" href="#modal2">
+			<span class="nav-title black-text">{{ group.name }}</span>
+		</a>
+		
+	</div>
+</nav>
+
+
+<div id="modal2" class="modal bottom-sheet">
+  <div class="modal-content">
+    <h4>Modal Header</h4>
+    <p>A bunch of text</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
+</div>
+
+

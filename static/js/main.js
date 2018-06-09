@@ -23,7 +23,9 @@
 
 	function my_notification_callback(data) {
 		$('#dropdown-notifications').html("")
-		$('#dropdown-no-notification').html("")
+		if(data.last_notifications_list.length !== 0){
+			$('#dropdown-no-notification').html("")
+		}
 		for (var i=0; i < data.unread_list.length; i++) {
 		    msg = data.unread_list[i];
 		    var notification = "<li><a href='#!'>" + msg.actor + " " + msg.verb + "</a></li>"

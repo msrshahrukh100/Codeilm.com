@@ -2,7 +2,7 @@
 {% load ramzaan_extras %}
 {% load thumbnail %}
 <div class="col s8">
-  {% include "partials/forms/status_update_form.html" %}
+  {% include "mainapp/partials/forms/status_update_form.html" %}
   <div class="divider hide show-on-status-focus"></div>
   {% with request.user|get_followings as followings %}
   {% for user in users %}
@@ -45,7 +45,7 @@
           {% endif %}
 
           <div class="right hide user-section-preloader-{{ user.id }}">
-            {% include "partials/preloader_small.html" %}
+            {% include "mainapp/partials/preloader_small.html" %}
           </div>
         </div>
       </div>
