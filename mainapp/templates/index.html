@@ -44,7 +44,11 @@
       </form>
     </ul>
      {% include "mainapp/partials/community_slider.html" %}
-     {% include "mainapp/partials/login-panel.html" %}
+     <div class="center">
+       {% if not request.user.is_authenticated %}
+       {% include "mainapp/partials/login-panel.html" %}
+       {% endif %}
+     </div>
     {% endblock %}
 
     {% block scripts %}

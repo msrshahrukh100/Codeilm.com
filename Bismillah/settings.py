@@ -241,3 +241,13 @@ CACHES = {
         'LOCATION': 'my_cache_table',
     }
 }
+
+# email settings
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = os.environ['SENDGRID_USER_NAME']
+EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+SENDGRID_SANDBOX_MODE_IN_DEBUG = bool(int(os.environ['SENDGRID_DEBUG']))
+SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
