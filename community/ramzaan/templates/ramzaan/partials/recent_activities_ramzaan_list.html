@@ -1,35 +1,35 @@
 {% load ramzaan_extras %}
 {% for status_update in status_updates %}
-<li class="collection-item avatar" style="border: none;">
-  <img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
-  <span class="title"><b>{{ status_update.user.get_full_name }}</b></span>
-  <p>
-    {{ status_update.content }}
-  </p>
-  <p>On {{ status_update.group.unit_name }} {{ status_update.on_unit }}</p>
-  <p class="grey-text">
-    {% with status_update.updated_at|check_age as old_post %}
-    {% if old_post == "0" %}
-      {{ status_update.updated_at|timesince }} ago
-    {% elif old_post == "1" %}
-      {{ status_update.updated_at|date:"P l" }}
-    {% elif old_post == "2" %}
-      {{ status_update.updated_at|date:"j N Y" }}
-    {% endif %}
-    {% endwith %}
-  </p>
-  <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+	<li class="collection-item avatar" style="border: none;">
+		<img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
+		<span class="title"><b>{{ status_update.user.get_full_name }}</b></span>
+		<p>
+			{{ status_update.content }}
+		</p>
+		<p>On {{ status_update.group.unit_name }} {{ status_update.on_unit }}</p>
+		<p class="grey-text">
+			{% with status_update.updated_at|check_age as old_post %}
+			{% if old_post == "0" %}
+				{{ status_update.updated_at|timesince }} ago
+				{% elif old_post == "1" %}
+				{{ status_update.updated_at|date:"P l" }}
+				{% elif old_post == "2" %}
+				{{ status_update.updated_at|date:"j N Y" }}
+			{% endif %}
+		{% endwith %}
+	</p>
+	<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 </li>
 {% endfor %}
 {% if status_updates.has_next %}
 <li class="collection-item avatar center temp-content" style="border: none;">
-  <a class="waves-effect waves-light btn load-more-status" data-href="{% url 'ramzaan:get_status_updates' %}?page={{ status_updates.next_page_number }}">Load More</a>
-  <div class="hide show-more-status-preloader">
-  {% include "partials/preloader_small.html" %}
-  </div>
+	<a class="waves-effect waves-light btn load-more-status" data-href="{% url 'ramzaan:get_status_updates' %}?page={{ status_updates.next_page_number }}">Load More</a>
+	<div class="hide show-more-status-preloader">
+		{% include "partials/preloader_small.html" %}
+	</div>
 </li>
 {% else %}
 <li class="collection-item avatar center grey-text" style="border: none;">
-  No more updates for you
+	No more updates for you
 </li>
 {% endif %}

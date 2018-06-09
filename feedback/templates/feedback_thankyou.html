@@ -1,27 +1,21 @@
 {% extends "base_template.html" %}
 {% load static %}
-    {% block css %}
-    {% endblock %}
-
-    {% block title %}
-    {% endblock %}
-
-    {% block content %}
-
-
-   <div class="slider fullscreen" style="z-index: -100;">
-    <ul class="slides">
-      <li>
-        <img src="{{ feedback_event.image.url }}"> <!-- random image -->
-        <div class="caption center-align">
-          <h3>Thank you for your response</h3>
-          <h4>We will let you know when we launch</h4>
-        </div>
-
-      </li>
-    </ul>
-  </div>
-    {% endblock %}
-
-    {% block scripts %}
-    {% endblock %}
+{% block css %}
+{% endblock %}
+{% block title %}
+{% endblock %}
+{% block content %}
+	<div class="slider fullscreen" style="z-index: -100;">
+		<ul class="slides">
+			<li>
+				<img src="{{ feedback_event.image.url }}"> <!-- random image -->
+				<div class="caption center-align">
+					<h3>Thank you for your response</h3>
+					<h4>We will let you know when we launch</h4>
+				</div>
+			</li>
+		</ul>
+	</div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

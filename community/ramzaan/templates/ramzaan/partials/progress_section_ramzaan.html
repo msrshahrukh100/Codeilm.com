@@ -2,56 +2,53 @@
 {% load ramzaan_extras %}
 {% load thumbnail %}
 <div class="col s8">
-  {% include "mainapp/partials/forms/status_update_form.html" %}
-  <div class="divider hide show-on-status-focus"></div>
-  {% with request.user|get_followings as followings %}
-  {% for user in users %}
-  <div class="row">
-    <div class="col s12">
-      <div class="card">
-        <div class="card-content">
-          <span class="right new badge" data-badge-caption="custom caption">4</span>
-          <div class="row valign-wrapper">
-            <div class="col s1">
-              {% thumbnail user.user_profile.first.get_profile_pic_url "55x55" as im %}
-                <img src="{{ im.url }}" class="circle" alt="{{ user.get_full_name }}">
-              {% endthumbnail %}
-
-            </div>
-            <div class="col s10">
-              <span class="card-title">
-                {{ user.get_full_name }}
-              </span>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col s10">
-              <div class="progress">
-                <div class="determinate" style="width: {{ user.ramzaan_userprogressuser.first.get_progress }}%"></div>
-              </div>
-              on ayat
-            </div>
-          <div class="col s2">
-              <i class="material-icons amber-text tooltipped " data-position="bottom" data-delay="50" data-tooltip="I am a tooltip">plus_one</i>
-              <i class="material-icons amber-text tooltipped " data-position="bottom" data-delay="50" data-tooltip="I am a tooltip">sentiment_very_satisfied</i>
-          </div>
-        </div>
-          
-        </div>
-        <div class="card-action">
-          <a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='Motivation Sent!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate this person" style="text-transform: none;"><i class="material-icons left">cloud</i>Motivate</a>
-          {% if user.id not in followings %}
-          <a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You started following {{ user.get_full_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=user.id %}" data-tooltip="Follow this person" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
-          {% endif %}
-
-          <div class="right hide user-section-preloader-{{ user.id }}">
-            {% include "mainapp/partials/preloader_small.html" %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
-  {% endwith %}
-
+	{% include "mainapp/partials/forms/status_update_form.html" %}
+	<div class="divider hide show-on-status-focus"></div>
+	{% with request.user|get_followings as followings %}
+	{% for user in users %}
+		<div class="row">
+			<div class="col s12">
+				<div class="card">
+					<div class="card-content">
+						<span class="right new badge" data-badge-caption="custom caption">4</span>
+						<div class="row valign-wrapper">
+							<div class="col s1">
+								{% thumbnail user.user_profile.first.get_profile_pic_url "55x55" as im %}
+								<img src="{{ im.url }}" class="circle" alt="{{ user.get_full_name }}">
+							{% endthumbnail %}
+						</div>
+						<div class="col s10">
+							<span class="card-title">
+								{{ user.get_full_name }}
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s10">
+							<div class="progress">
+								<div class="determinate" style="width: {{ user.ramzaan_userprogressuser.first.get_progress }}%"></div>
+							</div>
+							on ayat
+						</div>
+						<div class="col s2">
+							<i class="material-icons amber-text tooltipped " data-position="bottom" data-delay="50" data-tooltip="I am a tooltip">plus_one</i>
+							<i class="material-icons amber-text tooltipped " data-position="bottom" data-delay="50" data-tooltip="I am a tooltip">sentiment_very_satisfied</i>
+						</div>
+					</div>
+					
+				</div>
+				<div class="card-action">
+					<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='Motivation Sent!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate this person" style="text-transform: none;"><i class="material-icons left">cloud</i>Motivate</a>
+					{% if user.id not in followings %}
+						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You started following {{ user.get_full_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=user.id %}" data-tooltip="Follow this person" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
+					{% endif %}
+					<div class="right hide user-section-preloader-{{ user.id }}">
+						{% include "mainapp/partials/preloader_small.html" %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+{% endwith %}
 </div>

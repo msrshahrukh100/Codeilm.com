@@ -1,12 +1,12 @@
 <div class="col s4" style="display:block;height:700px;overflow:auto;">
-  <ul class="collection">
-    {% for group_user in group_users %}
-    <li class="collection-item avatar">
-      <img src="{{ group_user.user.user_profile.first.get_profile_pic_url }}" alt="{{ group_user.user.get_full_name }}" class="circle">
-      <span class="title">{{ group_user.user.get_full_name }}</span>
-      <p class="grey-text">Joined on {{ group_user.created_at }}
-      </p>
-    </li>
-    {% endfor %}
-  </ul>
+	<ul class="collection">
+		{% for group_user in group_users %}
+			<li class="collection-item avatar">
+				<img src="{{ group_user.user.user_profile.first.get_profile_pic_url }}" alt="{{ group_user.user.get_full_name }}" class="circle">
+				<span class="title">{{ group_user.user.get_full_name }}</span>
+				<p class="grey-text">Joined on {{ group_user.created_at }}
+				</p>
+			</li>
+		{% endfor %}
+	</ul>
 </div>

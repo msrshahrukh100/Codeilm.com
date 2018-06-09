@@ -1,20 +1,18 @@
 {% load account socialaccount %}
 {% providers_media_js %}
 {% load thumbnail %}
-
- <div class="slider">
-    <ul class="slides">
-      {% for community in communities %}
-      <li>
-        {% thumbnail community.image "1200x1000" as im %}
-            <img src="{{ im.url }}">
-        {% endthumbnail %}
-        <div class="caption center-align">
-          <h3 class="black-text">{{ community.name }}</h3>
-          <h5 class="light black-text">{{ community.description }}</h5>
-        </div>
-
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
+<div class="slider">
+	<ul class="slides">
+		{% for community in communities %}
+			<li>
+				{% thumbnail community.image "1200x1000" as im %}
+				<img src="{{ im.url }}">
+			{% endthumbnail %}
+			<div class="caption center-align">
+				<h3 class="black-text">{{ community.name }}</h3>
+				<h5 class="light black-text">{{ community.description }}</h5>
+			</div>
+		</li>
+	{% endfor %}
+</ul>
+</div>

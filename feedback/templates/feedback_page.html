@@ -1,64 +1,59 @@
 {% extends "base_template.html" %}
 {% load markdown_deux_tags %}
 {% load static %}
-    {% block css %}
-    {% endblock %}
-
-    {% block title %}
-    Welcome to Allywith
-    {% endblock %}
-    {% block meta_tags %}
-    {% include "mainapp/partials/meta_tags_feedback.html" %}
-    {% endblock %}
-    {% block content %}
-
-
-<div class="slider fullscreen" style="z-index: -100;">
-  <ul class="slides">
-    <li>
-      <img src="{{ feedback_event.image.url }}"> <!-- random image -->
-      <div class="caption center-align">
-        <h2>{{ feedback_event.name }}</h2>
-        <div class="first-content">
-          <h4 class="light grey-text text-lighten-3">{{ feedback_event.question|markdown }}</h4>
-          {{ rendered_click_response_html|safe }}
-        </div>
-        <div class="row">
-          <div class="s12">
-            <div class="response-preloader hide">
-              {% include "mainapp/partials/preloader_small.html" %}
-            </div>
-             <div class="row feedback-form-content hide">
-                <h6>Please let us know your email id so that we could send Salaam and let you know when we launch</h6>
-                <div class="col s12 center">
-                   <form method="POST" action="{% url 'feedback:feedback_page' id=feedback_event.id slug=feedback_event.slug %}">{% csrf_token %}
-                      <div class="row">
-                        <div class="input-field col s10 offset-s1">
-                          <i class="material-icons prefix">email</i>
-                          <input id="icon_telephone" type="email" class="validate" name="value" required>
-                          <label for="icon_telephone">Email</label>
-                        </div>
-                      </div>
-                      <input type="hidden" name="key" value="email">
-                      <div class="row">
-                        <div class="col s6 offset-s3">
-                             <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                              <i class="material-icons right">send</i>
-                            </button>
-                        </div>
-                      </div>
-                    </form>
-                </div>
-              </div>
-
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
-    {% endblock %}
-
-    {% block scripts %}
-    <script type="text/javascript" src="{% static 'feedback/js/feedback.js' %}"></script>
-    {% endblock %}
+{% block css %}
+{% endblock %}
+{% block title %}
+	Welcome to Allywith
+{% endblock %}
+{% block meta_tags %}
+	{% include "mainapp/partials/meta_tags_feedback.html" %}
+{% endblock %}
+{% block content %}
+	<div class="slider fullscreen" style="z-index: -100;">
+		<ul class="slides">
+			<li>
+				<img src="{{ feedback_event.image.url }}"> <!-- random image -->
+				<div class="caption center-align">
+					<h2>{{ feedback_event.name }}</h2>
+					<div class="first-content">
+						<h4 class="light grey-text text-lighten-3">{{ feedback_event.question|markdown }}</h4>
+						{{ rendered_click_response_html|safe }}
+					</div>
+					<div class="row">
+						<div class="s12">
+							<div class="response-preloader hide">
+								{% include "mainapp/partials/preloader_small.html" %}
+							</div>
+							<div class="row feedback-form-content hide">
+								<h6>Please let us know your email id so that we could send Salaam and let you know when we launch</h6>
+								<div class="col s12 center">
+									<form method="POST" action="{% url 'feedback:feedback_page' id=feedback_event.id slug=feedback_event.slug %}">{% csrf_token %}
+										<div class="row">
+											<div class="input-field col s10 offset-s1">
+												<i class="material-icons prefix">email</i>
+												<input id="icon_telephone" type="email" class="validate" name="value" required>
+												<label for="icon_telephone">Email</label>
+											</div>
+										</div>
+										<input type="hidden" name="key" value="email">
+										<div class="row">
+											<div class="col s6 offset-s3">
+												<button class="btn waves-effect waves-light" type="submit" name="action">Submit
+												<i class="material-icons right">send</i>
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+{% endblock %}
+{% block scripts %}
+	<script type="text/javascript" src="{% static 'feedback/js/feedback.js' %}"></script>
+{% endblock %}

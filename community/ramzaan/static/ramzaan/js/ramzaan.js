@@ -51,7 +51,6 @@ $('.action-buttons').on('click', function(){
 $('.status-list').on('click', '.load-more-status', function(){
     var el = $(this)
     actionurl = el.data('href')
-    console.log(actionurl)
 
     $.ajax({
         type: 'GET',

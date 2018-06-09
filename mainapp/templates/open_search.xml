@@ -2,17 +2,17 @@
 {% load main_extras %}
 {% load thumbnail %}
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-	<script/>
-	<ShortName>Ally With Search</ShortName>
-	<Description>Search for communities</Description>
-	<Tags>Social Groups</Tags>
-	<Image height="16" width="16" type="image/vnd.microsoft.icon">
-		{% thumbnail 'images/logo/logo-square.png'|static_absolute_uri "16x16" as im %}
-		https://allywith.com{{ im.url }}
-		{% endthumbnail %}
-	</Image>
-	<Url type="text/html" rel="results" method="get" template="https://allywith.com/">
-		<Param name="tag" value="{searchTerms}"/>
-		<Param name="source" value="opensearch"/>
+<script/>
+<ShortName>Ally With Search</ShortName>
+<Description>Search for communities</Description>
+<Tags>Social Groups</Tags>
+<Image height="16" width="16" type="image/vnd.microsoft.icon">
+	{% thumbnail 'images/logo/logo-square.png'|static_absolute_uri "16x16" as im %}
+	https://allywith.com{{ im.url }}
+	{% endthumbnail %}
+</Image>
+<Url type="text/html" rel="results" method="get" template="https://allywith.com/">
+	<Param name="tag" value="{searchTerms}"/>
+	<Param name="source" value="opensearch"/>
 	</Url> <Query role="example" searchTerms="pmp"/>
-</OpenSearchDescription>
+	</OpenSearchDescription>
