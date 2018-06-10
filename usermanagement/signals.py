@@ -20,17 +20,4 @@ def create_user_profile(sender, instance, created, **kwargs):
 			obj.save()
 
 		if instance.email:
-			print (instance.email)
-			# send_mail('Subject shahrukh', 'Here is the message.', 'msr.concordfly@gmail.com', ['msr.concordfly@gmail.com'])
-			emailmanager_utils.send_sendgrid_template_email(
-				"c8b46ab3-cabc-48ad-a021-d39ba71a0399",
-				"msr.concordfly@gmail.com",
-				"msr.concordfly@gmail.com",
-				bcc=None,
-				personalization_obj=None,
-				cc=None,
-				subject=None,
-				subscription_tracking=False,
-				group_id=None,
-				category=None
-				)
+			emailmanager_utils.send_welcome_email(instance)

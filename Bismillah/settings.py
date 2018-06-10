@@ -52,12 +52,14 @@ INSTALLED_APPS = [
     'markdown_deux',
     'sorl.thumbnail',
     'material',
+    'solo',
 
     # custom apps
     'community.ramzaan',
     'mainapp',
     'feedback',
-    'usermanagement'
+    'usermanagement',
+    'emailmanager',
 ]
 
 MIDDLEWARE = [

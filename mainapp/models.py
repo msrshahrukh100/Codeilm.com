@@ -2,12 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from autoslug import AutoSlugField
 from django.urls import reverse
+from solo.models import SingletonModel
 
-# Create your models here.
 
+class SiteConfiguration(SingletonModel):
+	sendgrid_welcome_email_template_id = models.CharField(max_length=255, null=True, blank=True)
+	default_from_email_id = models.EmailField(blank=True, null=True)
 
-class UserProfile(models.Model):
-	pass
+	def __str__(self):
+		return u"Site Configuration"
+
+	class Meta:
+		verbose_name = "Site Configuration"
 
 
 def upload_location(instance, filename):
