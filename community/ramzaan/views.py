@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from .models import RamzaanGroup
 from . import utils
 from . import tasks
@@ -33,6 +34,9 @@ def group_detail(request, id, slug):
 
 	# checking permissions
 	is_logged_in = user.is_authenticated
+	ongoing_event = group.start_date < timezone.now() and group.end_date > timezone.now()
+	expired_event = group.end_date < timezone.now()
+	future_event = group.start_date > timezone.now()
 
 	context = {
 		"logged_in_user": user,
@@ -43,6 +47,9 @@ def group_detail(request, id, slug):
 		# permissions context data
 		"is_member": utils.check_user_in_group(request, group),
 		"is_logged_in": is_logged_in,
+		"ongoing_event": ongoing_event,
+		"expired_event": expired_event,
+		"future_event": future_event,
 	}
 	return render(request, "group_detail_ramzaan.html", context)
 

@@ -24,10 +24,6 @@ def home(request):
 	return render(request, "index.html", context)
 
 
-# def community_mapper(request, community):
-# 	if community is "ramzaan-community":
-# 		return None
-
 @login_required
 def mark_notifications_read(request):
 	if request.method == "POST":

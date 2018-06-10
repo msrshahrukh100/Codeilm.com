@@ -42,7 +42,7 @@ class Community(models.Model):
 		return self.name
 
 	def get_community_url(self):
-		return reverse('mainapp:community_mapper', slug=self.slug)
+		return "/sealed-nector/"
 
 
 class RequestIpInfo(models.Model):

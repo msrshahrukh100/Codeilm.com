@@ -2,13 +2,13 @@
 {% load account %}
 {% providers_media_js %}
 <p>
-	<a href='{% provider_login_url "google" method="oauth2" %}' class="waves-effect red darken-1 waves-light btn" style="text-transform: none;"><i class="fab fa-google"></i> &nbsp | &nbsp
+	<a href='{% provider_login_url "google" method="oauth2" %}&next={{ request.get_full_path|urlencode }}' class="waves-effect red darken-1 waves-light btn" style="text-transform: none;"><i class="fab fa-google"></i> &nbsp | &nbsp
 		Google
 	</a>
-	<a href='{% provider_login_url "facebook" method="js_sdk" %}' class="waves-effect blue darken-3 waves-light btn" style="text-transform: none;"> <i class="fab fa-facebook-f"></i> &nbsp | &nbsp
+	<a href='{% provider_login_url "facebook" method="oauth2" %}?next={{ request.get_full_path|urlencode }}' class="waves-effect blue darken-3 waves-light btn" style="text-transform: none;"> <i class="fab fa-facebook-f"></i> &nbsp | &nbsp
 		Facebook
 	</a>
 </p>
 <p>
-	<a class="waves-effect waves-light btn-small" href="{% url 'account_login' %}">Login via Email</a>
+	<a class="waves-effect waves-light btn-small" href="{% url 'account_login' %}/?next={{ request.get_full_path|urlencode }}">Login via Email</a>
 </p>

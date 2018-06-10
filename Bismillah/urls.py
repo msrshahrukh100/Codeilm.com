@@ -28,13 +28,13 @@ urlpatterns = [
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('accounts/', include('allauth.urls')),
+    path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    path('sealed-nector/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
+    path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
     # urls for different communities
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
-    urlpatterns += path('sealed-nector/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
-    urlpatterns += path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
     
