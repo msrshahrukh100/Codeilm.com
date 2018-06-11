@@ -5,17 +5,19 @@
 	<ul class="slides">
 		{% for community in communities %}
 			<li>
-				{% thumbnail community.image "1200x1000" as im %}
-				<img src="{{ im.url }}">
-			{% endthumbnail %}
-			<div class="caption center-align">
-				<h3 class="black-text">{{ community.name }}</h3>
-				<h5 class="light black-text">{{ community.description }}</h5>
-				<p>
-					<a class="waves-effect waves-light btn" href="{{ community.get_community_url }}">View Groups</a>
-				</p>
-			</div>
-		</li>
-	{% endfor %}
-</ul>
+				{% thumbnail community.image "1200x1000" as big %}
+					{% thumbnail community.image "120x100" as small %}
+						<img src="{{ small.url }}" data-sizes="auto" data-src="{{ big.url }}" class="lazyload">
+					{% endthumbnail %}
+				{% endthumbnail %}
+				<div class="caption center-align">
+					<h3 class="black-text">{{ community.name }}</h3>
+					<h5 class="light black-text">{{ community.description }}</h5>
+					<p>
+						<a class="waves-effect waves-light btn" href="{{ community.get_community_url }}">View Groups</a>
+					</p>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
 </div>
