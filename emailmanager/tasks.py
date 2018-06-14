@@ -39,17 +39,17 @@ def send_sendgrid_template_email(
     if cc:
         for cc_email in cc:
             mail.personalizations[0].add_cc(Email(cc_email))
-    tracking_settings = TrackingSettings()
-    tracking_settings.subscription_tracking = SubscriptionTracking(subscription_tracking)
-    if subscription_tracking:
-        mail.personalizations[0].add_substitution(Substitution("%Unsubscribe%", "<%asm_group_unsubscribe_url%>"))
-        if group_id is not None:
-            asm = ASM(group_id)
-            mail.set_asm(asm)
-    else:
-        mail.personalizations[0].add_substitution(Substitution("%Unsubscribe%", ""))
+    # tracking_settings = TrackingSettings()
+    # tracking_settings.subscription_tracking = SubscriptionTracking(subscription_tracking)
+    # if subscription_tracking:
+    #     mail.personalizations[0].add_substitution(Substitution("%Unsubscribe%", "<%asm_group_unsubscribe_url%>"))
+    #     if group_id is not None:
+    #         asm = ASM(group_id)
+    #         mail.set_asm(asm)
+    # else:
+    #     mail.personalizations[0].add_substitution(Substitution("%Unsubscribe%", ""))
 
-    mail.tracking_settings = tracking_settings
+    # mail.tracking_settings = tracking_settings
     if category is not None:
         email_category = Category(category)
         mail.add_category(email_category)
