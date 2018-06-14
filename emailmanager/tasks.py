@@ -18,7 +18,7 @@ def send_sendgrid_template_email(
         personalization_obj=None,
         cc=None,
         subject=None,
-        subscription_tracking=False,
+        subscription_tracking=True,
         group_id=None,
         category=None):
     sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
