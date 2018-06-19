@@ -15,11 +15,11 @@
 	<li>
 		<div class="user-view">
 			<div class="background">
-				<img src="{% static 'images/user_background_image/user_background.jpg' %}">
+				<img class="lazyload" src="{% static 'images/user_background_image/user_background.jpg' %}">
 			</div>
 			<a>
 			{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" as im %}
-				<img class="circle" src="{{ im.url }}" alt="{{ request.user.get_full_name }}">
+				<img class="circle lazyload" src="{{ im.url }}" alt="{{ request.user.get_full_name }}">
 			{% endthumbnail %}
 			</a>
 			<a href="#name">
@@ -36,10 +36,12 @@
 	<li>
 		<div class="divider"></div>
 	</li>
-	<form method="POST" id="logout-form-small" action="{% url 'account_logout' %}">
+	<li>
+		<form method="POST" id="logout-form-small" action="{% url 'account_logout' %}">
 		{% csrf_token %}
-		<li><a onclick="document.getElementById('logout-form-small').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
-	</form>
+			<a onclick="document.getElementById('logout-form-small').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a>
+		</form>
+	</li>
 </ul>
 
 <ul id='dropdown-useroptions' class='dropdown-content'>
@@ -47,10 +49,12 @@
 		<a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a>
 	</li>
 	<li class="divider" tabindex="-1"></li>
-	<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
-	{% csrf_token %}
-		<li><a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
-	</form>
+	<li>
+		<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
+		{% csrf_token %}
+			<a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a>
+		</form>
+	</li>
 </ul>
 
 {% include "mainapp/partials/community_slider.html" %}
@@ -60,5 +64,6 @@
 {% endif %}
 </div>
 {% endblock %}
+
 {% block scripts %}
 {% endblock %}

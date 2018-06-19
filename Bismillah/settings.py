@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'sorl.thumbnail',
     'material',
     'solo',
+    'compressor',
 
     # custom apps
     'community.ramzaan',
@@ -170,6 +171,12 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn")
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -253,3 +260,4 @@ EMAIL_USE_TLS = True
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_SANDBOX_MODE_IN_DEBUG = bool(int(os.environ['SENDGRID_DEBUG']))
 SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+COMPRESS_ENABLED = True

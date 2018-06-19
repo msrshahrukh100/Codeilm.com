@@ -1,3 +1,6 @@
+$('#status_input').on('focus', function(){
+        $('.show-on-status-focus').removeClass('hide')
+    })
 
 $('.action-buttons').on('click', function(){
     el = $(this)
