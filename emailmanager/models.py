@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class EmailTracker(models.Model):
 	user = models.ForeignKey(User, related_name="emails_sent", null=True, blank=True, on_delete=models.CASCADE)
 	email = models.EmailField()
-	template_id = models.CharField(max_length=200)
+	template_path = models.CharField(max_length=200)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

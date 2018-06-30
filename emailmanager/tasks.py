@@ -1,65 +1,90 @@
-import sendgrid
-from sendgrid.helpers.mail import Email, Content, Substitution, Mail, TrackingSettings, SubscriptionTracking, ASM, Category
-from django.conf import settings
 import logging
 from background_task import background
 from . import models as emailmanager_models
 from django.contrib.auth.models import User
+import boto3
+from botocore.exceptions import ClientError
+from django.template.loader import render_to_string
+
 
 logger = logging.getLogger(__name__)
 
 
 @background(schedule=10)
-def send_sendgrid_template_email(
-        template_id,
-        from_email,
-        to_email,
-        bcc=None,
-        personalization_obj=None,
-        cc=None,
+def send_ses_email(
+        sender,
+        template_path="emails/welcome_email.html",
+        user_ids=None,
+        recipients=None,
+        name=None,
         subject=None,
-        subscription_tracking=True,
-        group_id=None,
-        category=None):
-    sg = sendgrid.SendGridAPIClient(apikey=settings.SENDGRID_API_KEY)
-    from_email = Email(from_email, from_email)
+        body_text=None):
 
-    if not subject:
-        subject = "Allywith | Open with Smile"
-    to_email = Email(to_email)
-    content = Content("text/html", " ")
-    mail = Mail(from_email, subject, to_email, content)
-    mail.template_id = template_id
-    if personalization_obj is not None:
-        for key in personalization_obj:
-            mail.personalizations[0].add_substitution(Substitution(key, personalization_obj[key]))
-    if bcc:
-        for bcc_email in bcc:
-            mail.personalizations[0].add_bcc(Email(bcc_email))
-    if cc:
-        for cc_email in cc:
-            mail.personalizations[0].add_cc(Email(cc_email))
-    # tracking_settings = TrackingSettings()
-    # tracking_settings.subscription_tracking = SubscriptionTracking(subscription_tracking)
-    # if subscription_tracking:
-    #     mail.personalizations[0].add_substitution(Substitution("%Unsubscribe%", "<%asm_group_unsubscribe_url%>"))
-    #     if group_id is not None:
-    #         asm = ASM(group_id)
-    #         mail.set_asm(asm)
-    # else:
-    #     mail.personalizations[0].add_substitution(Substitution("%Unsubscribe%", ""))
+    # Replace recipient@example.com with a "To" address. If your account
+    # is still in the sandbox, this address must be verified.
+    if not user_ids and not recipients:
+        raise Exception("Please provide at least user id or recipients")
 
-    # mail.tracking_settings = tracking_settings
-    if category is not None:
-        email_category = Category(category)
-        mail.add_category(email_category)
+    if not recipients:
+        recipients = User.objects.filter(id__in=user_ids).values_list('email', flat=True)
+
+    # If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
+    AWS_REGION = "us-west-2"
+
+    # The subject line for the email.
+    SUBJECT = "Amazon SES Test (SDK for Python)"
+
+    # The email body for recipients with non-HTML email clients.
+    if body_text:
+        BODY_TEXT = body_text
+    else:
+        BODY_TEXT = ("Sent with love from Allywith\r\n"
+                     "This email was sent with Amazon SES")
+
+    BODY_HTML = render_to_string(template_path, {'foo': 'bar'})
+
+    # The character encoding for the email.
+    CHARSET = "UTF-8"
+
+    # Create a new SES resource and specify a region.
+    client = boto3.client('ses', region_name=AWS_REGION)
+
+    # Try to send the email.
     try:
-        sg.client.mail.send.post(request_body=mail.get())
-    except Exception as e:
-        logger.info(e)
+        #Provide the contents of the email.
+        response = client.send_email(
+            Destination={
+                'ToAddresses': list(recipients),
+            },
+            Message={
+                'Body': {
+                    'Html': {
+                        'Charset': CHARSET,
+                        'Data': BODY_HTML,
+                    },
+                    'Text': {
+                        'Charset': CHARSET,
+                        'Data': BODY_TEXT,
+                    },
+                },
+                'Subject': {
+                    'Charset': CHARSET,
+                    'Data': SUBJECT,
+                },
+            },
+            Source=sender,
+        )
+    # Display an error if something goes wrong
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+    else:
+        print("Email sent! Message ID:"),
+        print(response['MessageId'])
+        if not recipients:
+            users = User.objects.filter(id__in=user_ids)
+            for user in users:
+                emailmanager_models.EmailTracker.objects.create(user=user, email=user.email, template_path=template_path)
+        else:
+            for recipient in recipients:
+                emailmanager_models.EmailTracker.objects.create(email=recipient, template_path=template_path)
 
-
-@background(schedule=10)
-def log_sent_email(email, user_id=None, template_id=None):
-    user = User.objects.get(id=user_id)
-    emailmanager_models.EmailTracker.objects.create(user=user, email=email, template_id=template_id)

@@ -31,6 +31,7 @@ urlpatterns = [
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('sealed-nector/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
     path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
+    path('view-email/', include(('emailmanager.urls', 'emailmanager'), namespace="emailmanager")),
     # urls for different communities
 ]
 
