@@ -14,9 +14,9 @@ logger = logging.getLogger(__name__)
 def send_ses_email(
         sender,
         template_path="emails/welcome_email.html",
+        context={},
         user_ids=None,
         recipients=None,
-        name=None,
         subject=None,
         body_text=None):
 
@@ -25,14 +25,13 @@ def send_ses_email(
     if not user_ids and not recipients:
         raise Exception("Please provide at least user id or recipients")
 
+    users = None
     if not recipients:
-        recipients = User.objects.filter(id__in=user_ids).values_list('email', flat=True)
+        users = User.objects.filter(id__in=user_ids)
+        recipients = users.values_list('email', flat=True)
 
     # If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
     AWS_REGION = "us-west-2"
-
-    # The subject line for the email.
-    SUBJECT = "Amazon SES Test (SDK for Python)"
 
     # The email body for recipients with non-HTML email clients.
     if body_text:
@@ -41,7 +40,7 @@ def send_ses_email(
         BODY_TEXT = ("Sent with love from Allywith\r\n"
                      "This email was sent with Amazon SES")
 
-    BODY_HTML = render_to_string(template_path, {'foo': 'bar'})
+    BODY_HTML = render_to_string(template_path, context)
 
     # The character encoding for the email.
     CHARSET = "UTF-8"
@@ -69,7 +68,7 @@ def send_ses_email(
                 },
                 'Subject': {
                     'Charset': CHARSET,
-                    'Data': SUBJECT,
+                    'Data': subject,
                 },
             },
             Source=sender,
@@ -80,11 +79,10 @@ def send_ses_email(
     else:
         print("Email sent! Message ID:"),
         print(response['MessageId'])
-        if not recipients:
-            users = User.objects.filter(id__in=user_ids)
+
+        if users:
             for user in users:
                 emailmanager_models.EmailTracker.objects.create(user=user, email=user.email, template_path=template_path)
         else:
             for recipient in recipients:
                 emailmanager_models.EmailTracker.objects.create(email=recipient, template_path=template_path)
-

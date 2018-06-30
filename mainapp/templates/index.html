@@ -49,12 +49,12 @@
 		<a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a>
 	</li>
 	<li class="divider" tabindex="-1"></li>
+	<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
 	<li>
-		<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
 		{% csrf_token %}
-			<a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a>
-		</form>
+		<a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a>
 	</li>
+	</form>
 </ul>
 
 {% include "mainapp/partials/community_slider.html" %}
