@@ -10,50 +10,20 @@ from django.template.loader import render_to_string
 logger = logging.getLogger(__name__)
 
 
-@background(schedule=10)
-def send_ses_email(
-        sender,
-        template_path="emails/welcome_email.html",
-        context={},
-        user_ids=None,
-        recipients=None,
-        subject=None,
-        body_text=None):
-
-    # Replace recipient@example.com with a "To" address. If your account
-    # is still in the sandbox, this address must be verified.
-    if not user_ids and not recipients:
-        raise Exception("Please provide at least user id or recipients")
-
-    users = None
-    if not recipients:
-        users = User.objects.filter(id__in=user_ids)
-        recipients = users.values_list('email', flat=True)
-
-    # If necessary, replace us-west-2 with the AWS Region you're using for Amazon SES.
+def ses_email_helper(email, sender, template_path, subject, context):
+    print("reached function")
     AWS_REGION = "us-west-2"
-
-    # The email body for recipients with non-HTML email clients.
-    if body_text:
-        BODY_TEXT = body_text
-    else:
-        BODY_TEXT = ("Sent with love from Allywith\r\n"
-                     "This email was sent with Amazon SES")
-
-    BODY_HTML = render_to_string(template_path, context)
-
-    # The character encoding for the email.
     CHARSET = "UTF-8"
-
-    # Create a new SES resource and specify a region.
+    BODY_HTML = render_to_string(template_path, context)
+    BODY_TEXT = ("Sent with love from Allywith\r\n"
+                 "This email was sent with Amazon SES")
+    print("making client pbje")
     client = boto3.client('ses', region_name=AWS_REGION)
-
-    # Try to send the email.
+    print(client)
     try:
-        #Provide the contents of the email.
         response = client.send_email(
             Destination={
-                'ToAddresses': list(recipients),
+                'ToAddresses': [email],
             },
             Message={
                 'Body': {
@@ -73,16 +43,80 @@ def send_ses_email(
             },
             Source=sender,
         )
-    # Display an error if something goes wrong
+
     except ClientError as e:
         print(e.response['Error']['Message'])
+        return False
     else:
         print("Email sent! Message ID:"),
         print(response['MessageId'])
+        return True
 
-        if users:
-            for user in users:
-                emailmanager_models.EmailTracker.objects.create(user=user, email=user.email, template_path=template_path)
-        else:
-            for recipient in recipients:
-                emailmanager_models.EmailTracker.objects.create(email=recipient, template_path=template_path)
+
+@background(schedule=10)
+def send_ses_email(
+        sender,
+        template_path,
+        context={},
+        user_ids=None,
+        recipients=None,
+        subject=None):
+
+    '''
+    Pass user_ids of the users to whom you want to send email or else provide the emails to whom you
+    want to send email. 
+    If receipients are provided than user ids won't be considered.
+    '''
+
+    if not user_ids and not recipients:
+        raise Exception("Please provide at least user id or recipients")
+
+    unsubscribed_emails = emailmanager_models.UnsubscribedUser.objects.values_list('email', flat=True)
+
+    users = None
+    if not recipients:
+        users = User.objects.filter(id__in=user_ids)
+
+    print(users)
+
+    if users:
+        for user in users:
+            print(user)
+            if user.email in unsubscribed_emails:
+                emailmanager_models.EmailTracker.objects.create(
+                    user=user,
+                    email=user.email,
+                    sent=False,
+                    remarks="Not sent as email in Unsubscribed list",
+                    template_path=template_path)
+                print("unsubscribed_emails")
+            else:
+                print("coming to else part")
+                context["name"] = user.first_name if user.first_name else "Friend"
+                print("calling function")
+                response = ses_email_helper(user.email, sender, template_path, subject, context)
+                if response:
+                    emailmanager_models.EmailTracker.objects.create(
+                        user=user,
+                        email=user.email,
+                        sent=True,
+                        remarks="Email sent successfully",
+                        template_path=template_path)
+
+    else:
+        for recipient in recipients:
+            if recipient in unsubscribed_emails:
+                emailmanager_models.EmailTracker.objects.create(
+                    email=recipient,
+                    sent=False,
+                    remarks="Not sent as email in Unsubscribed list",
+                    template_path=template_path)
+            else:
+                response = ses_email_helper(recipient, sender, template_path, subject, context)
+                if response:
+                    emailmanager_models.EmailTracker.objects.create(
+                        email=recipient,
+                        sent=True,
+                        remarks="Email sent successfully",
+                        template_path=template_path)
+    

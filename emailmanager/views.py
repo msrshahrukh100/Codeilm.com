@@ -1,5 +1,5 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from .models import UnsubscribedUser
 # Create your views here.
 
 
@@ -8,4 +8,14 @@ def view_email(request):
 	context = {}
 	for key in data.keys():
 		context[key] = data[key]
-	return render(request, "emails/welcome_email.html", context)
+	template = context["template"]
+	context["at_site"] = True
+	return render(request, template, context)
+
+
+def unsubscribe_user(request):
+	if request.method == "POST":
+		email = request.POST.get("email")
+		obj, created = UnsubscribedUser.objects.update_or_create(email=email)
+		return redirect("/")
+	return render(request, "unsubscribe.html", {})

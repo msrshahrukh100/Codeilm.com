@@ -21,3 +21,16 @@
 	</ul>
 </div>
 </nav>
+
+<ul id='dropdown-useroptions' class='dropdown-content'>
+	<li>
+		<a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a>
+	</li>
+	<li class="divider" tabindex="-1"></li>
+	<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
+	<li>
+		{% csrf_token %}
+		<a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a>
+	</li>
+	</form>
+</ul>

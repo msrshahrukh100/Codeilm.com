@@ -15,7 +15,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>*|MC:SUBJECT|*</title>
+      <title>Welcome to Allywith</title>
       
     <style type="text/css">
 		p{
@@ -105,7 +105,7 @@
 	@tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
 	*/
 		body,#bodyTable{
-			/*@editable*/background-color:#51CFDD;
+			/*@editable*/background-color:#ffc107;
 		}
 	/*
 	@tab Page
@@ -130,7 +130,7 @@
 	@style heading 1
 	*/
 		h1{
-			/*@editable*/color:#51CFDD !important;
+			/*@editable*/color:#ffc107 !important;
 			/*@editable*/font-family:Helvetica;
 			/*@editable*/font-size:32px;
 			/*@editable*/font-style:normal;
@@ -193,7 +193,7 @@
 	@tip Set the background color and borders for your email's preheader area.
 	*/
 		#templatePreheader{
-			/*@editable*/background-color:#51CFDD;
+			/*@editable*/background-color:#ffc107;
 			/*@editable*/border-top:0;
 			/*@editable*/border-bottom:0;
 		}
@@ -247,7 +247,7 @@
 	@tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
 	*/
 		.headerContainer .mcnTextContent a{
-			/*@editable*/color:#51CFDD;
+			/*@editable*/color:#ffc107;
 			/*@editable*/font-weight:normal;
 			/*@editable*/text-decoration:underline;
 		}
@@ -279,7 +279,7 @@
 	@tip Set the styling for your email's body links. Choose a color that helps them stand out from your text.
 	*/
 		.bodyContainer .mcnTextContent a{
-			/*@editable*/color:#51CFDD;
+			/*@editable*/color:#ffc107;
 			/*@editable*/font-weight:normal;
 			/*@editable*/text-decoration:underline;
 		}
@@ -311,7 +311,7 @@
 	@tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
 	*/
 		.footerContainer .mcnTextContent a{
-			/*@editable*/color:#51CFDD;
+			/*@editable*/color:#ffc107;
 			/*@editable*/font-weight:normal;
 			/*@editable*/text-decoration:underline;
 		}
@@ -522,7 +522,7 @@
 }</style></head>
     <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
         <!--*|IF:MC_PREVIEW_TEXT|*-->
-        <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|MC_PREVIEW_TEXT|*</span><!--<![endif]-->
+        <!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;"></span><!--<![endif]-->
         <!--*|END:IF|*-->
         <center>
             <table align="center" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
@@ -551,8 +551,9 @@
                     <tbody><tr>
                         
                         <td valign="top" class="mcnTextContent" style="padding: 0px 18px 9px; text-align: center;">
-                        
+                        	{% if not at_site %}
                             <a href="{{ base_url }}{% url 'emailmanager:view_email' %}{{ get_params }}" target="_blank">View this email in your browser</a>
+                            {% endif %}
                         </td>
                     </tr>
                 </tbody></table>
@@ -686,7 +687,7 @@ Welcome to the community of achievers. Allywith is a place where you can meet li
 Keep moving forward,<br>
 <br>
 Shahrukh
-<br>Developer @ Allywith.com
+<br>Developer@Allywith.com
                         </td>
                     </tr>
                 </tbody></table>
@@ -752,9 +753,11 @@ Shahrukh
     shahrukh@allywith.com
     <br>
     <br>
+    {% if not at_site %}
 	Want to change how you receive these emails?<br>
-    You can <a href="*|UPDATE_PROFILE|*">update your preferences</a> or <a href="*|UNSUB|*">unsubscribe from this list</a>.
+    You can <a href="*|UPDATE_PROFILE|*">update your preferences</a> or <a href="{{ base_url }}{% url 'emailmanager:unsubscribe_user' %}{{ get_params }}">unsubscribe from this list</a>.
     <br>
+    {% endif %}
     <br>
 
                         </td>

@@ -11,13 +11,12 @@ def get_params_from_context(context):
 
 
 def send_welcome_email(user):
-	name = user.first_name if user.first_name else "Friend"
-	context = {"name": name, "base_url": settings.BASE_URL}
+	context = {"base_url": settings.BASE_URL, "email": user.email, "template": "emails/welcome_email.html"}
 	context["get_params"] = get_params_from_context(context)
 	emailmanager_tasks.send_ses_email(
-		sender="Shahrukh <shahrukh@allywith.com>",
+		sender="Welcome to Allywith <shahrukh@allywith.com>",
 		user_ids=[user.id],
-		subject="Allywith first signup",
+		subject="Sent with ❤️ from Allywith",
 		template_path="emails/welcome_email.html",
 		context=context,
 	)
