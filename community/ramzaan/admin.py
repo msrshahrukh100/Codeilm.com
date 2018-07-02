@@ -31,7 +31,19 @@ class RamzaanStatusUpdateAdmin(admin.ModelAdmin):
 	list_display = ['user', 'content', 'on_unit', 'created_at', 'updated_at']
 
 
+class RamzaanGroupAdmin(admin.ModelAdmin):
+	list_display = ['name', 'slug', 'target_statement']
+
+	def save_model(self, request, obj, form, change):
+		if change:
+			obj.updated_by = request.user
+		else:
+			obj.created_by = request.user
+			obj.updated_by = request.user
+			obj.save()
+
+
 admin.site.register(RamzaanGroupUser, RamzaanGroupUserAdmin)
 admin.site.register(RamzaanStatusUpdate, RamzaanStatusUpdateAdmin)
-admin.site.register(RamzaanGroup)
+admin.site.register(RamzaanGroup, RamzaanGroupAdmin)
 admin.site.register(RamzaanUserProgress)

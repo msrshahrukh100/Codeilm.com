@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'material',
     'solo',
     'compressor',
+    'guardian',
 
     # custom apps
     'community.ramzaan',
@@ -82,6 +83,7 @@ AUTHENTICATION_BACKENDS = (
 
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
 )
 
 

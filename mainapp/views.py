@@ -1,9 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Community
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 import logging
+from . import utils as utils
+from django.contrib import messages
+import community.ramzaan.models as ramzaan_models
+import community.ramzaan.utils as ramzaan_utils
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -11,6 +15,21 @@ logger = logging.getLogger(__name__)
 
 def opensearch(request):
 	return render(request, 'open_search.xml', content_type="application/xhtml+xml")
+
+
+@login_required
+def group_join(request, id, slug, community):
+	user = request.user
+
+	if community == "ramzaan":
+		group = get_object_or_404(ramzaan_models.RamzaanGroup, id=id)
+		is_member = utils.check_user_in_group(request, group)
+		if is_member:
+			messages.info(request, 'You are already part of this group')
+		else:
+			ramzaan_utils.add_user_to_group(request, user, group)
+
+		return HttpResponseRedirect(reverse("ramzaan:group_detail", kwargs={"id": id, "slug": slug}))
 
 
 def home(request):
