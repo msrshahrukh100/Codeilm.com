@@ -57,7 +57,7 @@ class RequestIpInfo(models.Model):
 	time_zone = models.CharField(max_length=255, null=True, blank=True)
 
 	def __str__(self):
-		return self.city
+		return str(self.id)
 
 	def get_city(self):
 		return self.city

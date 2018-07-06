@@ -26,12 +26,19 @@ class Group(models.Model):
 	total_units = models.PositiveIntegerField(help_text="The total number of units in the task")
 	start_date = models.DateTimeField(blank=True, null=True, help_text="The start date for the task")
 	end_date = models.DateTimeField(blank=True, null=True, help_text="The end date for the task")
-	is_private = models.BooleanField(default=False, help_text="Whether the group is still private")
-	is_active = models.BooleanField(default=True, help_text="Whether the group is still active, set to false when user deletes it")
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	created_by = models.ForeignKey(User, related_name="%(app_label)s_groupcreateduser", on_delete=models.CASCADE)
 	updated_by = models.ForeignKey(User, related_name="%(app_label)s_groupupdateduser", on_delete=models.CASCADE)
+
+	class Meta:
+		abstract = True
+
+
+class GroupOption(models.Model):
+	is_private = models.BooleanField(default=False, help_text="Whether the group is still private")
+	is_active = models.BooleanField(default=True, help_text="Whether the group is still active, set to false when user deletes it")
+	show_timer = models.BooleanField(default=False)
 
 	class Meta:
 		abstract = True

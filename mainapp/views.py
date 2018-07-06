@@ -8,6 +8,7 @@ from . import utils as utils
 from django.contrib import messages
 import community.ramzaan.models as ramzaan_models
 import community.ramzaan.utils as ramzaan_utils
+from . import community_utils
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -21,9 +22,9 @@ def opensearch(request):
 def group_join(request, id, slug, community):
 	user = request.user
 
-	if community == "ramzaan":
+	if community == "sealed-nector":
 		group = get_object_or_404(ramzaan_models.RamzaanGroup, id=id)
-		is_member = utils.check_user_in_group(request, group)
+		is_member = community_utils.check_user_in_group(request, group)
 		if is_member:
 			messages.info(request, 'You are already part of this group')
 		else:

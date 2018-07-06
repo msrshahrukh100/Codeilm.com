@@ -1,6 +1,10 @@
 from django.contrib import admin
-from .models import RamzaanGroup, RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser
+from .models import RamzaanGroup, RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser, RamzaanGroupOptions
 # Register your models here.
+
+
+class RamzaanGroupOptionsInline(admin.StackedInline):
+	model = RamzaanGroupOptions
 
 
 class RamzaanGroupUserAdmin(admin.ModelAdmin):
@@ -33,6 +37,10 @@ class RamzaanStatusUpdateAdmin(admin.ModelAdmin):
 
 class RamzaanGroupAdmin(admin.ModelAdmin):
 	list_display = ['name', 'slug', 'target_statement']
+	inlines = [
+		RamzaanGroupOptionsInline,
+	]
+
 
 	def save_model(self, request, obj, form, change):
 		super().save_model(request, obj, form, change)
