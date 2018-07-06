@@ -10,6 +10,7 @@ class CommunityAdmin(admin.ModelAdmin):
 	list_display = ['name', 'slug', 'created_by', 'created_at', 'updated_at', 'updated_by']
 
 	def save_model(self, request, obj, form, change):
+		super().save_model(request, obj, form, change)
 		if change:
 			obj.updated_by = request.user
 		else:
