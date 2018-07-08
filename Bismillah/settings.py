@@ -228,10 +228,14 @@ LOGGING = {
             'class': 'logging.FileHandler',
             'filename': os.environ['LOG_FILE'],
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file', 'mail_admins'],
             'level': os.environ['LOG_LEVEL'],
             'propagate': True,
         },
