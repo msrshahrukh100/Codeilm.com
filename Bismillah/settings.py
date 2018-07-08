@@ -256,14 +256,12 @@ CACHES = {
 }
 
 # email settings
-# EMAIL_HOST = 'smtp.sendgrid.net'
-# EMAIL_HOST_USER = os.environ['SENDGRID_USER_NAME']
-# EMAIL_HOST_PASSWORD = os.environ['SENDGRID_PASSWORD']
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-# SENDGRID_SANDBOX_MODE_IN_DEBUG = bool(int(os.environ['SENDGRID_DEBUG']))
-# SENDGRID_API_KEY = os.environ['SENDGRID_API_KEY']
+EMAIL_HOST = 'email-smtp.us-west-2.amazonaws.com'
+EMAIL_HOST_USER = os.environ['SES_SMTP_USERNAME']
+EMAIL_HOST_PASSWORD = os.environ['SES_SMTP_PASSWORD']
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 COMPRESS_ENABLED = True
 
 DEFAULT_SALT = "CURbV3gO8bcBm9jyefWQ9vCQZ/A="
