@@ -239,6 +239,7 @@ if not DEBUG:
     }
 
 ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'towardslight52@gmail.com')]
+SERVER_EMAIL = "shahrukh@allywith.com"
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'geo-ip-db')
 
