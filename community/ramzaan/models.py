@@ -12,13 +12,26 @@ class RamzaanGroupUser(basemodels.GroupUser):
 
 
 class RamzaanGroup(basemodels.Group):
-	users = models.ManyToManyField(RamzaanGroupUser, related_name="ramzaan_groupusers", help_text="The users who are part of this group")
+	users = models.ManyToManyField(RamzaanGroupUser, blank=True, related_name="ramzaan_groupusers", help_text="The users who are part of this group")
 
 	def __str__(self):
 		return self.name
 
 	def get_absolute_url(self):
 		return reverse("ramzaan:group_detail", kwargs={"id": self.id, "slug": self.slug})
+
+
+	class Meta:
+		permissions = (
+			('owner_of_group', 'Owner of group'),
+		)
+
+
+class RamzaanGroupOptions(basemodels.GroupOption):
+	group = models.OneToOneField(RamzaanGroup, related_name="ramzaan_groupoptions", help_text="The group for which the group options is entered", on_delete=models.CASCADE)
+
+	def __str__(self):
+		return str(self.id)
 
 
 class RamzaanUnitDescription(basemodels.UnitDescription):

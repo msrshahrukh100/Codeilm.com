@@ -28,8 +28,8 @@ class Group(models.Model):
 	end_date = models.DateTimeField(blank=True, null=True, help_text="The end date for the task")
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	created_by = models.ForeignKey(User, related_name="%(app_label)s_groupcreateduser", on_delete=models.CASCADE)
-	updated_by = models.ForeignKey(User, related_name="%(app_label)s_groupupdateduser", on_delete=models.CASCADE)
+	created_by = models.ForeignKey(User, editable=False, related_name="%(app_label)s_groupcreateduser", on_delete=models.CASCADE)
+	updated_by = models.ForeignKey(User, editable=False, related_name="%(app_label)s_groupupdateduser", on_delete=models.CASCADE)
 
 	class Meta:
 		abstract = True
@@ -62,15 +62,8 @@ class UnitDescription(models.Model):
 		abstract = True
 
 
-# class UserMilestones(models.Model):
-# 	user = models.ForeignKey(User, related_name="%(app_label)s_usermilestones", on_delete=models.CASCADE)
-
-# 	class Meta:
-# 		abstract = True
-
-
 class UserProgress(models.Model):
-	user = models.ForeignKey(User, related_name="%(app_label)s_userprogressuser", help_text="The user who makes the progress in the group", on_delete=models.CASCADE)  # community - userprogress
+	user = models.OneToOneField(User, related_name="%(app_label)s_userprogressuser", help_text="The user who makes the progress in the group", on_delete=models.CASCADE)  # community - userprogress
 	at_unit = models.PositiveIntegerField(default=0, help_text="The current state of the user, eg. at chapter 2")
 	last_progress_made = models.DateTimeField(auto_now=True, help_text="The last date the user made progress")
 

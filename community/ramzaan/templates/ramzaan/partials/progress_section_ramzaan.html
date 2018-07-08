@@ -1,7 +1,7 @@
 {% load static %}
 {% load ramzaan_extras %}
 {% load thumbnail %}
-<div class="col s8">
+<div class="col l8 m12 s12">
 	{% include "mainapp/partials/forms/status_update_form.html" %}
 	<div class="divider hide show-on-status-focus"></div>
 	{% with request.user|get_followings as followings %}

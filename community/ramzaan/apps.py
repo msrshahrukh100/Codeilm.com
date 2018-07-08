@@ -1,8 +1,10 @@
 from django.apps import AppConfig
 
+name = "sealed-nector"
+
 
 class RamzaanConfig(AppConfig):
-	name = 'ramzaan'
+	name = 'community.ramzaan'
 
 	def ready(self):
-		import ramzaan.signals
+		import community.ramzaan.signals

@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.utils import timezone
-from .models import RamzaanGroup
+from .models import RamzaanGroup, RamzaanUnitDescription
 from . import utils
 from . import tasks
+from mainapp import community_utils
 
 
 def get_status_updates(request):
@@ -15,11 +15,11 @@ def get_status_updates(request):
 	context = {
 		"status_updates": status_updates,
 	}
-	return render(request, "partials/recent_activities_ramzaan_list.html", context)
+	return render(request, "ramzaan/partials/recent_activities_ramzaan_list.html", context)
 
 
 def group_list(request):
-	groups = RamzaanGroup.objects.filter(is_active=True)
+	groups = RamzaanGroup.objects.filter()
 	context = {
 		"groups": groups
 	}
@@ -31,12 +31,11 @@ def group_detail(request, id, slug):
 	user = request.user  # the current logged in user
 	group_users = group.users.all()  # query set of group user objects
 	users = [obj.user for obj in group_users]
-
-	# checking permissions
-	is_logged_in = user.is_authenticated
-	ongoing_event = group.start_date < timezone.now() and group.end_date > timezone.now()
-	expired_event = group.end_date < timezone.now()
-	future_event = group.start_date > timezone.now()
+	unit_descriptions = RamzaanUnitDescription.objects.filter(group=group).order_by('unit')
+	try:
+		user_at_unit = user.ramzaan_userprogressuser.at_unit
+	except Exception as e:
+		user_at_unit = None
 
 	context = {
 		"logged_in_user": user,
@@ -44,27 +43,12 @@ def group_detail(request, id, slug):
 		"group_users": group_users,
 		"status_updates": utils.get_status_updates_page(1),
 		"users": users,
-		# permissions context data
-		"is_member": utils.check_user_in_group(request, group),
-		"is_logged_in": is_logged_in,
-		"ongoing_event": ongoing_event,
-		"expired_event": expired_event,
-		"future_event": future_event,
+		"group_options": community_utils.get_group_options(request, group, 'sealed-nector'),
+		"unit_descriptions": unit_descriptions,
+		"user_at_unit": user_at_unit
+
 	}
 	return render(request, "group_detail_ramzaan.html", context)
-
-
-@login_required
-def group_join(request, id, slug):
-	user = request.user
-	group = get_object_or_404(RamzaanGroup, id=id)
-	is_member = utils.check_user_in_group(request, group)
-	if is_member:
-		messages.info(request, 'You are already part of this group')
-	else:
-		utils.add_user_to_group(request, user, group)
-
-	return HttpResponseRedirect(reverse("ramzaan:group_detail", kwargs={"id": id, "slug": slug}))
 
 
 def send_motivation(request, id, slug, to_user_id):
@@ -83,5 +67,5 @@ def post_status_update(request, id=None, slug=None):
 		data = request.POST.dict()
 		data.pop('csrfmiddlewaretoken')
 		data.pop('action')
-		utils.update_user_status(user, group, **data)
+		utils.update_user_status(request, user, group, **data)
 		return HttpResponseRedirect(reverse('ramzaan:group_detail', kwargs={"id": group.id, "slug": group.slug}))

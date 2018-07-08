@@ -1,10 +1,14 @@
 from django.contrib import admin
-from .models import RamzaanGroup, RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser, RamzaanGroupOptions
+from .models import RamzaanGroup, RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser, RamzaanGroupOptions, RamzaanUnitDescription
 # Register your models here.
 
 
 class RamzaanGroupOptionsInline(admin.StackedInline):
 	model = RamzaanGroupOptions
+
+
+class RamzaanUnitDescriptionInline(admin.TabularInline):
+	model = RamzaanUnitDescription
 
 
 class RamzaanGroupUserAdmin(admin.ModelAdmin):
@@ -39,20 +43,21 @@ class RamzaanGroupAdmin(admin.ModelAdmin):
 	list_display = ['name', 'slug', 'target_statement']
 	inlines = [
 		RamzaanGroupOptionsInline,
+		RamzaanUnitDescriptionInline
 	]
 
-
 	def save_model(self, request, obj, form, change):
-		super().save_model(request, obj, form, change)
 		if change:
 			obj.updated_by = request.user
 		else:
 			obj.created_by = request.user
 			obj.updated_by = request.user
 			obj.save()
+		super().save_model(request, obj, form, change)
 
 
 admin.site.register(RamzaanGroupUser, RamzaanGroupUserAdmin)
 admin.site.register(RamzaanStatusUpdate, RamzaanStatusUpdateAdmin)
 admin.site.register(RamzaanGroup, RamzaanGroupAdmin)
 admin.site.register(RamzaanUserProgress)
+admin.site.register(RamzaanUnitDescription)

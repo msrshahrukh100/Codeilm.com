@@ -4,6 +4,7 @@ from django.utils import timezone
 from feedback.tasks import add_activity
 from .models import RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser
 from mainapp.utils import save_request_ip_info
+from . import tasks
 
 
 def add_user_to_group(request, user, group):
@@ -33,10 +34,11 @@ def get_status_updates_page(page_no):
 	return status_updates
 
 
-def update_user_status(user, group, **data):
+def update_user_status(request, user, group, **data):
 	obj = RamzaanStatusUpdate.objects.create(**data)
-	obj.save()
 	user_progress_obj, created = RamzaanUserProgress.objects.get_or_create(user=user, group=group)
 	user_progress_obj.at_unit = obj.on_unit
 	user_progress_obj.save()
 	add_activity(user.id, 'ramzaan-status-update')
+	online_user_ids = request.online_now_ids
+	tasks.send_update_user_status_notifications(user.id, group.id, data, online_user_ids)

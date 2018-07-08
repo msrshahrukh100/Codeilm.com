@@ -1,16 +1,24 @@
-<div class="col s8" style="padding-top: 100px;">
+{% load thumbnail %}
+<div class="col l8 m12 s12" style="padding-top: 100px;">
 	<h4 class="grey-text center">In this group</h4>
 	<div class="container">
 		{% for user in users %}
 		<div class="chip blue">
-	        <img src="{{ user.user_profile.first.get_profile_pic_url }}" alt="Contact Person">
+			{% thumbnail user.user_profile.first.get_profile_pic_url "1000x1000" as big %}
+				{% thumbnail user.user_profile.first.get_profile_pic_url "10x10" as small %}
+					<img src="{{ small.url }}" alt="{{ user.first_name }}" data-sizes="auto" data-src="{{ big.url }}" class="lazyload">
+				{% endthumbnail %}
+			{% endthumbnail %}
 	        {{ user.get_full_name }}
 	    </div>
 		{% endfor %}
-		{% if is_logged_in %}
+		{% if group_options.user_is_loggedin %}
+		{% if not group_options.user_is_member %}
 		<p class="center">
 			<a href="{% url 'mainapp:group_join' id=group.id slug=group.slug community='sealed-nector' %}" class="waves-effect waves-light btn amber" style="text-transform: none;"><i class="material-icons left">group_add</i>Join Group</a>
 		</p>
+		{% endif %}
+
 		{% else %}
 		<p class="center">
 			Login to Join this group

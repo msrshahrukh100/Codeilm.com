@@ -1,5 +1,4 @@
 {% extends "base_template.html" %}
-{% load notifications_tags %}
 {% load ramzaan_extras %}
 {% load thumbnail %}
 {% load static %}
@@ -8,6 +7,9 @@
 {% endblock %}
 {% block title %}
 	Allywith | {{ group.name }}
+{% endblock %}
+{% block css %}
+
 {% endblock %}
 {% block content %}
 	
@@ -27,19 +29,46 @@
 {% endif %}
 	<!-- Page Layout here -->
 <div class="row">
-	{% if is_logged_in and is_member %}
-		{% include "ramzaan/partials/recent_activities_ramzaan.html" %}
-		{% include "ramzaan/partials/progress_section_ramzaan.html" %}
+	{% if group_options.user_is_loggedin %}
+		{% if group_options.user_is_member %}
+			{% include "ramzaan/partials/recent_activities_ramzaan.html" %}
+			{% include "ramzaan/partials/progress_section_ramzaan.html" %}
+		{% else %}
+			{% include "ramzaan/partials/non-member-left-panel.html" %}
+			{% include "ramzaan/partials/non-member-right-panel.html" %}
+		{% endif %}
 	{% else %}
-		{% include "ramzaan/partials/non-member-left-panel.html" %}
-		{% include "ramzaan/partials/non-member-right-panel.html" %}
+		View to be decided
 	{% endif %}
 </div>
+
+<div class="fixed-action-btn hide-on-large-only">
+  <a href="#" data-target="slide-out" class="btn-floating btn-large red sidenav-trigger">
+    <i class="large material-icons">mode_edit</i>
+  </a>
+  <ul>
+    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+  </ul>
+</div>
+
+<div id="slide-out" class="sidenav sidenav-recent-activity">
+	{% if group_options.user_is_loggedin %}
+		{% if group_options.user_is_member %}
+			{% include "ramzaan/partials/recent_activities_ramzaan_mobile.html" %}
+		{% else %}
+			{% include "ramzaan/partials/non-member-left-panel.html" %}
+		{% endif %}
+	{% else %}
+		View to be decided
+	{% endif %}
+</div>
+
 	
 <span class="hide" id="mark_notifications_read_url" data-url="{% url 'mainapp:mark_notifications_read' %}"></span>
 {% endblock %}
 {% block scripts %}
 	<script type="text/javascript" src="{% static 'ramzaan/js/ramzaan.js' %}"></script>
-	<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
-	{% register_notify_callbacks callbacks='my_fill_notification_badge,my_notification_callback' %}
 {% endblock %}
