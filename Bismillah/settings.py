@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('BISMILLAH_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('SETTINGS_DEBUG')))
 
-ALLOWED_HOSTS = os.environ['ALLOWED_HOSTS'].split()
+ALLOWED_HOSTS = ['allywith.com', 'www.allywith.com', '54.218.212.69']
 SITE_ID = 1
 
 # Application definition
