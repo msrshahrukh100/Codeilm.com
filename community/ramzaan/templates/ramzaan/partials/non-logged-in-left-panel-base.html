@@ -1,0 +1,24 @@
+{% load main_extras %}
+<ul class="collection">
+	{% for group_user in group_users|first_n_items:3 %}
+		<li class="collection-item avatar">
+			<img src="{{ group_user.user.user_profile.first.get_profile_pic_url }}" alt="{{ group_user.user.get_full_name }}" class="circle">
+			<span class="title">{{ group_user.user.get_full_name }}</span>
+			<p class="grey-text">Joined on {{ group_user.created_at }}
+			</p>
+		</li>
+	{% endfor %}
+	{% if group_users.count > 3 %}
+		<li class="collection-item center">
+			And {{ group_users.count|add:-3 }} people more
+		</li>
+	{% endif %}
+	<li class="collection-item">
+		<p class="center">
+			Login to Join this group
+		</p>
+		<div class="center">
+			{% include "mainapp/partials/login-panel.html" %}
+		</div>
+	</li>
+</ul>

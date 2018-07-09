@@ -38,7 +38,8 @@
 			{% include "ramzaan/partials/non-member-right-panel.html" %}
 		{% endif %}
 	{% else %}
-		View to be decided
+		{% include "ramzaan/partials/non-logged-in-left-panel.html" %}
+		{% include "ramzaan/partials/non-logged-in-right-panel.html" %}
 	{% endif %}
 </div>
 
@@ -62,7 +63,7 @@
 			{% include "ramzaan/partials/non-member-left-panel.html" %}
 		{% endif %}
 	{% else %}
-		View to be decided
+		{% include "ramzaan/partials/non-logged-in-left-panel-mobile.html" %}
 	{% endif %}
 </div>
 
