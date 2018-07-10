@@ -1,7 +1,7 @@
 {% load ramzaan_extras %}
 {% for status_update in status_updates %}
 	<li class="collection-item avatar" style="border: none;">
-		<img src="https://avatars1.githubusercontent.com/u/13628270?s=460&v=4" alt="" class="circle">
+		<img src="{{ status_update.user.user_profile.first.get_profile_pic_url }}" alt="" class="circle">
 		<span class="title"><b>{{ status_update.user.get_full_name }}</b></span>
 		<p>
 			{{ status_update.content }}
