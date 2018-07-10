@@ -26,10 +26,10 @@
 						<div class="row">
 							<div class="col s12">
 								<div class="progress">
-									<div class="determinate" style="width: {{ user.ramzaan_userprogressuser.get_progress }}%">
+									<div class="determinate" style="width: {{ user.ramzaan_userprogressuser.first.get_progress }}%">
 									</div>
 								</div>
-								On {{ user.ramzaan_userprogressuser.at_unit|ordinal }} {{ group.unit_name }}
+								On {{ user.ramzaan_userprogressuser.first.at_unit|ordinal }} {{ group.unit_name }}
 							</div>
 						</div>
 					
