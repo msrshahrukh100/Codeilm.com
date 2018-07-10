@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     
     # third party apps
     'allauth',
@@ -261,11 +262,12 @@ CACHES = {
 }
 
 # email settings
-EMAIL_HOST = 'email-smtp.us-west-2.amazonaws.com'
-EMAIL_HOST_USER = os.environ['SES_SMTP_USERNAME']
-EMAIL_HOST_PASSWORD = os.environ['SES_SMTP_PASSWORD']
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+if not DEBUG:
+    EMAIL_HOST = 'email-smtp.us-west-2.amazonaws.com'
+    EMAIL_HOST_USER = os.environ['SES_SMTP_USERNAME']
+    EMAIL_HOST_PASSWORD = os.environ['SES_SMTP_PASSWORD']
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
 
 COMPRESS_ENABLED = True
 
