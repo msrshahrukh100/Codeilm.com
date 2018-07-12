@@ -1,6 +1,41 @@
+
+$('.dropdown-trigger.filter-dropdown').dropdown({hover: true, constrainWidth: false});
+
+var $grid = $('.grid').isotope({
+  itemSelector: '.element-item',
+  layoutMode: 'vertical',
+
+  getSortData: {
+    name: '[data-name]',
+    progress: function( itemElem ) {
+      var progress = $( itemElem ).find('.progress').text();
+      return parseFloat( progress.replace( /[\(\)]/g, '') );
+    },
+    progress_inv: function( itemElem ) {
+      var progress = $( itemElem ).find('.progress').text();
+      return 1 / parseFloat( progress.replace( /[\(\)]/g, '') );
+    }
+  }
+});
+
+
+$('.filter-by').on('click', function(e){
+    e.preventDefault();
+    var by = $(this).data('by');
+    if(by === "increase-progress"){
+        $grid.isotope({ sortBy: "progress" });
+    }
+    else if(by === "decrease-progress"){
+        $grid.isotope({ sortBy: "progress_inv" });
+    }
+    else if(by === "name"){
+        $grid.isotope({ sortBy: "name", sortAscending: false });
+    }
+});
+
 $('#status_input').on('focus', function(){
-        $('.show-on-status-focus').removeClass('hide')
-    })
+    $('.show-on-status-focus').removeClass('hide');
+});
 
 $('.action-buttons').on('click', function(){
     el = $(this)

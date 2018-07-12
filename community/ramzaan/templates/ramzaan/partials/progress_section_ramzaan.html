@@ -2,11 +2,37 @@
 {% load ramzaan_extras %}
 {% load humanize %}
 {% load thumbnail %}
+
 <div class="col l8 m12 s12">
+
+
 	{% include "mainapp/partials/forms/status_update_form.html" %}
 	{% with request.user|get_followings as followings %}
+	<div class="row">
+        <div class="col s12">
+          <a style="text-transform: none;" class='dropdown-trigger black-text transparent filter-dropdown btn-large z-depth-0' href='#' data-target='sort-dropdown'><i class="material-icons black-text">swap_vert</i> Sort</a>
+			<ul id='sort-dropdown' class='dropdown-content'>
+				<li>
+					<a class="filter-by" data-by="increase-progress" href="#!">Progress <i class="material-icons black-text">arrow_upward</i>
+					</a>
+				</li>
+				<li>
+					<a class="filter-by" data-by="decrease-progress" href="#!">Progress <i class="material-icons black-text">arrow_downward</i>
+					</a>
+				</li>
+				<li>
+					<a class="filter-by" data-by="name" href="#!">Name <i class="material-icons black-text">person</i>
+					</a>
+				</li>
+			</ul>
+        </div>
+      </div>
+
+
+	<div class="grid">
 	{% for user in users %}
-		<div class="row">
+		<div style="width: 100%;" class="row element-item" data-name="{{ user.ramzaan_userprogressuser.first.get_progress }}">
+			<p class="progress hide">{{ user.ramzaan_userprogressuser.first.get_progress }}</p>
 			<div class="col s12">
 				<div class="card">
 					<div class="card-content">
@@ -47,5 +73,6 @@
 			</div>
 		</div>
 {% endfor %}
+	</div>
 {% endwith %}
 </div>
