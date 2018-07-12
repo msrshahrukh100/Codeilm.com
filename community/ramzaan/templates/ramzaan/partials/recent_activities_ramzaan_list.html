@@ -1,7 +1,8 @@
 {% load ramzaan_extras %}
+{% load static %}
 {% for status_update in status_updates %}
 	<li class="collection-item avatar" style="border: none;">
-		<img src="{{ status_update.user.user_profile.first.get_profile_pic_url }}" alt="" class="circle">
+		<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ status_update.user.user_profile.first.get_profile_pic_url }}" alt="{{ status_update.user.get }}" class="lazyload circle">
 		<span class="title"><b>{{ status_update.user.get_full_name }}</b></span>
 		<p>
 			{{ status_update.content }}

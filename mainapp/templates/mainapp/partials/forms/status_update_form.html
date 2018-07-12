@@ -1,4 +1,5 @@
 {% load thumbnail %}
+{% load humanize %}
 
 <div id="profile-page-wall-share" class="row" style="margin-top: 15px;">
   <div class="col s12">
@@ -29,7 +30,7 @@
         <div class="input-field col s10 offset-s2 hide show-on-status-focus">
           <select class="icons" name="on_unit">
             {% for unit_description in unit_descriptions %}
-            <option value="{{ unit_description.unit }}" {% ifequal user_at_unit unit_description.unit %} selected {% endifequal %}>{{ unit_description.unit_title }}</option>
+            <option value="{{ unit_description.unit }}" {% ifequal user_at_unit unit_description.unit %} selected {% endifequal %}>{{ unit_description.unit|ordinal }} {{ group.unit_name }} - {{ unit_description.unit_title }}</option>
             {% endfor %}
           </select>
           <label>I am on</label>

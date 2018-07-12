@@ -1,5 +1,6 @@
 {% load thumbnail %}
 {% load main_extras %}
+{% load static %}
 <div class="col l8 m12 s12">
 
 <div class="row hide-on-med-and-up">
@@ -45,11 +46,7 @@
           <p>
           	{% for user in users|first_n_items:10 %}
 			<div class="chip blue">
-				{% thumbnail user.user_profile.first.get_profile_pic_url "1000x1000" as big %}
-					{% thumbnail user.user_profile.first.get_profile_pic_url "10x10" as small %}
-						<img src="{{ small.url }}" alt="{{ user.first_name }}" data-sizes="auto" data-src="{{ big.url }}" class="lazyload">
-					{% endthumbnail %}
-				{% endthumbnail %}
+				<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ user.user_profile.first.get_profile_pic_url }}" alt="{{ user.first_name }}" data-sizes="auto" class="lazyload">
 		        {{ user.get_full_name }}
 		    </div>
 			{% endfor %}

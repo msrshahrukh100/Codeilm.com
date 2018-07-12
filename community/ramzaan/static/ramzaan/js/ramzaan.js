@@ -1,5 +1,5 @@
 
-$('.dropdown-trigger.filter-dropdown').dropdown({hover: true, constrainWidth: false});
+$('.dropdown-trigger.filter-dropdown').dropdown({constrainWidth: false});
 
 var $grid = $('.grid').isotope({
   itemSelector: '.element-item',

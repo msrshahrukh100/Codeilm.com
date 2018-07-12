@@ -9,7 +9,7 @@
 	{% include "mainapp/partials/forms/status_update_form.html" %}
 	{% with request.user|get_followings as followings %}
 	<div class="row">
-        <div class="col s12">
+        <div class="col s12" style="height: 27px;margin-top: -27px;">
           <a style="text-transform: none;" class='dropdown-trigger black-text transparent filter-dropdown btn-large z-depth-0' href='#' data-target='sort-dropdown'><i class="material-icons black-text">swap_vert</i> Sort</a>
 			<ul id='sort-dropdown' class='dropdown-content'>
 				<li>
