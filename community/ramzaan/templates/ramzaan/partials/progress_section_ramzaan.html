@@ -31,7 +31,7 @@
 
 	<div class="grid">
 	{% for user in users %}
-		<div style="width: 100%;" class="row element-item" data-name="{{ user.ramzaan_userprogressuser.first.get_progress }}">
+		<div style="width: 100%;" class="row element-item" data-name="{{ user.get_full_name }}">
 			<p class="progress hide">{{ user.ramzaan_userprogressuser.first.get_progress }}</p>
 			<div class="col s12">
 				<div class="card">

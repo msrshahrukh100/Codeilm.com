@@ -29,7 +29,7 @@ $('.filter-by').on('click', function(e){
         $grid.isotope({ sortBy: "progress_inv" });
     }
     else if(by === "name"){
-        $grid.isotope({ sortBy: "name", sortAscending: false });
+        $grid.isotope({ sortBy: "name" });
     }
 });
 
