@@ -37,7 +37,7 @@ def get_status_updates_page(page_no):
 def update_user_status(request, user, group, **data):
 	obj = RamzaanStatusUpdate.objects.create(**data)
 	user_progress_obj, created = RamzaanUserProgress.objects.get_or_create(user=user, group=group)
-	user_progress_obj.at_unit = obj.on_unit
+	user_progress_obj.at_unit = obj.at_unit
 	user_progress_obj.save()
 	add_activity(user.id, 'ramzaan-status-update')
 	online_user_ids = request.online_now_ids

@@ -55,7 +55,9 @@
 									<div class="determinate" style="width: {{ user.ramzaan_userprogressuser.first.get_progress }}%">
 									</div>
 								</div>
-								On {{ user.ramzaan_userprogressuser.first.at_unit|ordinal }} {{ group.unit_name }}
+								{% if user.ramzaan_userprogressuser.first.at_unit %}
+								On {{ user.ramzaan_userprogressuser.first.at_unit.unit|ordinal }} {{ group.unit_name }}<span class="right">{{ user.ramzaan_userprogressuser.first.at_unit.get_unit_full_text }}</span>
+								{% endif %}
 							</div>
 						</div>
 					

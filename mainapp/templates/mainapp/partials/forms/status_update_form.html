@@ -28,9 +28,9 @@
       </div>
       <div class="row">
         <div class="input-field col s10 offset-s2 hide show-on-status-focus">
-          <select class="icons" name="on_unit">
+          <select class="icons" name="at_unit_id">
             {% for unit_description in unit_descriptions %}
-            <option value="{{ unit_description.unit }}" {% ifequal user_at_unit unit_description.unit %} selected {% endifequal %}>{{ unit_description.unit|ordinal }} {{ group.unit_name }} - {{ unit_description.unit_title }}</option>
+            <option value="{{ unit_description.id }}" {% ifequal user_at_unit unit_description %} selected {% endifequal %}>{{ unit_description.unit|ordinal }} {{ group.unit_name }} - {{ unit_description.unit_title }}</option>
             {% endfor %}
           </select>
           <label>I am on</label>

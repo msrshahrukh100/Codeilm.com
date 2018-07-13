@@ -33,7 +33,7 @@ def group_detail(request, id, slug):
 	users = [obj.user for obj in group_users]
 	unit_descriptions = RamzaanUnitDescription.objects.filter(group=group).order_by('unit')
 	try:
-		user_at_unit = user.ramzaan_userprogressuser.at_unit
+		user_at_unit = user.ramzaan_userprogressuser.first().at_unit
 	except Exception as e:
 		user_at_unit = None
 

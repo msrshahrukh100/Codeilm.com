@@ -36,7 +36,7 @@ class RamzaanGroupUserAdmin(admin.ModelAdmin):
 
 
 class RamzaanStatusUpdateAdmin(admin.ModelAdmin):
-	list_display = ['user', 'content', 'on_unit', 'created_at', 'updated_at']
+	list_display = ['user', 'content', 'created_at', 'updated_at']
 
 
 class RamzaanGroupAdmin(admin.ModelAdmin):

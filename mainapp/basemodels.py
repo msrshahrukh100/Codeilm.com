@@ -57,14 +57,19 @@ class StatusUpdate(models.Model):
 class UnitDescription(models.Model):
 	unit = models.PositiveIntegerField(default=0)
 	unit_title = models.CharField(max_length=300)
+	unit_text = models.TextField(null=True, blank=True)
 
 	class Meta:
 		abstract = True
 
+	def get_unit_full_text(self):
+		if self.unit_text:
+			return self.unit_text
+		return self.unit_title
+
 
 class UserProgress(models.Model):
 	user = models.ForeignKey(User, related_name="%(app_label)s_userprogressuser", help_text="The user who makes the progress in the group", on_delete=models.CASCADE)  # community - userprogress
-	at_unit = models.PositiveIntegerField(default=0, help_text="The current state of the user, eg. at chapter 2")
 	last_progress_made = models.DateTimeField(auto_now=True, help_text="The last date the user made progress")
 
 	class Meta:
