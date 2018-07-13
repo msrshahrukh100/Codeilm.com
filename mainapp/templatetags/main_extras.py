@@ -13,3 +13,8 @@ def static_absolute_uri(value):
 @register.filter(name='first_n_items')
 def first_n_items(value, n):
 	return value[:int(n)]
+
+
+@register.simple_tag(name='get_settings')
+def get_settings(value):
+	return getattr(settings, value)
