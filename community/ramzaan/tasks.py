@@ -14,7 +14,12 @@ def send_motivation(from_user_id, to_user_id, group_id):
 	to_user = User.objects.get(id=to_user_id)
 	group = ramzaan_models.RamzaanGroup.objects.get(id=group_id)
 	ramzaan_models.RamzaanGroupUserMotivation.objects.create(to_user=to_user, from_user=from_user, group=group)
-	notify.send(sender=from_user, recipient=to_user, verb='motivated you')
+	verb = from_user.first_name + " motivated you"
+	notify.send(
+		sender=from_user,
+		recipient=to_user,
+		verb=verb,
+		image_url=from_user.user_profile.first().get_profile_pic_url())
 	add_activity(from_user.id, 'ramzaan-motivation-sent')
 
 

@@ -7,6 +7,8 @@ from django.forms import model_to_dict
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
+from django.utils.timesince import timesince
+
 
 from .models import Notification
 from .utils import id2slug, slug2id
@@ -172,6 +174,7 @@ def live_unread_notification_list(request):
             struct['action_object'] = str(n.action_object)
         if n.data:
             struct['data'] = n.data
+        struct["timesince"] = timesince(n.timestamp)
         unread_list.append(struct)
         if request.GET.get('mark_as_read'):
             n.mark_as_read()
@@ -187,6 +190,7 @@ def live_unread_notification_list(request):
             struct['action_object'] = str(n.action_object)
         if n.data:
             struct['data'] = n.data
+        struct["timesince"] = timesince(n.timestamp)
         last_notifications_list.append(struct)
 
     data = {
