@@ -66,4 +66,4 @@ function mark_user_notifications_read(){
 }
 
 
-$('.dropdown-trigger-notification').dropdown({onCloseEnd: mark_user_notifications_read});
+$('.dropdown-trigger-notification').dropdown({coverTrigger: false, constrainWidth: false, onCloseEnd: mark_user_notifications_read});
