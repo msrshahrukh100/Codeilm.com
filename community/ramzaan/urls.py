@@ -5,7 +5,7 @@ urlpatterns = [
     path('', group_list, name="group_list"),
     path('<int:id>/<slug:slug>', group_detail, name="group_detail"),
     path('<int:id>/<slug:slug>/status-update', post_status_update, name="post_status_update"),
-    path('<int:id>/<slug:slug>/motivate/<int:to_user_id>', send_motivation, name="send_motivation"),
+    path('<int:group_id>/<slug:group_slug>/motivate/<int:to_user_id>', send_motivation, name="send_motivation"),
     path('get-status-update/', get_status_updates, name="get_status_updates"),
     # path('<slug:community>/', community_mapper, name="community_mapper")
 ]

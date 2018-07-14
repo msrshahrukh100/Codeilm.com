@@ -85,3 +85,12 @@ class GroupUser(models.Model):
 	class Meta:
 		abstract = True
 
+
+class GroupUserMotivation(models.Model):
+	to_user = models.ForeignKey(User, related_name="%(app_label)s_tomotivation", help_text="The user to whom motivation is sent", on_delete=models.CASCADE)
+	from_user = models.ForeignKey(User, related_name="%(app_label)s_frommotivation", help_text="The user who sent motivations", on_delete=models.CASCADE)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		abstract = True

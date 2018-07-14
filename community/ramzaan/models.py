@@ -54,7 +54,7 @@ class RamzaanUserProgress(basemodels.UserProgress):
 		return 0
 
 	def get_motivate_url(self):
-		return reverse("ramzaan:send_motivation", kwargs={"id": self.group.id, "slug": self.group.slug, "to_user_id": self.user.id})
+		return reverse("ramzaan:send_motivation", kwargs={"group_id": self.group.id, "group_slug": self.group.slug, "to_user_id": self.user.id})
 
 
 class RamzaanStatusUpdate(basemodels.StatusUpdate):
@@ -66,3 +66,10 @@ class RamzaanStatusUpdate(basemodels.StatusUpdate):
 
 	class Meta:
 		ordering = ['-created_at']
+
+
+class RamzaanGroupUserMotivation(basemodels.GroupUserMotivation):
+	group = models.ForeignKey(RamzaanGroup, related_name="motivation_sent", on_delete=models.CASCADE, help_text="The group corresponding to which the motivation was sent")
+
+	def __str__(self):
+		return str(self.to_user.id) + " motivated by " + str(self.from_user.id)

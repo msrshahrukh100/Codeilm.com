@@ -65,7 +65,7 @@
 					
 					</div>
 					<div class="card-action">
-						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='Motivation Sent!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate this person" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
+						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ user.first_name }}" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You motivated {{ user.first_name }}!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ user.get_full_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
 						{% if user.id not in followings %}
 							<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You started following {{ user.get_full_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=user.id %}" data-tooltip="Follow this person" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
 						{% endif %}

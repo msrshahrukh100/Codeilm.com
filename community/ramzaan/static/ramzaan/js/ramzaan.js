@@ -38,11 +38,20 @@ $('.filter-by').on('click', function(e){
 $('#status_input').on('focus', function(){
     $('.show-on-status-focus').removeClass('hide');
 });
+// localStorage.clear();
+var motivate_interval = 10*60*1000;
+
+function get_time_difference(difference, interval){
+
+    var result = interval - difference;
+    return humanizeDuration(result, { round: true, delimiter: ' and ' })
+}
+
 
 $('.action-buttons').on('click', function(){
-    el = $(this)
-	actionurl = el.data('url')
-    userid = el.data('userid')
+    el = $(this);
+	actionurl = el.data('url');
+    userid = el.data('userid');
     success_message = el.data('successmessage')
 	type = el.data('type')
 	$.ajax({
@@ -51,12 +60,16 @@ $('.action-buttons').on('click', function(){
             timeout: 4000,
             success: function(data) {
                 M.toast({html: success_message, classes: "green"})
+
                 if(type === "follow"){
-                    el.remove()
+                    el.remove();
+                }
+                else{
+                    var now = new Date();
+                    localStorage.setItem(userid, now);
                 }
             },
             fail: function() {
-                console.log("error")
                 if(type === "follow"){
                     el.show()    
                 }
@@ -66,6 +79,18 @@ $('.action-buttons').on('click', function(){
                 $('.user-section-preloader-'+userid).removeClass('hide');
                 if(type === "follow"){
                     el.hide()    
+                }
+                else{
+                    if (localStorage.getItem(userid)){
+                        var clicked_time = Date.parse(localStorage.getItem(userid));
+                        var current_now = new Date();
+                        if((current_now - clicked_time) < motivate_interval){
+                            var html = "You can motivate in " + get_time_difference(current_now - clicked_time, motivate_interval);
+                            M.toast({html: html, classes: "red"});
+                            $('.user-section-preloader-'+userid).addClass('hide');
+                            xhr.abort();
+                        }
+                    }
                 }
             	var csrftoken = getCookie('csrftoken');
                 xhr.setRequestHeader('X-CSRFToken', csrftoken);

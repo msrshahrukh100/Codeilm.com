@@ -51,10 +51,11 @@ def group_detail(request, id, slug):
 	return render(request, "group_detail_ramzaan.html", context)
 
 
-def send_motivation(request, id, slug, to_user_id):
+@login_required
+def send_motivation(request, group_id, group_slug, to_user_id):
 	if request.method == "POST":
 		user = request.user
-		tasks.send_motivation(user.id)
+		tasks.send_motivation(from_user_id=user.id, to_user_id=to_user_id, group_id=group_id)
 		return JsonResponse({"status": "Success"})
 	return JsonResponse({"status": "Failure"})
 

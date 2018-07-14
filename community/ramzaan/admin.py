@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import RamzaanGroup, RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser, RamzaanGroupOptions, RamzaanUnitDescription
+from . import models as ramzaan_models
 # Register your models here.
 
 
 class RamzaanGroupOptionsInline(admin.StackedInline):
-	model = RamzaanGroupOptions
+	model = ramzaan_models.RamzaanGroupOptions
 
 
 class RamzaanUnitDescriptionInline(admin.TabularInline):
-	model = RamzaanUnitDescription
+	model = ramzaan_models.RamzaanUnitDescription
 
 
 class RamzaanGroupUserAdmin(admin.ModelAdmin):
@@ -56,8 +56,9 @@ class RamzaanGroupAdmin(admin.ModelAdmin):
 		super().save_model(request, obj, form, change)
 
 
-admin.site.register(RamzaanGroupUser, RamzaanGroupUserAdmin)
-admin.site.register(RamzaanStatusUpdate, RamzaanStatusUpdateAdmin)
-admin.site.register(RamzaanGroup, RamzaanGroupAdmin)
-admin.site.register(RamzaanUserProgress)
-admin.site.register(RamzaanUnitDescription)
+admin.site.register(ramzaan_models.RamzaanGroupUser, RamzaanGroupUserAdmin)
+admin.site.register(ramzaan_models.RamzaanStatusUpdate, RamzaanStatusUpdateAdmin)
+admin.site.register(ramzaan_models.RamzaanGroup, RamzaanGroupAdmin)
+admin.site.register(ramzaan_models.RamzaanUserProgress)
+admin.site.register(ramzaan_models.RamzaanUnitDescription)
+admin.site.register(ramzaan_models.RamzaanGroupUserMotivation)

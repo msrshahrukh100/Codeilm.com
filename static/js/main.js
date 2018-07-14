@@ -28,14 +28,14 @@ function my_notification_callback(data) {
 
 	for (var i=0; i < data.last_notifications_list.length; i++) {
 	    msg = data.last_notifications_list[i];
-	    console.log(msg);
+	    // console.log(msg);
 	    var notification = "<li><a href='#!'>" + msg.actor + " " + msg.verb + "</a></li>"
 	    $('#dropdown-no-notification').append(notification)
 	    }
 }
 
 function my_fill_notification_badge(data) {
-    console.log(data)
+    // console.log(data)
     if(data.unread_count !== 0){
         $('#no-notification').hide()
         $('#notifications-count-active').fadeIn()
