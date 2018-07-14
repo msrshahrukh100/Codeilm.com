@@ -1,6 +1,8 @@
 
 $('.dropdown-trigger.filter-dropdown').dropdown({constrainWidth: false});
 
+setTimeout(function(){ $('.recent-updates-indicator-mobile').hide(); }, 10000);
+
 var $grid = $('.grid').isotope({
   itemSelector: '.element-item',
   layoutMode: 'vertical',
