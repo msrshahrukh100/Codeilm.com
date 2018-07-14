@@ -22,21 +22,20 @@ function my_notification_callback(data) {
 	}
 	for (var i=0; i < data.unread_list.length; i++) {
 	    msg = data.unread_list[i];
-	    // var notification = "<li class='collection-item avatar notification-list-item'><img src="+ msg.image_url +" class='circle'><p class='title notification-text'>" + msg.verb + "<br><span class='grey-text right'>" + msg.timesince + " ago</span></p></li>"
+	    var notification = "<li class='collection-item avatar notification-list-item'><img src="+ msg.data.image_url +" class='circle'><p class='title notification-text'>" + msg.verb + "<br><span class='grey-text right'>" + msg.timesince + " ago</span></p></li>"
 	    // var notification = "<li><a href='#!'>" + msg.actor + " " + msg.verb + "</a></li>"
 	    $('#dropdown-notifications').append(notification)
 	    }
 
 	for (var i=0; i < data.last_notifications_list.length; i++) {
 	    msg = data.last_notifications_list[i];
-	    var notification = "<li class='collection-item avatar notification-list-item'><img src="+ msg.image_url +" class='circle'><p class='title notification-text'>" + msg.verb + "<br><span class='grey-text right'>" + msg.timesince + " ago</span></p></li>"
+	    var notification = "<li class='collection-item avatar notification-list-item'><img src="+ msg.data.image_url +" class='circle'><p class='title notification-text'>" + msg.verb + "<br><span class='grey-text right'>" + msg.timesince + " ago</span></p></li>"
 	    // var notification = "<li><a href='#!'>" + msg.actor + " " + msg.verb + "</a></li>"
 	    $('#dropdown-no-notification').append(notification)
 	    }
 }
 
 function my_fill_notification_badge(data) {
-    // console.log(data)
     if(data.unread_count !== 0){
         $('#no-notification').hide()
         $('#notifications-count-active').fadeIn()
@@ -67,4 +66,4 @@ function mark_user_notifications_read(){
 }
 
 
-$('.dropdown-trigger-notification').dropdown({coverTrigger: false, constrainWidth: false, onCloseEnd: mark_user_notifications_read});
+$('.dropdown-trigger-notification').dropdown({onCloseEnd: mark_user_notifications_read});
