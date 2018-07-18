@@ -48,6 +48,7 @@ class UserSettings(models.Model):
 class Connections(models.Model):
 	user = models.ForeignKey(User, related_name="user_followings", on_delete=models.CASCADE)
 	following = models.ForeignKey(User, related_name="user_followers", on_delete=models.CASCADE)
+	active = models.BooleanField(default=True)
 
 	def __str__(self):
 		return self.user.username + " is following " + self.following.username

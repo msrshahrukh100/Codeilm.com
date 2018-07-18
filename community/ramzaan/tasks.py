@@ -7,6 +7,7 @@ from emailmanager import tasks as emailmanager_tasks
 from django.conf import settings
 from emailmanager import utils as emailmanager_utils
 
+
 @background(schedule=20)
 def send_motivation(from_user_id, to_user_id, group_id):
 	'''
@@ -17,7 +18,7 @@ def send_motivation(from_user_id, to_user_id, group_id):
 	to_user = User.objects.get(id=to_user_id)
 	group = ramzaan_models.RamzaanGroup.objects.get(id=group_id)
 	ramzaan_models.RamzaanGroupUserMotivation.objects.create(to_user=to_user, from_user=from_user, group=group)
-	verb = from_user.first_name + " motivated you"
+	verb = from_user.get_full_name() + " motivated you"
 	notify.send(
 		sender=from_user,
 		recipient=to_user,
