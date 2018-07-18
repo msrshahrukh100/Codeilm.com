@@ -29,7 +29,7 @@ def get_post_age(date):
 
 def get_status_updates_page(page_no):
 	qs = RamzaanStatusUpdate.objects.all()
-	paginator = Paginator(qs, 4)
+	paginator = Paginator(qs, 6)
 	status_updates = paginator.get_page(page_no)
 	return status_updates
 

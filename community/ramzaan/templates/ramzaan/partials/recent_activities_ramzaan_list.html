@@ -25,7 +25,7 @@
 {% endfor %}
 {% if status_updates.has_next %}
 <li class="collection-item avatar center temp-content" style="border: none;">
-	<a class="waves-effect waves-light btn load-more-status" data-href="{% url 'ramzaan:get_status_updates' %}?page={{ status_updates.next_page_number }}">Load More</a>
+	<a class="waves-effect waves-light btn load-more-status light-blue darken-2 no-capital-button" data-href="{% url 'ramzaan:get_status_updates' %}?page={{ status_updates.next_page_number }}">Load More</a>
 	<div class="hide show-more-status-preloader">
 		{% include "mainapp/partials/preloader_small.html" %}
 	</div>

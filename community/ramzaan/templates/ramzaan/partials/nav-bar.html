@@ -1,18 +1,18 @@
 {% load static %}
 {% load thumbnail %}
-<nav class="nav-extended amber">
+<nav class="nav-extended amber" style="color: red;">
 	<div class="nav-wrapper">
-		<a href="#!" class="brand-logo">
+		<a href="/" class="brand-logo">
 			<img class="responsive-img" src="{% static 'images/logo/logo-transparent.png' %}" style="padding-top: 5px;" height="200" width="200">
 		</a>
 		<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 		<!-- sidenav content -->
 		<ul class="sidenav" id="mobile-demo">
-			<li><a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a></li>
+			<li><a class="light-blue-text text-darken-4" href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons light-blue-text text-darken-4 left">feedback</i>Feedback</a></li>
 			<li class="divider" tabindex="-1"></li>
 			<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
 				{% csrf_token %}
-				<li><a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
+				<li><a class="light-blue-text text-darken-4" onclick="document.getElementById('logout-form').submit();"><i class="material-icons light-blue-text text-darken-4 left">power_settings_new</i>Logout</a></li>
 			</form>
 		</ul>
 		<!-- sidenav content -->
@@ -49,11 +49,11 @@
 			</div>
 			<!-- dropdown content -->
 			<ul id='dropdown-useroptions' class='dropdown-content'>
-				<li><a href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}"><i class="material-icons teal-text text-darken-3 left">feedback</i>Feedback</a></li>
+				<li><a class="light-blue-text text-darken-4" href="{% url 'feedback:feedback_page' id=1 slug='the-sealed-nector' %}" ><i class="material-icons left">feedback</i>Feedback</a></li>
 				<li class="divider" tabindex="-1"></li>
 				<form method="POST" id="logout-form" action="{% url 'account_logout' %}">
 					{% csrf_token %}
-					<li><a onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
+					<li><a class="light-blue-text text-darken-4" onclick="document.getElementById('logout-form').submit();"><i class="material-icons teal-text text-darken-3 left">power_settings_new</i>Logout</a></li>
 				</form>
 			</ul>
 			<!-- dropdown content -->
@@ -79,6 +79,6 @@
 	  </p>
 	</div>
 	<div class="modal-footer">
-		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+		<a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
 	</div>
 </div>
