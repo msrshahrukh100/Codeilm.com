@@ -53,7 +53,7 @@ function mark_user_notifications_read(){
             type: 'POST',
             url: actionurl,
             success: function(data) {
-                console.log(data)
+                // console.log(data)
             },
             fail: function() {
                 console.log("error")

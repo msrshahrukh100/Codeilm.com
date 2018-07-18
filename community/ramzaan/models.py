@@ -20,6 +20,8 @@ class RamzaanGroup(basemodels.Group):
 	def get_absolute_url(self):
 		return reverse("ramzaan:group_detail", kwargs={"id": self.id, "slug": self.slug})
 
+	def get_community_name(self):
+		return "Sealed Nector"
 
 	class Meta:
 		permissions = (

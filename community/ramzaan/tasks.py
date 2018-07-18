@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from feedback.tasks import add_activity
 from notifications.signals import notify
 from . import models as ramzaan_models
+from emailmanager import tasks as emailmanager_tasks
+from django.conf import settings
+from emailmanager import utils as emailmanager_utils
 
 @background(schedule=20)
 def send_motivation(from_user_id, to_user_id, group_id):
@@ -20,6 +23,28 @@ def send_motivation(from_user_id, to_user_id, group_id):
 		recipient=to_user,
 		verb=verb,
 		image_url=from_user.user_profile.first().get_profile_pic_url())
+
+	context = {
+		"base_url": settings.BASE_URL,
+		"email": to_user.email,
+		"template": "emails/motivation_sent_email.html",
+		"motivator_image_url": from_user.user_profile.first().get_profile_pic_url(),
+		"motivator_full_name": from_user.get_full_name(),
+		"group_name": group.name,
+		"community_name": group.get_community_name(),
+		"group_url": group.get_absolute_url(),
+		"group_target": group.target_statement,
+
+	}
+	context["get_params"] = emailmanager_utils.get_params_from_context(context)
+	emailmanager_tasks.send_ses_email(
+		sender="Allywith <shahrukh@allywith.com>",
+		user_ids=[to_user.id],
+		subject="🕊 Motivation received from " + from_user.get_full_name(),
+		template_path="emails/motivation_sent_email.html",
+		context=context,
+	)
+
 	add_activity(from_user.id, 'ramzaan-motivation-sent')
 
 
