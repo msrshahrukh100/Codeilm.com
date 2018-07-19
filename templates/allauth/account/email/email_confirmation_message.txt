@@ -1,8 +1,10 @@
 {% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
 Hello from Allywith !!
-Thank You for signing up on Roba Square.
+Thank You for signing up on Allywith.
 To confirm your account, go to {{ activate_url }}
 {% endblocktrans %}{% endautoescape %}
-{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+
 Thank you!
-{{ site_domain }}{% endblocktrans %}
+Shahrukh
+Allywith.com
+
