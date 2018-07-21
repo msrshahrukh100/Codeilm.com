@@ -28,8 +28,8 @@ class Group(models.Model):
 	end_date = models.DateTimeField(blank=True, null=True, help_text="The end date for the task")
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	created_by = models.ForeignKey(User, editable=False, related_name="%(app_label)s_groupcreateduser", on_delete=models.CASCADE)
-	updated_by = models.ForeignKey(User, editable=False, related_name="%(app_label)s_groupupdateduser", on_delete=models.CASCADE)
+	created_by = models.ForeignKey(User, editable=False, null=True, related_name="%(app_label)s_groupcreateduser", on_delete=models.SET_NULL)
+	updated_by = models.ForeignKey(User, editable=False, null=True, related_name="%(app_label)s_groupupdateduser", on_delete=models.SET_NULL)
 
 	class Meta:
 		abstract = True
@@ -45,7 +45,7 @@ class GroupOption(models.Model):
 
 
 class StatusUpdate(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="%(app_label)s_user_status_update", help_text="User's status update on a particular group")
+	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name="%(app_label)s_user_status_update", help_text="User's status update on a particular group")
 	content = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -69,7 +69,7 @@ class UnitDescription(models.Model):
 
 
 class UserProgress(models.Model):
-	user = models.ForeignKey(User, related_name="%(app_label)s_userprogressuser", help_text="The user who makes the progress in the group", on_delete=models.CASCADE)  # community - userprogress
+	user = models.ForeignKey(User, null=True, related_name="%(app_label)s_userprogressuser", help_text="The user who makes the progress in the group", on_delete=models.SET_NULL)  # community - userprogress
 	last_progress_made = models.DateTimeField(auto_now=True, help_text="The last date the user made progress")
 
 	class Meta:
@@ -77,7 +77,7 @@ class UserProgress(models.Model):
 
 
 class GroupUser(models.Model):
-	user = models.ForeignKey(User, related_name="%(app_label)s_groupusers", help_text="The user in a particular group", on_delete=models.CASCADE)
+	user = models.ForeignKey(User, null=True, related_name="%(app_label)s_groupusers", help_text="The user in a particular group", on_delete=models.SET_NULL)
 	request_ip_info = models.ForeignKey(RequestIpInfo, null=True, blank=True, related_name="%(app_label)s_requestipinfos", on_delete=models.SET_NULL)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -87,8 +87,8 @@ class GroupUser(models.Model):
 
 
 class GroupUserMotivation(models.Model):
-	to_user = models.ForeignKey(User, related_name="%(app_label)s_tomotivation", help_text="The user to whom motivation is sent", on_delete=models.CASCADE)
-	from_user = models.ForeignKey(User, related_name="%(app_label)s_frommotivation", help_text="The user who sent motivations", on_delete=models.CASCADE)
+	to_user = models.ForeignKey(User, null=True, related_name="%(app_label)s_tomotivation", help_text="The user to whom motivation is sent", on_delete=models.SET_NULL)
+	from_user = models.ForeignKey(User, null=True, related_name="%(app_label)s_frommotivation", help_text="The user who sent motivations", on_delete=models.SET_NULL)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

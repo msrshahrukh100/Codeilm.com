@@ -35,8 +35,8 @@ class Community(models.Model):
 	description = models.TextField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	created_by = models.ForeignKey(User, editable=False, related_name="communitycreated", on_delete=models.CASCADE)
-	updated_by = models.ForeignKey(User, editable=False, on_delete=models.CASCADE)
+	created_by = models.ForeignKey(User, null=True, editable=False, related_name="communitycreated", on_delete=models.SET_NULL)
+	updated_by = models.ForeignKey(User, null=True, editable=False, on_delete=models.SET_NULL)
 
 	def __str__(self):
 		return self.name
