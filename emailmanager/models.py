@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class EmailTracker(models.Model):
-	user = models.ForeignKey(User, related_name="emails_sent", null=True, blank=True, on_delete=models.CASCADE)
+	user = models.ForeignKey(User, related_name="emails_sent", null=True, blank=True, on_delete=models.SET_NULL)
 	email = models.EmailField()
 	sent = models.BooleanField(default=False)
 	remarks = models.TextField(null=True, blank=True)

@@ -11,7 +11,7 @@ from mainapp.models import RequestIpInfo
 
 
 class UserActivity(models.Model):
-	user = models.ForeignKey(User, related_name="user_activity", on_delete=models.CASCADE, help_text="The user whose activity is registered")
+	user = models.ForeignKey(User, null=True, related_name="user_activity", on_delete=models.SET_NULL, help_text="The user whose activity is registered")
 	activity = models.CharField(max_length=255)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
@@ -40,8 +40,8 @@ class FeedbackEvent(models.Model):
 	feedback_url = models.URLField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
-	created_by = models.ForeignKey(User, editable=False, related_name="feedbackevent_created", on_delete=models.CASCADE)
-	modified_by = models.ForeignKey(User, editable=False, on_delete=models.CASCADE)
+	created_by = models.ForeignKey(User, null=True, editable=False, related_name="feedbackevent_created", on_delete=models.SET_NULL)
+	modified_by = models.ForeignKey(User, null=True, editable=False, on_delete=models.SET_NULL)
 
 	def __str__(self):
 		return self.name
@@ -52,9 +52,9 @@ class FeedbackEvent(models.Model):
 
 class ClickResponse(models.Model):
 	# holds the click response
-	event = models.ForeignKey(FeedbackEvent, on_delete=models.CASCADE, help_text="The event corresponding to which the click response is collected")
+	event = models.ForeignKey(FeedbackEvent, null=True, on_delete=models.SET_NULL, help_text="The event corresponding to which the click response is collected")
 	response = models.CharField(max_length=255, null=True, blank=True)
-	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.CASCADE, related_name="click_response", null=True, blank=True)
+	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.SET_NULL, related_name="click_response", null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -63,10 +63,10 @@ class ClickResponse(models.Model):
 
 
 class FeedbackResponse(models.Model):
-	event = models.ForeignKey(FeedbackEvent, on_delete=models.CASCADE, help_text="Form responses of feedback")
+	event = models.ForeignKey(FeedbackEvent, null=True, on_delete=models.SET_NULL, help_text="Form responses of feedback")
 	key = models.TextField()
 	value = models.TextField()
-	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.CASCADE, related_name="feedback_response", null=True, blank=True)
+	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.SET_NULL, related_name="feedback_response", null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

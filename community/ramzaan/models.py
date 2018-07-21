@@ -8,7 +8,7 @@ import mainapp.basemodels as basemodels
 class RamzaanGroupUser(basemodels.GroupUser):
 
 	def __str__(self):
-		return self.user.username
+		return self.user
 
 
 class RamzaanGroup(basemodels.Group):
@@ -48,7 +48,7 @@ class RamzaanUserProgress(basemodels.UserProgress):
 	at_unit = models.ForeignKey(RamzaanUnitDescription, null=True, on_delete=models.SET_NULL, help_text="The current state of the user, eg. at chapter 2")
 
 	def __str__(self):
-		return self.user.username
+		return self.user
 
 	def get_progress(self):
 		if self.at_unit:
@@ -64,7 +64,7 @@ class RamzaanStatusUpdate(basemodels.StatusUpdate):
 	at_unit = models.ForeignKey(RamzaanUnitDescription, null=True, on_delete=models.SET_NULL, help_text="The current state of the user, eg. at chapter 2")
 
 	def __str__(self):
-		return self.user.username
+		return self.user
 
 	class Meta:
 		ordering = ['-created_at']
@@ -74,4 +74,4 @@ class RamzaanGroupUserMotivation(basemodels.GroupUserMotivation):
 	group = models.ForeignKey(RamzaanGroup, related_name="motivation_sent", on_delete=models.CASCADE, help_text="The group corresponding to which the motivation was sent")
 
 	def __str__(self):
-		return str(self.to_user.id) + " motivated by " + str(self.from_user.id)
+		return str(self.to_user) + " motivated by " + str(self.from_user)
