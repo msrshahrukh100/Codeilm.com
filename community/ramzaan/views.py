@@ -29,7 +29,7 @@ def group_list(request):
 def group_detail(request, id, slug):
 	group = get_object_or_404(RamzaanGroup, id=id)
 	user = request.user  # the current logged in user
-	group_users = group.users.all()  # query set of group user objects
+	group_users = group.users.all().exclude(user__isnull=True)  # query set of group user objects
 	users = [obj.user for obj in group_users]
 	unit_descriptions = RamzaanUnitDescription.objects.filter(group=group).order_by('unit')
 	try:
