@@ -3,23 +3,12 @@
 {% load i18n %}
 {% load account socialaccount %}
 {% load material_form %}
-{% block title %}{% trans "Sign In" %}{% endblock %}
-
-{% block breadcumb %}
-<div class="col s12" style="padding-left:50px;">
-  <a href="/" class="breadcrumb">Home</a>
-  <a class="breadcrumb" >Login</a>
-</div>
+{% block title %}{% trans "Sign In" %} | Allywith{% endblock %}
+{% block meta_tags %}
+  {% include "mainapp/partials/meta_tags_homepage.html" %}
 {% endblock %}
-
 {% block content %}
-<style type="text/css">
-  input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
-    background-color: rgb(250, 200, 100) !important;
-    background-image: none !important;
-    color: rgb(0, 0, 0) !important;
-}
-</style>
+
 {% include "mainapp/partials/simple-navbar.html" %}
 
 <div class="container">
@@ -40,7 +29,7 @@
         <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
         <br/>
 
-        <button id="login_button" class="btn waves-effect waves-light primaryAction right" type="submit" name="action">
+        <button id="login_button" class="btn waves-effect light-blue darken-2 no-capital-button waves-light primaryAction right" type="submit" name="action">
           Sign In <i class="material-icons right">send</i>
         </button>
       </form>

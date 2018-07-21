@@ -32,4 +32,4 @@ def test_email(request):
 
 	}
 
-	return render(request, "emails/motivation_sent_email.html", context)
+	return render(request, "emails/temp.html", context)
