@@ -8,7 +8,9 @@ import mainapp.basemodels as basemodels
 class RamzaanGroupUser(basemodels.GroupUser):
 
 	def __str__(self):
-		return self.user
+		if self.user:
+			return self.user.id
+		return "Deleted user"
 
 
 class RamzaanGroup(basemodels.Group):
@@ -48,7 +50,9 @@ class RamzaanUserProgress(basemodels.UserProgress):
 	at_unit = models.ForeignKey(RamzaanUnitDescription, null=True, on_delete=models.SET_NULL, help_text="The current state of the user, eg. at chapter 2")
 
 	def __str__(self):
-		return self.user
+		if self.user:
+			return self.user.id
+		return "Deleted user"
 
 	def get_progress(self):
 		if self.at_unit:
@@ -64,7 +68,9 @@ class RamzaanStatusUpdate(basemodels.StatusUpdate):
 	at_unit = models.ForeignKey(RamzaanUnitDescription, null=True, on_delete=models.SET_NULL, help_text="The current state of the user, eg. at chapter 2")
 
 	def __str__(self):
-		return self.user
+		if self.user:
+			return self.user.id
+		return "Deleted user"
 
 	class Meta:
 		ordering = ['-created_at']

@@ -25,7 +25,10 @@ class UserProfile(models.Model):
 	locale = models.CharField(max_length=255, null=True, blank=True)
 
 	def __str__(self):
-		return self.user
+		if self.user:
+			return self.user.id
+		return "Deleted user"
+
 
 	def get_profile_pic_url(self):
 		if self.profile_image:
