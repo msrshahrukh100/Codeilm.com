@@ -15,10 +15,13 @@
 				<div class="chip transparent dropdown-trigger" style="cursor: pointer;" data-target='dropdown-useroptions'>
 					{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" as im %}
 					<img src="{{ im.url }}" alt="{{ request.user|user_display_name }}">
-				{% endthumbnail %}
-				{{ request.user|user_display_name }}
-			</div>
-		</li>
+					{% endthumbnail %}
+					{{ request.user|user_display_name }}
+				</div>
+			</li>
+			{% if not request.user.is_authenticated %}
+				<a class="waves-effect waves-light btn light-blue darken-2 no-capital-button" href="{% url 'account_signup' %}">Signup Now</a>
+			{% endif %}
 	</ul>
 </div>
 </nav>

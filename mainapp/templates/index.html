@@ -46,6 +46,41 @@
 
 
 {% include "mainapp/partials/community_slider.html" %}
+
+<div class="container">
+	{% for community in communities %}
+	<div class="row">
+	    <div class="col s6">
+	      <div class="card">
+	        <div class="card-image">
+
+				{% thumbnail community.image "1200x1000" as big %}
+				{% thumbnail community.image "120x100" as small %}
+					<img src="{{ small.url }}" data-sizes="auto" data-src="{{ big.url }}" class="lazyload">
+				{% endthumbnail %}
+				{% endthumbnail %}
+
+	          <span class="card-title">Card Title</span>
+	        </div>
+	        <div class="card-content">
+			<p>
+				<h5>
+					{{ community.name }}
+				</h5>
+				{{ community.description }}
+			</p>
+	        </div>
+	        <div class="card-action">
+				<a class="waves-effect waves-light btn light-blue darken-2 no-capital-button" href="{{ community.get_community_url }}">View Groups</a>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+
+	{% endfor %}
+</div>
+
+
 <div class="center">
 {% if not request.user.is_authenticated %}
 	{% include "mainapp/partials/login-panel.html" %}
