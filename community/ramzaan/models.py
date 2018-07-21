@@ -9,7 +9,7 @@ class RamzaanGroupUser(basemodels.GroupUser):
 
 	def __str__(self):
 		if self.user:
-			return self.user.id
+			return str(self.user.id)
 		return "Deleted user"
 
 
@@ -51,7 +51,7 @@ class RamzaanUserProgress(basemodels.UserProgress):
 
 	def __str__(self):
 		if self.user:
-			return self.user.id
+			return str(self.user.id)
 		return "Deleted user"
 
 	def get_progress(self):
@@ -69,7 +69,7 @@ class RamzaanStatusUpdate(basemodels.StatusUpdate):
 
 	def __str__(self):
 		if self.user:
-			return self.user.id
+			return str(self.user.id)
 		return "Deleted user"
 
 	class Meta:

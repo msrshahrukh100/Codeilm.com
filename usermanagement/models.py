@@ -26,7 +26,7 @@ class UserProfile(models.Model):
 
 	def __str__(self):
 		if self.user:
-			return self.user.id
+			return str(self.user.id)
 		return "Deleted user"
 
 
