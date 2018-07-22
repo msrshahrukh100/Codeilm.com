@@ -44,18 +44,29 @@
 	</h4>
 	<p class="center">We will let you know when we launch new groups in this community.</p>
 	<form method="POST" action="{% url 'feedback:save_feedback_response' %}">
+
 	<div class="row center">
 		{% csrf_token %}
 	    <div class="input-field col s6">
-	      <input name="value" id="feedback_email" type="email" class="validate">
-	      <label class="active" for="feedback_email">Email</label>
+	      {% if request.user.is_authenticated %}
+	      <input type="hidden" name="value" value="{{ request.user.email }}">
+	      {% else %}
+		      <input name="value" id="feedback_email" type="email" class="validate">
+		      <label class="active" for="feedback_email">Email</label>
+	      {% endif %}
 	      <input type="hidden" name="key" value="{{ feedback_event.name }} email ids">
 	      <input type="hidden" name="event_id" value="{{ feedback_event.id }}">
 	    </div>
 	  </div>
-	    <button class="btn waves-effect waves-light light-blue darken-2 no-capital-button" type="submit" name="action">Submit
-		    <i class="material-icons right">send</i>
-		  </button>
+
+		<button class="btn waves-effect waves-light light-blue darken-2 no-capital-button" type="submit" name="action">
+			{% if request.user.is_authenticated %}
+			I am interested in this community
+			{% else %}
+			Submit
+			<i class="material-icons right">send</i>
+			{% endif %}
+		</button>
 	</form>
 	{% endif %}
 </div>
