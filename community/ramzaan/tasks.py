@@ -55,7 +55,13 @@ def send_update_user_status_notifications(user_id, group_id, data, online_user_i
 	user = User.objects.get(id=user_id)
 	followers = user.user_followers.all()
 	for follower in followers:
-		notify.send(user, recipient=follower.user, verb='Updated his status', age="21")
+		notify.send(
+			user,
+			recipient=follower.user,
+			verb=get_user_display_name(user) + ' updated his status',
+			image_url=user.user_profile.first().get_profile_pic_url()
+		)
+
 		if follower.user.id in online_user_ids:
 			print("online now, don't send mail")
 		else:
