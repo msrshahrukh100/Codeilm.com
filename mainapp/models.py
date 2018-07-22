@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from autoslug import AutoSlugField
 from django.urls import reverse
 from solo.models import SingletonModel
+from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
 
 
 class SiteConfiguration(SingletonModel):
@@ -72,3 +74,7 @@ class GroupCreationRequest(models.Model):
 
 	def __str__(self):
 		return str(self.id)
+
+	def get_admin_url(self):
+		content_type = ContentType.objects.get_for_model(self.__class__)
+		return settings.BASE_URL + reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))

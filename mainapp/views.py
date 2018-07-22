@@ -10,6 +10,7 @@ import community.ramzaan.utils as ramzaan_utils
 from . import community_utils
 from . import models as main_models
 from .utils import save_request_ip_info
+from emailmanager.utils import send_info_mail_to_admins
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -60,9 +61,18 @@ def save_group_creation_request(request):
 		data = request.POST.dict()
 		data.pop('csrfmiddlewaretoken')
 		data.pop('action')
+		if data['user_id'] == 'None':
+			data.pop('user_id')
 		obj = main_models.GroupCreationRequest.objects.create(**data)
 		obj.request_ip_info = save_request_ip_info(request)
 		obj.save()
+		content = "A new group creation request from <br>User: <b>%s</b><br> On the community: <b>%s</b> <br>With the description: <br><b>%s</b>" % (obj.user, obj.community, obj.description)
+		context = {
+			"subject": "New Group creation request",
+			"content": content,
+			"url": obj.get_admin_url()
+		}
+		send_info_mail_to_admins(context)
 		messages.info(request, 'We have received your interest and will get back to you shortly')
 	return redirect('mainapp:home')
 
