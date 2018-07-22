@@ -5,6 +5,7 @@
 {% block content %}
 	{% include "mainapp/partials/simple-navbar.html" %}
 	<div class="container">
+		{% if groups %}
 		{% for group in groups %}
 			{% cycle "<div class='row'>" "" %}
 				
@@ -37,6 +38,26 @@
 			{% endif %}
 		{% endif %}
 	{% endfor %}
+	{% else %}
+	<h4 class="grey-text center">
+		There are no groups in this community yet
+	</h4>
+	<p class="center">We will let you know when we launch new groups in this community.</p>
+	<div class="row center">
+	<form method="POST" action="{% url 'feedback:save_feedback_response' %}">
+		{% csrf_token %}
+	    <div class="input-field col s6">
+	      <input name="value" id="feedback_email" type="email" class="validate">
+	      <label class="active" for="feedback_email">Email</label>
+	      <input type="hidden" name="key" value="{{ feedback_event.name }} email ids">
+	      <input type="hidden" name="event_id" value="{{ feedback_event.id }}">
+	    </div>
+	</form>
+	  </div>
+	    <button class="btn waves-effect waves-light light-blue darken-2 no-capital-button" type="submit" name="action">Submit
+		    <i class="material-icons right">send</i>
+		  </button>
+	{% endif %}
 </div>
 {% endblock %}
 

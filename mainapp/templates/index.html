@@ -11,6 +11,21 @@
 {% endblock %}
 {% block content %} <!-- blue lime -->
 {% include "mainapp/partials/simple-navbar.html" %}
+
+{% if messages %}
+	{% for message in messages %}
+		<div class="row">
+			<div class="col s12 center">
+				<p class="center-align"></p>
+				<div class="chip {{ message.tags }}">
+					{{ message }}
+					<i class="close material-icons">close</i>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endif %}
+
 <ul id="slide-out" class="sidenav">
 	<li>
 		<div class="user-view">
@@ -70,7 +85,7 @@
 			</p>
 	        </div>
 	        <div class="card-action">
-				<a class="waves-effect waves-light btn light-blue darken-2 no-capital-button" href="{{ community.get_community_url }}">View Groups</a>
+				<a class="waves-effect waves-light btn light-blue darken-2 no-capital-button" href="{{ community.community_base_url }}">View Groups</a>
 	        </div>
 	      </div>
 	    </div>

@@ -36,7 +36,7 @@ class FeedbackEvent(models.Model):
 		height_field="height_field", help_text="A image representing the feedback event")
 	height_field = models.IntegerField(default=0)
 	width_field = models.IntegerField(default=0)
-	click_response_html = models.TextField(help_text="HTML for the click responses")
+	click_response_html = models.TextField(null=True, blank=True, help_text="HTML for the click responses")
 	feedback_url = models.URLField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

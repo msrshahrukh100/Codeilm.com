@@ -4,7 +4,6 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 import logging
-from . import utils as utils
 from django.contrib import messages
 import community.ramzaan.models as ramzaan_models
 import community.ramzaan.utils as ramzaan_utils
