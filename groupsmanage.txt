@@ -1,0 +1,2 @@
+1. create the community id in the settings .py file
+2. each groups also contain their community
