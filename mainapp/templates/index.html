@@ -48,9 +48,9 @@
 {% include "mainapp/partials/community_slider.html" %}
 
 <div class="container">
-	{% for community in communities %}
 	<div class="row">
-	    <div class="col s6">
+	{% for community in communities reversed %}
+	    <div class="col s12 l6">
 	      <div class="card">
 	        <div class="card-image">
 
@@ -74,9 +74,9 @@
 	        </div>
 	      </div>
 	    </div>
-	  </div>
 
 	{% endfor %}
+	  </div>
 </div>
 
 

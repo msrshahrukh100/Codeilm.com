@@ -19,6 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 import notifications.urls
 from mainapp.views import opensearch
+from . import community_urls
 
 handler404 = 'mainapp.views.redirect_to_page'
 
@@ -27,9 +28,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
+    path('', include((community_urls))),
     path('accounts/', include('allauth.urls')),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
-    path('sealed-nector/', include(('community.ramzaan.urls', 'community.ramzaan'), namespace="ramzaan")),
     path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
     path('email/', include(('emailmanager.urls', 'emailmanager'), namespace="emailmanager")),
     # urls for different communities

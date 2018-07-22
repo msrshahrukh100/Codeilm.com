@@ -1,7 +1,7 @@
 from autoslug import AutoSlugField
 from django.db import models
 from django.contrib.auth.models import User
-from .models import RequestIpInfo
+from . import models as main_models
 # Create your models here.
 
 
@@ -78,7 +78,7 @@ class UserProgress(models.Model):
 
 class GroupUser(models.Model):
 	user = models.ForeignKey(User, null=True, related_name="%(app_label)s_groupusers", help_text="The user in a particular group", on_delete=models.SET_NULL)
-	request_ip_info = models.ForeignKey(RequestIpInfo, null=True, blank=True, related_name="%(app_label)s_requestipinfos", on_delete=models.SET_NULL)
+	request_ip_info = models.ForeignKey(main_models.RequestIpInfo, null=True, blank=True, related_name="%(app_label)s_requestipinfos", on_delete=models.SET_NULL)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -89,6 +89,18 @@ class GroupUser(models.Model):
 class GroupUserMotivation(models.Model):
 	to_user = models.ForeignKey(User, null=True, related_name="%(app_label)s_tomotivation", help_text="The user to whom motivation is sent", on_delete=models.SET_NULL)
 	from_user = models.ForeignKey(User, null=True, related_name="%(app_label)s_frommotivation", help_text="The user who sent motivations", on_delete=models.SET_NULL)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	class Meta:
+		abstract = True
+
+
+class GroupCreationRequest(models.Model):
+	user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="%(app_label)s_groupcreationrequests")
+	community = models.ForeignKey(main_models.Community, on_delete=models.SET_NULL, null=True, blank=True)
+	description = models.TextField()
+	notification_sent = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

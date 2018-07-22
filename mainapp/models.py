@@ -33,6 +33,7 @@ class Community(models.Model):
 	height_field = models.IntegerField(null=True, blank=True)
 	width_field = models.IntegerField(null=True, blank=True)
 	description = models.TextField()
+	community_base_url = models.CharField(max_length=255)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	created_by = models.ForeignKey(User, null=True, editable=False, related_name="communitycreated", on_delete=models.SET_NULL)
@@ -40,9 +41,6 @@ class Community(models.Model):
 
 	def __str__(self):
 		return self.name
-
-	def get_community_url(self):
-		return "/sealed-nector/"
 
 
 class RequestIpInfo(models.Model):

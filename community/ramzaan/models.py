@@ -81,3 +81,9 @@ class RamzaanGroupUserMotivation(basemodels.GroupUserMotivation):
 
 	def __str__(self):
 		return str(self.to_user) + " motivated by " + str(self.from_user)
+
+
+class RamzaanGroupCreationRequest(basemodels.GroupCreationRequest):
+
+	def __str__(self):
+		return str(self.id)
