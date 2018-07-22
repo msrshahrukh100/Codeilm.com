@@ -1,7 +1,7 @@
 from django import template
 from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
-
+from mainapp.utils import get_user_display_name
 register = template.Library()
 
 
@@ -17,11 +17,7 @@ def absolute_uri(value):
 
 @register.filter(name='user_display_name')
 def user_display_name(user):
-	if user.is_authenticated:
-		if user.get_full_name():
-			return user.get_full_name()
-		return user.get_username()
-	return ""
+	return get_user_display_name(user)
 
 
 @register.filter(name='first_n_items')

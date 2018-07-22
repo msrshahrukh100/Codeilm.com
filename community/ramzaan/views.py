@@ -60,7 +60,7 @@ def group_detail(request, id, slug):
 def send_motivation(request, group_id, group_slug, to_user_id):
 	if request.method == "POST":
 		user = request.user
-		tasks.send_motivation(from_user_id=user.id, to_user_id=to_user_id, group_id=group_id)
+		tasks.send_motivation(user.id, to_user_id, group_id)
 		return JsonResponse({"status": "Success"})
 	return JsonResponse({"status": "Failure"})
 

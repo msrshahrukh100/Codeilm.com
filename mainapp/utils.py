@@ -42,3 +42,11 @@ def save_request_ip_info(request):
 	)
 	obj.save()
 	return obj
+
+
+def get_user_display_name(user):
+	if user.is_authenticated:
+		if user.get_full_name():
+			return user.get_full_name()
+		return user.get_username()
+	return ""
