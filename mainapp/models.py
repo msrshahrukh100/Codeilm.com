@@ -65,6 +65,7 @@ class GroupCreationRequest(models.Model):
 	user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="%(app_label)s_groupcreationrequests")
 	community = models.ForeignKey(Community, on_delete=models.SET_NULL, null=True, blank=True)
 	description = models.TextField()
+	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.SET_NULL, related_name="group_creation_request", null=True, blank=True)
 	notification_sent = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

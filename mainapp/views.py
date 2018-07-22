@@ -9,6 +9,7 @@ import community.ramzaan.models as ramzaan_models
 import community.ramzaan.utils as ramzaan_utils
 from . import community_utils
 from . import models as main_models
+from .utils import save_request_ip_info
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -59,7 +60,9 @@ def save_group_creation_request(request):
 		data = request.POST.dict()
 		data.pop('csrfmiddlewaretoken')
 		data.pop('action')
-		main_models.GroupCreationRequest.objects.create(**data)
+		obj = main_models.GroupCreationRequest.objects.create(**data)
+		obj.request_ip_info = save_request_ip_info(request)
+		obj.save()
 		messages.info(request, 'We have received your interest and will get back to you shortly')
 	return redirect('mainapp:home')
 
