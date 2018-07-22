@@ -3,12 +3,13 @@ from django.db import models
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from sorl.thumbnail import ImageField
 from django.conf import settings
+from mainapp.utils import get_user_display_name
 
 # Create your models here.
 
 
 def upload_location(instance, filename):
-	return "user_profile_images/%s/%s" % (instance.user.get_full_name(), filename)
+	return "user_profile_images/%s/%s" % (get_user_display_name(instance.user), filename)
 
 
 class UserProfile(models.Model):

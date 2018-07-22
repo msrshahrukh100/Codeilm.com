@@ -1,5 +1,6 @@
 {% load static %}
 {% load ramzaan_extras %}
+{% load main_extras %}
 {% load humanize %}
 {% load thumbnail %}
 
@@ -33,7 +34,7 @@
 
 	<div class="grid">
 	{% for user in users %}
-		<div style="width: 100%;" class="row element-item" data-name="{{ user.get_full_name }}">
+		<div style="width: 100%;" class="row element-item" data-name="{{ user|user_display_name }}">
 			<p class="progress hide">{{ user.ramzaan_userprogressuser.first.get_progress }}</p>
 			<div class="col s12">
 				<div class="card">
@@ -42,12 +43,12 @@
 						<div class="row valign-wrapper">
 							<div class="col s3 l1">
 								{% thumbnail user.user_profile.first.get_profile_pic_url "55x55" as im %}
-									<img src="{{ im.url }}" class="circle" alt="{{ user.get_full_name }}">
+									<img src="{{ im.url }}" class="circle" alt="{{ user|user_display_name }}">
 								{% endthumbnail %}
 							</div>
 							<div class="col s9 l11">
 								<span class="card-title">
-									{{ user.get_full_name }}
+									{{ user|user_display_name }}
 								</span>
 							</div>
 						</div>
@@ -65,9 +66,9 @@
 					
 					</div>
 					<div class="card-action">
-						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ user.first_name }}" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You motivated {{ user.first_name }}!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ user.get_full_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
+						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ user|user_display_name }}" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You motivated {{ user|user_display_name }}!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ user|user_display_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
 						{% if user.id not in followings %}
-							<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You started following {{ user.get_full_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=user.id %}" data-tooltip="Follow this person" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
+							<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You started following {{ user|user_display_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=user.id %}" data-tooltip="Follow this person" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
 						{% endif %}
 						<div class="right hide user-section-preloader-{{ user.id }}">
 							{% include "mainapp/partials/preloader_small.html" %}
