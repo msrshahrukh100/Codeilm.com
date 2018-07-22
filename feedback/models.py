@@ -74,7 +74,7 @@ class FeedbackResponse(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.event.name
+		return str(self.event.id)
 
 	def get_admin_url(self):
 		content_type = ContentType.objects.get_for_model(self.__class__)
