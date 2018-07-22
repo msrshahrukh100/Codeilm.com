@@ -20,3 +20,15 @@ def send_welcome_email(user):
 		template_path="emails/welcome_email.html",
 		context=context,
 	)
+
+
+def send_info_mail_to_admins(context):
+	admins = settings.ADMINS
+	admin_emails = [admin[1] for admin in admins]
+	emailmanager_tasks.send_ses_email(
+		sender="Admin Info from Allywith <shahrukh@allywith.com>",
+		recipients=admin_emails,
+		subject=context.get('subject'),
+		template_path="emails/send_info_to_admin.html",
+		context=context,
+	)

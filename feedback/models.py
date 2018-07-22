@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from mainapp.models import RequestIpInfo
+from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+
 # Create your models here.
 # Possible activities
 # ramzaan-status-update --> Status Updated in the ramzaan app
@@ -72,3 +75,7 @@ class FeedbackResponse(models.Model):
 
 	def __str__(self):
 		return self.event.name
+
+	def get_admin_url(self):
+		content_type = ContentType.objects.get_for_model(self.__class__)
+		return settings.BASE_URL + reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
