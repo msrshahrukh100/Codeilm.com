@@ -10,6 +10,7 @@ def upload_to(instance, filename):
 
 
 class Group(models.Model):
+	community = models.ForeignKey(main_models.Community, blank=True, null=True, on_delete=models.SET_NULL)
 	name = models.CharField(max_length=255, help_text="The name of the individual group formed within a community")
 	slug = AutoSlugField(populate_from='name')
 	description = models.TextField(help_text="The description for the group in the community")
@@ -95,14 +96,3 @@ class GroupUserMotivation(models.Model):
 	class Meta:
 		abstract = True
 
-
-class GroupCreationRequest(models.Model):
-	user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="%(app_label)s_groupcreationrequests")
-	community = models.ForeignKey(main_models.Community, on_delete=models.SET_NULL, null=True, blank=True)
-	description = models.TextField()
-	notification_sent = models.BooleanField(default=False)
-	created_at = models.DateTimeField(auto_now_add=True)
-	updated_at = models.DateTimeField(auto_now=True)
-
-	class Meta:
-		abstract = True

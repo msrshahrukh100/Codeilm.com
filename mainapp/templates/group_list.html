@@ -42,12 +42,12 @@
 	<h4 class="grey-text center">
 		There are no groups in this community yet
 	</h4>
-	<p class="center">We will let you know when we launch new groups in this community.</p>
+	<p class="" style="padding-top: 100px;">We will let you know when we launch new groups in this community.</p>
 	<form method="POST" action="{% url 'feedback:save_feedback_response' %}">
 
 	<div class="row center">
 		{% csrf_token %}
-	    <div class="input-field col s6">
+	    <div class="input-field col l6 s12">
 	      {% if request.user.is_authenticated %}
 	      <input type="hidden" name="value" value="{{ request.user.email }}">
 	      {% else %}
@@ -63,12 +63,15 @@
 			{% if request.user.is_authenticated %}
 			I am interested in this community
 			{% else %}
-			Submit
+			Notify Me
 			<i class="material-icons right">send</i>
 			{% endif %}
 		</button>
 	</form>
 	{% endif %}
+	<div class="center">
+		{% include "mainapp/partials/forms/group_creation_request_form.html" %}
+	</div>
 </div>
 {% endblock %}
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Community, RequestIpInfo, SiteConfiguration
+from .models import Community, RequestIpInfo, SiteConfiguration, GroupCreationRequest
 from solo.admin import SingletonModelAdmin
 
 
@@ -27,3 +27,4 @@ class RequestIpInfoAdmin(admin.ModelAdmin):
 admin.site.register(Community, CommunityAdmin)
 admin.site.register(RequestIpInfo, RequestIpInfoAdmin)
 admin.site.register(SiteConfiguration, SingletonModelAdmin)
+admin.site.register(GroupCreationRequest)

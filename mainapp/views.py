@@ -8,6 +8,7 @@ from django.contrib import messages
 import community.ramzaan.models as ramzaan_models
 import community.ramzaan.utils as ramzaan_utils
 from . import community_utils
+from . import models as main_models
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -51,6 +52,17 @@ def mark_notifications_read(request):
 		if qs.exists():
 			qs.mark_all_as_read()
 		return JsonResponse({"status": "success", "msg": "Marked as read"})
+
+
+def save_group_creation_request(request):
+	if request.method == "POST":
+		data = request.POST.dict()
+		data.pop('csrfmiddlewaretoken')
+		data.pop('action')
+		main_models.GroupCreationRequest.objects.create(**data)
+		messages.info(request, 'We have received your interest and will get back to you shortly')
+	return redirect('mainapp:home')
+
 
 
 def redirect_to_page(request, exception, template_name="feedback_page.html"):

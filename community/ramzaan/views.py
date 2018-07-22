@@ -7,6 +7,8 @@ from .models import RamzaanGroup, RamzaanUnitDescription
 from . import utils
 from . import tasks
 from mainapp import community_utils
+import mainapp.models as mainapp_models
+from django.conf import settings
 
 
 def get_status_updates(request):
@@ -20,8 +22,11 @@ def get_status_updates(request):
 
 def group_list(request):
 	groups = RamzaanGroup.objects.filter()
+	community = mainapp_models.Community.objects.get(id=settings.RAMZAAN_COMMUNITY_ID)
+
 	context = {
-		"groups": groups
+		"groups": groups,
+		"community": community
 	}
 	return render(request, "group_list.html", context)
 

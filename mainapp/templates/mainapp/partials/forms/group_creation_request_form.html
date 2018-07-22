@@ -1,0 +1,23 @@
+<div class="row" style="padding-top: 100px;">
+	<p>Want to have your own group in this community? Let us know about your group here</p>
+    <form class="col l6 s12 offset-l3" method="POST" action="{% url 'mainapp:save_group_creation_request' %}">{% csrf_token %}
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea" name="description"></textarea>
+          <label for="textarea1">Describe your group</label>
+        </div>
+      </div>
+      {% if request.user.is_authenticated %}
+      <input type="hidden" name="user_id" value="{{ request.user.id }}">
+      {% endif %}
+      <input type="hidden" name="community_id" value="{{ community.id }}">
+      <input type="hidden" name="user_id" value="{{ request.user.id }}">
+
+      <button class="btn waves-effect waves-light light-blue darken-2 no-capital-button" type="submit" name="action">
+			Submit
+			<i class="material-icons right">send</i>
+		</button>
+    </form>
+  </div>
+
+        
