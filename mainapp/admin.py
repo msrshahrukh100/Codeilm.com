@@ -24,7 +24,30 @@ class RequestIpInfoAdmin(admin.ModelAdmin):
 	list_filter = ['city', 'country_code']
 
 
+class GroupCreationRequestAdmin(admin.ModelAdmin):
+	list_display = ['user', 'community', 'description', 'city', 'country_name', 'time_zone', 'region', 'notification_sent', 'created_at', 'updated_at']
+
+	def city(self, obj):
+		if obj.request_ip_info:
+			return obj.request_ip_info.city
+		return None
+
+	def country_name(self, obj):
+		if obj.request_ip_info:
+			return obj.request_ip_info.country_name
+		return None
+
+	def time_zone(self, obj):
+		if obj.request_ip_info:
+			return obj.request_ip_info.time_zone
+		return None
+
+	def region(self, obj):
+		if obj.request_ip_info:
+			return obj.request_ip_info.region
+		return None
+
 admin.site.register(Community, CommunityAdmin)
 admin.site.register(RequestIpInfo, RequestIpInfoAdmin)
 admin.site.register(SiteConfiguration, SingletonModelAdmin)
-admin.site.register(GroupCreationRequest)
+admin.site.register(GroupCreationRequest, GroupCreationRequestAdmin)
