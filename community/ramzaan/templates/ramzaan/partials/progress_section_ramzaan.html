@@ -16,7 +16,7 @@
 
 			<ul id='sort-dropdown' class='dropdown-content'>
 				<li>
-					<a class="filter-by" data-by="decrease-progress href="#!">Progress <i class="material-icons black-text">arrow_upward</i>
+					<a class="filter-by" data-by="decrease-progress" href="#!">Progress <i class="material-icons black-text">arrow_upward</i>
 					</a>
 				</li>
 				<li>
@@ -34,12 +34,12 @@
 
 	<div class="grid">
 	{% for user in users %}
+	{% with user.ramzaan_userprogressuser.first.get_progress as user_progress %}
 		<div style="width: 100%;" class="row element-item" data-name="{{ user|user_display_name }}">
-			<p class="progress hide">{{ user.ramzaan_userprogressuser.first.get_progress }}</p>
+			<p class="progress hide">{{ user_progress }}</p>
 			<div class="col s12">
-				<div class="card">
+				<div class="card {% ifequal user_progress 100 %}  light-blue lighten-3 {% endifequal %}">
 					<div class="card-content">
-						<!-- <span class="right new badge" data-badge-caption="custom caption">4</span> -->
 						<div class="row valign-wrapper">
 							<div class="col s3 l1">
 								{% thumbnail user.user_profile.first.get_profile_pic_url "55x55" as im %}
@@ -52,10 +52,11 @@
 								</span>
 							</div>
 						</div>
+						{% ifnotequal user_progress 100 %}
 						<div class="row">
 							<div class="col s12">
 								<div class="progress light-blue lighten-4">
-									<div class="determinate light-blue darken-4" style="width: {{ user.ramzaan_userprogressuser.first.get_progress }}%">
+									<div class="determinate light-blue darken-4" style="width: {{ user_progress }}%">
 									</div>
 								</div>
 								{% if user.ramzaan_userprogressuser.first.at_unit %}
@@ -63,8 +64,18 @@
 								{% endif %}
 							</div>
 						</div>
+						{% else %}
+						<div class="row">
+							<div class="col s12">
+								{% if user.ramzaan_userprogressuser.first.at_unit %}
+								Completed {{ user.ramzaan_userprogressuser.first.at_unit.unit|ordinal }} {{ group.unit_name }} <br> {{ user.ramzaan_userprogressuser.first.last_progress_made|naturaltime }} {{ user.ramzaan_userprogressuser.first.last_progress_made|naturalday }} <span class="right">{{ user.ramzaan_userprogressuser.first.at_unit.get_unit_full_text }}</span>
+								{% endif %}
+							</div>
+						</div>
+						{% endifnotequal %}
 					
 					</div>
+					{% ifnotequal user_progress 100 %}
 					<div class="card-action">
 						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ user|user_display_name }}" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You motivated {{ user|user_display_name }}!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ user|user_display_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
 						{% if user.id not in followings %}
@@ -74,9 +85,13 @@
 							{% include "mainapp/partials/preloader_small.html" %}
 						</div>
 					</div>
+
+					{% endifnotequal %}
+
 				</div>
 			</div>
 		</div>
+		{% endwith %}
 {% endfor %}
 	</div>
 {% endwith %}
