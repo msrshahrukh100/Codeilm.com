@@ -46,7 +46,9 @@
           <p>
           	{% for user in users|first_n_items:3 %}
 			<div class="chip light-blue black-text">
-				<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ user.user_profile.first.get_profile_pic_url }}" alt="{{ user.first_name }}" data-sizes="auto" class="lazyload">
+				{% thumbnail user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
+				<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ im.url }}" alt="{{ user.first_name }}" data-sizes="auto" class="lazyload">
+				{% endthumbnail %}
 		        {{ user|user_display_name }}
 		    </div>
 			{% endfor %}

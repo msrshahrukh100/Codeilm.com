@@ -1,13 +1,27 @@
 {% load main_extras %}
+{% load ramzaan_extras %}
+{% load thumbnail %}
+{% load humanize %}
 {% load static %}
 <ul class="collection">
 	{% for group_user in group_users|first_n_items:10 %}
 		<li class="collection-item avatar">
-
-			<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ group_user.user.user_profile.first.get_profile_pic_url }}" alt="{{ group_user.user|user_display_name }}" class="lazyload circle">
-
+			{% thumbnail group_user.user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
+			<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ im.url }}" alt="{{ group_user.user|user_display_name }}" class="lazyload circle">
+			{% endthumbnail %}
 			<span class="title">{{ group_user.user|user_display_name }}</span>
-			<p class="grey-text">Joined on {{ group_user.created_at }}
+			<p class="grey-text">Joined
+				{% with group_user.created_at|check_age as old_post %}
+				{% if old_post == "0" %}
+					{{ group_user.created_at|timesince }} ago
+				{% elif old_post == "1" %}
+					at
+					{{ group_user.created_at|date:"P l" }}
+				{% elif old_post == "2" %}
+					on
+					{{ group_user.created_at|date:"j N Y" }}
+				{% endif %}
+				{% endwith %}
 			</p>
 		</li>
 	{% endfor %}

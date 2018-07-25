@@ -4,7 +4,7 @@ from .models import UserProfile, Connections
 
 
 class UserProfileAdmin(admin.ModelAdmin):
-	list_display = ['user', 'gender']
+	list_display = ['user', 'gender', 'profile_image']
 
 
 class ConnectionsAdmin(admin.ModelAdmin):
