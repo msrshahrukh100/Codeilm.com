@@ -43,7 +43,7 @@
 			</li>
 			<li>
 				<div class="chip transparent dropdown-trigger" style="cursor: pointer;" data-target='dropdown-useroptions'>
-					{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" as im %}
+					{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" crop="center" as im %}
 					<img src="{{ im.url }}" alt="{{ request.user|user_display_name }}">
 				{% endthumbnail %}
 				{{ request.user|user_display_name }}

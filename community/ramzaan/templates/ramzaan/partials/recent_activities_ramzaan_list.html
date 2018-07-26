@@ -1,10 +1,13 @@
 {% load ramzaan_extras %}
 {% load humanize %}
 {% load main_extras %}
+{% load thumbnail %}
 {% load static %}
 {% for status_update in status_updates %}
 	<li class="collection-item avatar" style="border: none;">
-		<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ status_update.user.user_profile.first.get_profile_pic_url }}" alt="{{ status_update.user.get }}" class="lazyload circle">
+		{% thumbnail status_update.user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
+		<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ im.url }}" alt="{{ status_update.user.get }}" class="lazyload circle">
+		{% endthumbnail %}
 		<span class="title"><b>{{ status_update.user|user_display_name }}</b></span>
 		<p>
 			{{ status_update.content }}

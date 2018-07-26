@@ -8,7 +8,7 @@
     <form method="POST" action="{% url 'ramzaan:post_status_update' id=group.id slug=group.slug %}">
       <div class="row">
         <div class="col s2">
-          {% thumbnail request.user.user_profile.first.get_profile_pic_url "350x350" as big %}
+          {% thumbnail request.user.user_profile.first.get_profile_pic_url "270x270" crop="center" as big %}
             {% thumbnail request.user.user_profile.first.get_profile_pic_url "10x10" as small %}
               <img src="{{ small.url }}" style="padding-top: 10px;" height="80" width="80" alt="{{ user.first_name }}" data-sizes="auto" data-src="{{ big.url }}" class="circle responsive-img valign profile-image-post lazyload">
             {% endthumbnail %}

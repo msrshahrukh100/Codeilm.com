@@ -36,7 +36,7 @@
 	{% for user in users %}
 	{% with user.ramzaan_userprogressuser.first.get_progress as user_progress %}
 		<div style="width: 100%;" class="row element-item" data-name="{{ user|user_display_name }}">
-			<p class="progress hide">{{ user_progress }}</p>
+			<p class="progress hide">{% if user_progress %}{{ user_progress }}{% else %}0{% endif %}</p>
 			<div class="col s12">
 				<div class="card {% ifequal user_progress 100 %}  light-blue lighten-3 {% endifequal %}">
 					<div class="card-content">
