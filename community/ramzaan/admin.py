@@ -56,9 +56,13 @@ class RamzaanGroupAdmin(admin.ModelAdmin):
 		super().save_model(request, obj, form, change)
 
 
+class RamzaanUserProgressAdmin(admin.ModelAdmin):
+	list_display = [field.name for field in ramzaan_models.RamzaanUserProgress._meta.get_fields()]
+
+
 admin.site.register(ramzaan_models.RamzaanGroupUser, RamzaanGroupUserAdmin)
 admin.site.register(ramzaan_models.RamzaanStatusUpdate, RamzaanStatusUpdateAdmin)
 admin.site.register(ramzaan_models.RamzaanGroup, RamzaanGroupAdmin)
-admin.site.register(ramzaan_models.RamzaanUserProgress)
+admin.site.register(ramzaan_models.RamzaanUserProgress, RamzaanUserProgressAdmin)
 admin.site.register(ramzaan_models.RamzaanUnitDescription)
 admin.site.register(ramzaan_models.RamzaanGroupUserMotivation)

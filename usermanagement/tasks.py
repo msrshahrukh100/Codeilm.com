@@ -7,9 +7,10 @@ from emailmanager import tasks as emailmanager_tasks
 from emailmanager import utils as emailmanager_utils
 from background_task import background
 from mainapp.utils import get_user_display_name
+from sorl.thumbnail import get_thumbnail
 
 
-@background(schedule=3)
+@background(schedule=1)
 def send_connection_notifications(user_id, following_id):
 	user = User.objects.get(id=user_id)
 	following = User.objects.get(id=following_id)
@@ -20,8 +21,8 @@ def send_connection_notifications(user_id, following_id):
 		sender=user,
 		recipient=following,
 		verb=verb,
-		image_url=user.user_profile.first().get_profile_pic_url())
-
+		image_url=get_thumbnail(user.user_profile.first().get_profile_pic_url(), '100x100', crop="center").url
+	)
 	context = {
 		"base_url": settings.BASE_URL,
 		"email": following.email,

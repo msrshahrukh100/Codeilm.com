@@ -7,6 +7,8 @@ from emailmanager import tasks as emailmanager_tasks
 from django.conf import settings
 from emailmanager import utils as emailmanager_utils
 from mainapp.utils import get_user_display_name
+from sorl.thumbnail import get_thumbnail
+
 
 
 @background(schedule=20)
@@ -24,7 +26,8 @@ def send_motivation(from_user_id, to_user_id, group_id):
 		sender=from_user,
 		recipient=to_user,
 		verb=verb,
-		image_url=from_user.user_profile.first().get_profile_pic_url())
+		image_url=get_thumbnail(from_user.user_profile.first().get_profile_pic_url(), '100x100', crop="center").url
+	)
 
 	context = {
 		"base_url": settings.BASE_URL,
@@ -59,7 +62,7 @@ def send_update_user_status_notifications(user_id, group_id, data, online_user_i
 			user,
 			recipient=follower.user,
 			verb=get_user_display_name(user) + ' updated his status',
-			image_url=user.user_profile.first().get_profile_pic_url()
+			image_url=get_thumbnail(user.user_profile.first().get_profile_pic_url(), '100x100', crop="center").url
 		)
 
 		if follower.user.id in online_user_ids:
