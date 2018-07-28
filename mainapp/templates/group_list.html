@@ -1,6 +1,7 @@
 {% extends "base_template.html" %}
 {% load thumbnail %}
 {% block title %}
+{{ groups.first.community }} | Allywith
 {% endblock %}
 {% block content %}
 	{% include "mainapp/partials/simple-navbar.html" %}
@@ -19,7 +20,7 @@
 									{% endthumbnail %}
 								{% endthumbnail %}
 							</a>
-							<a onclick="return confirm('Join the group {{ group.name }}')" class="btn-floating halfway-fab waves-effect waves-light light-blue darken-2" href="{% url 'mainapp:group_join' id=group.id slug=group.slug community='ramzaan' %}"><i class="material-icons">add</i></a>
+							<a onclick="return confirm('Join the group {{ group.name }}')" class="btn-floating halfway-fab waves-effect waves-light light-blue darken-2" href="{% url 'mainapp:group_join' community=group.community.slug id=group.id slug=group.slug %}"><i class="material-icons">add</i></a>
 						</div>
 						<div class="card-content">
 							<a href="{{ group.get_absolute_url }}">

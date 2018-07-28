@@ -46,7 +46,9 @@
 		<script src="{% static 'js/lazysizes.min.js' %}"></script>
 		<script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
 		<script src="{% static 'js/main.js' %}"></script>
+		{% if request.user.is_authenticated %}
 		{% register_notify_callbacks callbacks='my_fill_notification_badge,my_notification_callback' %}
+		{% endif %}
 
 		{% block scripts %}
 		{% endblock %}
