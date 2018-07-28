@@ -4,7 +4,7 @@
 <div id="profile-page-wall-share" class="row" style="margin-top: 15px;">
 
     <!-- UpdateStatus-->
-    <div id="UpdateStatus" class="col s12  grey lighten-4">
+    <div id="UpdateStatus" class="col s12  grey lighten-4" style="height: 100px;">
     <form method="POST" action="{% url 'ramzaan:post_status_update' id=group.id slug=group.slug %}">
       <div class="row">
         <div class="col s2">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s10 offset-s2 hide show-on-status-focus">
+        <div class="input-field col s10 offset-s2 scale-transition scale-out show-on-status-focus">
           <select class="icons" name="at_unit_id">
             {% for unit_description in unit_descriptions %}
             <option value="{{ unit_description.id }}" {% ifequal user_at_unit unit_description %} selected {% endifequal %}>{{ unit_description.unit|ordinal }} {{ group.unit_name }} - {{ unit_description.unit_title }}</option>
@@ -38,7 +38,7 @@
 
       <div class="row">
         <div class="col s12 m6 center-align">
-          <button class="btn waves-effect waves-light light-blue darken-2 no-capital-button" type="submit" name="action">Update
+          <button class="btn waves-effect waves-light light-blue darken-2 no-capital-button scale-transition scale-out show-on-status-focus" type="submit" name="action">Update
             <i class="material-icons right">send</i>
           </button>
         </div>

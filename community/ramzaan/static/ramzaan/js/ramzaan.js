@@ -36,7 +36,8 @@ $('.filter-by').on('click', function(e){
 });
 
 $('#status_input').on('focus', function(){
-    $('.show-on-status-focus').removeClass('hide');
+    $('#UpdateStatus').height("270");
+    $('.show-on-status-focus').addClass('scale-in');
 });
 // localStorage.clear();
 var motivate_interval = 10*60*1000;
