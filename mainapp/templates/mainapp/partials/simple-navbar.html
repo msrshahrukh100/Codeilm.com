@@ -48,7 +48,7 @@
 				<img class="lazyload" src="{% static 'images/user_background_image/user_background.jpg' %}">
 			</div>
 			<a>
-			{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" as im %}
+			{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" crop="center" as im %}
 				<img class="circle lazyload" src="{{ im.url }}" alt="{{ request.user|user_display_name }}">
 			{% endthumbnail %}
 			</a>
@@ -74,4 +74,12 @@
 		</li>
 	</form>
 	{% endif %}
+	<li>
+		<div class="divider"></div>
+	</li>
+	<li>
+		<a href="{% url 'mainapp:how_it_works' %}">
+			<i class="material-icons teal-text text-darken-3 left">how_to_reg</i>How it works
+		</a>
+	</li>
 </ul>
