@@ -20,6 +20,12 @@ def opensearch(request):
 	return render(request, 'open_search.xml', content_type="application/xhtml+xml")
 
 
+def how_does_it_work(request):
+	context = {
+		"video_id_list": ['aCpiaYshXNY', 'aCpiaYshXNY']
+	}
+	return render(request, 'howdoesitwork.html', context)
+
 @login_required
 def group_join(request, id, slug, community):
 	user = request.user
