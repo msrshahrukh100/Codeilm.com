@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Community
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 import logging
@@ -39,6 +39,7 @@ def group_join(request, id, slug, community):
 			ramzaan_utils.add_user_to_group(request, user, group)
 
 		return HttpResponseRedirect(reverse("ramzaan:group_detail", kwargs={"id": id, "slug": slug}))
+	return HttpResponse(status=404)
 
 
 def home(request):
