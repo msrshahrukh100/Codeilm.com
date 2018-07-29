@@ -64,10 +64,29 @@
 
 {% include "mainapp/partials/community_slider.html" %}
 
-<div class="section container">
+<div class="row container">
+
+      <div class="col s4 center">
+          <h2><i class="medium material-icons amber-text">favorite_border</i></h2>
+			<p class="flow-text">Update your status as you go about achieving your goal</p>
+      </div>
+      <div class="col s4 center">
+        <h2><i class="fas fa-dove amber-text"></i></h2>
+        <p class="flow-text">Motivate your friends in achieving the goal</p>
+      </div>
+      <div class="col s4 center">
+        <h2><i class="medium material-icons amber-text">person_add</i></h2>
+        <p class="flow-text">Follow your friends</p>
+      </div>
+
+    </div>
+
+<div class="section">
 	<div class="center">
-			<video autoplay muted loop playsinline width="100%">
-			  <source src="{% static 'videos/final.mp4' %}" type="video/mp4">
+			<video autoplay muted loop playsinline width="100%" poster="{% static 'images/firstlook.png' %}">
+				<source src="{% static 'videos/final.mp4' %}" type="video/mp4">
+				<source src="{% static 'videos/final.webm' %}" type="video/webm">
+				<source src="{% static 'videos/final.ogv' %}" type="video/ogg">
 			</video>
 	</div>
 </div>
