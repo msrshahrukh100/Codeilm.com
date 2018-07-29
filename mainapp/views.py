@@ -20,7 +20,7 @@ def opensearch(request):
 	return render(request, 'open_search.xml', content_type="application/xhtml+xml")
 
 
-def how_does_it_work(request):
+def how_it_works(request):
 	context = {
 		"video_id_list": ['aCpiaYshXNY', 'aCpiaYshXNY']
 	}
