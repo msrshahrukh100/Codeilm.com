@@ -1,2 +1,17 @@
 1. create the community id in the settings .py file
 2. each groups also contain their community
+
+how to chage the encoding of a table
+
+
+ALTER DATABASE bismillah CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE bismillah.ramzaan_ramzaanstatusupdate CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+ALTER DATABASE mydb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE mydb.mytable CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+ALTER TABLE bismillah.ramzaan_ramzaanunitdescription CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
