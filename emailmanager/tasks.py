@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 import boto3
 from botocore.exceptions import ClientError
 from django.template.loader import render_to_string
+from mainapp.utils import get_user_display_name
 
 
 logger = logging.getLogger(__name__)
@@ -94,6 +95,8 @@ def send_ses_email(
                 print("coming to else part")
                 context["name"] = user.first_name if user.first_name else "Friend"
                 print("calling function")
+                if '%' in subject:
+                    subject = subject % {'user_full_name': get_user_display_name(user)}
                 response = ses_email_helper(user.email, sender, template_path, subject, context)
                 if response:
                     emailmanager_models.EmailTracker.objects.create(

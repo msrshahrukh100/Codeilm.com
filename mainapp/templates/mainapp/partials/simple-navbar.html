@@ -13,10 +13,12 @@
 		<ul class="right hide-on-med-and-down">
 			<li>
 				<div class="chip transparent dropdown-trigger" style="cursor: pointer;" data-target='dropdown-useroptions'>
+					{% if request.user.is_authenticated %}
 					{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" crop="center" as im %}
 					<img src="{{ im.url }}" alt="{{ request.user|user_display_name }}">
 					{% endthumbnail %}
 					{{ request.user|user_display_name }}
+					{% endif %}
 				</div>
 			</li>
 			<a class="waves-effect waves-light btn light-blue darken-2 no-capital-button" href="{% url 'mainapp:how_it_works' %}">How it works</a>
@@ -47,15 +49,18 @@
 			<div class="background">
 				<img class="lazyload" src="{% static 'images/user_background_image/user_background.jpg' %}">
 			</div>
+			{% if request.user.is_authenticated %}
 			<a>
 			{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" crop="center" as im %}
 				<img class="circle lazyload" src="{{ im.url }}" alt="{{ request.user|user_display_name }}">
 			{% endthumbnail %}
+
 			</a>
 			<a href="#name">
 				<span class="white-text name">{{ request.user|user_display_name }}
 				</span>
 			</a>
+			{% endif %}
 		</div>
 	</li>
 	<li>

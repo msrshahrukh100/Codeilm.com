@@ -20,8 +20,10 @@
 			{% endthumbnail %}
 			</a>
 			<a href="#name">
+				{% if request.user.is_authenticated %}
 				<span class="white-text name">{{ request.user|user_display_name }}
 				</span>
+				{% endif %}
 			</a>
 		</div>
 	</li>

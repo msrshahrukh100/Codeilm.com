@@ -45,8 +45,6 @@ def save_request_ip_info(request):
 
 
 def get_user_display_name(user):
-	if user.is_authenticated:
-		if user.get_full_name():
-			return user.get_full_name()
-		return user.get_username()
-	return ""
+	if user.get_full_name():
+		return user.get_full_name()
+	return user.get_username()
