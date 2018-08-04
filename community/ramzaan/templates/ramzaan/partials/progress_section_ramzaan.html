@@ -33,55 +33,55 @@
 
 
 	<div class="grid">
-	{% for user in users %}
-	{% with user.ramzaan_userprogressuser.first.get_progress as user_progress %}
-		<div style="width: 100%;" class="row element-item" data-name="{{ user|user_display_name }}">
-			<p class="progress hide">{% if user_progress %}{{ user_progress }}{% else %}0{% endif %}</p>
+	{% for group_user in group_users %}
+	{% with group_user.user.ramzaan_userprogressuser.first as user_progress_obj %}
+		<div style="width: 100%;" class="row element-item" data-name="{{ group_user.user|user_display_name }}">
+			<p class="progress hide">{% if user_progress_obj.get_progress %}{{ user_progress_obj.get_progress }}{% else %}0{% endif %}</p>
 			<div class="col s12">
-				<div class="card {% ifequal user_progress 100 %}  light-blue lighten-3 {% endifequal %}">
+				<div class="card {% ifequal user_progress_obj.get_progress 100 %}  light-blue lighten-3 {% endifequal %}">
 					<div class="card-content">
 						<div class="row valign-wrapper">
 							<div class="col s3 l1">
-								{% thumbnail user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
-									<img src="{{ im.url }}" class="circle" alt="{{ user|user_display_name }}">
+								{% thumbnail group_user.user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
+									<img src="{{ im.url }}" class="circle" alt="{{ group_user.user|user_display_name }}">
 								{% endthumbnail %}
 							</div>
 							<div class="col s9 l11">
 								<span class="card-title">
 									<p class="flow-text">
-										{{ user|user_display_name }}
+										{{ group_user.user|user_display_name }}
 									</p>
 								</span>
 							</div>
 						</div>
-						{% ifnotequal user_progress 100 %}
+						{% ifnotequal user_progress_obj.get_progress 100 %}
 						<div class="row">
 							<div class="col s12">
 								<div class="progress light-blue lighten-4">
-									<div class="determinate light-blue darken-4" style="width: {{ user_progress }}%">
+									<div class="determinate light-blue darken-4" style="width: {{ user_progress_obj.get_progress }}%">
 									</div>
 								</div>
-								{% if user.ramzaan_userprogressuser.first.at_unit %}
-								On {{ user.ramzaan_userprogressuser.first.at_unit.unit|ordinal }} {{ group.unit_name }}<span class="right">{{ user.ramzaan_userprogressuser.first.at_unit.get_unit_full_text }}</span>
+								{% if user_progress_obj.at_unit %}
+								On {{ user_progress_obj.at_unit.unit|ordinal }} {{ group.unit_name }}<span class="right">{{ user_progress_obj.at_unit.get_unit_full_text }}</span>
 								{% endif %}
 							</div>
 						</div>
 						{% else %}
 						<div class="row">
 							<div class="col s12">
-								{% if user.ramzaan_userprogressuser.first.at_unit %}
-								Completed {{ user.ramzaan_userprogressuser.first.at_unit.unit|ordinal }} {{ group.unit_name }} <br> {{ user.ramzaan_userprogressuser.first.last_progress_made|naturaltime }} {{ user.ramzaan_userprogressuser.first.last_progress_made|naturalday }} <span class="right">{{ user.ramzaan_userprogressuser.first.at_unit.get_unit_full_text }}</span>
+								{% if user_progress_obj.at_unit %}
+								Completed {{ user_progress_obj.at_unit.unit|ordinal }} {{ group.unit_name }} <br> {{ group_user.user.ramzaan_userprogressgroup_user.user.first.last_progress_made|naturaltime }} {{ user.ramzaan_userprogressuser.first.last_progress_made|naturalday }} <span class="right">{{ user_progress_obj.at_unit.get_unit_full_text }}</span>
 								{% endif %}
 							</div>
 						</div>
 						{% endifnotequal %}
 					
 					</div>
-					{% ifnotequal user_progress 100 %}
+					{% ifnotequal user_progress_obj.get_progress 100 %}
 					<div class="card-action">
-						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ user|user_display_name }}" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You motivated {{ user|user_display_name }}!' data-url="{{ user.ramzaan_userprogressuser.first.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ user|user_display_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
-						{% if user.id not in followings %}
-							<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ user.id }}" data-successmessage='You started following {{ user|user_display_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=user.id %}" data-tooltip="Follow {{ user|user_display_name }}" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
+						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ group_user.user|user_display_name }}" data-position="bottom" data-userid="{{ group_user.user.id }}" data-successmessage='You motivated {{ group_user.user|user_display_name }}!' data-url="{{ user_progress_obj.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ group_user.user|user_display_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
+						{% if group_user.user.id not in followings %}
+							<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ group_user.user.id }}" data-successmessage='You started following {{ group_user.user|user_display_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=group_user.user.id %}" data-tooltip="Follow {{ user|user_display_name }}" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
 						{% endif %}
 						<div class="right hide user-section-preloader-{{ user.id }}">
 							{% include "mainapp/partials/preloader_small.html" %}
