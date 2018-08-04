@@ -23,7 +23,7 @@ class FeedbackEventAdmin(admin.ModelAdmin):
 
 
 class ClickResponseAdmin(admin.ModelAdmin):
-	list_display = ['event', 'response', 'city', 'country_name', 'time_zone', 'region', 'created_at']
+	list_display = ['event', 'response', 'email', 'city', 'country_name', 'time_zone', 'region', 'created_at']
 	list_filter = ['event', 'response', 'created_at']
 
 	def city(self, obj):

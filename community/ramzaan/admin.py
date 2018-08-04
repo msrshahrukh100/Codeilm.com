@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models as ramzaan_models
+from emailmanager.tasks import send_ses_email
 # Register your models here.
 
 
@@ -13,6 +14,19 @@ class RamzaanUnitDescriptionInline(admin.TabularInline):
 
 class RamzaanGroupUserAdmin(admin.ModelAdmin):
 	list_display = ['user', 'created_at', 'city', 'country_name', 'time_zone', 'region']
+	actions = ['send_reminder_email']
+
+	def send_reminder_email(self, request, queryset):
+		user_ids = [ramzaangroupuser.user.id for ramzaangroupuser in queryset]
+		sender = "Allywith <shahrukh@allywith.com>"
+		send_ses_email(
+			sender,
+			"emails/reminder_email.html",
+			context={},
+			user_ids=user_ids,
+			subject="%(user_full_name)s memorized the first 10 Ayat of Surah Kahf")
+		self.message_user(request, "Reminder emails successfully sent")
+	send_reminder_email.short_description = "Send reminder emails"
 
 	def city(self, obj):
 		if obj.request_ip_info:

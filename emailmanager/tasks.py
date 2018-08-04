@@ -93,7 +93,8 @@ def send_ses_email(
                 print("unsubscribed_emails")
             else:
                 print("coming to else part")
-                context["name"] = user.first_name if user.first_name else "Friend"
+                context["name"] = get_user_display_name(user)
+                context["email"] = user.email
                 print("calling function")
                 if '%' in subject:
                     subject = subject % {'user_full_name': get_user_display_name(user)}

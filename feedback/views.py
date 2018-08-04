@@ -5,6 +5,7 @@ from django.template import Template, Context
 from . import utils
 import logging
 from django.contrib import messages
+from django.urls import reverse
 # Create your views here.
 
 logger = logging.getLogger(__name__)
@@ -28,11 +29,14 @@ def feedback_page(request, id=None, slug=None):
 	return render(request, "feedback_page.html", context)
 
 
+def feed_back_thankyou_page(request):
+	return render(request, "feedback_thankyou.html", {})
+
+
 def store_click_response(request, id=None, slug=None):
 	feedback_event = get_object_or_404(FeedbackEvent, id=id, slug=slug)
-	if request.method == "POST":
-		utils.save_click_response(request, feedback_event)
-		return render(request, "feedback_thankyou.html", {})
+	utils.save_click_response(request, feedback_event)
+	return redirect(reverse('feedback:feed_back_thankyou_page'))
 
 
 def save_feedback_response(request):

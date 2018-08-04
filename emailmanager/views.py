@@ -29,7 +29,8 @@ def test_email(request):
 	# this view is for the purpose of testing emails with a sample context data
 	group = RamzaanGroup.objects.all().first()
 	context = {
-		"motivator": request.user,
+		"name": request.user.get_full_name(),
+		"email": request.user.email,
 		"group": RamzaanGroup.objects.all().first(),
 		"message": group.target_statement,
 		"person_image_url": "https://allywith.com/media/cache/ad/e2/ade227dc7c39d0e5b7001445c55bc11b.jpg",

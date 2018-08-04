@@ -56,6 +56,7 @@ class FeedbackEvent(models.Model):
 class ClickResponse(models.Model):
 	# holds the click response
 	event = models.ForeignKey(FeedbackEvent, null=True, on_delete=models.SET_NULL, help_text="The event corresponding to which the click response is collected")
+	email = models.EmailField(null=True, blank=True)
 	response = models.CharField(max_length=255, null=True, blank=True)
 	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.SET_NULL, related_name="click_response", null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
@@ -64,11 +65,16 @@ class ClickResponse(models.Model):
 	def __str__(self):
 		return str(self.id)
 
+	def get_admin_url(self):
+		content_type = ContentType.objects.get_for_model(self.__class__)
+		return settings.BASE_URL + reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
+
 
 class FeedbackResponse(models.Model):
 	event = models.ForeignKey(FeedbackEvent, null=True, on_delete=models.SET_NULL, help_text="Form responses of feedback")
 	key = models.TextField()
 	value = models.TextField()
+	email = models.EmailField(null=True, blank=True)
 	request_ip_info = models.ForeignKey(RequestIpInfo, on_delete=models.SET_NULL, related_name="feedback_response", null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
