@@ -14,7 +14,7 @@
 					<div class="card">
 						<div class="card-image">
 							<a href="{{ group.get_absolute_url }}">
-								{% thumbnail group.image "1200x1000" as big %}
+								{% thumbnail group.image "480x270" crop="center" as big %}
 									{% thumbnail group.image "120x100" as small %}
 										<img src="{{ small.url }}" data-sizes="auto" data-src="{{ big.url }}" class="lazyload">
 									{% endthumbnail %}
@@ -27,7 +27,7 @@
 								<span class="card-title">{{ group.name }}</span>
 							</a>
 							<p>
-								{{ group.target_statement }}
+								{{ group.target_statement|truncatewords:20 }}
 							</p>
 						</div>
 					</div>

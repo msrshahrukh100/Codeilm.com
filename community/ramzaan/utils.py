@@ -32,7 +32,6 @@ def add_user_to_group(request, user, group):
 	)
 
 
-
 def get_post_age(date):
 	old_post = 0
 	time_delta = timezone.now() - date
@@ -43,8 +42,8 @@ def get_post_age(date):
 	return str(old_post)
 
 
-def get_status_updates_page(page_no):
-	qs = RamzaanStatusUpdate.objects.all()
+def get_status_updates_page(page_no, group):
+	qs = RamzaanStatusUpdate.objects.filter(group=group)
 	paginator = Paginator(qs, 6)
 	status_updates = paginator.get_page(page_no)
 	return status_updates
