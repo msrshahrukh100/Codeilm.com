@@ -78,11 +78,8 @@ def send_ses_email(
     if not recipients:
         users = User.objects.filter(id__in=user_ids)
 
-    print(users)
-
     if users:
         for user in users:
-            print(user)
             if user.email in unsubscribed_emails:
                 emailmanager_models.EmailTracker.objects.create(
                     user=user,
@@ -90,12 +87,12 @@ def send_ses_email(
                     sent=False,
                     remarks="Not sent as email in Unsubscribed list",
                     template_path=template_path)
-                print("unsubscribed_emails")
             else:
-                print("coming to else part")
                 context["name"] = get_user_display_name(user)
                 context["email"] = user.email
-                print("calling function")
+                logger.info("-----------------*************--------------")
+                logger.info("subject is")
+                logger.info(subject)
                 if '%' in subject:
                     subject = subject % {'user_full_name': get_user_display_name(user)}
                 response = ses_email_helper(user.email, sender, template_path, subject, context)
