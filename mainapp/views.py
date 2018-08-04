@@ -47,7 +47,7 @@ def home(request):
 	logger.info("The communities queryset exists")
 	logger.info(communities.exists())
 	context = {
-		"communities": communities
+		"communities": communities[0:1]
 	}
 
 	return render(request, "index.html", context)
