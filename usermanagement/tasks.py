@@ -34,11 +34,12 @@ def send_connection_notifications(user_id, following_id):
 	}
 	context["get_params"] = emailmanager_utils.get_params_from_context(context)
 	emailmanager_tasks.send_ses_email(
-		sender="Allywith <shahrukh@allywith.com>",
-		user_ids=[following.id],
-		subject="🤗 %s started following you on Allywith " % get_user_display_name(user),
-		template_path="emails/connection_added_email.html",
-		context=context,
+		"Allywith <shahrukh@allywith.com>",
+		"emails/connection_added_email.html",
+		context,
+		[following.id],
+		None,
+		"🤗 %s started following you on Allywith " % get_user_display_name(user),
 	)
 
 	add_activity(user.id, 'started-following-' + get_user_display_name(following))

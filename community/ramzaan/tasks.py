@@ -43,11 +43,12 @@ def send_motivation(from_user_id, to_user_id, group_id):
 	}
 	context["get_params"] = emailmanager_utils.get_params_from_context(context)
 	emailmanager_tasks.send_ses_email(
-		sender="Allywith <shahrukh@allywith.com>",
-		user_ids=[to_user.id],
+		"Allywith <shahrukh@allywith.com>",
+		"emails/motivation_sent_email.html",
+		context,
+		[to_user.id],
+		None,
 		subject="🕊 Motivation received from " + get_user_display_name(from_user),
-		template_path="emails/motivation_sent_email.html",
-		context=context,
 	)
 
 	add_activity(from_user.id, 'ramzaan-motivation-sent')

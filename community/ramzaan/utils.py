@@ -24,11 +24,12 @@ def add_user_to_group(request, user, group):
 		"button_title": "Visit the group"
 	}
 	emailmanager_tasks.send_ses_email(
-		sender="Allywith <shahrukh@allywith.com>",
-		recipients=recipients,
-		subject="😃 " + get_user_display_name(user) + " joined the group " + group.name,
-		template_path="emails/email_with_image.html",
-		context=context,
+		"Allywith <shahrukh@allywith.com>",
+		"emails/email_with_image.html",
+		context,
+		None,
+		recipients,
+		"😃 " + get_user_display_name(user) + " joined the group " + group.name,
 	)
 
 
