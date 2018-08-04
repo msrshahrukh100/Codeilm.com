@@ -42,7 +42,7 @@ class RamzaanUnitDescription(basemodels.UnitDescription):
 	group = models.ForeignKey(RamzaanGroup, related_name="ramzaan_unitdescription", help_text="The group for which the unit description is entered", on_delete=models.CASCADE)
 
 	def __str__(self):
-		return self.unit_title
+		return str(self.id)
 
 
 class RamzaanUserProgress(basemodels.UserProgress):

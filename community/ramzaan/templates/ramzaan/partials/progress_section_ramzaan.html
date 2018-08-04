@@ -34,7 +34,7 @@
 
 	<div class="grid">
 	{% for group_user in group_users %}
-	{% with group_user.user.ramzaan_userprogressuser.first as user_progress_obj %}
+	{% with group_user|get_user_progress_object:group as user_progress_obj %}
 		<div style="width: 100%;" class="row element-item" data-name="{{ group_user.user|user_display_name }}">
 			<p class="progress hide">{% if user_progress_obj.get_progress %}{{ user_progress_obj.get_progress }}{% else %}0{% endif %}</p>
 			<div class="col s12">

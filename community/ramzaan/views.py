@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from .models import RamzaanGroup, RamzaanUnitDescription
+from .models import RamzaanGroup, RamzaanUnitDescription, RamzaanUserProgress
 from . import utils
 from . import tasks
 from mainapp import community_utils
@@ -40,10 +40,12 @@ def group_detail(request, id, slug):
 	group_users = group.users.all().exclude(user__isnull=True)  # query set of group user objects
 	users = [obj.user for obj in group_users]
 	unit_descriptions = RamzaanUnitDescription.objects.filter(group=group).order_by('unit')
-	try:
-		user_at_unit = user.ramzaan_userprogressuser.first().at_unit
-	except Exception as e:
+	user_progress_qs = RamzaanUserProgress.objects.filter(user=user, group=group)
+	if user_progress_qs.exists():
+		user_at_unit = RamzaanUserProgress.objects.filter(user=user, group=group).first().at_unit
+	else:
 		user_at_unit = None
+
 
 	context = {
 		"logged_in_user": user,

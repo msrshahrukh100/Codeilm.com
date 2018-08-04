@@ -1,6 +1,7 @@
 from community.ramzaan.utils import get_post_age
 from django import template
 from usermanagement.models import UserProfile
+from community.ramzaan.models import RamzaanUserProgress
 register = template.Library()
 
 
@@ -23,3 +24,9 @@ def profile_pic_url(user):
 def get_followings(user):
 	qs = user.user_followings.all()
 	return qs.values_list('following', flat=True)
+
+
+@register.filter(name='get_user_progress_object')
+def get_user_progress_object(group_user, group):
+	qs = RamzaanUserProgress.objects.filter(user=group_user.user, group=group)
+	return qs.first()
