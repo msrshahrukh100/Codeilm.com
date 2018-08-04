@@ -10,7 +10,7 @@ import emailmanager.tasks as emailmanager_tasks
 
 def add_user_to_group(request, user, group):
 	request_ip_info_obj = save_request_ip_info(request)
-	recipients = list(RamzaanGroupUser.objects.all().values_list('user__email', flat=True))
+	recipients = list(group.users.all().values_list('user__email', flat=True))
 	ramzaangroupuser_object = RamzaanGroupUser.objects.create(user=user, request_ip_info=request_ip_info_obj)
 	ramzaangroupuser_object.save()
 	group.users.add(ramzaangroupuser_object)
