@@ -2,6 +2,8 @@ from autoslug import AutoSlugField
 from django.db import models
 from django.contrib.auth.models import User
 from . import models as main_models
+from hashid_field import HashidField
+
 # Create your models here.
 
 
@@ -13,6 +15,7 @@ class Group(models.Model):
 	community = models.ForeignKey(main_models.Community, blank=True, null=True, on_delete=models.SET_NULL)
 	name = models.CharField(max_length=255, help_text="The name of the individual group formed within a community")
 	slug = AutoSlugField(populate_from='name')
+	group_hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
 	description = models.TextField(help_text="The description for the group in the community")
 	image = models.ImageField(
 		upload_to=upload_to,

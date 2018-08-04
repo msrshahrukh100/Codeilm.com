@@ -55,7 +55,7 @@ class RamzaanStatusUpdateAdmin(admin.ModelAdmin):
 
 
 class RamzaanGroupAdmin(admin.ModelAdmin):
-	list_display = ['name', 'slug', 'target_statement']
+	list_display = ['name', 'slug', 'group_hash_id', 'target_statement']
 	inlines = [
 		RamzaanGroupOptionsInline,
 		RamzaanUnitDescriptionInline
