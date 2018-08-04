@@ -22,9 +22,10 @@ class RamzaanGroupUserAdmin(admin.ModelAdmin):
 		send_ses_email(
 			sender,
 			"emails/reminder_email.html",
-			context={},
-			user_ids=user_ids,
-			subject="%(user_full_name)s memorized the first 10 Ayat of Surah Kahf")
+			{},
+			user_ids,
+			None,
+			"%(user_full_name)s memorized the first 10 Ayat of Surah Kahf")
 		self.message_user(request, "Reminder emails successfully sent")
 	send_reminder_email.short_description = "Send reminder emails"
 
