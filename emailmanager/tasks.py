@@ -106,18 +106,18 @@ def send_ses_email(
 
     else:
         for recipient in recipients:
-            if recipient in unsubscribed_emails:
+            if recipient[1] in unsubscribed_emails:
                 emailmanager_models.EmailTracker.objects.create(
-                    email=recipient,
+                    email=recipient[1],
                     sent=False,
                     remarks="Not sent as email in Unsubscribed list",
                     template_path=template_path)
             else:
-                response = ses_email_helper(recipient, sender, template_path, subject, context)
+                context["name"] = recipient[0]
+                response = ses_email_helper(recipient[1], sender, template_path, subject, context)
                 if response:
                     emailmanager_models.EmailTracker.objects.create(
-                        email=recipient,
+                        email=recipient[1],
                         sent=True,
                         remarks="Email sent successfully",
                         template_path=template_path)
-    

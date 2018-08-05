@@ -6,11 +6,14 @@ from .models import RamzaanUserProgress, RamzaanStatusUpdate, RamzaanGroupUser
 from mainapp.utils import save_request_ip_info, get_user_display_name
 from . import tasks
 import emailmanager.tasks as emailmanager_tasks
+from mainapp.utils import get_user_display_name
 
 
 def add_user_to_group(request, user, group):
 	request_ip_info_obj = save_request_ip_info(request)
-	recipients = list(group.users.all().values_list('user__email', flat=True))
+	users = [groupuser.user for groupuser in group.users.all()]
+	recipients = [(get_user_display_name(user), user.email) for user in users]
+	print(recipients)
 	ramzaangroupuser_object = RamzaanGroupUser.objects.create(user=user, request_ip_info=request_ip_info_obj)
 	ramzaangroupuser_object.save()
 	group.users.add(ramzaangroupuser_object)

@@ -15,7 +15,7 @@
 						<div class="card-image">
 							<a href="{{ group.get_absolute_url }}">
 								{% thumbnail group.image "480x270" crop="center" as big %}
-									{% thumbnail group.image "120x100" as small %}
+									{% thumbnail group.image "48x27" crop="center" as small %}
 										<img src="{{ small.url }}" data-sizes="auto" data-src="{{ big.url }}" class="lazyload">
 									{% endthumbnail %}
 								{% endthumbnail %}
