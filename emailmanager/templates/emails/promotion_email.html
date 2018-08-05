@@ -609,7 +609,7 @@
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
-                            <h1>Hello {{ name|title }}</h1>
+                            <h1>Hello {{ name|title }} !</h1>
 <br>
 From your friends at <br>
 <img align="center" alt="" src="{{ 'images/logo/logo-transparent.png'|static_absolute_uri }}" width="120" style="padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
@@ -673,8 +673,9 @@ From your friends at <br>
                     <tbody><tr>
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
-                        
+                            {% if name %}
                             Dear {{ name|title }},<br>
+                            {% endif %}
 <br>
 We are really excited to tell you about the launch of Allywith. An online social collaboration platform. On Allywith you can work on a common goal and motivate each other to achieve the same.
 <br>
