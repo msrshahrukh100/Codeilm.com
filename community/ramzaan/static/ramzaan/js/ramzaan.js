@@ -49,6 +49,26 @@ function get_time_difference(difference, interval){
 }
 
 
+$('.extra-content-popup-show').on('click', function(){
+    var actionurl = $(this).data('actionurl');
+    $.ajax({
+        type: 'GET',
+        url: actionurl,
+        success: function(data){
+            $('#entra-content-modal').html(data);
+        },
+        error: function(x, t, m) {
+            if(t==="timeout") {
+                M.toast({html: 'Connection Error', classes: "red"})
+            }
+            else {
+                M.toast({html: t, classes: "red"})
+            }
+        }
+    });
+});
+
+
 $('.action-buttons').on('click', function(){
     el = $(this);
 	actionurl = el.data('url');

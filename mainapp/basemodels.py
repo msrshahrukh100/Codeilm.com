@@ -43,6 +43,9 @@ class GroupOption(models.Model):
 	is_private = models.BooleanField(default=False, help_text="Whether the group is still private")
 	is_active = models.BooleanField(default=True, help_text="Whether the group is still active, set to false when user deletes it")
 	show_timer = models.BooleanField(default=False)
+	has_extra_content_popup = models.BooleanField(default=False, help_text="Has content which needs to be shown in a popup window")
+	extra_content_popup_cta = models.CharField(max_length=255, null=True, blank=True, help_text="The CTA of the modal display button")
+	extra_content_popup_template = models.CharField(max_length=255, null=True, blank=True, help_text="The template of the pop")
 
 	class Meta:
 		abstract = True

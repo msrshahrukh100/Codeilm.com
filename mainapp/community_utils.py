@@ -34,19 +34,25 @@ def get_group_options(request, group, app_name):
 	group_options = None
 	if app_name == 'sealed-nector':
 		group_options = group.ramzaan_groupoptions
+		print("------------------")
+		print(group_options.has_extra_content_popup)
 	options = {
 		'is_ongoing_event': is_ongoing_event,
 		'is_expired_event': is_expired_event,
 		'is_future_event': is_future_event,
 		'user_is_member': user_is_member,
 		'user_is_loggedin': request.user.is_authenticated,
-		'is_private': group_options.is_private,
-		'is_active': group_options.is_active,
-		'show_timer': group_options.show_timer,
 		'is_time_bound': is_time_bound,
 		'is_indefinite': is_indefinite,
 		'is_not_time_bound': is_not_time_bound,
 		'is_group_owner': is_group_owner,
+	
+		'is_private': group_options.is_private,
+		'has_extra_content_popup': group_options.has_extra_content_popup,
+		'is_active': group_options.is_active,
+		'show_timer': group_options.show_timer,
+		'extra_content_popup_cta': group_options.extra_content_popup_cta,
+		'extra_content_popup_template': group_options.extra_content_popup_template
 	}
 
 	return options

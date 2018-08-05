@@ -34,6 +34,12 @@ def group_list(request):
 	return render(request, "group_list.html", context)
 
 
+def get_group_extra_content(request, group_hash_id):
+	group = RamzaanGroup.objects.get(group_hash_id=group_hash_id)
+	template = group.ramzaan_groupoptions.extra_content_popup_template
+	return render(request, template, {})
+
+
 def group_detail(request, id, slug):
 	group = get_object_or_404(RamzaanGroup, id=id)
 	user = request.user  # the current logged in user
@@ -45,7 +51,6 @@ def group_detail(request, id, slug):
 		user_at_unit = RamzaanUserProgress.objects.filter(user=user, group=group).first().at_unit
 	else:
 		user_at_unit = None
-
 
 	context = {
 		"logged_in_user": user,

@@ -14,6 +14,17 @@
           <a style="text-transform: none;" class='dropdown-trigger black-text transparent filter-dropdown btn-large z-depth-0' href='#' data-target='sort-dropdown'><i class="material-icons black-text">swap_vert</i> Sort</a>
           <a style="text-transform: none;" data-target="slide-out" class='black-text hide-on-large-only transparent sidenav-trigger btn-large z-depth-0'><i class="material-icons black-text"></i>Recent Updates<sup class="recent-updates-indicator-mobile"><span class="btn-floating waves-effect waves-light green pulse" style="height: 10px; width: 10px; margin-left: 2px;"></span></sup></a>
 
+          {% if group_options.has_extra_content_popup %}
+           <a class="waves-effect waves-light modal-trigger extra-content-popup-show" data-actionurl="{% url 'ramzaan:get_group_extra_content' group_hash_id=group.group_hash_id %}" href="#entra-content-modal">{{ group_options.extra_content_popup_cta }}</a
+			>
+			{% endif %}
+
+		  <div id="entra-content-modal" class="modal" style="height: 100%;">
+			<div class="center">
+			    {% include 'mainapp/partials/preloader_small.html' %}
+			</div>
+		  </div>
+
 			<ul id='sort-dropdown' class='dropdown-content'>
 				<li>
 					<a class="filter-by" data-by="decrease-progress" href="#!">Progress <i class="material-icons black-text">arrow_upward</i>
