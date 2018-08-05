@@ -1,6 +1,5 @@
-{% load static %}
 {% load main_extras %}
-{% load thumbnail %}
+{% load static %}
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
     <head>
@@ -16,7 +15,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Motivation Received | Allywith</title>
+      <title>Welcome to Allywith</title>
       
     <style type="text/css">
 		p{
@@ -106,7 +105,7 @@
 	@tip Set the background color and top border for your email. You may want to choose colors that match your company's branding.
 	*/
 		body,#bodyTable{
-			/*@editable*/background-color:#2667FF;
+			/*@editable*/background-color:#ffc107;
 		}
 	/*
 	@tab Page
@@ -131,7 +130,7 @@
 	@style heading 1
 	*/
 		h1{
-			/*@editable*/color:#2667FF !important;
+			/*@editable*/color:#ffc107 !important;
 			/*@editable*/font-family:Helvetica;
 			/*@editable*/font-size:32px;
 			/*@editable*/font-style:normal;
@@ -194,7 +193,7 @@
 	@tip Set the background color and borders for your email's preheader area.
 	*/
 		#templatePreheader{
-			/*@editable*/background-color:#2667FF;
+			/*@editable*/background-color:#ffc107;
 			/*@editable*/border-top:0;
 			/*@editable*/border-bottom:0;
 		}
@@ -248,7 +247,7 @@
 	@tip Set the styling for your email's header links. Choose a color that helps them stand out from your text.
 	*/
 		.headerContainer .mcnTextContent a{
-			/*@editable*/color:#2667FF;
+			/*@editable*/color:#ffc107;
 			/*@editable*/font-weight:normal;
 			/*@editable*/text-decoration:underline;
 		}
@@ -280,7 +279,7 @@
 	@tip Set the styling for your email's body links. Choose a color that helps them stand out from your text.
 	*/
 		.bodyContainer .mcnTextContent a{
-			/*@editable*/color:#2667FF;
+			/*@editable*/color:#ffc107;
 			/*@editable*/font-weight:normal;
 			/*@editable*/text-decoration:underline;
 		}
@@ -312,7 +311,7 @@
 	@tip Set the styling for your email's footer links. Choose a color that helps them stand out from your text.
 	*/
 		.footerContainer .mcnTextContent a{
-			/*@editable*/color:#2667FF;
+			/*@editable*/color:#ffc107;
 			/*@editable*/font-weight:normal;
 			/*@editable*/text-decoration:underline;
 		}
@@ -347,12 +346,6 @@
 		.mcnImage{
 			height:auto !important;
 			width:100% !important;
-		}
-
-}	@media only screen and (max-width: 480px){
-		.mcnImageMot{
-			height:auto !important;
-			width:40% !important;
 		}
 
 }	@media only screen and (max-width: 480px){
@@ -554,6 +547,11 @@
 				<!--[if mso]>
 				<td valign="top" width="600" style="width:600px;">
 				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                    </tr>
+                </tbody></table>
 				<!--[if mso]>
 				</td>
 				<![endif]-->
@@ -576,37 +574,57 @@
                                     <!-- BEGIN HEADER // -->
                                     <table border="0" cellpadding="0" cellspacing="0" width="600" id="templateHeader">
                                         <tr>
-                                            <td valign="top" class="headerContainer" style="padding-top:9px; padding-bottom:9px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnCaptionBlock">
-    <tbody class="mcnCaptionBlockOuter">
+                                            <td valign="top" class="headerContainer" style="padding-top:9px; padding-bottom:9px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width:100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding:9px" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width:100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
+                                
+                                    
+                                        <img align="center" alt="" src="{{ 'images/email_images/holiday_giving_header.png'|static_absolute_uri }}" width="400" style="max-width:400px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
+                                    
+                                
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
+</table><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
+    <tbody class="mcnTextBlockOuter">
         <tr>
-            <td class="mcnCaptionBlockInner" valign="top" style="padding:9px;">
+            <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
+                        
+                            <h1>Hello {{ name|title }}</h1>
+<br>
+From your friends at <br>
+<img align="center" alt="" src="{{ 'images/logo/logo-transparent.png'|static_absolute_uri }}" width="120" style="padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
+
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
                 
-
-<table align="left" border="0" cellpadding="0" cellspacing="0" class="mcnCaptionBottomContent">
-    <tbody><tr>
-        <td class="mcnCaptionBottomImageContent" align="center" valign="top" style="padding:0 9px 9px 9px;">
-        
-            
-            <a href="https://allywith.com">
-            	
-
-            <img alt="" src="{{ 'images/logo/logo-square.png'|static_absolute_uri }}" width="150" style="max-width:230px;" class="mcnImage">
-            
-            </a>
-        
-        </td>
-    </tr>
-    <tr>
-        <td class="mcnTextContent" valign="top" style="padding:0 9px 0 9px;" width="564">
-            
-        </td>
-    </tr>
-</tbody></table>
-
-
-
-
-
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
             </td>
         </tr>
     </tbody>
@@ -639,55 +657,46 @@
                                     <!-- BEGIN BODY // -->
                                     <table border="0" cellpadding="0" cellspacing="0" width="600" id="templateBody">
                                         <tr>
-                                            <td valign="top" class="bodyContainer" style="padding-top:9px; padding-bottom:9px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnCaptionBlock">
-    <tbody class="mcnCaptionBlockOuter">
+                                            <td valign="top" class="bodyContainer" style="padding-top:9px; padding-bottom:9px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
+    <tbody class="mcnTextBlockOuter">
         <tr>
-            <td class="mcnCaptionBlockInner" valign="top" style="padding:9px;">
+            <td valign="top" class="mcnTextBlockInner" style="padding-top:9px;">
+              	<!--[if mso]>
+				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
+				<tr>
+				<![endif]-->
+			    
+				<!--[if mso]>
+				<td valign="top" width="600" style="width:600px;">
+				<![endif]-->
+                <table align="left" border="0" cellpadding="0" cellspacing="0" style="max-width:100%; min-width:100%;" width="100%" class="mcnTextContentContainer">
+                    <tbody><tr>
+                        
+                        <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
+                        
+                            Dear {{ name|title }},<br>
+<br>
+We are really excited to tell you about the launch of Allywith. An online social collaboration platform. On Allywith you can work on a common goal and motivate each other to achieve the same.
+<br>
+Sounds exciting?
+<br>
+
+Click on the button below to know how it works.
+                        </td>
+                    </tr>
+                </tbody></table>
+				<!--[if mso]>
+				</td>
+				<![endif]-->
                 
-
-<table align="left" border="0" cellpadding="0" cellspacing="0" class="mcnCaptionBottomContent">
-    <tbody>
-    	<tr style="height: 20%; width: 20%;">
-        <td class="mcnCaptionBottomImageContent" align="center" valign="top" style="padding:0 9px 9px 9px;">
-        
-            
-
-           
-            
-        
-        </td>
-    </tr>
-    <tr>
-        <td class="mcnTextContent" valign="top" style="padding:0 9px 0 9px;" width="564">
-            <p style="font-size: 20px; font-weight: bold;">
-            	"{{ name }} memorized the first 10 Ayat of Surah Kahaf"
-            </p>
-
-            <br>
-            <p style="font-size: 17px;">Imagine having completed the task and motivating others to achieve the same goal. It will be indeed a great achievement.&nbsp;<br>
-			<br>
-			We were really excited when you joined the group. So we just thought of sending you a reminder email to keep doing the good work.<br>
-			<br>
-			Also, we are working really hard to keep improving Allywith, and <strong>we will be glad if you could please give us a feedback<br>
-			<br>
-			Please let us know which of the following options describes you the best.</strong><br>
-			&nbsp;</p>
-
-        </td>
-    </tr>
-</tbody></table>
-
-
-
-
+				<!--[if mso]>
+				</tr>
+				</table>
+				<![endif]-->
             </td>
         </tr>
     </tbody>
-</table>
-
-
-
-</td>
+</table></td>
                                         </tr>
                                     </table>
                                     <!-- // END BODY -->
@@ -698,10 +707,41 @@
                                     <!-- BEGIN FOOTER // -->
                                     <table border="0" cellpadding="0" cellspacing="0" width="600" id="templateFooter">
                                         <tr>
-                                            <td valign="top" class="footerContainer" style="padding-top:9px; padding-bottom:9px;">
-                                            	<table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width:100%;">
-
+                                            <td valign="top" class="footerContainer" style="padding-top:9px; padding-bottom:9px;"><table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnImageBlock" style="min-width:100%;">
+    <tbody class="mcnImageBlockOuter">
+            <tr>
+                <td valign="top" style="padding:9px" class="mcnImageBlockInner">
+                    <table align="left" width="100%" border="0" cellpadding="0" cellspacing="0" class="mcnImageContentContainer" style="min-width:100%;">
+                        <tbody><tr>
+                            <td class="mcnImageContent" valign="top" style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
+                                
+                                                                    
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </td>
+            </tr>
+    </tbody>
 </table>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonBlock" style="min-width:100%; margin-top: 40px;">
+    <tbody class="mcnButtonBlockOuter">
+        <tr>
+            <td style="padding-top:0; padding-right:18px; padding-bottom:18px; padding-left:18px;" valign="top" align="center" class="mcnButtonBlockInner">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnButtonContentContainer" style="border-collapse: separate !important;border-radius: 5px;background-color: #DB5461;">
+                    <tbody>
+                        <tr>
+                            <td align="center" valign="middle" class="mcnButtonContent" style="font-family: &quot;Lucida Sans Unicode&quot;, &quot;Lucida Grande&quot;, sans-serif; font-size: 24px; padding: 15px;">
+                                <a class="mcnButton " title="How Allywith works?" href="{{ feedback_url|absolute_uri }}?value=visited_site&email={{ email }}" target="_blank" style="font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;">How Allywith works?</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="mcnTextBlock" style="min-width:100%;">
     <tbody class="mcnTextBlockOuter">
         <tr>
@@ -719,14 +759,21 @@
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
-                            <em>Copyright © {% now 'Y' %} Allywith.com, All rights reserved.</em><br>
+                            <em>Copyright © {% now 'Y' %} Allywith.com, All rights reserved.</em>
 <br>
-<strong>Our mailing address is:</strong><br>
-shahrukh@allywith.com<br>
-<br>
-Want to change how you receive these emails?<br>
-You can <a href="">update your preferences</a> or <a href="{{ base_url }}{% url 'emailmanager:unsubscribe_user' %}{{ get_params }}">unsubscribe from this list</a>.<br>
-<br>
+    <br>
+    <strong>Our mailing address is:</strong>
+    <br>
+    shahrukh@allywith.com
+    <br>
+    <br>
+    {% if not at_site %}
+	Want to change how you receive these emails?<br>
+    You can <a href="*|UPDATE_PROFILE|*">update your preferences</a> or <a href="{{ base_url }}{% url 'emailmanager:unsubscribe_user' %}{{ get_params }}">unsubscribe from this list</a>.
+    <br>
+    {% endif %}
+    <br>
+
                         </td>
                     </tr>
                 </tbody></table>

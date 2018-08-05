@@ -41,6 +41,7 @@ class FeedbackEvent(models.Model):
 	width_field = models.IntegerField(default=0)
 	click_response_html = models.TextField(null=True, blank=True, help_text="HTML for the click responses")
 	feedback_url = models.URLField(null=True, blank=True)
+	redirect_url = models.URLField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	created_by = models.ForeignKey(User, null=True, editable=False, related_name="feedbackevent_created", on_delete=models.SET_NULL)

@@ -39,4 +39,4 @@ def test_email(request):
 
 	}
 
-	return render(request, "emails/temp.html", context)
+	return render(request, "emails/promotion_email.html", context)

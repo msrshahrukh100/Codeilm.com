@@ -36,6 +36,8 @@ def feed_back_thankyou_page(request):
 def store_click_response(request, id=None, slug=None):
 	feedback_event = get_object_or_404(FeedbackEvent, id=id, slug=slug)
 	utils.save_click_response(request, feedback_event)
+	if feedback_event.redirect_url:
+		return redirect(feedback_event.redirect_url)
 	return redirect(reverse('feedback:feed_back_thankyou_page'))
 
 
