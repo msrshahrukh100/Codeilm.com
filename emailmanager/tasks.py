@@ -114,6 +114,7 @@ def send_ses_email(
                     template_path=template_path)
             else:
                 context["name"] = recipient[0]
+                context["email"] = recipient[1]
                 if '%' in subject:
                     subject = subject % {'user_full_name': context["name"]}
                 response = ses_email_helper(recipient[1], sender, template_path, subject, context)
