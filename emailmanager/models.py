@@ -23,3 +23,14 @@ class UnsubscribedUser(models.Model):
 
 	def __str__(self):
 		return self.email
+
+
+class SendSESEmail(models.Model):
+	sender = models.CharField(max_length=255)
+	template_path = models.CharField(max_length=255)
+	context = models.TextField(default="{}")
+	receipient_json_data = models.TextField()
+	subject = models.CharField(max_length=255)
+
+	def __str__(self):
+		return str(self.id)

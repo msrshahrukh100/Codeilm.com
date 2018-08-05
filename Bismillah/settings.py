@@ -250,7 +250,7 @@ LOGGING = {
     },
 }
 
-ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'towardslight52@gmail.com')]
+ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'shahrukh@allywith.com')]
 SERVER_EMAIL = "shahrukh@allywith.com"
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'geo-ip-db')

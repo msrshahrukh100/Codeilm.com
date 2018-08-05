@@ -11,5 +11,10 @@ class UnsubscribedUserAdmin(admin.ModelAdmin):
 	list_display = ['email', 'created_at', 'updated_at']
 
 
+class SendSESEmailAdmin(admin.ModelAdmin):
+	list_display = ['sender', 'template_path', 'subject']
+
+
 admin.site.register(emailmanager_models.EmailTracker, EmailTrackerAdmin)
 admin.site.register(emailmanager_models.UnsubscribedUser, UnsubscribedUserAdmin)
+admin.site.register(emailmanager_models.SendSESEmail, SendSESEmailAdmin)
