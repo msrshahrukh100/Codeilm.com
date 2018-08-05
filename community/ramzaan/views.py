@@ -46,9 +46,12 @@ def group_detail(request, id, slug):
 	group_users = group.users.all().exclude(user__isnull=True)  # query set of group user objects
 	users = [obj.user for obj in group_users]
 	unit_descriptions = RamzaanUnitDescription.objects.filter(group=group).order_by('unit')
-	user_progress_qs = RamzaanUserProgress.objects.filter(user=user, group=group)
-	if user_progress_qs.exists():
-		user_at_unit = RamzaanUserProgress.objects.filter(user=user, group=group).first().at_unit
+	if user.is_authenticated:
+		user_progress_qs = RamzaanUserProgress.objects.filter(user=user, group=group)
+		if user_progress_qs.exists():
+			user_at_unit = RamzaanUserProgress.objects.filter(user=user, group=group).first().at_unit
+		else:
+			user_at_unit = None
 	else:
 		user_at_unit = None
 
