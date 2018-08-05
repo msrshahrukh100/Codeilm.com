@@ -13,5 +13,5 @@ def give_group_owner_permission(sender, instance, created, **kwargs):
 		assign_perm('owner_of_group', instance.created_by, instance)
 		ramzaan_models.RamzaanGroupOptions.objects.create(group=instance)
 		logger.info("Added group permission to user")
-		qs = ramzaan_models.RamzaanGroup.objects.filter(id=instance.id)
-		qs.update(group_hash_id=instance.id)
+	qs = ramzaan_models.RamzaanGroup.objects.filter(id=instance.id)
+	qs.update(group_hash_id=instance.id)
