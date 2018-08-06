@@ -778,8 +778,9 @@
 <strong>Our mailing address is:</strong><br>
 shahrukh@allywith.com<br>
 <br>
+{% url 'emailmanager:unsubscribe_user' as unsubscribe_url %}
 Want to change how you receive these emails?<br>
-You can <a href="">update your preferences</a> or <a href="{{ base_url }}{% url 'emailmanager:unsubscribe_user' %}{{ get_params }}">unsubscribe from this list</a>.<br>
+You can <a href="">update your preferences</a> or <a href="{{ unsubscribe_url|absolute_uri }}?name={{ name }}&email={{ email }}">unsubscribe from this list</a>.<br>
 <br>
                         </td>
                     </tr>

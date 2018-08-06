@@ -768,11 +768,10 @@ Click on the button below to know how it works.
     shahrukh@allywith.com
     <br>
     <br>
-    {% if not at_site %}
+    {% url 'emailmanager:unsubscribe_user' as unsubscribe_url %}
 	Want to change how you receive these emails?<br>
-    You can <a href="*|UPDATE_PROFILE|*">update your preferences</a> or <a href="{{ base_url }}{% url 'emailmanager:unsubscribe_user' %}{{ get_params }}">unsubscribe from this list</a>.
+    You can <a href="*|UPDATE_PROFILE|*">update your preferences</a> or <a href="{{ unsubscribe_url|absolute_uri }}?name={{ name }}&email={{ email }}">unsubscribe from this list</a>.
     <br>
-    {% endif %}
     <br>
 
                         </td>
