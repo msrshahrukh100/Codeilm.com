@@ -31,6 +31,8 @@ class SendSESEmail(models.Model):
 	context = models.TextField(default="{}")
 	receipient_json_data = models.TextField()
 	subject = models.CharField(max_length=255)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return str(self.id)

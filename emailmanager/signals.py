@@ -25,19 +25,20 @@ def user_signed_up(sender, instance, created, **kwargs):
 			]
 		}
 	'''
-	sender = instance.sender
-	template_path = instance.template_path
-	subject = instance.subject
-	context = ast.literal_eval(instance.context)
-	receipient_json_data = ast.literal_eval(instance.receipient_json_data)
-	recipients_data = receipient_json_data.get('recipients')
-	if recipients_data:
-		recipients = [(recipient["name"], recipient["email"]) for recipient in recipients_data]
-	send_ses_email(
-		sender,
-		template_path,
-		context,
-		None,
-		recipients,
-		subject
-	)
+	if created:
+		sender = instance.sender
+		template_path = instance.template_path
+		subject = instance.subject
+		context = ast.literal_eval(instance.context)
+		receipient_json_data = ast.literal_eval(instance.receipient_json_data)
+		recipients_data = receipient_json_data.get('recipients')
+		if recipients_data:
+			recipients = [(recipient["name"], recipient["email"]) for recipient in recipients_data]
+		send_ses_email(
+			sender,
+			template_path,
+			context,
+			None,
+			recipients,
+			subject
+		)
