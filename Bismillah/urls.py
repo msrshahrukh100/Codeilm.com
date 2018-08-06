@@ -22,6 +22,7 @@ from mainapp.views import opensearch
 from . import community_urls
 
 handler404 = 'mainapp.views.redirect_to_page'
+handler500 = 'mainapp.views.redirect_for_server_error'
 
 urlpatterns = [
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),

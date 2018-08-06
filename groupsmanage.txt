@@ -17,3 +17,19 @@ ALTER TABLE mydb.mytable CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicod
 ALTER TABLE bismillah.ramzaan_ramzaanunitdescription CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
+**** new
+
+ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+ALTER TABLE table_name CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE table_name modify name text charset utf8mb4; 
+
+
+ALTER DATABASE bismillah CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+ALTER TABLE ramzaan_ramzaanstatusupdate CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER TABLE ramzaan_ramzaanstatusupdate modify content text charset utf8mb4;
+
+
+
+*** steps i am doing now
+
+in the directory - /etc/mysql/mysql.conf.d
