@@ -8,7 +8,7 @@ from django.conf import settings
 from emailmanager import utils as emailmanager_utils
 from mainapp.utils import get_user_display_name
 from sorl.thumbnail import get_thumbnail
-
+from emailmanager.tasks import send_ses_email
 
 
 @background(schedule=20)
@@ -58,16 +58,27 @@ def send_motivation(from_user_id, to_user_id, group_id):
 def send_update_user_status_notifications(user_id, group_id, data, online_user_ids):
 	user = User.objects.get(id=user_id)
 	followers = user.user_followers.all()
+	group = ramzaan_models.RamzaanGroup.objects.get(id=group_id)
+	email_context = {
+		"message": get_user_display_name(user) + " updated status on the group '" + group.name + "' in the community " + group.community.name,
+		"person_image_url": user.user_profile.first().get_profile_pic_url(),
+		"button_url": group.get_absolute_url(),
+		"button_title": "Visit the group"
+	}
+	email_subject = "🙌 " + get_user_display_name(user) + " updated the status"
 	for follower in followers:
 		notify.send(
 			user,
 			recipient=follower.user,
-			verb=get_user_display_name(user) + ' updated his status',
+			verb=get_user_display_name(user) + ' updated the status',
 			image_url=get_thumbnail(user.user_profile.first().get_profile_pic_url(), '100x100', crop="center").url
 		)
-
-		if follower.user.id in online_user_ids:
-			print("online now, don't send mail")
-		else:
-			pass
-			# send mai
+		sender = "Allywith <shahrukh@allywith.com>"
+		send_ses_email(
+			sender,
+			"emails/email_with_image.html",
+			email_context,
+			[follower.user.id],
+			None,
+			email_subject
+		)

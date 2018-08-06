@@ -55,7 +55,11 @@ def get_status_updates_page(page_no, group):
 
 def update_user_status(request, user, group, **data):
 	obj = RamzaanStatusUpdate.objects.create(**data)
-	user_progress_obj, created = RamzaanUserProgress.objects.get_or_create(user=user, group=group)
+	user_progress_qs = RamzaanUserProgress.objects.filter(user=user, group=group)
+	if user_progress_qs.exists():
+		user_progress_obj = user_progress_qs.first()
+	else:
+		user_progress_obj = RamzaanUserProgress.objects.create(user=user, group=group)
 	user_progress_obj.at_unit = obj.at_unit
 	user_progress_obj.save()
 	add_activity(user.id, 'ramzaan-status-update')
