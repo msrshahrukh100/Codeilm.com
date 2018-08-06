@@ -64,4 +64,7 @@ def update_user_status(request, user, group, **data):
 	user_progress_obj.save()
 	add_activity(user.id, 'ramzaan-status-update')
 	online_user_ids = request.online_now_ids
-	tasks.send_update_user_status_notifications(user.id, group.id, data, online_user_ids)
+	if user_progress_obj.get_progress() == 100:
+		tasks.send_task_completed_notifications(user.id, group.id, data, online_user_ids)
+	else:
+		tasks.send_update_user_status_notifications(user.id, group.id, data, online_user_ids)
