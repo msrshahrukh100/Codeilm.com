@@ -129,6 +129,7 @@ DATABASES = {
         'HOST': os.environ['MYSQL_DATABASE_HOST'],
         'PORT': os.environ['MYSQL_DATABASE_PORT'],
         'CONN_MAX_AGE': int(os.environ['CONN_MAX_AGE']),
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 
