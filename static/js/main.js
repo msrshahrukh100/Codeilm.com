@@ -67,3 +67,12 @@ function mark_user_notifications_read(){
 
 
 $('.dropdown-trigger-notification').dropdown({coverTrigger: false, constrainWidth: false, onCloseEnd: mark_user_notifications_read});
+
+
+$('.insert-emoticon').on('click', function(){
+	var status_input = $('#status_input');
+	var emoticon = $(this).text();
+	var initial_val = status_input.val();
+	status_input.focus();
+	status_input.val(initial_val + emoticon);
+});

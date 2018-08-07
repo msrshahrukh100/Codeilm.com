@@ -22,11 +22,42 @@
 
             <label for="status_input" class="">What's on your mind?</label>
             <textarea id="status_input" row="2" name="content" class="materialize-textarea"></textarea>
+              <a class='dropdown-trigger btn-tiny scale-transition scale-out show-on-status-focus emoji-dropdown btn transparent z-depth-0 grey-text' style="padding-left: 0px;" href='#' data-target='dropdown1'>
+                  <i class="material-icons left-align">sentiment_very_satisfied</i>
+              </a>
+              <div id='dropdown1' class='dropdown-content row scale-transition scale-out show-on-status-focus'>
+                <div class="col s12">
+                  <span class="insert-emoticon" style="margin: 1px;">☺️</span>
+                  <span class="insert-emoticon" style="margin: 1px;">🙂</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😊</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😀</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😁</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😍</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😆</span>
+                  <br>
+                  <span class="insert-emoticon" style="margin: 1px;">😂</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😉</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😜</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😘</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😗</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😍</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😲</span>
+                  <br>
+                  <span class="insert-emoticon" style="margin: 1px;">☹️</span>
+                  <span class="insert-emoticon" style="margin: 1px;">🙁</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😞</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😟</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😣</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😖</span>
+                  <span class="insert-emoticon" style="margin: 1px;">😭</span>
+                  <br>
+                </div>
+              </div>
 
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s10 offset-s2 scale-transition scale-out show-on-status-focus" style="z-index: 100;">
+        <div class="input-field col s10 offset-s2 scale-transition scale-out show-on-status-focus" style="z-index: 100; margin-top: -10px;">
           <select class="icons" name="at_unit_id">
             {% for unit_description in unit_descriptions %}
             <option value="{{ unit_description.id }}" {% ifequal user_at_unit unit_description %} selected {% endifequal %}>{{ unit_description.unit|ordinal }} {{ group.unit_name }} - {{ unit_description.unit_title }}</option>

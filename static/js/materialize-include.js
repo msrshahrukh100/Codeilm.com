@@ -8,3 +8,5 @@ $('select').formSelect();
 $('.slider').slider({indicators:false});
 $('.fixed-action-btn').floatingActionButton();
 $('.sidenav.sidenav-recent-activity').sidenav({edge: 'right', preventScrolling: false});
+
+$('.dropdown-trigger.emoji-dropdown').dropdown({hover: true, constrainWidth: false, alignment: 'bottom', closeOnClick: false});
