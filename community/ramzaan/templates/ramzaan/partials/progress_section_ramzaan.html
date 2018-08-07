@@ -44,7 +44,7 @@
 
 
 	<div class="grid">
-	{% for group_user in group_users %}
+	{% for group_user in group_users reversed %}
 	{% with group_user|get_user_progress_object:group as user_progress_obj %}
 		<div style="width: 100%;" class="row element-item" data-name="{{ group_user.user|user_display_name }}">
 			<p class="progress hide">{% if user_progress_obj.get_progress %}{{ user_progress_obj.get_progress }}{% else %}0{% endif %}</p>
@@ -89,6 +89,7 @@
 					
 					</div>
 					{% ifnotequal user_progress_obj.get_progress 100 %}
+					{% ifnotequal group_user.user request.user %}
 					<div class="card-action">
 						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ group_user.user|user_display_name }}" data-position="bottom" data-userid="{{ group_user.user.id }}" data-successmessage='You motivated {{ group_user.user|user_display_name }}!' data-url="{{ user_progress_obj.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ group_user.user|user_display_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
 						{% if group_user.user.id not in followings %}
@@ -98,7 +99,7 @@
 							{% include "mainapp/partials/preloader_small.html" %}
 						</div>
 					</div>
-
+					{% endifnotequal %}
 					{% endifnotequal %}
 
 				</div>

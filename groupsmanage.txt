@@ -29,6 +29,13 @@ ALTER TABLE ramzaan_ramzaanstatusupdate CONVERT TO CHARACTER SET utf8mb4 COLLATE
 ALTER TABLE ramzaan_ramzaanstatusupdate modify content text charset utf8mb4;
 
 
+******Important *****
+
+The main step is add option for connection encoding in settings.py databases settings.
+'OPTIONS': {'charset': 'utf8mb4'},
+
+
+
 
 *** steps i am doing now
 
