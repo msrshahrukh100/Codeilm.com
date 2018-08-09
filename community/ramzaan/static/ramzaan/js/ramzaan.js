@@ -55,7 +55,7 @@ $('.extra-content-popup-show').on('click', function(){
         type: 'GET',
         url: actionurl,
         success: function(data){
-            $('#entra-content-modal').html(data);
+            $('#extra-content-modal').html(data);
         },
         error: function(x, t, m) {
             if(t==="timeout") {

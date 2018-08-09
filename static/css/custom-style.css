@@ -29,3 +29,8 @@ textarea.materialize-textarea:focus {
 .dropdown-content li>span {
 	color: #0277bd;
 }
+
+.panel-buttons {
+	padding-left: 0px;
+	padding-right: 17px;
+}
