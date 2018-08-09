@@ -11,29 +11,31 @@ from mainapp.utils import get_user_display_name
 
 def add_user_to_group(request, user, group):
 	request_ip_info_obj = save_request_ip_info(request)
-	users = [groupuser.user for groupuser in group.users.all()]
+	users = [groupuser.user for groupuser in group.users.all().order_by('-id')]
 	recipients = [(get_user_display_name(user), user.email) for user in users]
-	print(recipients)
+	no_of_recipients = len(recipients)
 	ramzaangroupuser_object = RamzaanGroupUser.objects.create(user=user, request_ip_info=request_ip_info_obj)
 	ramzaangroupuser_object.save()
 	group.users.add(ramzaangroupuser_object)
 	obj = RamzaanUserProgress.objects.create(user=user, group=group)
 	obj.save()
 	messages.success(request, 'You have successfully joined this group')
-	context = {
-		"message": get_user_display_name(user) + " just joined the group " + group.name + " in the community " + group.community.name,
-		"person_image_url": user.user_profile.first().get_profile_pic_url(),
-		"button_url": group.get_absolute_url(),
-		"button_title": "Visit the group"
-	}
-	emailmanager_tasks.send_ses_email(
-		"Allywith <shahrukh@allywith.com>",
-		"emails/email_with_image.html",
-		context,
-		None,
-		recipients,
-		"😃 " + get_user_display_name(user) + " joined the group " + group.name,
-	)
+	if no_of_recipients % 5 is 0:
+		new_user_names = recipients[0][0] + ", " + recipients[1][0]
+		context = {
+			"message": new_user_names + " and 3 others just joined the group " + group.name + " in the community " + group.community.name,
+			"person_image_url": user.user_profile.first().get_profile_pic_url(),
+			"button_url": group.get_absolute_url(),
+			"button_title": "Visit the group"
+		}
+		emailmanager_tasks.send_ses_email(
+			"Allywith <shahrukh@allywith.com>",
+			"emails/email_with_image.html",
+			context,
+			None,
+			recipients,
+			"😃 " + new_user_names + " and 3 others joined the group " + group.name,
+		)
 
 
 def get_post_age(date):
