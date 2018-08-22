@@ -1,0 +1,112 @@
+{% load static %}
+{% load ramzaan_extras %}
+{% load main_extras %}
+{% load humanize %}
+{% load thumbnail %}
+
+<div class="col l8 m12 s12">
+
+
+	{% include "mainapp/partials/forms/status_update_form.html" %}
+	{% with request.user|get_followings as followings %}
+	<div class="row">
+        <div class="col s12" style="height: 27px;margin-top: -27px;">
+          <a style="text-transform: none;" class='dropdown-trigger panel-buttons black-text transparent filter-dropdown btn-large z-depth-0' href='#' data-target='sort-dropdown'><i class="material-icons black-text">swap_vert</i> Sort</a>
+          <a style="text-transform: none; padding-top: 3px;" data-target="slide-out" class='black-text hide-on-large-only panel-buttons transparent sidenav-trigger btn-large z-depth-0'><i class="material-icons black-text"></i>Recent Updates<sup class="recent-updates-indicator-mobile"><span class="btn-floating waves-effect waves-light green pulse" style="height: 10px; width: 10px; margin-left: 2px;"></span></sup></a>
+
+          {% if group_options.has_extra_content_popup %}
+           <a style="padding-top: 3px;" class="waves-effect waves-light modal-trigger extra-content-popup-show" data-actionurl="{% url 'ramzaan:get_group_extra_content' group_hash_id=group.group_hash_id %}" href="#extra-content-modal">{{ group_options.extra_content_popup_cta }}</a
+			>
+			  <div id="extra-content-modal" class="modal" style="height: 100%;">
+				<div class="center">
+				    {% include 'mainapp/partials/preloader_small.html' %}
+				</div>
+			  </div>
+			{% endif %}
+
+
+			<ul id='sort-dropdown' class='dropdown-content'>
+				<li>
+					<a class="filter-by" data-by="decrease-progress" href="#!">Progress <i class="material-icons black-text">arrow_upward</i>
+					</a>
+				</li>
+				<li>
+					<a class="filter-by" data-by="increase-progress" href="#!">Progress <i class="material-icons black-text">arrow_downward</i>
+					</a>
+				</li>
+				<li>
+					<a class="filter-by" data-by="name" href="#!">Name <i class="material-icons black-text">person</i>
+					</a>
+				</li>
+			</ul>
+        </div>
+      </div>
+
+
+	<div class="grid">
+	{% for group_user in group_users reversed %}
+	{% with group_user|get_user_progress_object:group as user_progress_obj %}
+		<div style="width: 100%;" class="row element-item" data-name="{{ group_user.user|user_display_name }}">
+			<p class="progress hide">{% if user_progress_obj.get_progress %}{{ user_progress_obj.get_progress }}{% else %}0{% endif %}</p>
+			<div class="col s12">
+				<div class="card {% ifequal user_progress_obj.get_progress 100 %}  light-blue lighten-3 {% endifequal %}">
+					<div class="card-content">
+						<div class="row valign-wrapper">
+							<div class="col s3 l1">
+								{% thumbnail group_user.user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
+									<img src="{{ im.url }}" class="circle" alt="{{ group_user.user|user_display_name }}">
+								{% endthumbnail %}
+							</div>
+							<div class="col s9 l11">
+								<span class="card-title">
+									<p class="flow-text">
+										{{ group_user.user|user_display_name }}
+									</p>
+								</span>
+							</div>
+						</div>
+						{% ifnotequal user_progress_obj.get_progress 100 %}
+						<div class="row">
+							<div class="col s12">
+								<div class="progress light-blue lighten-4">
+									<div class="determinate light-blue darken-4" style="width: {{ user_progress_obj.get_progress }}%">
+									</div>
+								</div>
+								{% if user_progress_obj.at_unit %}
+								On {{ user_progress_obj.at_unit.unit|ordinal }} {{ group.unit_name }}<span class="right">{{ user_progress_obj.at_unit.get_unit_full_text }}</span>
+								{% endif %}
+							</div>
+						</div>
+						{% else %}
+						<div class="row">
+							<div class="col s12">
+								{% if user_progress_obj.at_unit %}
+								Completed {{ user_progress_obj.at_unit.unit|ordinal }} {{ group.unit_name }} <br> {{ group_user.user.ramzaan_userprogressgroup_user.user.first.last_progress_made|naturaltime }} {{ user.ramzaan_userprogressuser.first.last_progress_made|naturalday }} <span class="right">{{ user_progress_obj.at_unit.get_unit_full_text }}</span>
+								{% endif %}
+							</div>
+						</div>
+						{% endifnotequal %}
+					
+					</div>
+					{% ifnotequal user_progress_obj.get_progress 100 %}
+					{% ifnotequal group_user.user request.user %}
+					<div class="card-action">
+						<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-user-firstname="{{ group_user.user|user_display_name }}" data-position="bottom" data-userid="{{ group_user.user.id }}" data-successmessage='You motivated {{ group_user.user|user_display_name }}!' data-url="{{ user_progress_obj.get_motivate_url }}" data-type="motivate" data-tooltip="Motivate {{ group_user.user|user_display_name }}" style="text-transform: none;"><i class="fas fa-dove"></i> &nbsp;&nbsp;Motivate</a>
+						{% if group_user.user.id not in followings %}
+							<a class="btn-small transparent black-text tooltipped z-depth-0 action-buttons" data-type="follow" data-position="bottom" data-userid="{{ group_user.user.id }}" data-successmessage='You started following {{ group_user.user|user_display_name }}' data-url="{% url 'usermanagement:add_user_following' user_id=group_user.user.id %}" data-tooltip="Follow {{ user|user_display_name }}" style="text-transform: none;"><i class="material-icons left">person_add</i>Follow</a>
+						{% endif %}
+						<div class="right hide user-section-preloader-{{ user.id }}">
+							{% include "mainapp/partials/preloader_small.html" %}
+						</div>
+					</div>
+					{% endifnotequal %}
+					{% endifnotequal %}
+
+				</div>
+			</div>
+		</div>
+		{% endwith %}
+{% endfor %}
+	</div>
+{% endwith %}
+</div>

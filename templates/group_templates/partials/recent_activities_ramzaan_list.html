@@ -1,0 +1,41 @@
+{% load ramzaan_extras %}
+{% load humanize %}
+{% load main_extras %}
+{% load thumbnail %}
+{% load static %}
+{% for status_update in status_updates %}
+	<li class="collection-item avatar" style="border: none;">
+		{% thumbnail status_update.user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
+		<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ im.url }}" alt="{{ status_update.user.get }}" class="lazyload circle">
+		{% endthumbnail %}
+		<span class="title"><b>{{ status_update.user|user_display_name }}</b></span>
+		<p>
+			{{ status_update.content }}
+		</p>
+		<p>On {{ status_update.at_unit.unit|ordinal }} {{ status_update.group.unit_name }}</p>
+		<p class="grey-text">
+			{% with status_update.updated_at|check_age as old_post %}
+			{% if old_post == "0" %}
+				{{ status_update.updated_at|timesince }} ago
+				{% elif old_post == "1" %}
+				{{ status_update.updated_at|date:"P l" }}
+				{% elif old_post == "2" %}
+				{{ status_update.updated_at|date:"j N Y" }}
+			{% endif %}
+		{% endwith %}
+	</p>
+	<!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
+</li>
+{% endfor %}
+{% if status_updates.has_next %}
+<li class="collection-item avatar center temp-content" style="border: none;">
+	<a class="waves-effect waves-light btn load-more-status light-blue darken-2 no-capital-button" data-href="{% url 'ramzaan:get_status_updates' %}?page={{ status_updates.next_page_number }}&group_hash_id={{ group.group_hash_id }}">Load More</a>
+	<div class="hide show-more-status-preloader">
+		{% include "mainapp/partials/preloader_small.html" %}
+	</div>
+</li>
+{% else %}
+<li class="collection-item avatar center grey-text" style="border: none;">
+	No more updates for you
+</li>
+{% endif %}

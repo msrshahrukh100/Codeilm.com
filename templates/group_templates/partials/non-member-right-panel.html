@@ -44,7 +44,7 @@
       <div class="card">
         <div class="card-content">
           <p>
-          	{% for user in users|first_n_items:3 %}
+          	{% for user in users|first_n_items:10 %}
 			<div class="chip light-blue black-text">
 				{% thumbnail user.user_profile.first.get_profile_pic_url "55x55" crop="center" as im %}
 				<img src="{% static 'images/default_profile_pic/default_small.png' %}" data-src="{{ im.url }}" alt="{{ user.first_name }}" data-sizes="auto" class="lazyload">
@@ -53,18 +53,18 @@
 		    </div>
 			{% endfor %}
 
-			{% if users|length > 3 %}
-					And {{ users|length|add:-3 }} more people
+			{% if users|length > 10 %}
+					And {{ users|length|add:-10 }} more people
 			{% endif %}
 			{{ users|length|pluralize:"is, are" }} in this group
           </p>
         </div>
         <div class="card-action">
           <p class="center">
-				Login to Join this group
-			</p>
+				Join this group Now
+		</p>
 			<div class="center">
-				{% include "group_templates/partials/login-panel.html" %}
+				<a href="{% url 'mainapp:group_join' community=group.community.slug id=group.id slug=group.slug %}" class="waves-effect waves-light btn light-blue darken-2 no-capital-button"><i class="material-icons left">group_add</i>Join Group</a>
 			</div>
         </div>
       </div>

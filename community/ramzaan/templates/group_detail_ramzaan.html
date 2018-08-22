@@ -3,7 +3,7 @@
 {% load thumbnail %}
 {% load static %}
 {% block meta_tags %}
-	{% include "ramzaan/partials/ramzaan-meta-tags.html" %}
+	{% include "group_templates/partials/ramzaan-meta-tags.html" %}
 {% endblock %}
 {% block title %}
 	Allywith | {{ group.name }}
@@ -14,7 +14,7 @@
 {% endblock %}
 {% block content %}
 	
-{% include "ramzaan/partials/nav-bar.html" %}
+{% include "group_templates/partials/nav-bar.html" %}
 {% if messages %}
 	{% for message in messages %}
 		<div class="row">
@@ -32,15 +32,15 @@
 <div class="row">
 	{% if group_options.user_is_loggedin %}
 		{% if group_options.user_is_member %}
-			{% include "ramzaan/partials/recent_activities_ramzaan.html" %}
-			{% include "ramzaan/partials/progress_section_ramzaan.html" %}
+			{% include "group_templates/partials/recent_activities_ramzaan.html" %}
+			{% include "group_templates/partials/progress_section_ramzaan.html" %}
 		{% else %}
-			{% include "ramzaan/partials/non-member-left-panel.html" %}
-			{% include "ramzaan/partials/non-member-right-panel.html" %}
+			{% include "group_templates/partials/non-member-left-panel.html" %}
+			{% include "group_templates/partials/non-member-right-panel.html" %}
 		{% endif %}
 	{% else %}
-		{% include "ramzaan/partials/non-logged-in-left-panel.html" %}
-		{% include "ramzaan/partials/non-logged-in-right-panel.html" %}
+		{% include "group_templates/partials/non-logged-in-left-panel.html" %}
+		{% include "group_templates/partials/non-logged-in-right-panel.html" %}
 	{% endif %}
 </div>
 
@@ -59,12 +59,12 @@
 <div id="slide-out" class="sidenav sidenav-recent-activity">
 	{% if group_options.user_is_loggedin %}
 		{% if group_options.user_is_member %}
-			{% include "ramzaan/partials/recent_activities_ramzaan_mobile.html" %}
+			{% include "group_templates/partials/recent_activities_ramzaan_mobile.html" %}
 		{% else %}
-			{% include "ramzaan/partials/non-member-left-panel-mobile.html" %}
+			{% include "group_templates/partials/non-member-left-panel-mobile.html" %}
 		{% endif %}
 	{% else %}
-		{% include "ramzaan/partials/non-logged-in-left-panel-mobile.html" %}
+		{% include "group_templates/partials/non-logged-in-left-panel-mobile.html" %}
 	{% endif %}
 </div>
 
@@ -74,5 +74,5 @@
 {% block scripts %}
 	<script type="text/javascript" src="{% static 'js/isotope.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'js/humanize-duration.js' %}"></script>
-	<script type="text/javascript" src="{% static 'ramzaan/js/ramzaan.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/group-functions.js' %}"></script>
 {% endblock %}

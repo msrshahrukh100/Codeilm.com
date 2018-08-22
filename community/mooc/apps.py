@@ -1,5 +1,10 @@
 from django.apps import AppConfig
 
+name = "complete-online-course"
 
-class MoocConfig(AppConfig):
-    name = 'mooc'
+
+class RamzaanConfig(AppConfig):
+	name = 'community.mooc'
+
+	def ready(self):
+		import community.mooc.signals
