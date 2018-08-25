@@ -3,7 +3,7 @@
 {% load thumbnail %}
 <div class="slider">
 	<ul class="slides">
-		{% for community in communities|slice:"0:1" %}
+		{% for community in communities|slice:"2:3" %}
 			<li>
 				{% thumbnail community.image "1200x1000" as big %}
 					{% thumbnail community.image "120x100" as small %}
