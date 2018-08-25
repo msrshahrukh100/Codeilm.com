@@ -6,7 +6,9 @@ from django.urls import reverse
 import logging
 from django.contrib import messages
 import community.ramzaan.models as ramzaan_models
+import community.mooc.models as mooc_models
 import community.ramzaan.utils as ramzaan_utils
+import community.mooc.utils as mooc_utils
 from . import community_utils
 from . import models as main_models
 from .utils import save_request_ip_info
@@ -39,6 +41,16 @@ def group_join(request, id, slug, community):
 			ramzaan_utils.add_user_to_group(request, user, group)
 
 		return HttpResponseRedirect(reverse("ramzaan:group_detail", kwargs={"id": id, "slug": slug}))
+
+	if community == "complete-online-course-together":
+		group = get_object_or_404(mooc_models.MoocGroup, id=id)
+		is_member = community_utils.check_user_in_group(request, group)
+		if is_member:
+			messages.info(request, 'You are already part of this group')
+		else:
+			mooc_utils.add_user_to_group(request, user, group)
+
+		return HttpResponseRedirect(reverse("mooc:group_detail", kwargs={"id": id, "slug": slug}))
 	return HttpResponse(status=404)
 
 

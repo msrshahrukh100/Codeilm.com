@@ -1,7 +1,10 @@
-from community.ramzaan.utils import get_post_age
+from mainapp.utils import get_post_age
 from django import template
 from usermanagement.models import UserProfile
 from community.ramzaan.models import RamzaanUserProgress
+from community.mooc.models import MoocUserProgress
+from django.conf import settings
+
 register = template.Library()
 
 
@@ -28,5 +31,8 @@ def get_followings(user):
 
 @register.filter(name='get_user_progress_object')
 def get_user_progress_object(group_user, group):
-	qs = RamzaanUserProgress.objects.filter(user=group_user.user, group=group)
+	if group.community.id == settings.RAMZAAN_COMMUNITY_ID:
+		qs = RamzaanUserProgress.objects.filter(user=group_user.user, group=group)
+	elif group.community.id == settings.MOOC_COMMUNITY_ID:
+		qs = MoocUserProgress.objects.filter(user=group_user.user, group=group)
 	return qs.first()

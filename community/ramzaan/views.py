@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
@@ -20,7 +19,7 @@ def get_status_updates(request):
 		"status_updates": status_updates,
 		"group": group
 	}
-	return render(request, "ramzaan/partials/recent_activities_ramzaan_list.html", context)
+	return render(request, "group_templates/partials/recent_activities_ramzaan_list.html", context)
 
 
 def group_list(request):

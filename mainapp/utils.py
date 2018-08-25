@@ -1,8 +1,19 @@
 from django.contrib.gis.geoip2 import GeoIP2
 from .models import RequestIpInfo
 import logging
+from django.utils import timezone
 
 logger = logging.getLogger(__name__)
+
+
+def get_post_age(date):
+	old_post = 0
+	time_delta = timezone.now() - date
+	if time_delta > timezone.timedelta(days=1) and time_delta < timezone.timedelta(days=7):
+		old_post = 1
+	elif time_delta > timezone.timedelta(days=7):
+		old_post = 2
+	return str(old_post)
 
 
 def get_client_ip(request):

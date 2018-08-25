@@ -5,7 +5,7 @@
 
     <!-- UpdateStatus-->
     <div id="UpdateStatus" class="col s12  grey lighten-4" style="height: 100px;">
-    <form method="POST" action="{% url 'ramzaan:post_status_update' id=group.id slug=group.slug %}">
+    <form method="POST" action="{{ group.get_post_status_update_url }}">
       <div class="row">
         <div class="col s2">
           {% thumbnail request.user.user_profile.first.get_profile_pic_url "270x270" crop="center" as big %}

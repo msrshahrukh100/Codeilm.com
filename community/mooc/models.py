@@ -19,16 +19,22 @@ class MoocGroup(basemodels.Group):
 	def __str__(self):
 		return self.name
 
-	# def get_absolute_url(self):
-	# 	return reverse("ramzaan:group_detail", kwargs={"id": self.id, "slug": self.slug})
+	def get_absolute_url(self):
+		return reverse("mooc:group_detail", kwargs={"id": self.id, "slug": self.slug})
 
-	# def get_community_name(self):
-	# 	return "Sealed Nector"
+	def get_community_name(self):
+		return "Complete online courses"
 
-	# class Meta:
-	# 	permissions = (
-	# 		('owner_of_group', 'Owner of group'),
-	# 	)
+	def get_post_status_update_url(self):
+		return reverse("mooc:post_status_update", kwargs={"id": self.id, "slug": self.slug})
+
+	def get_status_updates_url(self):
+		return reverse("mooc:get_status_updates")
+
+	class Meta:
+		permissions = (
+			('owner_of_group', 'Owner of group'),
+		)
 
 
 class MoocGroupOptions(basemodels.GroupOption):
@@ -59,8 +65,8 @@ class MoocUserProgress(basemodels.UserProgress):
 			return int((self.at_unit.unit / self.group.total_units) * 100)
 		return 0
 
-	# def get_motivate_url(self):
-	# 	return reverse("ramzaan:send_motivation", kwargs={"group_id": self.group.id, "group_slug": self.group.slug, "to_user_id": self.user.id})
+	def get_motivate_url(self):
+		return reverse("mooc:send_motivation", kwargs={"group_id": self.group.id, "group_slug": self.group.slug, "to_user_id": self.user.id})
 
 
 class MoocStatusUpdate(basemodels.StatusUpdate):

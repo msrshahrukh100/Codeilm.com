@@ -34,8 +34,8 @@ def get_group_options(request, group, app_name):
 	group_options = None
 	if app_name == 'sealed-nector':
 		group_options = group.ramzaan_groupoptions
-		print("------------------")
-		print(group_options.has_extra_content_popup)
+	elif app_name == 'complete-online-course':
+		group_options = group.mooc_groupoptions
 	options = {
 		'is_ongoing_event': is_ongoing_event,
 		'is_expired_event': is_expired_event,

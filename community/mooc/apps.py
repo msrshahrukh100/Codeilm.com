@@ -3,7 +3,7 @@ from django.apps import AppConfig
 name = "complete-online-course"
 
 
-class RamzaanConfig(AppConfig):
+class MoocConfig(AppConfig):
 	name = 'community.mooc'
 
 	def ready(self):

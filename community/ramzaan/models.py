@@ -25,6 +25,12 @@ class RamzaanGroup(basemodels.Group):
 	def get_community_name(self):
 		return "Sealed Nector"
 
+	def get_post_status_update_url(self):
+		return reverse("ramzaan:post_status_update", kwargs={"id": self.id, "slug": self.slug})
+
+	def get_status_updates_url(self):
+		return reverse("ramzaan:get_status_updates")
+
 	class Meta:
 		permissions = (
 			('owner_of_group', 'Owner of group'),
