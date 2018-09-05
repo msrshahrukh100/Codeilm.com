@@ -1,0 +1,20 @@
+{% extends "base_template.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'forteams/css/forteams.ui.css' %}">`
+{% endblock %}
+{% block meta_tags %}
+	
+{% endblock %}
+{% block title %}
+	Teams | Meet with Purpose
+{% endblock %}
+{% block content %} <!-- blue lime -->
+
+{% include "mainapp/partials/simple-navbar.html" %}
+	<div id="root"></div>
+	<script src="{% static 'forteams/js/forteams.ui.js' %}"></script>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

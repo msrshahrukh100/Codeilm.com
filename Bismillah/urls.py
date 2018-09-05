@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 import notifications.urls
@@ -30,10 +31,13 @@ urlpatterns = [
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('', include((community_urls))),
+    path('teams/', include(('forteams.urls', 'forteams'), namespace="forteams")),
+    path('api/forteams/', include(('forteams.api.urls', 'forteams_api'), namespace="forteams_api")),
     path('accounts/', include('allauth.urls')),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
     path('email/', include(('emailmanager.urls', 'emailmanager'), namespace="emailmanager")),
+    url(r'^api-auth/', include('rest_framework.urls'))
     # urls for different communities
 ]
 

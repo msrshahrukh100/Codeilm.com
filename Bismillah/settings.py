@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'solo',
     'compressor',
     'guardian',
+    'rest_framework',
 
     # custom apps
     'community.ramzaan',
@@ -64,6 +65,7 @@ INSTALLED_APPS = [
     'feedback',
     'usermanagement',
     'emailmanager',
+    'forteams'
 ]
 
 MIDDLEWARE = [
