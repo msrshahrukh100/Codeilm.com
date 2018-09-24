@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     # custom apps
     'community.ramzaan',
     'community.mooc',
+    'community.coding',
     'mainapp',
     'feedback',
     'usermanagement',
