@@ -15,7 +15,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 440,
+    height: '100%',
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -47,6 +47,7 @@ const styles = theme => ({
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
+    zIndex: 1000,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -62,6 +63,9 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: theme.spacing.unit * 9,
     },
+    [theme.breakpoints.down('xs')]: {
+      width: 0,
+    },
   },
   toolbar: {
     display: 'flex',
@@ -70,11 +74,7 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-  },
+
 });
 
 
