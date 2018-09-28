@@ -5,7 +5,7 @@ import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import { mailFolderListItems, otherMailFolderListItems } from '../NavLinks/NavLinks';
+import { mailFolderListItems } from '../NavLinks/NavLinks';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -99,8 +99,6 @@ class DrawerSection extends React.Component {
         </div>
         <Divider />
         <List>{mailFolderListItems}</List>
-        <Divider />
-        <List>{otherMailFolderListItems}</List>
       </Drawer>
     )
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import User from '../User/User'
+import User from '../../containers/User/User'
 
 const styles = theme => ({
   root: {
@@ -16,23 +16,25 @@ const styles = theme => ({
 });
 
 
-class UserPanel extends React.Component {
-
-  state = {
-    githubUsers: ['msrshahrukh100', 'ad-os', 'ageron', 'ahsankamal', 'ameenkhan07']
-  }
+class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props
-    const users = this.state.githubUsers.map(user => {
-      return (
-        <Grid key={user} item xs={12} sm={6} lg={3}>
-          <Paper className={classes.paper}>
-            <User username={user} />
-          </Paper>
-        </Grid>
-      )
-    })
+    const users = this.props.githubUsersData ? this.props.githubUsersData.map(item => {
+      if(item !== undefined) {
+        return (
+          <Grid key={item.username} item xs={12} sm={6} lg={4}>
+            <Paper className={classes.paper}>
+              <User userGithubData={item} />
+            </Paper>
+          </Grid>
+        )
+      }
+      else {
+        return null
+      }
+
+    }) : null
     return (
       <div className={classes.root}>
       <Grid container spacing={8}>
@@ -44,4 +46,4 @@ class UserPanel extends React.Component {
 }
 
 
-export default withStyles(styles)(UserPanel)
+export default withStyles(styles)(Dashboard)

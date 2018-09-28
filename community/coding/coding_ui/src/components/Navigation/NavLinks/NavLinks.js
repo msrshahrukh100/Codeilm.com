@@ -11,21 +11,27 @@ import SendIcon from '@material-ui/icons/Send';
 import MailIcon from '@material-ui/icons/Mail';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ReportIcon from '@material-ui/icons/Report';
+import { Home, Storage } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 
 export const mailFolderListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <InboxIcon />
-      </ListItemIcon>
-      <ListItemText primary="Inbox" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <StarIcon />
-      </ListItemIcon>
-      <ListItemText primary="Starred" />
-    </ListItem>
+    <Link to="/">
+      <ListItem button>
+        <ListItemIcon>
+          <Home />
+        </ListItemIcon>
+        <ListItemText primary="Home" />
+      </ListItem>
+    </Link>
+    <Link to="/repositories">
+      <ListItem button>
+        <ListItemIcon>
+          <Storage />
+        </ListItemIcon>
+        <ListItemText primary="Repositories" />
+      </ListItem>
+    </Link>
     <ListItem button>
       <ListItemIcon>
         <SendIcon />
@@ -37,29 +43,6 @@ export const mailFolderListItems = (
         <DraftsIcon />
       </ListItemIcon>
       <ListItemText primary="Drafts" />
-    </ListItem>
-  </div>
-);
-
-export const otherMailFolderListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <MailIcon />
-      </ListItemIcon>
-      <ListItemText primary="All mail" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DeleteIcon />
-      </ListItemIcon>
-      <ListItemText primary="Trash" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ReportIcon />
-      </ListItemIcon>
-      <ListItemText primary="Spam" />
     </ListItem>
   </div>
 );
