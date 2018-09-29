@@ -37,7 +37,7 @@ class User extends React.Component {
             title={username}
             subheader={lastPushed}
           />
-        <UserInfo events={events} />
+        <UserInfo username={username} events={events} />
       </div>
     )
   }
