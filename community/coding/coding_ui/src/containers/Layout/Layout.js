@@ -9,6 +9,7 @@ import { axiosInst as axios } from '../../Axios/githubAxios'
 import moment from 'moment'
 import MessageSnackbar from '../../components/UI/MessageSnackbar/MessageSnackbar'
 import Progress from '../../components/UI/Progress/Progress'
+import LeaderBoard from '../../components/LeaderBoard/LeaderBoard'
 
 const styles = theme => ({
   root: {
@@ -47,14 +48,18 @@ class Layout extends React.Component {
   loadGithubData = (username) => {
     return axios.get("users/" + username + '/events')
       .then(response => {
-        const avatarURL = response.data[0].actor.avatar_url
+        const avatar_url = response.data[0].actor.avatar_url
+        const userId = response.data[0].actor.id
         const pushEvents = response.data.filter(item => item.type === 'PushEvent')
+        const commitCounts = pushEvents.map(item => item.payload.distinct_size).reduce((a, b) => a + b, 0)
         const createEvents = response.data.filter(item => item.type === 'CreateEvent')
         const date = pushEvents[0] ? pushEvents[0].created_at : null
         const lastPushed = date ? moment(date).calendar() : null
         let userData = {
-          username: username,
-          avatarURL: avatarURL,
+          id: userId,
+          login: username,
+          avatar_url: avatar_url,
+          contributions: commitCounts,
           lastPushed: lastPushed,
           events: {
             pushEvents: pushEvents,
@@ -84,7 +89,8 @@ class Layout extends React.Component {
   render() {
     const { classes } = this.props;
     const DashboardComponent = () => <Dashboard githubUsersData={this.state.githubUsersData} />
-  const RepoDashboardComponent =  () => <RepoDashboard githubUsersData={this.state.githubUsersData} />
+    const RepoDashboardComponent =  () => <RepoDashboard githubUsersData={this.state.githubUsersData} />
+    const LeaderBoardComponent = () => <LeaderBoard githubUsersData={this.state.githubUsersData} />
 
     return (
       <div className={classes.root}>
@@ -93,6 +99,7 @@ class Layout extends React.Component {
         <div className={classes.toolbar} />
         <Progress onRequestComplete={this.state.requestCompleted} />
           <Switch>
+            <Route path="/leaderboard" component={LeaderBoardComponent} />
             <Route path="/repositories" component={RepoDashboardComponent} />
             <Route path="/" component={DashboardComponent} />
           </Switch>

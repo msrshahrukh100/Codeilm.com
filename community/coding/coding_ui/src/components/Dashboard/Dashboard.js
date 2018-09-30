@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
     const users = this.props.githubUsersData ? this.props.githubUsersData.map(item => {
       if(item !== undefined) {
         return (
-          <Grid key={item.username} item xs={12} sm={12} lg={3}>
+          <Grid key={item.login} item xs={12} sm={12} lg={3}>
             <Paper className={classes.paper}>
               <User userGithubData={item} />
             </Paper>
