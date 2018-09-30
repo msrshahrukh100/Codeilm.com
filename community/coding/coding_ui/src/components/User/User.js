@@ -3,12 +3,14 @@ import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import UserInfo from './UserInfo/UserInfo'
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const styles = theme => ({
   avatar: {
     margin: 10,
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
   },
   root: {
     color: 'white',
@@ -34,8 +36,12 @@ class User extends React.Component {
                 {username[0]}
               </Avatar>
             }
-            title={username}
-            subheader={lastPushed}
+            title={<h3>{username}</h3>}
+            subheader={
+              <Tooltip title="Last commit pushed on">
+                <p>{lastPushed}</p>
+              </Tooltip>
+            }
           />
         <UserInfo username={username} events={events} />
       </div>

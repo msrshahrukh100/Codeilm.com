@@ -5,7 +5,7 @@ import Navigation from '../../components/Navigation/Navigation'
 import Dashboard from '../../components/Dashboard/Dashboard'
 import RepoDashboard from '../../components/RepoDashboard/RepoDashboard'
 import { Switch, Route } from 'react-router-dom'
-import axios from '../../Axios/githubAxios'
+import { axiosInst as axios } from '../../Axios/githubAxios'
 import moment from 'moment'
 import MessageSnackbar from '../../components/UI/MessageSnackbar/MessageSnackbar'
 import Progress from '../../components/UI/Progress/Progress'
@@ -37,14 +37,15 @@ const styles = theme => ({
 class Layout extends React.Component {
 
   state = {
-    githubUsers: ['msrshahrukh100', 'ad-os', 'ageron', 'ahsankamal', 'ameenkhan07'],
+    githubUsers: ['msrshahrukh100', 'ad-os', 'ageron', 'ahsankamal', 'ameenkhan07', 'dufferzafar'],
     githubUsersData: null,
     error: null,
-    requestCompleted: false
+    requestCompleted: false,
   }
 
+
   loadGithubData = (username) => {
-    return axios.get(username + '/events')
+    return axios.get("users/" + username + '/events')
       .then(response => {
         const avatarURL = response.data[0].actor.avatar_url
         const pushEvents = response.data.filter(item => item.type === 'PushEvent')
@@ -83,6 +84,8 @@ class Layout extends React.Component {
   render() {
     const { classes } = this.props;
     const DashboardComponent = () => <Dashboard githubUsersData={this.state.githubUsersData} />
+  const RepoDashboardComponent =  () => <RepoDashboard githubUsersData={this.state.githubUsersData} />
+
     return (
       <div className={classes.root}>
         <Navigation />
@@ -90,7 +93,7 @@ class Layout extends React.Component {
         <div className={classes.toolbar} />
         <Progress onRequestComplete={this.state.requestCompleted} />
           <Switch>
-            <Route path="/repositories" component={RepoDashboard} />
+            <Route path="/repositories" component={RepoDashboardComponent} />
             <Route path="/" component={DashboardComponent} />
           </Switch>
         </main>

@@ -5,12 +5,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import { Publish, DeviceHub } from '@material-ui/icons';
+import { Publish, Grain } from '@material-ui/icons';
 import Divider from '@material-ui/core/Divider';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
 import Dialog from '../../UI/Dialog/Dialog'
-import Button from '@material-ui/core/Button';
 import moment from 'moment'
 
 const styles = theme => ({
@@ -71,7 +70,6 @@ class UserInfo extends React.Component {
         <Dialog
           title={username + "'s repositories"}
           dialogdata={dialogData}
-          title={username + "'s repositories"}
           open={this.state.dialogOpen}
           onClose={this.handleClose}/>
         <List>
@@ -88,7 +86,7 @@ class UserInfo extends React.Component {
           </li>
           <ListItem>
             <Avatar className={classes.purpleAvatar}>
-              <DeviceHub />
+              <Grain />
             </Avatar>
             <ListItemText
               primary={String(createCounts) + " create events"}
