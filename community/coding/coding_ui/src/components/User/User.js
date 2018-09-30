@@ -4,7 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
 import UserInfo from './UserInfo/UserInfo'
 import Tooltip from '@material-ui/core/Tooltip';
-
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   avatar: {
@@ -24,26 +24,30 @@ class User extends React.Component {
 
   render() {
     const { classes } = this.props
-    const { username, avatarURL, events, lastPushed } = this.props.userGithubData
+    const { login, avatar_url, events, lastPushed } = this.props.userGithubData
 
     return (
       <div className={classes.row}>
         <CardHeader
             avatar={
               <Avatar
-                src={avatarURL}
+                src={avatar_url}
                 className={classes.avatar}>
-                {username[0]}
+                {login[0]}
               </Avatar>
             }
-            title={<h3>{username}</h3>}
+            title={
+              <h3>
+                {login}
+              </h3>
+              }
             subheader={
               <Tooltip title="Last commit pushed on">
                 <p>{lastPushed}</p>
               </Tooltip>
             }
           />
-        <UserInfo username={username} events={events} />
+        <UserInfo username={login} events={events} />
       </div>
     )
   }
