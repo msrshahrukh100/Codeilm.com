@@ -59,6 +59,7 @@ class RepoDashboard extends React.Component {
     let temp = repositoriesUrls ? repositoriesUrls.map(url => repositoryRequestPromises.push(this.loadRepoData(url))) : null
     Promise.all(repositoryRequestPromises)
       .then(response => this.setState({repoData: response, loading: false}))
+      .catch(error => console.log(error))
   }
 
 
@@ -71,9 +72,9 @@ class RepoDashboard extends React.Component {
   render() {
     const { classes } = this.props
     const repositories = this.state.repoData ? this.state.repoData.map(item => {
-      return (
-        <RepoPanel key={item.id} repoData={item} />
-      )
+      if(item) {
+        return <RepoPanel key={item.id} repoData={item} />
+      }
     }) : null
 
     return (

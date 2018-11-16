@@ -46,7 +46,7 @@ class Layout extends React.Component {
 
 
   loadGithubData = (username) => {
-    return axios.get("users/" + username + '/events')
+    return axios.get("users/" + username + '/events?per_page=100')
       .then(response => {
         const avatar_url = response.data[0].actor.avatar_url
         const userId = response.data[0].actor.id
