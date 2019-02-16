@@ -64,6 +64,9 @@ INSTALLED_APPS = [
     'feedback',
     'usermanagement',
     'emailmanager',
+
+    #android
+    'androidapps.gymapp.gymappbackend',
 ]
 
 MIDDLEWARE = [

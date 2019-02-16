@@ -5,6 +5,8 @@ db.sqlite3
 website.log
 static_cdn
 
+androidapps/gymapp/gymappfrontend/
+
 # dependencies
 /node_modules
 /.pnp
