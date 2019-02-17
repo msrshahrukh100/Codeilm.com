@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 import notifications.urls
 from mainapp.views import opensearch
 from . import community_urls
+from . import android_urls
 
 handler404 = 'mainapp.views.redirect_to_page'
 handler500 = 'mainapp.views.redirect_for_server_error'
@@ -30,6 +31,7 @@ urlpatterns = [
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('', include((community_urls))),
+    path('', include((android_urls))),
     path('accounts/', include('allauth.urls')),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
