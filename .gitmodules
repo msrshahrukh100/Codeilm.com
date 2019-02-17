@@ -1,0 +1,3 @@
+[submodule "androidapps/gymapp/gymappfrontend"]
+	path = androidapps/gymapp/gymappfrontend
+	url = git@github.com:msrshahrukh100/Gym-App-Front-end.git
