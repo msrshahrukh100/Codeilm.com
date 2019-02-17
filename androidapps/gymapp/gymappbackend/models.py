@@ -3,11 +3,22 @@ from django.contrib.auth.models import User
 from hashid_field import HashidField
 # Create your models here.
 
+def upload_to(instance, filename):
+	return "exercise_images/%s/%s/%s" % (instance.__class__.__name__, instance.name, filename)
+
 class Exercise(models.Model):
 	exercise_hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
 	name = models.CharField(max_length=100)
 	exercise_for = models.CharField(max_length=50, null=True, blank=True)
 	description = models.TextField(null=True, blank=True)
+	image = models.ImageField(
+		upload_to=upload_to,
+		null=True,
+		blank=True,
+		width_field="width_field",
+		height_field="height_field", help_text="A image of the exercise")
+	height_field = models.IntegerField(default=0, blank=True, null=True)
+	width_field = models.IntegerField(default=0, blank=True, null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
