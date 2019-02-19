@@ -14,6 +14,7 @@ django-autoslug-iplweb==1.9.4.dev0
 django-background-tasks==1.1.13
 django-compat==1.0.15
 django-compressor==2.2
+django-cors-headers==2.4.0
 django-filter==2.1.0
 django-guardian==1.4.9
 django-hashid-field==2.1.1

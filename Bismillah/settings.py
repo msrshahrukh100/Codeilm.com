@@ -28,6 +28,14 @@ SECRET_KEY = os.environ.get('BISMILLAH_SECRET_KEY')
 DEBUG = bool(int(os.environ.get('SETTINGS_DEBUG')))
 
 ALLOWED_HOSTS = ['allywith.com', 'www.allywith.com', '54.218.212.69', '127.0.0.1', 'localhost']
+
+CORS_ORIGIN_WHITELIST = (
+    # remove it after all done
+    'localhost:3000'
+    )
+
+# CORS_ORIGIN_ALLOW_ALL = True
+
 SITE_ID = 1
 
 # Application definition
@@ -57,6 +65,7 @@ INSTALLED_APPS = [
     'compressor',
     'guardian',
     'rest_framework',
+    'corsheaders',
 
     # custom apps
     'community.ramzaan',
@@ -71,6 +80,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
