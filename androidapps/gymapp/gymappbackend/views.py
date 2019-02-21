@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAdminUser
 from . import serializers as gymapp_serializers
 from . import models as gymapp_models
 from django.contrib.auth.decorators import login_required
+from guardian.shortcuts import get_objects_for_user
 # Create your views here.
 
 @login_required(login_url='/android/login')
@@ -16,7 +17,14 @@ def login(request):
 
 
 class ScheduleList(generics.ListCreateAPIView):
-	queryset = g
+
+	def get_queryset(self):
+		user = self.request.user
+		return get_objects_for_user(
+			user=user,
+			perms=['owner', 'shared'],
+			klass=gymapp_models.Schedule
+		)
 
 
 class ExerciseList(generics.ListCreateAPIView):

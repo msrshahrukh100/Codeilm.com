@@ -43,6 +43,12 @@ class Schedule(models.Model):
 	def __str__(self):
 		return self.name
 
+	class Meta:
+		permissions = (
+			('owner', 'owner'),
+			('shared', 'shared')
+		)
+
 
 class ScheduleExercise(models.Model):
 	schedule_exercise_hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
