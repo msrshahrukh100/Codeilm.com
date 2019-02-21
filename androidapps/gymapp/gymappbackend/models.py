@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from hashid_field import HashidField
+from django.urls import reverse
 # Create your models here.
 
 def upload_to(instance, filename):
@@ -24,6 +25,10 @@ class Exercise(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	@property
+	def get_absolute_url(self):
+		return reverse("gymapp:exercise-detail", kwargs={"exercise_hash_id": self.exercise_hash_id})
 
 
 class Schedule(models.Model):
