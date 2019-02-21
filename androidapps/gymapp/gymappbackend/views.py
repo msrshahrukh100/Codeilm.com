@@ -17,12 +17,14 @@ def login(request):
 
 
 class ScheduleList(generics.ListCreateAPIView):
-
+	serializer_class = gymapp_serializers.ScheduleListSerializer
+	# queryset = gymapp_models.Schedule.objects.all()
 	def get_queryset(self):
 		user = self.request.user
 		return get_objects_for_user(
 			user=user,
 			perms=['owner', 'shared'],
+			any_perm=False,
 			klass=gymapp_models.Schedule
 		)
 
