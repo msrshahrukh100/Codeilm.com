@@ -46,7 +46,7 @@ class Schedule(models.Model):
 	class Meta:
 		permissions = (
 			('owner', 'owner'),
-			('shared', 'shared')
+			('see_shared', 'see_shared')
 		)
 
 

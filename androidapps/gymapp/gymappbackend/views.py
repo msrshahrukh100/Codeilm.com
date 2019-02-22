@@ -18,13 +18,27 @@ def login(request):
 
 class ScheduleList(generics.ListCreateAPIView):
 	serializer_class = gymapp_serializers.ScheduleListSerializer
-	# queryset = gymapp_models.Schedule.objects.all()
+
 	def get_queryset(self):
 		user = self.request.user
 		return get_objects_for_user(
 			user=user,
 			perms=['owner', 'shared'],
-			any_perm=False,
+			any_perm=True,
+			klass=gymapp_models.Schedule
+		)
+
+
+class ScheduleDetail(generics.RetrieveAPIView):
+	serializer_class = gymapp_serializers.ScheduleDetailSerializer
+	lookup_field = "schedule_hash_id"
+
+	def get_queryset(self):
+		user = self.request.user
+		return get_objects_for_user(
+			user=user,
+			perms=['owner', 'shared'],
+			any_perm=True,
 			klass=gymapp_models.Schedule
 		)
 
