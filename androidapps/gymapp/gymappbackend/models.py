@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from hashid_field import HashidField
 from django.urls import reverse
+from django.utils.timesince import timesince
 # Create your models here.
 
 def upload_to(instance, filename):
@@ -42,6 +43,11 @@ class Schedule(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	def get_last_performed_text(self):
+		if self.last_performed:
+			return "Last performed %s ago" % timesince(self.last_performed)
+		return ""
 
 	class Meta:
 		permissions = (

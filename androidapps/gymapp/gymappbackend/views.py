@@ -22,15 +22,19 @@ def login(request):
 
 class ScheduleList(generics.ListCreateAPIView):
 	serializer_class = gymapp_serializers.ScheduleListSerializer
+	queryset = gymapp_models.Schedule.objects.all()
+	# def get_queryset(self):
+	# 	user = self.request.user
+	# 	return get_objects_for_user(
+	# 		user=user,
+	# 		perms=['owner', 'see_shared'],
+	# 		any_perm=True,
+	# 		klass=gymapp_models.Schedule
+	# 	)
 
-	def get_queryset(self):
-		user = self.request.user
-		return get_objects_for_user(
-			user=user,
-			perms=['owner', 'see_shared'],
-			any_perm=True,
-			klass=gymapp_models.Schedule
-		)
+
+class ScheduleExerciseList(generics.ListCreateApiView):
+	pass
 
 
 class ScheduleDetail(generics.RetrieveAPIView):

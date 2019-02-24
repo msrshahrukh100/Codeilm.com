@@ -4,10 +4,11 @@ from . import models as gymapp_models
 
 class ScheduleListSerializer(serializers.ModelSerializer):
 	schedule_hash_id = serializers.CharField(default="")
+	last_performed_text = serializers.CharField(source='get_last_performed_text')
 
 	class Meta:
 		model = gymapp_models.Schedule
-		fields = ('schedule_hash_id', 'name', 'user', 'day_of_week')
+		fields = ('schedule_hash_id', 'name', 'user', 'last_performed', 'last_performed_text')
 
 
 class ScheduleDetailSerializer(serializers.ModelSerializer):
