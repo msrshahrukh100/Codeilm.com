@@ -6,6 +6,7 @@ from . import serializers as gymapp_serializers
 from . import models as gymapp_models
 from django.contrib.auth.decorators import login_required
 from guardian.shortcuts import get_objects_for_user
+from allauth.account.forms import LoginForm
 # Create your views here.
 
 @login_required(login_url='/android/login')
@@ -13,7 +14,10 @@ def home(request):
 	return render(request, "gym_index.html", {})
 
 def login(request):
-	return render(request, "gymlogin.html", {})
+	context = {
+		'form': LoginForm()
+	}
+	return render(request, "gymlogin.html", context)
 
 
 class ScheduleList(generics.ListCreateAPIView):
@@ -23,7 +27,7 @@ class ScheduleList(generics.ListCreateAPIView):
 		user = self.request.user
 		return get_objects_for_user(
 			user=user,
-			perms=['owner', 'shared'],
+			perms=['owner', 'see_shared'],
 			any_perm=True,
 			klass=gymapp_models.Schedule
 		)
@@ -37,7 +41,7 @@ class ScheduleDetail(generics.RetrieveAPIView):
 		user = self.request.user
 		return get_objects_for_user(
 			user=user,
-			perms=['owner', 'shared'],
+			perms=['owner', 'see_shared'],
 			any_perm=True,
 			klass=gymapp_models.Schedule
 		)
