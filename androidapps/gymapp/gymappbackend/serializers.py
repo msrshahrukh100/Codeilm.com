@@ -11,6 +11,15 @@ class ScheduleListSerializer(serializers.ModelSerializer):
 		fields = ('schedule_hash_id', 'name', 'user', 'last_performed', 'last_performed_text')
 
 
+class ScheduleExerciseListSerializer(serializers.ModelSerializer):
+	schedule_exercise_hash_id = serializers.CharField(default="")
+	# exercise = serializers.StringRelatedField(many=True)
+
+	class Meta:
+		model = gymapp_models.ScheduleExercise
+		fields = ('id', 'exercise', 'schedule_exercise_hash_id', 'order', 'sets', 'created_at', 'updated_at')
+		
+		
 class ScheduleDetailSerializer(serializers.ModelSerializer):
 	schedule_hash_id = serializers.CharField(default="")
 

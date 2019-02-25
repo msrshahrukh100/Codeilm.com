@@ -33,8 +33,18 @@ class ScheduleList(generics.ListCreateAPIView):
 	# 	)
 
 
-class ScheduleExerciseList(generics.ListCreateApiView):
-	pass
+class ScheduleExerciseList(generics.ListAPIView):
+	serializer_class = gymapp_serializers.ScheduleExerciseListSerializer
+	lookup_field = "schedule_hash_id"
+
+	def get_queryset(self):
+		schedule_hash_id = self.kwargs['schedule_hash_id']
+		schedule_obj = gymapp_models.Schedule.objects.get(schedule_hash_id=schedule_hash_id)
+		queryset = schedule_obj.schedule_exercise_schedule.all()
+
+		return queryset
+
+
 
 
 class ScheduleDetail(generics.RetrieveAPIView):
