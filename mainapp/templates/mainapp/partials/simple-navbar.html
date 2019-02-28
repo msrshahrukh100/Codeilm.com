@@ -72,6 +72,13 @@
 		<div class="divider"></div>
 	</li>
 	{% if request.user.is_authenticated %}
+		<li>
+		<a href="{% url 'gymapp:gym_home' %}">
+			<i class="material-icons teal-text text-darken-3 left">fitness_center</i>Gym Schedule
+		</a>
+	</li>
+	{% endif %}
+	{% if request.user.is_authenticated %}
 	<form method="POST" id="logout-form-small" action="{% url 'account_logout' %}">
 		<li>
 		{% csrf_token %}
