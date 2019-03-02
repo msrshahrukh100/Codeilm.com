@@ -35,7 +35,7 @@ class Exercise(models.Model):
 class Schedule(models.Model):
 	schedule_hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
 	name = models.CharField(max_length=100)
-	user = models.ForeignKey(User, null=True, related_name="user_schedule", on_delete=models.SET_NULL)
+	user = models.ForeignKey(User, null=True, blank=True, related_name="user_schedule", on_delete=models.SET_NULL)
 	day_of_week = models.IntegerField(null=True, blank=True)
 	last_performed = models.DateTimeField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
