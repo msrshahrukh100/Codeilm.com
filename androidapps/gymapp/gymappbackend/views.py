@@ -64,7 +64,6 @@ class ScheduleDetail(generics.RetrieveAPIView):
 class ExerciseList(generics.ListCreateAPIView):
     queryset = gymapp_models.Exercise.objects.all()
     serializer_class = gymapp_serializers.ExerciseListSerializer
-    lookup_field = "exercise_hash_id"
     # permission_classes = (IsAdminUser,)
 
 class ExerciseDetail(generics.RetrieveAPIView):
