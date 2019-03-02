@@ -7,6 +7,7 @@ from . import models as gymapp_models
 from django.contrib.auth.decorators import login_required
 from guardian.shortcuts import get_objects_for_user
 from allauth.account.forms import LoginForm
+from django.utils import timezone
 # Create your views here.
 
 @login_required(login_url='/android/login')
@@ -30,7 +31,7 @@ class ScheduleList(generics.ListCreateAPIView):
 	# 		perms=['owner', 'see_shared'],
 	# 		any_perm=True,
 	# 		klass=gymapp_models.Schedule
-	# 	)
+	# 	).update(last_performed=timezone.now())
 
 
 class ScheduleExerciseList(generics.ListAPIView):
@@ -40,7 +41,9 @@ class ScheduleExerciseList(generics.ListAPIView):
 	def get_queryset(self):
 		schedule_hash_id = self.kwargs['schedule_hash_id']
 		schedule_obj = gymapp_models.Schedule.objects.get(schedule_hash_id=schedule_hash_id)
-		queryset = schedule_obj.schedule_exercise_schedule.all()
+		schedule_obj.last_performed = timezone.now()
+		schedule_obj.save()
+		queryset = schedule_obj.schedule_exercise_schedule.all().order_by('order')
 
 		return queryset
 
