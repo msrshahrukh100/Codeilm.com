@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
     'notifications',
     'background_task',
     'markdown_deux',
@@ -313,3 +314,14 @@ BOOKS_COMMUNITY_ID = 6
 MOOC_COMMUNITY_ID = 7
 
 HASHID_FIELD_SALT = "Drz3/ay3eS+o4/Sgxxx/UBrq3Bms3Fi52NCu+kPhT5Y="
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        'SCOPE': [
+            'user',
+            'repo',
+            'read:org',
+        ],
+    }
+}
