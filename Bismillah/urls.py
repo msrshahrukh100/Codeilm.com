@@ -29,6 +29,7 @@ urlpatterns = [
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
     path('admin/', admin.site.urls),
     path('ally_search.xml/', opensearch, name="opensearch"),
+    path('', include(('lovecode.lovecodebackend.urls', 'lovecode'), namespace="lovecode")),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('', include((community_urls))),
     path('', include((android_urls))),
