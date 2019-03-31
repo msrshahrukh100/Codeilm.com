@@ -1,9 +1,9 @@
 from django.dispatch import receiver
-from django.db.models.signals import pre_save
+from django.db.models.signals import post_save
 from .models import GithubRepo
 from .tasks import add_languages
 
-@receiver(pre_save, sender=GithubRepo)
+@receiver(post_save, sender=GithubRepo)
 def save_languages(sender, instance, **kwargs):
 
 	'''
@@ -24,5 +24,3 @@ def save_languages(sender, instance, **kwargs):
 		}
 	'''
 	add_languages(instance.id)
-
-	instance.languages = {"Shahrukh": "cool"}
