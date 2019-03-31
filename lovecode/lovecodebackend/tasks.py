@@ -9,8 +9,8 @@ from allauth.socialaccount.models import SocialApp
 @background(schedule=20)
 def add_languages(githubrepo_id):
 	print("runnign jobs")
-	instance = GithubRepo.objects.get(id=githubrepo_id)
-	repo_data = instance.repo_data
+	instances = GithubRepo.objects.filter(id=githubrepo_id)
+	repo_data = instances.first().repo_data
 	languages_url = repo_data.get("languages_url")
 	print(languages_url)
 	if languages_url:
@@ -18,8 +18,7 @@ def add_languages(githubrepo_id):
 			social_app = SocialApp.objects.get(provider='GitHub')
 			languages_url += '?client_id=' + social_app.client_id + "&client_secret=" + social_app.secret
 			languages = requests.get(languages_url)
-			instance.languages = languages.json()
-			instance.save()
+			instances.update(languages=languages.json())
 			print(languages.json())
 		except Exception as e:
 			print(e)
