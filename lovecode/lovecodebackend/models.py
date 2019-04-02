@@ -30,6 +30,3 @@ class Tutorial(Model):
 	def __str__(self):
 		return self.user.username
 
-	def get_languages(self):
-		return self.repo.languages
-
