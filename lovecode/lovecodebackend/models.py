@@ -10,7 +10,6 @@ class GithubRepo(Model):
 	hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
 	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 	repo_data = JSONField()
-	languages = JSONField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
