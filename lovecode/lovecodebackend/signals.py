@@ -13,7 +13,7 @@ def save_languages(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Tutorial)
-def save_languages(sender, instance, created, **kwargs):
+def save_hashid(sender, instance, created, **kwargs):
 	if created:
 		qs = Tutorial.objects.filter(id=instance.id)
 		qs.update(hash_id=instance.id)
