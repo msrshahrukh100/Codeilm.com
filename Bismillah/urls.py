@@ -21,6 +21,8 @@ import notifications.urls
 from mainapp.views import opensearch
 from . import community_urls
 from . import android_urls
+from django.views.generic import TemplateView
+
 
 handler404 = 'mainapp.views.redirect_to_page'
 handler500 = 'mainapp.views.redirect_for_server_error'
@@ -30,6 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('api/v1/', include(('lovecode.lovecodebackend.urls', 'lovecode'), namespace="lovecode")),
+    path('learn/', TemplateView.as_view(template_name="lovecode.html")),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('', include((community_urls))),
     path('', include((android_urls))),
