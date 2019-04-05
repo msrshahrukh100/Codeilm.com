@@ -1,4 +1,4 @@
 from rest_framework.pagination import PageNumberPagination
 
 class TutorialListPaginator(PageNumberPagination):
-    page_size = 1
+    page_size = 2
