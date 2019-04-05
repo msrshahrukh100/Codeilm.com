@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('api/v1/', include(('lovecode.lovecodebackend.urls', 'lovecode'), namespace="lovecode")),
-    path('learn/', TemplateView.as_view(template_name="lovecode.html")),
+    path('tutorials/', TemplateView.as_view(template_name="lovecode.html")),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('', include((community_urls))),
     path('', include((android_urls))),
