@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from '../../lovecodeaxios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import {Helmet} from "react-helmet";
 
 class TutorialDetail extends React.Component {
 
@@ -18,6 +19,10 @@ class TutorialDetail extends React.Component {
 
     return (
       <>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Tutorial Detail</title>
+        </Helmet>
         <h4>Tutorial Details</h4>
       </>
     )

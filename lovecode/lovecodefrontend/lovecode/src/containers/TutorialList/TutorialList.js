@@ -4,6 +4,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
 import { withRouter } from "react-router";
+import {Helmet} from "react-helmet";
 
 
 class ExercisesContainer extends React.Component {
@@ -43,6 +44,10 @@ class ExercisesContainer extends React.Component {
 
     return (
       <>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Tutorials on Allywith</title>
+        </Helmet>
         {tutorials}
       </>
     )
