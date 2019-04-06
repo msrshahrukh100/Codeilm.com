@@ -13,6 +13,12 @@ def learn(request):
 
 
 class TutorialList(generics.ListCreateAPIView):
-    queryset = lovecode_models.Tutorial.objects.all()
-    serializer_class = lovecode_serializers.TutorialSerializer
-    pagination_class = TutorialListPaginator
+	queryset = lovecode_models.Tutorial.objects.all()
+	serializer_class = lovecode_serializers.TutorialListSerializer
+	pagination_class = TutorialListPaginator
+
+
+class TutorialDetail(generics.RetrieveAPIView):
+	queryset = lovecode_models.Tutorial.objects.all()
+	serializer_class = lovecode_serializers.TutorialDetailSerializer
+	lookup_field = "hash_id"

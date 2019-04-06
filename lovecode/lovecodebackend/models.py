@@ -23,6 +23,7 @@ class Tutorial(Model):
 	repo = models.ForeignKey(GithubRepo, null=True, on_delete=models.SET_NULL)
 	title = models.CharField(max_length=300)
 	slug = AutoSlugField(populate_from='title')
+	tutorial_data = JSONField(null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
