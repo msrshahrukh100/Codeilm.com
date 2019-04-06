@@ -16,7 +16,6 @@ class ExercisesContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     axios.get('/tutorials')
       .then(response => {
         console.log(response.data)
@@ -38,7 +37,11 @@ class ExercisesContainer extends React.Component {
 
     const tutorials = this.state.tutorials ?
     this.state.tutorials.results.map((tutorial, index) => {
-      return <MediaCard key={tutorial.hash_id} link={this.props.match.path + '/' + tutorial.slug} content=<TutorialInfo /> title={tutorial.title} />
+      return <MediaCard
+        key={tutorial.hash_id}
+        link={this.props.match.path + '/' + tutorial.hash_id + '/' + tutorial.slug}
+        content=<TutorialInfo />
+        title={tutorial.title} />
     })
      : null
 

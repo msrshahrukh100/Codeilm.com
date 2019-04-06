@@ -1,6 +1,7 @@
 import React from 'react'
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
-import LinearPreloader from '../../components/UI/LinearPreloader/LinearPreloader'
+import { List } from 'react-content-loader'
+import PageLayout from '../../components/UI/PageLayout/PageLayout'
 
 const withErrorHandler = (WrappedCompenent, axios) => {
   return class extends React.Component {
@@ -43,10 +44,11 @@ const withErrorHandler = (WrappedCompenent, axios) => {
     }
 
     render() {
+      const skeleton = (<PageLayout><List /></PageLayout>)
       return (
         <>
 
-            {this.state.loading ? <LinearPreloader /> : null}
+            {this.state.loading ? skeleton : null}
             {this.state.error ? this.state.error.message : null}
             {this.state.error ? <Snackbar show={true} type="error" text={this.state.error.message} /> : null}
           {!this.state.error ? <WrappedCompenent {...this.props} /> : null}

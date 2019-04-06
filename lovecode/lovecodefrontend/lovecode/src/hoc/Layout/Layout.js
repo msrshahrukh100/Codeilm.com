@@ -13,7 +13,7 @@ class Layout extends React.Component {
       <SearchAppBar />
 
       <Switch>
-      <Route path='/tutorials/:slug' component={TutorialDetail} />
+      <Route path='/tutorials/:hash_id/:slug/' component={TutorialDetail} />
        <Route path='/tutorials' component={TutorialList} />
        <Route render={() => <h1>404 page is yet to be found</h1>} />
      </Switch>
