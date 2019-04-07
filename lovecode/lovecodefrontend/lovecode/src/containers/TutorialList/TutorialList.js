@@ -57,4 +57,4 @@ class ExercisesContainer extends React.Component {
   }
 }
 
-export default withErrorHandler(withRouter(ExercisesContainer), axios)
+export default withErrorHandler(withRouter(ExercisesContainer), axios, "list")

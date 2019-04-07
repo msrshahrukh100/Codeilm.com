@@ -1,9 +1,10 @@
 import React from 'react'
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
-import { List } from 'react-content-loader'
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
+import DetailPageSkeleton from '../../components/UI/SkeletonLoaders/DetailPageSkeleton'
+import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
 
-const withErrorHandler = (WrappedCompenent, axios) => {
+const withErrorHandler = (WrappedCompenent, axios, type="detail") => {
   return class extends React.Component {
     state = {
       error: null,
@@ -44,11 +45,14 @@ const withErrorHandler = (WrappedCompenent, axios) => {
     }
 
     render() {
-      const skeleton = (<PageLayout><List /></PageLayout>)
+      let skeleton = (<PageLayout><DetailPageSkeleton /></PageLayout>)
+      if(type == "list") {
+        skeleton = (<PageLayout><ListPageSkeleton /></PageLayout>)
+      }
       return (
         <>
 
-            {this.state.loading ? skeleton : null}
+            {this.state.loading ?  skeleton: null}
             {this.state.error ? this.state.error.message : null}
             {this.state.error ? <Snackbar show={true} type="error" text={this.state.error.message} /> : null}
           {!this.state.error ? <WrappedCompenent {...this.props} /> : null}
