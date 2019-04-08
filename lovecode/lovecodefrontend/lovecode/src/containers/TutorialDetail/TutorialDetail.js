@@ -4,6 +4,8 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import {Helmet} from "react-helmet"
 import { List } from 'react-content-loader'
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
+import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
+import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 
 class TutorialDetail extends React.Component {
 
@@ -35,13 +37,14 @@ class TutorialDetail extends React.Component {
 
   render() {
     const title = this.state.tutorial ? this.state.tutorial.title : null
-    const content = this.state.error ? <h3>{this.state.error}</h3> :
+    const content = this.state.tutorial ?
       (
-        <>
-        <h1>{title}</h1>
-        <p>sadf</p>
-        </>
+        <PageLayout>
+          <h1>{title}</h1>
+          <p>sadf</p>
+        </PageLayout>
       )
+    : null
 
     return (
       <>
@@ -50,9 +53,7 @@ class TutorialDetail extends React.Component {
           <title>Tutorial Detail</title>
         </Helmet>
         {!this.state.loading ?
-          <PageLayout>
-          {content}
-          </PageLayout>
+          <DetailPageLayout left={content} right={<VerticalLinearStepper />}/>
           : null
         }
       </>

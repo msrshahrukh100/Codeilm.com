@@ -87,7 +87,7 @@ class SearchAppBar extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar elevation={0} position="static">
       <Toolbar>
       <IconButton onClick={() => this.toggleDrawer(true)() } className={classes.menuButton} color="inherit" aria-label="Open drawer">
       <MenuIcon />

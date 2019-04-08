@@ -3,6 +3,7 @@ import Snackbar from '../../components/UI/Snackbar/Snackbar'
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import DetailPageSkeleton from '../../components/UI/SkeletonLoaders/DetailPageSkeleton'
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
+import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 
 const withErrorHandler = (WrappedCompenent, axios, type="detail") => {
   return class extends React.Component {
@@ -45,7 +46,7 @@ const withErrorHandler = (WrappedCompenent, axios, type="detail") => {
     }
 
     render() {
-      let skeleton = (<PageLayout><DetailPageSkeleton /></PageLayout>)
+      let skeleton = (<DetailPageLayout left=<PageLayout><DetailPageSkeleton /></PageLayout> />)
       if(type == "list") {
         skeleton = (<PageLayout><ListPageSkeleton /></PageLayout>)
       }
