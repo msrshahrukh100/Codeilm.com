@@ -12,11 +12,30 @@ class TutorialDetail extends React.Component {
   state = {
     tutorial: null,
     loading: true,
-    error: null
+    error: null,
+    activeStep: 0
   }
 
+  handleNext = () => {
+    this.setState(state => ({
+      activeStep: state.activeStep + 1,
+    }));
+  };
+
+  handleBack = () => {
+    this.setState(state => ({
+      activeStep: state.activeStep - 1,
+    }));
+  };
+
+  handleReset = () => {
+    this.setState({
+      activeStep: 0,
+    });
+  };
+
+
   componentDidMount() {
-    console.log(this.props)
     const { hash_id } = this.props.match.params
     axios.get('/tutorials/' + hash_id)
       .then(response => {
@@ -39,10 +58,10 @@ class TutorialDetail extends React.Component {
     const title = this.state.tutorial ? this.state.tutorial.title : null
     const content = this.state.tutorial ?
       (
-        <PageLayout>
+        <>
           <h1>{title}</h1>
           <p>sadf</p>
-        </PageLayout>
+        </>
       )
     : null
 
@@ -53,7 +72,13 @@ class TutorialDetail extends React.Component {
           <title>Tutorial Detail</title>
         </Helmet>
         {!this.state.loading ?
-          <DetailPageLayout left={content} right={<VerticalLinearStepper />}/>
+          <DetailPageLayout
+            left={content}
+            right={<VerticalLinearStepper
+              activeStep={this.state.activeStep}
+              handleBack={this.handleBack}
+              handleNext={this.handleNext}
+              handleReset={this.handleReset} />}/>
           : null
         }
       </>

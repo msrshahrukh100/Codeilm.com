@@ -22,11 +22,11 @@ function FullWidthGrid(props) {
     <div className={classes.root}>
       <Grid
         container
-        spacing={16}
+        spacing={0}
         justify='center'
         alignItems='center'
         >
-        <Grid item sm={10} xs={10} >
+        <Grid item sm={12} xs={12} >
           <Paper elevation={0} className={classes.paper}>{props.children}</Paper>
         </Grid>
       </Grid>
