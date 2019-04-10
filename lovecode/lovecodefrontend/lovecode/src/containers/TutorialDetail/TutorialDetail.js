@@ -39,7 +39,6 @@ class TutorialDetail extends React.Component {
     const { hash_id } = this.props.match.params
     axios.get('/tutorials/' + hash_id)
       .then(response => {
-        console.log(response.data)
         this.setState({
           tutorial: response.data,
           loading: false
@@ -55,7 +54,10 @@ class TutorialDetail extends React.Component {
   }
 
   render() {
-    const title = this.state.tutorial ? this.state.tutorial.title : null
+    const steps = this.state.tutorial ?
+    this.state.tutorial.tutorial_data.data.map(tutorial => tutorial.title)
+    : null;
+    const title = steps ? steps[this.state.activeStep] : null
     const content = this.state.tutorial ?
       (
         <>
@@ -63,7 +65,7 @@ class TutorialDetail extends React.Component {
           <p>sadf</p>
         </>
       )
-    : null
+    : null;
 
     return (
       <>
@@ -78,7 +80,8 @@ class TutorialDetail extends React.Component {
               activeStep={this.state.activeStep}
               handleBack={this.handleBack}
               handleNext={this.handleNext}
-              handleReset={this.handleReset} />}/>
+              handleReset={this.handleReset}
+              steps={steps} />}/>
           : null
         }
       </>
