@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 import notifications.urls
@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('api/v1/', include(('lovecode.lovecodebackend.urls', 'lovecode'), namespace="lovecode")),
-    path('tutorials/', TemplateView.as_view(template_name="lovecode.html")),
+    re_path(r'^tutorials/', TemplateView.as_view(template_name="lovecode.html")),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('', include((community_urls))),
     path('', include((android_urls))),
