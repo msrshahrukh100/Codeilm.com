@@ -6,6 +6,7 @@ import { List } from 'react-content-loader'
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
+import TutorialPage from '../../components/TutorialPage/TutorialPage'
 
 class TutorialDetail extends React.Component {
 
@@ -39,6 +40,7 @@ class TutorialDetail extends React.Component {
     const { hash_id } = this.props.match.params
     axios.get('/tutorials/' + hash_id)
       .then(response => {
+        console.log(response.data)
         this.setState({
           tutorial: response.data,
           loading: false
@@ -55,18 +57,14 @@ class TutorialDetail extends React.Component {
 
   render() {
     const steps = this.state.tutorial ?
-    this.state.tutorial.tutorial_data.data.map(tutorial => tutorial.title)
-    : null;
+      this.state.tutorial.tutorial_data.data.map(tutorial => tutorial.title)
+      : null;
     const title = steps ? steps[this.state.activeStep] : null
-    const content = this.state.tutorial ?
-      (
-        <>
-          <h1>{title}</h1>
-          <p>sadf</p>
-        </>
-      )
-    : null;
-
+    const currentPage = this.state.tutorial ?
+      this.state.tutorial.tutorial_data.data[this.state.activeStep]
+      : null;
+    const content = <TutorialPage page={currentPage} />
+    console.log(currentPage);
     return (
       <>
         <Helmet>
