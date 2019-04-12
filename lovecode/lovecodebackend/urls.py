@@ -6,4 +6,7 @@ urlpatterns = [
     path('tutorials/', lovecode_views.TutorialList.as_view() , name="tutorials_list"),
     path('tutorials/<slug:hash_id>', lovecode_views.TutorialDetail.as_view(), name="tutorials_detail"),
 
+    path('userrepositories/', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
+    path('userrepositories/<slug:datetime>', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
+
 ]
