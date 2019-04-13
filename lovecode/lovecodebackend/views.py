@@ -11,8 +11,13 @@ from .paginators import TutorialListPaginator
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie, vary_on_headers
-from allauth.socialaccount.models import SocialAccount
-from rest_framework.exceptions import NotFound
+from .github import GithubApi
+
+from django.utils.cache import learn_cache_key, get_cache_key
+from django.core.cache import cache
+
+
+
 # Create your views here.
 
 def learn(request):
@@ -30,20 +35,27 @@ class TutorialDetail(generics.RetrieveAPIView):
 	serializer_class = lovecode_serializers.TutorialDetailSerializer
 	lookup_field = "hash_id"
 
+keys = set()
+
+
+class UserRepositoriesCached(APIView):
+
+	permission_classes = (permissions.IsAuthenticated,)
+
+	@method_decorator(cache_page(10, key_prefix="something"))
+	@method_decorator(vary_on_cookie)
+	def get(self, request, datetime=None):
+		from django.utils import timezone
+		usernames = [timezone.now()]
+		response = Response(usernames)
+		return response
+
 
 class UserRepositories(APIView):
 
 	permission_classes = (permissions.IsAuthenticated,)
 
-	@method_decorator(cache_page(60))
-	@method_decorator(vary_on_cookie, vary_on_headers)
 	def get(self, request, datetime=None):
-		qs = SocialAccount.objects.filter(user=request.user, provider="GitHub")
-		if not qs.exists():
-			return NotFound("User doesn't have a github account")
-		github_account = qs.first()
-		repos_url = github_account.extra_data.get("repos_url")
-
-		from django.utils import timezone
-		usernames = [timezone.now(), repos_url]
-		return Response(usernames)
+		github_api = GithubApi()
+		response = github_api.get_user_repos(request.user)
+		return Response(response)
