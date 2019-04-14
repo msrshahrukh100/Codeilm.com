@@ -65,7 +65,6 @@ class Carbon extends React.PureComponent {
     const config = { ...DEFAULT_SETTINGS, ...this.props.config }
 
     const languageMode = this.handleLanguageChange(this.props.children, config.language)
-    console.log("config.lineNumbers", this.props.config)
     const options = {
       lineNumbers: config.lineNumbers,
       mode: languageMode || 'plaintext',

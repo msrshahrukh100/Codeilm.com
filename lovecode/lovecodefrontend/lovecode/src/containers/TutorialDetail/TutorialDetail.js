@@ -40,14 +40,12 @@ class TutorialDetail extends React.Component {
     const { hash_id } = this.props.match.params
     axios.get('/tutorials/' + hash_id)
       .then(response => {
-        console.log(response.data)
         this.setState({
           tutorial: response.data,
           loading: false
         })
       })
       .catch(error => {
-        console.log(error)
         this.setState({
           error: error,
           loading: false
@@ -64,7 +62,6 @@ class TutorialDetail extends React.Component {
       this.state.tutorial.tutorial_data.data[this.state.activeStep]
       : null;
     const content = <TutorialPage page={currentPage} />
-    console.log(currentPage);
     return (
       <>
         <Helmet>

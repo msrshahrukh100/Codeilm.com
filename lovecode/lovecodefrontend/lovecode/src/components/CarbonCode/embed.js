@@ -35,7 +35,7 @@ const Page = props => (
 class Embed extends React.Component {
   state = {
     ...DEFAULT_SETTINGS,
-    code: DEFAULT_CODE,
+    code: "",
     mounted: false,
     readOnly: true
   }
@@ -50,7 +50,7 @@ class Embed extends React.Component {
       exportSize: "2x",
       fontFamily: "Hack",
       fontSize: "14px",
-      language: "auto",
+      language: this.props.language,
       lineHeight: "133%",
       lineNumbers: false,
       paddingHorizontal: "56px",
@@ -114,7 +114,7 @@ class Embed extends React.Component {
             copyable={this.state.copyable}
             onChange={this.updateCode}
           >
-            {this.state.code}
+            {this.props.code}
           </Carbon>
         )}
       </Page>

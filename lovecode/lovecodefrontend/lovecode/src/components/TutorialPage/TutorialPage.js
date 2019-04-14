@@ -9,13 +9,15 @@ const tutorialPage = (props) => {
       if(segment.type == "md") {
         return <ReactMarkdown key={"markdown" + index} source={segment.value} />
       }
+      else if(segment.type == "code") {
+        return <Embed key={"code"+index} code={segment.value} language="python" />
+      }
     }) : null
 
 
   return (
     <>
       <h1>{title}</h1>
-      <Embed />
       {content}
     </>
   )
