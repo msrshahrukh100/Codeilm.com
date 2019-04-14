@@ -8,7 +8,7 @@ class GithubApi:
 	def __init__(self, page):
 		self.client_id = settings.GITHUB_CLIENT_ID
 		self.client_secret = settings.GITHUB_CLIENT_SECRET
-		self.per_page = 1
+		self.per_page = 10
 		self.page = page
 		self.etag_names = ["user_repos_etag"]
 
@@ -17,7 +17,6 @@ class GithubApi:
 
 	def get_response_and_headers_from_db(self, request, etag):
 		qs = GithubApiResponse.objects.filter(user=request.user, etag=etag)
-		print(request.user, etag, qs, qs.exists())
 		if not qs.exists():
 			return None
 		return qs.first().response
@@ -33,16 +32,15 @@ class GithubApi:
 				"per_page": self.per_page,
 				"page": self.page
 			}
-			print(etag, conditional_request)
+
 			if etag and conditional_request:
 				headers['If-None-Match'] = etag
 			repos_data = requests.get(url, params=params, headers=headers)
-			print(repos_data.status_code)
-			request.session[etag_name] = str(repos_data.headers.get("ETag"))
+			request.session[etag_name] = repos_data.headers.get("ETag").strip("W/")
 
 			if repos_data.status_code == 200:
 				print("fetched from the api")
-				obj, created = GithubApiResponse.objects.get_or_create(user=request.user, etag=str(request.session[etag_name]))
+				obj, created = GithubApiResponse.objects.get_or_create(user=request.user, etag=request.session.get(etag_name))
 				obj.response = repos_data.json()
 				obj.headers = dict(repos_data.headers)
 				obj.url = request.build_absolute_uri()
@@ -64,6 +62,8 @@ class GithubApi:
 		github_account = self.get_github_acount(request.user)
 		repos_url = github_account.extra_data.get("repos_url")
 		try:
+			# del request.session["user_repos_etag"]
+			# return
 			return self.get_response_from_github_api(request, repos_url, "user_repos_etag", True)
 		except Exception as e:
 			print(e)
