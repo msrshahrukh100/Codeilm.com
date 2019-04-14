@@ -10,4 +10,5 @@ class TutorialAdmin(admin.ModelAdmin):
 
 admin.site.register(lovecode_model.GithubRepo, GithubRepoAdmin)
 admin.site.register(lovecode_model.Tutorial, TutorialAdmin)
+admin.site.register(lovecode_model.GithubApiResponse)
 

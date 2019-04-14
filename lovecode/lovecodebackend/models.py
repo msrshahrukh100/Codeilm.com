@@ -31,3 +31,17 @@ class Tutorial(Model):
 	def __str__(self):
 		return self.user.username
 
+class GithubApiResponse(Model):
+	user = models.ForeignKey(User, related_name="user_github_api", null=True, on_delete=models.SET_NULL)
+	etag = models.CharField(max_length=150)
+	response = JSONField(null=True, blank=True)
+	headers = JSONField(null=True, blank=True)
+	url = models.URLField(null=True, blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.user.username
+
+
+

@@ -245,6 +245,8 @@ if not DEBUG:
 else:
     COMPRESS_ENABLED = False
 
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
 
 LOGGING = {
     'version': 1,
