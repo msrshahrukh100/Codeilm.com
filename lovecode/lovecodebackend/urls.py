@@ -7,7 +7,7 @@ urlpatterns = [
     path('tutorials/<slug:hash_id>', lovecode_views.TutorialDetail.as_view(), name="tutorials_detail"),
 
     path('userrepositories/cached', lovecode_views.UserRepositoriesCached.as_view(), name="user_repositories_cached"),
-    path('userrepositories/', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
+    path('userrepositories/<int:page>', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
     # path('userrepositories/<slug:datetime>', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
 
 ]

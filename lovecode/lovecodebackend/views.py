@@ -55,7 +55,7 @@ class UserRepositories(APIView):
 
 	permission_classes = (permissions.IsAuthenticated,)
 
-	def get(self, request, datetime=None):
-		github_api = GithubApi(page=3)
+	def get(self, request, page=0):
+		github_api = GithubApi(page=page)
 		response = github_api.get_user_repos(request)
 		return Response(response)

@@ -24,7 +24,7 @@ const styles = {
 function MediaCard(props) {
   const { classes } = props;
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} elevation={props.elevation}>
       <CardActionArea>
 
       <Link to={{
