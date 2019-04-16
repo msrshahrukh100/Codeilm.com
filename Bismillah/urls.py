@@ -29,6 +29,7 @@ handler500 = 'mainapp.views.redirect_for_server_error'
 
 urlpatterns = [
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
+    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('api/v1/', include(('lovecode.lovecodebackend.urls', 'lovecode'), namespace="lovecode")),
