@@ -1,5 +1,4 @@
 import React from 'react'
-import Paper from '../../components/UI/Paper/Paper'
 import axios from '../../lovecodeaxios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
