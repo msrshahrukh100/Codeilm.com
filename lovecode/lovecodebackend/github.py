@@ -3,6 +3,10 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from .models import GithubApiResponse
 import requests
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class GithubApi:
 	def __init__(self, page):
@@ -15,7 +19,7 @@ class GithubApi:
 	def get_github_acount(self, user):
 		return get_object_or_404(SocialAccount, user=user, provider="GitHub")
 
-	def get_response_and_headers_from_db(self, request, etag):
+	def get_response_from_db(self, request, etag):
 		qs = GithubApiResponse.objects.filter(user=request.user, etag=etag)
 		if not qs.exists():
 			return None
@@ -39,7 +43,7 @@ class GithubApi:
 			request.session[etag_name] = repos_data.headers.get("ETag").strip("W/")
 
 			if repos_data.status_code == 200:
-				print("fetched from the api")
+				logger.info("____________fetched from the api________")
 				obj, created = GithubApiResponse.objects.get_or_create(user=request.user, etag=request.session.get(etag_name))
 				obj.response = repos_data.json()
 				obj.headers = dict(repos_data.headers)
@@ -47,13 +51,13 @@ class GithubApi:
 				obj.save()
 				return repos_data.json()
 			elif repos_data.status_code == 304:
-				db_values = self.get_response_and_headers_from_db(request, etag)
+				db_values = self.get_response_from_db(request, etag)
 				if db_values:
-					print("fetching from database values")
+					logger.info("_______fetching from database values________")
 					return db_values
 				return self.get_response_from_github_api(request, url, etag_name, False)
 		except Exception as e:
-			print(e)
+			logger.error(e)
 			return {}
 
 
@@ -66,5 +70,5 @@ class GithubApi:
 			# return
 			return self.get_response_from_github_api(request, repos_url, "user_repos_etag", True)
 		except Exception as e:
-			print(e)
+			logger.error(e)
 			return {}
