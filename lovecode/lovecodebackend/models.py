@@ -33,9 +33,12 @@ class Tutorial(Model):
 
 class GithubApiResponse(Model):
 	user = models.ForeignKey(User, related_name="user_github_api", null=True, on_delete=models.SET_NULL)
-	etag = models.CharField(max_length=150)
+	etag = models.CharField(max_length=150, null=True, blank=True)
 	response = JSONField(null=True, blank=True)
-	headers = JSONField(null=True, blank=True)
+	response_headers = JSONField(null=True, blank=True)
+	request_headers = JSONField(null=True, blank=True)
+	get_params = JSONField(null=True, blank=True)
+	post_params = JSONField(null=True, blank=True)
 	url = models.URLField(null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)

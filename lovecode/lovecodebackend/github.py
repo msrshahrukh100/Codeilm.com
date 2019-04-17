@@ -19,17 +19,17 @@ class GithubApi:
 	def get_github_acount(self, user):
 		return get_object_or_404(SocialAccount, user=user, provider="GitHub")
 
-	def get_response_from_db(self, request, etag):
-		qs = GithubApiResponse.objects.filter(user=request.user, etag=etag)
-		if not qs.exists():
-			return None
-		return qs.first().response
+
+	def make_request_to_github_api(self, url, get_params, request_headers):
+		repos_data = requests.get(url, params=get_params, headers=request_headers)
+		return repos_data, repos_data.headers.get('Etag').strip("W/")
 
 
-	def get_response_from_github_api(self, request, url, etag_name, conditional_request=False):
+
+	def get_response_from_github_api(self, request, url):
 		try:
+
 			headers = {}
-			etag = request.session.get(etag_name)
 			params = {
 				"client_id": self.client_id,
 				"client_secret": self.client_secret,
@@ -37,27 +37,31 @@ class GithubApi:
 				"page": self.page
 			}
 
-			if etag and conditional_request:
-				headers['If-None-Match'] = etag
-			repos_data = requests.get(url, params=params, headers=headers)
-			request.session[etag_name] = repos_data.headers.get("ETag").strip("W/")
 
-			if repos_data.status_code == 200:
-				logger.info("____________fetched from the api________")
-				obj, created = GithubApiResponse.objects.get_or_create(user=request.user, etag=request.session.get(etag_name))
-				obj.response = repos_data.json()
-				obj.headers = dict(repos_data.headers)
-				obj.url = request.build_absolute_uri()
+			obj, created = GithubApiResponse.objects.get_or_create(url=url, get_params=params, user=request.user)
+
+			headers['If-None-Match'] = obj.etag
+				
+			response, etag = self.make_request_to_github_api(url, params, headers)
+
+			# request.session[etag_name] = repos_data.headers.get("ETag").strip("W/")
+
+			if response.status_code == 200:
+				print("____________fetched from the api________")
+				
+				obj.response = response.json()
+				print(dir(request))
+				# obj.request_headers = dict(request.headers)
+				obj.response_headers = dict(response.headers)
+				obj.etag = etag
+				obj.url = url
 				obj.save()
-				return repos_data.json()
-			elif repos_data.status_code == 304:
-				db_values = self.get_response_from_db(request, etag)
-				if db_values:
-					logger.info("_______fetching from database values________")
-					return db_values
-				return self.get_response_from_github_api(request, url, etag_name, False)
+				return response.json()
+			elif response.status_code == 304:
+				print("returned from db")
+				return obj.response
 		except Exception as e:
-			logger.error(e)
+			print(e)
 			return {}
 
 
@@ -68,7 +72,7 @@ class GithubApi:
 		try:
 			# del request.session["user_repos_etag"]
 			# return
-			return self.get_response_from_github_api(request, repos_url, "user_repos_etag", True)
+			return self.get_response_from_github_api(request, repos_url)
 		except Exception as e:
-			logger.error(e)
+			print(e)
 			return {}
