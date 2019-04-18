@@ -55,7 +55,7 @@ class GithubApi:
 				obj.etag = etag
 				obj.url = url
 				obj.save()
-				return {"links": get_links_from_headers(obj.response_headers.get('Link'), ""), "data": response.json()}
+				return {"links": get_links_from_headers(obj.response_headers.get('Link', "")), "data": response.json()}
 			elif response.status_code == 304:
 				print("returned from db")
 				return {"links": get_links_from_headers(obj.response_headers.get('Link', "")), "data": obj.response}
