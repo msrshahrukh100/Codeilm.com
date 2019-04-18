@@ -44,7 +44,7 @@ class Embed extends React.Component {
     const query = ""
     const queryParams = {
       backgroundColor: "rgba(255, 255, 255, 1)",
-      dropShadow: true,
+      dropShadow: false,
       dropShadowBlurRadius: "68px",
       dropShadowOffsetY: "20px",
       exportSize: "2x",
@@ -54,7 +54,7 @@ class Embed extends React.Component {
       lineHeight: "133%",
       lineNumbers: false,
       paddingHorizontal: "56px",
-      paddingVertical: "56px",
+      paddingVertical: "40px",
       squaredImage: false,
       theme: "seti",
       watermark: false,
