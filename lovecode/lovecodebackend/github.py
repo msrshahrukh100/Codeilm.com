@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class GithubApi:
-	def __init__(self, page):
+	def __init__(self, page=0):
 		self.client_id = settings.GITHUB_CLIENT_ID
 		self.client_secret = settings.GITHUB_CLIENT_SECRET
 		self.per_page = 10
@@ -63,6 +63,17 @@ class GithubApi:
 			print(e)
 			return {}
 
+
+	def get_learn_md_content(self, request, repo_name):
+		github_account = self.get_github_acount(request.user)
+		login = github_account.extra_data.get("login")
+
+		try:
+			url = "https://api.github.com/repos/msrshahrukh100/My-Plans/contents/.gitignore"
+			return self.get_response_from_github_api(request, url)
+		except Exception as e:
+			print(e)
+			return {}
 
 
 	def get_user_repos(self, request):

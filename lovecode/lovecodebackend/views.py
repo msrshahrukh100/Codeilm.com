@@ -15,7 +15,7 @@ from .github import GithubApi
 
 from django.utils.cache import learn_cache_key, get_cache_key
 from django.core.cache import cache
-
+import base64
 
 
 # Create your views here.
@@ -35,7 +35,21 @@ class TutorialDetail(generics.RetrieveAPIView):
 	serializer_class = lovecode_serializers.TutorialDetailSerializer
 	lookup_field = "hash_id"
 
-keys = set()
+
+class UserRepositoryLearnContent(APIView):
+	permission_classes = (permissions.IsAuthenticated,)
+
+	def get(self, request, repo_name=None):
+		github_api = GithubApi()
+		response = github_api.get_learn_md_content(request, repo_name)
+		data = response.get("data")
+		if data:
+			content = data.get("content")
+			asdf = base64.b64decode(content)
+			print(str(asdf))
+			return Response({"content": base64.b64decode(content)})
+		else:
+			return {}
 
 
 class UserRepositoriesCached(APIView):
