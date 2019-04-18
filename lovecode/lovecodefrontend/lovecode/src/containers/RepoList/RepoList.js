@@ -2,24 +2,33 @@ import React from 'react'
 import axios from '../../lovecodeaxios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
+import InfiniteScroll from "react-infinite-scroll-component"
+import PageLayout from '../../components/UI/PageLayout/PageLayout'
+import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
+
 
 class RepoList extends React.Component {
 
   state = {
-    userrepositories: null,
+    userrepositories: [],
+    links:{},
     pageNumber: 0,
     loading: true,
+    hasMoreRepo: false,
     error: null
   }
 
-  componentDidMount() {
+  fetchRepositories = () => {
     axios.get('/userrepositories/' + this.state.pageNumber)
       .then(response => {
         console.log(response.data)
-        this.setState({
-          userrepositories: response.data,
-          loading: false
-        })
+        this.setState(state => ({
+          userrepositories: state.userrepositories.concat(response.data.data),
+          links: response.data.links,
+          loading: false,
+          hasMoreRepo: response.data.links.next ? true : false,
+          pageNumber: response.data.links.next ? response.data.links.next : -1
+        }))
 
       })
       .catch(error => {
@@ -30,16 +39,22 @@ class RepoList extends React.Component {
       })
   }
 
+  componentDidMount() {
+    this.fetchRepositories()
+  }
+
   render() {
-    const repos = this.state.userrepositories ?
-    this.state.userrepositories.data.map(repo => <MediaCard key={repo.id} title={repo.name} />)
-      : null
     return (
-      <>
-      {repos}
-      </>
+      <InfiniteScroll
+          dataLength={this.state.userrepositories.length}
+          next={this.fetchRepositories}
+          hasMore={this.state.hasMoreRepo}
+          loader={<PageLayout><ListPageSkeleton /></PageLayout>}
+      >
+      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} title={repo.name} />)}
+      </InfiniteScroll>
     )
   }
 }
 
-export default withErrorHandler(RepoList, axios)
+export default withErrorHandler(RepoList, axios, "list")
