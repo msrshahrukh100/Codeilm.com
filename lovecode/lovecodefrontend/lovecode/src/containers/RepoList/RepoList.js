@@ -13,7 +13,7 @@ class RepoList extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/userrepositories/' + this.state.pageNumber, {withCredentials: true})
+    axios.get('/userrepositories/' + this.state.pageNumber)
       .then(response => {
         console.log(response.data)
         this.setState({
@@ -32,7 +32,7 @@ class RepoList extends React.Component {
 
   render() {
     const repos = this.state.userrepositories ?
-    this.state.userrepositories.map(repo => <MediaCard key={repo.id} title={repo.name} />)
+    this.state.userrepositories.data.map(repo => <MediaCard key={repo.id} title={repo.name} />)
       : null
     return (
       <>

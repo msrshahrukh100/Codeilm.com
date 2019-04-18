@@ -4,6 +4,7 @@ from django.conf import settings
 from .models import GithubApiResponse
 import requests
 import logging
+from .utils import get_links_from_headers
 
 logger = logging.getLogger(__name__)
 
@@ -44,22 +45,20 @@ class GithubApi:
 				
 			response, etag = self.make_request_to_github_api(url, params, headers)
 
-			# request.session[etag_name] = repos_data.headers.get("ETag").strip("W/")
 
 			if response.status_code == 200:
 				print("____________fetched from the api________")
 				
 				obj.response = response.json()
-				print(dir(request))
 				# obj.request_headers = dict(request.headers)
 				obj.response_headers = dict(response.headers)
 				obj.etag = etag
 				obj.url = url
 				obj.save()
-				return response.json()
+				return {"links": get_links_from_headers(obj.response_headers.get('Link'), ""), "data": response.json()}
 			elif response.status_code == 304:
 				print("returned from db")
-				return obj.response
+				return {"links": get_links_from_headers(obj.response_headers.get('Link', "")), "data": obj.response}
 		except Exception as e:
 			print(e)
 			return {}
