@@ -45,11 +45,9 @@ class UserRepositoryLearnContent(APIView):
 		data = response.get("data")
 		if data:
 			content = data.get("content")
-			asdf = base64.b64decode(content)
-			print(str(asdf))
 			return Response({"content": base64.b64decode(content)})
 		else:
-			return {}
+			return Response({})
 
 
 class UserRepositoriesCached(APIView):

@@ -69,7 +69,7 @@ class GithubApi:
 		login = github_account.extra_data.get("login")
 
 		try:
-			url = "https://api.github.com/repos/msrshahrukh100/My-Plans/contents/.gitignore"
+			url = "https://api.github.com/repos/" + login + "/" + repo_name + "/contents/requirements.txt"
 			return self.get_response_from_github_api(request, url)
 		except Exception as e:
 			print(e)
