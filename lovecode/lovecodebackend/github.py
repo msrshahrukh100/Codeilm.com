@@ -80,8 +80,6 @@ class GithubApi:
 		github_account = self.get_github_acount(request.user)
 		repos_url = github_account.extra_data.get("repos_url")
 		try:
-			# del request.session["user_repos_etag"]
-			# return
 			return self.get_response_from_github_api(request, repos_url)
 		except Exception as e:
 			print(e)

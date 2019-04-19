@@ -21,7 +21,6 @@ class RepoList extends React.Component {
   fetchRepositories = () => {
     axios.get('/userrepositories/' + this.state.pageNumber)
       .then(response => {
-        console.log(response.data)
         this.setState(state => ({
           userrepositories: state.userrepositories.concat(response.data.data),
           links: response.data.links,
@@ -51,7 +50,7 @@ class RepoList extends React.Component {
           hasMore={this.state.hasMoreRepo}
           loader={<PageLayout><ListPageSkeleton /></PageLayout>}
       >
-      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} title={repo.name} />)}
+      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} link={'/tutorials/create/'+repo.name} title={repo.name} />)}
       </InfiniteScroll>
     )
   }
