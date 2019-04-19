@@ -4,17 +4,13 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
+import BranchChoose from '../BranchChoose/BranchChoose'
 
 const styles = theme => ({
   textField: {
-    width: '100%'
-  },
-  dense: {
-    marginTop: 16,
-  },
-  menu: {
-    width: 200,
-  },
+    width: '95%',
+    margin: theme.spacing.unit
+  }
 });
 
 
@@ -29,7 +25,7 @@ class LearnEdit extends React.Component {
 
   componentDidMount() {
     const { repoName } = this.props.match.params;
-    axios.get('/learn/content/' + repoName)
+    axios.get('/learn/content/' + repoName + "?branch_name=" + "master")
       .then(response => {
         {response.data.content ?
           this.setState({
@@ -54,11 +50,12 @@ class LearnEdit extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state);
+    const { repoName } = this.props.match.params;
     return (
       <>
       {this.state.content ?
-
+        <>
+        <BranchChoose repoName={repoName} />
         <TextField
         id="outlined-multiline-static"
         label="learn.md"
@@ -71,7 +68,7 @@ class LearnEdit extends React.Component {
         spellCheck="false"
         variant="outlined"
         />
-
+        </>
         : null}
       </>
     )

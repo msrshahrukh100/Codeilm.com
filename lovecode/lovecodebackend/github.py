@@ -27,7 +27,7 @@ class GithubApi:
 
 
 
-	def get_response_from_github_api(self, request, url):
+	def get_response_from_github_api(self, request, url, extra_params={}):
 		try:
 
 			headers = {}
@@ -38,6 +38,7 @@ class GithubApi:
 				"page": self.page
 			}
 
+			params = {**params, **extra_params}
 
 			obj, created = GithubApiResponse.objects.get_or_create(url=url, get_params=params, user=request.user)
 
@@ -64,12 +65,22 @@ class GithubApi:
 			return {}
 
 
-	def get_learn_md_content(self, request, repo_name):
+	def get_learn_md_content(self, request, repo_name, branch_name):
 		github_account = self.get_github_acount(request.user)
 		login = github_account.extra_data.get("login")
-
 		try:
+			extra_params = {"ref": branch_name}
 			url = "https://api.github.com/repos/" + login + "/" + repo_name + "/contents/requirements.txt"
+			return self.get_response_from_github_api(request, url, extra_params)
+		except Exception as e:
+			print(e)
+			return {}
+
+	def get_repo_branches(self, request, repo_name):
+		github_account = self.get_github_acount(request.user)
+		login = github_account.extra_data.get("login")
+		try:
+			url = "https://api.github.com/repos/" + login + "/" + repo_name + "/branches"
 			return self.get_response_from_github_api(request, url)
 		except Exception as e:
 			print(e)

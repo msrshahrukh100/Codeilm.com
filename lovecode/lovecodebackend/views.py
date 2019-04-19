@@ -41,13 +41,23 @@ class UserRepositoryLearnContent(APIView):
 
 	def get(self, request, repo_name=None):
 		github_api = GithubApi()
-		response = github_api.get_learn_md_content(request, repo_name)
+		branch_name = request.GET.get('branch_name')
+		response = github_api.get_learn_md_content(request, repo_name, branch_name)
 		data = response.get("data")
 		if data:
 			content = data.get("content")
 			return Response({"content": base64.b64decode(content)})
 		else:
 			return Response({})
+
+
+class UserRepositoryBranches(APIView):
+	permission_classes = (permissions.IsAuthenticated,)
+
+	def get(self, request, repo_name=None):
+		github_api = GithubApi()
+		response = github_api.get_repo_branches(request, repo_name)
+		return Response(response)
 
 
 class UserRepositoriesCached(APIView):
