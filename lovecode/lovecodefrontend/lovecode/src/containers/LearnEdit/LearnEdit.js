@@ -7,6 +7,11 @@ import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
 import BranchChoose from '../BranchChoose/BranchChoose'
 import { withRouter } from "react-router";
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
+import Fab from '@material-ui/core/Fab';
+import NavigationIcon from '@material-ui/icons/Navigation';
+import { FaGithub } from 'react-icons/fa';
+import { IconContext } from "react-icons";
+
 
 const styles = theme => ({
   textField: {
@@ -17,6 +22,13 @@ const styles = theme => ({
     position: 'absolute',
     top: '90px',
     width: '95%'
+  },
+  margin: {
+    margin: theme.spacing.unit,
+    textTransform: 'none'
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
   }
 });
 
@@ -43,7 +55,8 @@ class LearnEdit extends React.Component {
       branchName: branchName,
       repoName: repoName,
       error: null,
-      defaultContent: false
+      defaultContent: false,
+      commitMessage: "Updated learn.md"
     }
   }
 
@@ -56,10 +69,28 @@ class LearnEdit extends React.Component {
     }
   }
 
-  textareaUpdate = event => {
-    this.setState({content: event.target.value})
+  commitFile = () => {
+    axios.post('/commit/learn', {
+      message: this.state.commitMessage,
+      content: this.state.content,
+      branch: this.state.branchName
+    })
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      this.setState({
+        error: error,
+      })
+    })
   }
 
+  learnContentUpdate = event => {
+    this.setState({content: event.target.value})
+  }
+  commitMessageUpdate = event => {
+    this.setState({commitMessage: event.target.value})
+  }
 
   handleBranchChange = event => {
     this.props.history.push('/tutorials/create/' + this.state.repoName + '?branch_name=' + event.target.value);
@@ -104,13 +135,35 @@ class LearnEdit extends React.Component {
         multiline
         rows="20"
         value={this.state.content}
-        onChange={this.textareaUpdate}
+        onChange={this.learnContentUpdate}
         className={classes.textField}
         margin="normal"
         autoFocus={true}
         spellCheck="false"
         variant="outlined"
         />
+        <TextField
+          id="outlined-name"
+          label="Name"
+          value={this.state.commitMessage}
+          onChange={this.commitMessageUpdate}
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+        />
+        <Fab
+          variant="extended"
+          onClick={this.commitFile}
+          size="medium"
+          color="primary"
+          aria-label="Add"
+          className={classes.margin}
+        >
+          <IconContext.Provider value={{ size: '2em' }}>
+          <FaGithub className={classes.extendedIcon} />
+          </IconContext.Provider>
+          Commit on GitHub
+        </Fab>
         </>
         : null}
         </div>
