@@ -6,11 +6,17 @@ import TextField from '@material-ui/core/TextField';
 import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
 import BranchChoose from '../BranchChoose/BranchChoose'
 import { withRouter } from "react-router";
+import Snackbar from '../../components/UI/Snackbar/Snackbar'
 
 const styles = theme => ({
   textField: {
     width: '95%',
     margin: theme.spacing.unit
+  },
+  container: {
+    position: 'absolute',
+    top: '90px',
+    width: '95%'
   }
 });
 
@@ -37,6 +43,7 @@ class LearnEdit extends React.Component {
       branchName: branchName,
       repoName: repoName,
       error: null,
+      defaultContent: false
     }
   }
 
@@ -49,23 +56,22 @@ class LearnEdit extends React.Component {
     }
   }
 
-
-
   textareaUpdate = event => {
     this.setState({content: event.target.value})
   }
 
 
   handleBranchChange = event => {
-
     this.props.history.push('/tutorials/create/' + this.state.repoName + '?branch_name=' + event.target.value);
   }
 
   fetchLearnContent = () => {
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
+
       this.setState({
         content: response.data.content ? response.data.content : DEFAULT_LEARN_CONTENT,
+        defaultContent: response.data.content ? false : true
       })
     })
     .catch(error => {
@@ -85,6 +91,10 @@ class LearnEdit extends React.Component {
     const { repoName } = this.props.match.params;
     return (
       <>
+      <div className={classes.snackbarDiv}>
+        {this.state.defaultContent ? <Snackbar show={true} type="success" text={"This branch doesn't have the learn.md file. You can start with this template"} /> : null}
+      </div>
+      <div className={classes.container}>
       {this.state.content ?
         <>
         <BranchChoose onBranchChange={this.handleBranchChange} repoName={repoName} defaultBranch={this.state.branchName} />
@@ -103,9 +113,10 @@ class LearnEdit extends React.Component {
         />
         </>
         : null}
+        </div>
       </>
     )
   }
 }
 
-export default withErrorHandler(withStyles(styles)(withRouter(LearnEdit)), axios, "no-preloader")
+export default withErrorHandler(withStyles(styles)(withRouter(LearnEdit)), axios, "circular")

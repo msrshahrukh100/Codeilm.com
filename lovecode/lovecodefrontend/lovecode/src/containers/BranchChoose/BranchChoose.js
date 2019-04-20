@@ -30,7 +30,6 @@ class LearnEdit extends React.Component {
   state = {
     branches: null,
     age: '',
-    loading: true,
     error: null,
     defaultBranch: this.props.defaultBranch
   }
@@ -41,13 +40,11 @@ class LearnEdit extends React.Component {
       .then(response => {
         this.setState({
           branches: response.data.data,
-          loading: false
         })
       })
       .catch(error => {
         this.setState({
           error: error,
-          loading: false
         })
       })
   }
@@ -60,8 +57,6 @@ class LearnEdit extends React.Component {
 
   render() {
     const { classes } = this.props;
-    console.log(this.props);
-    console.log(this.state);
     return (
       <>
       {this.state.branches ?
@@ -83,10 +78,7 @@ class LearnEdit extends React.Component {
           />
         }
         >
-        <option value="" />
         {this.state.branches.map(branch => <option key={"selectbranch_"+branch.name} value={branch.name}>{branch.name}</option>)}
-        <option value={20}>Twenty</option>
-            <option value={30}>Thirty</option>
         </Select>
         </FormControl>
 
@@ -97,4 +89,4 @@ class LearnEdit extends React.Component {
   }
 }
 
-export default withErrorHandler( withStyles(styles)(withRouter(LearnEdit)), axios, "no-preloader")
+export default withErrorHandler( withStyles(styles)(withRouter(LearnEdit)), axios)
