@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
 import BranchChoose from '../BranchChoose/BranchChoose'
+import { withRouter } from "react-router";
 
 const styles = theme => ({
   textField: {
@@ -17,35 +18,66 @@ const styles = theme => ({
 
 class LearnEdit extends React.Component {
 
-  state = {
-    content: null,
-    loading: true,
-    error: null,
+  getBranchName = (props) => {
+    const query = new URLSearchParams( props.location.search );
+    for ( let param of query.entries() ) {
+      if (param[0] === 'branch_name') {
+        return param[1];
+      }
+    }
+    return null
+  }
+
+  constructor(props) {
+    super(props)
+    const { repoName } = this.props.match.params;
+    let branchName = this.getBranchName(this.props);
+    this.state = {
+      content: null,
+      branchName: branchName,
+      repoName: repoName,
+      error: null,
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    let prevBranchName = this.getBranchName(prevProps);
+    let newBranchName = this.getBranchName(this.props);
+
+    if(prevBranchName !== newBranchName) {
+      this.setState({branchName: newBranchName}, () => this.fetchLearnContent())
+    }
+  }
+
+
+
+  textareaUpdate = event => {
+    this.setState({content: event.target.value})
+  }
+
+
+  handleBranchChange = event => {
+
+    this.props.history.push('/tutorials/create/' + this.state.repoName + '?branch_name=' + event.target.value);
+  }
+
+  fetchLearnContent = () => {
+    axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
+    .then(response => {
+      this.setState({
+        content: response.data.content ? response.data.content : DEFAULT_LEARN_CONTENT,
+      })
+    })
+    .catch(error => {
+      this.setState({
+        error: error,
+      })
+    })
+
   }
 
   componentDidMount() {
-    const { repoName } = this.props.match.params;
-    axios.get('/learn/content/' + repoName + "?branch_name=" + "master")
-      .then(response => {
-        {response.data.content ?
-          this.setState({
-            content: response.data.content,
-            loading: false
-          })
-
-        : this.setState({
-          content: DEFAULT_LEARN_CONTENT,
-          loading: false
-        })
-      }
-
-      })
-      .catch(error => {
-        this.setState({
-          error: error,
-          loading: false
-        })
-      })
+    this.fetchLearnContent()
   }
 
   render() {
@@ -55,13 +87,14 @@ class LearnEdit extends React.Component {
       <>
       {this.state.content ?
         <>
-        <BranchChoose repoName={repoName} />
+        <BranchChoose onBranchChange={this.handleBranchChange} repoName={repoName} defaultBranch={this.state.branchName} />
         <TextField
         id="outlined-multiline-static"
         label="learn.md"
         multiline
         rows="20"
-        defaultValue={this.state.content}
+        value={this.state.content}
+        onChange={this.textareaUpdate}
         className={classes.textField}
         margin="normal"
         autoFocus={true}
@@ -75,4 +108,4 @@ class LearnEdit extends React.Component {
   }
 }
 
-export default withErrorHandler(withStyles(styles)(LearnEdit), axios)
+export default withErrorHandler(withStyles(styles)(withRouter(LearnEdit)), axios, "no-preloader")

@@ -9,6 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
+import { withRouter } from "react-router";
 
 const styles = theme => ({
   root: {
@@ -31,18 +32,13 @@ class LearnEdit extends React.Component {
     age: '',
     loading: true,
     error: null,
-    labelWidth: 0,
+    defaultBranch: this.props.defaultBranch
   }
 
   componentDidMount() {
 
-    this.setState({
-      labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-    });
-
     axios.get('/repo/branches/' + this.props.repoName)
       .then(response => {
-        console.log(response.data);
         this.setState({
           branches: response.data.data,
           loading: false
@@ -56,46 +52,49 @@ class LearnEdit extends React.Component {
       })
   }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
-  };
+  componentDidUpdate(prevProps) {
+    if(prevProps.defaultBranch !== this.props.defaultBranch) {
+      this.setState({defaultBranch: this.props.defaultBranch})
+    }
+  }
 
   render() {
     const { classes } = this.props;
-
+    console.log(this.props);
+    console.log(this.state);
     return (
       <>
+      {this.state.branches ?
         <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel
-        ref={ref => {
-          this.InputLabelRef = ref;
-        }}
         htmlFor="outlined-age-native-simple"
         >
         Branch
         </InputLabel>
         <Select
         native
-        value={this.state.age}
-        onChange={this.handleChange('age')}
+        onChange={this.props.onBranchChange}
+        value={this.state.defaultBranch}
         input={
           <OutlinedInput
           name="branch"
-          labelWidth={this.state.labelWidth}
+          labelWidth={51}
           id="outlined-age-native-simple"
           />
         }
         >
-        {this.state.branches ?
-          this.state.branches.map(branch => <option key={"selectbranch_"+branch.name} value={branch.name}>{branch.name}</option>)
-          : null
-        }
-          </Select>
-          </FormControl>
+        <option value="" />
+        {this.state.branches.map(branch => <option key={"selectbranch_"+branch.name} value={branch.name}>{branch.name}</option>)}
+        <option value={20}>Twenty</option>
+            <option value={30}>Thirty</option>
+        </Select>
+        </FormControl>
+
+      : null}
 
       </>
     )
   }
 }
 
-export default withErrorHandler( withStyles(styles)(LearnEdit), axios)
+export default withErrorHandler( withStyles(styles)(withRouter(LearnEdit)), axios, "no-preloader")

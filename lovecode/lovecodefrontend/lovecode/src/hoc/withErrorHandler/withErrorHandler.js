@@ -50,6 +50,9 @@ const withErrorHandler = (WrappedCompenent, axios, type="detail") => {
       if(type == "list") {
         skeleton = (<PageLayout><ListPageSkeleton /></PageLayout>)
       }
+      else if(type == "no-preloader") {
+        skeleton = null
+      }
       return (
         <>
 

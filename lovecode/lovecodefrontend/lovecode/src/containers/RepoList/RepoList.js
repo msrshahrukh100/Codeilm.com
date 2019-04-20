@@ -5,7 +5,7 @@ import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import InfiniteScroll from "react-infinite-scroll-component"
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
-
+import { withRouter } from "react-router";
 
 class RepoList extends React.Component {
 
@@ -50,10 +50,10 @@ class RepoList extends React.Component {
           hasMore={this.state.hasMoreRepo}
           loader={<PageLayout><ListPageSkeleton /></PageLayout>}
       >
-      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} link={'/tutorials/create/'+repo.name} title={repo.name} />)}
+      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} link={'/tutorials/create/'+repo.name} search={"?branch_name="+repo.default_branch} title={repo.name} />)}
       </InfiniteScroll>
     )
   }
 }
 
-export default withErrorHandler(RepoList, axios, "list")
+export default withErrorHandler(withRouter(RepoList), axios, "list")
