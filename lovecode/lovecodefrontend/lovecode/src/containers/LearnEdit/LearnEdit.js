@@ -11,7 +11,7 @@ import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import { FaGithub } from 'react-icons/fa';
 import { IconContext } from "react-icons";
-
+import CircularPreloader from '../../components/UI/SkeletonLoaders/CircularPreloader'
 
 const styles = theme => ({
   textField: {
@@ -56,7 +56,9 @@ class LearnEdit extends React.Component {
       repoName: repoName,
       error: null,
       defaultContent: false,
-      commitMessage: "Updated learn.md"
+      sha: null,
+      commitMessage: "Updated learn.md",
+      commitedSuccessfully: false
     }
   }
 
@@ -70,13 +72,17 @@ class LearnEdit extends React.Component {
   }
 
   commitFile = () => {
+    this.setState({loading: true})
     axios.post('/commit/learn', {
       message: this.state.commitMessage,
-      content: this.state.content,
-      branch: this.state.branchName
+      content: "",
+      branch: this.state.branchName,
+      repo_name: this.state.repoName,
+      sha: this.state.sha,
+      loading: false
     })
     .then(response => {
-      console.log(response.data);
+      this.setState({loading: false, commitedSuccessfully: true}, () => this.fetchLearnContent())
     })
     .catch(error => {
       this.setState({
@@ -99,9 +105,10 @@ class LearnEdit extends React.Component {
   fetchLearnContent = () => {
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
-
+      console.log(response.data);
       this.setState({
         content: response.data.content ? response.data.content : DEFAULT_LEARN_CONTENT,
+        sha: response.data.sha,
         defaultContent: response.data.content ? false : true
       })
     })
@@ -124,6 +131,7 @@ class LearnEdit extends React.Component {
       <>
       <div className={classes.snackbarDiv}>
         {this.state.defaultContent ? <Snackbar show={true} type="success" text={"This branch doesn't have the learn.md file. You can start with this template"} /> : null}
+        {this.state.commitedSuccessfully ? <Snackbar show={true} type="success" text={"Successfully commited learn.md file to " + this.state.repoName + " to the branch " + this.state.branchName } /> : null}
       </div>
       <div className={classes.container}>
       {this.state.content ?
@@ -151,9 +159,11 @@ class LearnEdit extends React.Component {
           margin="normal"
           variant="outlined"
         />
+        <div className={classes.wrapper}>
         <Fab
           variant="extended"
           onClick={this.commitFile}
+          disabled={this.state.loading}
           size="medium"
           color="primary"
           aria-label="Add"
@@ -164,6 +174,8 @@ class LearnEdit extends React.Component {
           </IconContext.Provider>
           Commit on GitHub
         </Fab>
+        {this.state.loading ? <CircularPreloader /> : null}
+        </div>
         </>
         : null}
         </div>

@@ -57,7 +57,6 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
       else {
         skeleton = null
       }
-      console.log(type, this.state.loading, skeleton);
       return (
         <>
 

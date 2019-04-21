@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 from .github import GithubApi
+from rest_framework import status
 
 from django.utils.cache import learn_cache_key, get_cache_key
 from django.core.cache import cache
@@ -40,13 +41,14 @@ class UserRepositoryLearnContent(APIView):
 	permission_classes = (permissions.IsAuthenticated,)
 
 	def get(self, request, repo_name=None):
-		github_api = GithubApi()
+		github_api = GithubApi(request)
 		branch_name = request.GET.get('branch_name')
 		response = github_api.get_learn_md_content(request, repo_name, branch_name)
 		data = response.get("data")
 		if data:
 			content = data.get("content")
-			return Response({"content": base64.b64decode(content)})
+			sha = data.get("sha")
+			return Response({"content": base64.b64decode(content), "sha": sha})
 		else:
 			return Response({})
 
@@ -55,22 +57,9 @@ class UserRepositoryBranches(APIView):
 	permission_classes = (permissions.IsAuthenticated,)
 
 	def get(self, request, repo_name=None):
-		github_api = GithubApi()
+		github_api = GithubApi(request)
 		response = github_api.get_repo_branches(request, repo_name)
 		return Response(response)
-
-
-class UserRepositoriesCached(APIView):
-
-	permission_classes = (permissions.IsAuthenticated,)
-
-	@method_decorator(cache_page(10, key_prefix="something"))
-	@method_decorator(vary_on_cookie)
-	def get(self, request, datetime=None):
-		from django.utils import timezone
-		usernames = [timezone.now()]
-		response = Response(usernames)
-		return response
 
 
 class UserRepositories(APIView):
@@ -78,6 +67,17 @@ class UserRepositories(APIView):
 	permission_classes = (permissions.IsAuthenticated,)
 
 	def get(self, request, page=0):
-		github_api = GithubApi(page=page)
+		github_api = GithubApi(request, page=page)
 		response = github_api.get_user_repos(request)
 		return Response(response)
+
+
+class CreateUpdateCommitLearnFile(APIView):
+	permission_classes = (permissions.IsAuthenticated,)
+
+	def post(self, request):
+		github_api = GithubApi(request)
+		response = github_api.save_commit_learn(request)
+
+		return Response(response, status=status.HTTP_201_CREATED)
+
