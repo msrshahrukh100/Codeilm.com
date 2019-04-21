@@ -51,7 +51,7 @@ class LearnEdit extends React.Component {
     const { repoName } = this.props.match.params;
     let branchName = this.getBranchName(this.props);
     this.state = {
-      content: null,
+      content: "",
       branchName: branchName,
       repoName: repoName,
       error: null,
@@ -75,14 +75,15 @@ class LearnEdit extends React.Component {
     this.setState({loading: true})
     axios.post('/commit/learn', {
       message: this.state.commitMessage,
-      content: "",
+      content: this.state.content,
       branch: this.state.branchName,
       repo_name: this.state.repoName,
       sha: this.state.sha,
-      loading: false
+      loading: false,
+      contentLoaded: false
     })
     .then(response => {
-      this.setState({loading: false, commitedSuccessfully: true}, () => this.fetchLearnContent())
+      this.setState({loading: false, commitedSuccessfully: true}, () => setTimeout(() => this.fetchLearnContent(), 5000) )
     })
     .catch(error => {
       this.setState({
@@ -105,11 +106,12 @@ class LearnEdit extends React.Component {
   fetchLearnContent = () => {
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
-      console.log(response.data);
       this.setState({
         content: response.data.content ? response.data.content : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
-        defaultContent: response.data.content ? false : true
+        defaultContent: response.data.content ? false : true,
+        contentLoaded: true,
+        commitedSuccessfully: false
       })
     })
     .catch(error => {
@@ -134,7 +136,7 @@ class LearnEdit extends React.Component {
         {this.state.commitedSuccessfully ? <Snackbar show={true} type="success" text={"Successfully commited learn.md file to " + this.state.repoName + " to the branch " + this.state.branchName } /> : null}
       </div>
       <div className={classes.container}>
-      {this.state.content ?
+      {this.state.contentLoaded ?
         <>
         <BranchChoose onBranchChange={this.handleBranchChange} repoName={repoName} defaultBranch={this.state.branchName} />
         <TextField
