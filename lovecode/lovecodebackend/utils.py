@@ -1,7 +1,7 @@
 import re
 import json
 
-link_re = re.compile(r'[\s\S]*page\=([0-9]+)[\s\S]*\=[\'\"]([\s\S]*)[\'\"]')
+link_re = re.compile(r'[\s\S]*[\?\&]page\=([0-9]+)[\s\S]*\=[\'\"]([\s\S]*)[\'\"]')
 
 def get_links_from_headers(headers):
 	headers = headers.split(",")
