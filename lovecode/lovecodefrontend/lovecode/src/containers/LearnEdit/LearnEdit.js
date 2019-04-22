@@ -12,6 +12,7 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import { FaGithub } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import CircularPreloader from '../../components/UI/SkeletonLoaders/CircularPreloader'
+import getCookie from '../../utils/getCookie'
 
 const styles = theme => ({
   textField: {
@@ -73,6 +74,8 @@ class LearnEdit extends React.Component {
 
   commitFile = () => {
     this.setState({loading: true})
+    const csrftoken = getCookie('csrftoken');
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.post('/commit/learn', {
       message: this.state.commitMessage,
       content: this.state.content,
