@@ -19,6 +19,10 @@ const styles = theme => ({
     width: '95%',
     margin: theme.spacing.unit
   },
+  repoField: {
+    minWidth: 120,
+    margin: theme.spacing.unit
+  },
   container: {
     position: 'absolute',
     top: '90px',
@@ -141,6 +145,17 @@ class LearnEdit extends React.Component {
       <div className={classes.container}>
       {this.state.contentLoaded ?
         <>
+        <TextField
+          id="outlined-read-only-input"
+          label="Repository"
+          value={this.state.repoName}
+          className={classes.repoField}
+          margin="normal"
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="outlined"
+        />
         <BranchChoose onBranchChange={this.handleBranchChange} repoName={repoName} defaultBranch={this.state.branchName} />
         <TextField
         id="outlined-multiline-static"
@@ -157,7 +172,7 @@ class LearnEdit extends React.Component {
         />
         <TextField
           id="outlined-name"
-          label="Name"
+          label="Commit message"
           value={this.state.commitMessage}
           onChange={this.commitMessageUpdate}
           className={classes.textField}
