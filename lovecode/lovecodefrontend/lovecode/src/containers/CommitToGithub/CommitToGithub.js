@@ -6,6 +6,7 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import { FaGithub } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import { withStyles } from '@material-ui/core/styles';
+import CircularPreloader from '../../components/UI/SkeletonLoaders/CircularPreloader'
 
 const styles = theme => ({
   margin: {
@@ -20,6 +21,8 @@ class CommitToGithub extends React.Component {
 	}
 
 	render() {
+		const { classes } = this.props;
+
 		return (
 		<div className={classes.wrapper}>
 	        <Fab
