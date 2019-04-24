@@ -20,11 +20,14 @@ class GithubRepo(Model):
 class Tutorial(Model):
 	hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
 	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-	repo = models.ForeignKey(GithubRepo, null=True, on_delete=models.SET_NULL)
-	title = models.CharField(max_length=300)
+	title = models.CharField(max_length=300, null=True, blank=True)
 	slug = AutoSlugField(populate_from='title')
 	tutorial_data = JSONField(null=True, blank=True)
+	learn_md_content = models.TextField(null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
+	is_published = models.BooleanField(default=False)
+	repository_name = models.CharField(max_length=200)
+	branch_name = models.CharField(max_length=150)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
