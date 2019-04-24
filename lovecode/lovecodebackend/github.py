@@ -68,6 +68,9 @@ class GithubApi:
 			elif response.status_code == 304:
 				print("returned from db")
 				return {"links": get_links_from_headers(obj.response_headers.get('Link', "")), "data": obj.response}
+			elif response.status_code == 400:
+				return {"links": {}, "data": {}}
+
 		except Exception as e:
 			print(e)
 			return {}

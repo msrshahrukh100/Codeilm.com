@@ -44,13 +44,25 @@ class UserRepositoryLearnContent(APIView):
 		github_api = GithubApi(request)
 		branch_name = request.GET.get('branch_name')
 		response = github_api.get_learn_md_content(request, repo_name, branch_name)
-		data = response.get("data")
-		if data:
-			content = data.get("content")
-			sha = data.get("sha")
-			return Response({"content": base64.b64decode(content), "sha": sha})
+		data_from_api = response.get("data")
+		content_from_api = data_from_api.get("content", "")
+		sha = data_from_api.get("sha", "")
+		data_from_db = lovecode_models.Tutorial.objects.filter(
+			user=request.user,
+			repository_name=repo_name,
+			branch_name=branch_name
+		)
+		if data_from_db.exists():
+			content_from_db = data_from_db.first().learn_md_content
 		else:
-			return Response({})
+			content_from_db = ""
+
+
+		return Response({
+			"content_from_api": base64.b64decode(content_from_api),
+			"content_from_db": content_from_db,
+			"sha": sha
+		})
 
 
 class UserRepositoryBranches(APIView):
