@@ -26,8 +26,8 @@ class Tutorial(Model):
 	learn_md_content = models.TextField(null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	is_published = models.BooleanField(default=False)
-	repository_name = models.CharField(max_length=200)
-	branch_name = models.CharField(max_length=150)
+	repository_name = models.CharField(max_length=200, null=True, blank=True)
+	branch_name = models.CharField(max_length=150, null=True, blank=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
