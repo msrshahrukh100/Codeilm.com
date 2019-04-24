@@ -56,7 +56,7 @@ class LearnEdit extends React.Component {
     const { repoName } = this.props.match.params;
     let branchName = this.getBranchName(this.props);
     this.state = {
-      content: "",
+      content_from_api: "",
       branchName: branchName,
       repoName: repoName,
       error: null,
@@ -82,7 +82,7 @@ class LearnEdit extends React.Component {
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.post('/commit/learn', {
       message: this.state.commitMessage,
-      content: this.state.content,
+      content: this.state.content_from_api,
       branch: this.state.branchName,
       repo_name: this.state.repoName,
       sha: this.state.sha,
@@ -100,7 +100,7 @@ class LearnEdit extends React.Component {
   }
 
   learnContentUpdate = event => {
-    this.setState({content: event.target.value})
+    this.setState({content_from_api: event.target.value})
   }
   commitMessageUpdate = event => {
     this.setState({commitMessage: event.target.value})
@@ -114,7 +114,7 @@ class LearnEdit extends React.Component {
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
       this.setState({
-        content: response.data.content ? response.data.content : DEFAULT_LEARN_CONTENT,
+        content_from_api: response.data.content_from_api ? response.data.content_from_api : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
         defaultContent: response.data.content ? false : true,
         contentLoaded: true,
@@ -162,7 +162,7 @@ class LearnEdit extends React.Component {
         label="learn.md"
         multiline
         rows="20"
-        value={this.state.content}
+        value={this.state.content_from_api}
         onChange={this.learnContentUpdate}
         className={classes.textField}
         margin="normal"
