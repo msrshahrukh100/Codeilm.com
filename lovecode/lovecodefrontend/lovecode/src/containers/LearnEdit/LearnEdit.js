@@ -13,6 +13,7 @@ import { FaGithub } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import CircularPreloader from '../../components/UI/SkeletonLoaders/CircularPreloader'
 import getCookie from '../../utils/getCookie'
+import CommitToGithub from '../CommitToGithub/CommitToGithub'
 
 const styles = theme => ({
   textField: {
@@ -116,7 +117,7 @@ class LearnEdit extends React.Component {
       this.setState({
         content_from_api: response.data.content_from_api ? response.data.content_from_api : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
-        defaultContent: response.data.content ? false : true,
+        defaultContent: response.data.content_from_api ? false : true,
         contentLoaded: true,
         commitedSuccessfully: false
       })
@@ -196,6 +197,7 @@ class LearnEdit extends React.Component {
         </Fab>
         {this.state.loading ? <CircularPreloader /> : null}
         </div>
+        <CommitToGithub />
         </>
         : null}
         </div>
