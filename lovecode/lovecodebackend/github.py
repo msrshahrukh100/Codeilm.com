@@ -7,6 +7,7 @@ import logging
 from .utils import get_links_from_headers
 import base64
 import json
+from django.core.exceptions import PermissionDenied
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +15,8 @@ logger = logging.getLogger(__name__)
 class GithubApi:
 	def __init__(self, request, page=0):
 		social_token_obj = SocialToken.objects.filter(account__user=request.user, account__provider='GitHub').first()
+		if not social_token_obj:
+			raise PermissionDenied
 		self.auth_token = social_token_obj.token
 		self.per_page = 10
 		self.page = page
