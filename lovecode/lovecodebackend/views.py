@@ -44,7 +44,7 @@ class UserRepositoryLearnContent(APIView):
 		github_api = GithubApi(request)
 		branch_name = request.GET.get('branch_name')
 		response = github_api.get_learn_md_content(request, repo_name, branch_name)
-		data_from_api = response.get("data")
+		data_from_api = response.get("data", {})
 		content_from_api = data_from_api.get("content", "")
 		sha = data_from_api.get("sha", "")
 		data_from_db = lovecode_models.Tutorial.objects.filter(
