@@ -7,12 +7,6 @@ import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
 import BranchChoose from '../BranchChoose/BranchChoose'
 import { withRouter } from "react-router";
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
-import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
-import { FaGithub } from 'react-icons/fa';
-import { IconContext } from "react-icons";
-import CircularPreloader from '../../components/UI/SkeletonLoaders/CircularPreloader'
-import getCookie from '../../utils/getCookie'
 import CommitToGithub from '../CommitToGithub/CommitToGithub'
 
 const styles = theme => ({
@@ -29,13 +23,6 @@ const styles = theme => ({
     top: '90px',
     width: '95%'
   },
-  margin: {
-    margin: theme.spacing.unit,
-    textTransform: 'none'
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit,
-  }
 });
 
 
@@ -64,7 +51,6 @@ class LearnEdit extends React.Component {
       defaultContent: false,
       sha: null,
       commitMessage: "Updated learn.md",
-      commitedSuccessfully: false
     }
   }
 
@@ -75,29 +61,6 @@ class LearnEdit extends React.Component {
     if(prevBranchName !== newBranchName) {
       this.setState({branchName: newBranchName}, () => this.fetchLearnContent())
     }
-  }
-
-  commitFile = () => {
-    this.setState({loading: true})
-    const csrftoken = getCookie('csrftoken');
-    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
-    axios.post('/commit/learn', {
-      message: this.state.commitMessage,
-      content: this.state.content_from_api,
-      branch: this.state.branchName,
-      repo_name: this.state.repoName,
-      sha: this.state.sha,
-      loading: false,
-      contentLoaded: false
-    })
-    .then(response => {
-      this.setState({loading: false, commitedSuccessfully: true}, () => setTimeout(() => this.fetchLearnContent(), 5000) )
-    })
-    .catch(error => {
-      this.setState({
-        error: error,
-      })
-    })
   }
 
   learnContentUpdate = event => {
@@ -119,7 +82,6 @@ class LearnEdit extends React.Component {
         sha: response.data.sha,
         defaultContent: response.data.content_from_api ? false : true,
         contentLoaded: true,
-        commitedSuccessfully: false
       })
     })
     .catch(error => {
@@ -141,7 +103,6 @@ class LearnEdit extends React.Component {
       <>
       <div className={classes.snackbarDiv}>
         {this.state.defaultContent ? <Snackbar show={true} type="success" text={"This branch doesn't have the learn.md file. You can start with this template"} /> : null}
-        {this.state.commitedSuccessfully ? <Snackbar show={true} type="success" text={"Successfully commited learn.md file to " + this.state.repoName + " to the branch " + this.state.branchName } /> : null}
       </div>
       <div className={classes.container}>
       {this.state.contentLoaded ?
@@ -180,24 +141,15 @@ class LearnEdit extends React.Component {
           margin="normal"
           variant="outlined"
         />
-        <div className={classes.wrapper}>
-        <Fab
-          variant="extended"
-          onClick={this.commitFile}
-          disabled={this.state.loading}
-          size="medium"
-          color="primary"
-          aria-label="Add"
-          className={classes.margin}
-        >
-          <IconContext.Provider value={{ size: '2em' }}>
-          <FaGithub className={classes.extendedIcon} />
-          </IconContext.Provider>
-          Commit on GitHub
-        </Fab>
-        {this.state.loading ? <CircularPreloader /> : null}
-        </div>
-        <CommitToGithub />
+
+        <CommitToGithub
+          commitMessage={this.state.commitMessage}
+          content={this.state.content_from_api}
+          branch={this.state.branchName}
+          repoName={this.state.repoName}
+          sha={this.state.sha}
+          callback={this.fetchLearnContent}
+         />
         </>
         : null}
         </div>

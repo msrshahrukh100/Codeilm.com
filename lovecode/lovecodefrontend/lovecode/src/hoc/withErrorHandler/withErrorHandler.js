@@ -62,7 +62,7 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
 
             {skeleton ? this.state.loading ?  skeleton: null : null}
             {this.state.error ? this.state.error.message : null}
-            {this.state.error ? <Snackbar show={true} type="error" text={this.state.error.message} /> : null}
+            {this.state.error ? <Snackbar open={true} type="error" text={this.state.error.message} /> : null}
           {!this.state.error ? <WrappedCompenent {...this.props} /> : null}
         </>
       )

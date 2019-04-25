@@ -95,7 +95,7 @@ const styles2 = theme => ({
 
 class CustomizedSnackbars extends React.Component {
   state = {
-    open: this.props.show,
+    open: this.props.open,
   };
 
   handleClose = (event, reason) => {
@@ -108,7 +108,10 @@ class CustomizedSnackbars extends React.Component {
 
   render() {
     const { classes, type, text } = this.props;
-
+    const onCloseHandler = this.props.onCloseHandler ? this.props.onCloseHandler
+    : this.handleClose
+    const openValue = this.props.onCloseHandler ? this.props.open
+    : this.state.open
     return (
       <div>
 
@@ -117,12 +120,12 @@ class CustomizedSnackbars extends React.Component {
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          open={this.state.open}
+          open={openValue}
           autoHideDuration={10000}
-          onClose={this.handleClose}
+          onClose={onCloseHandler}
         >
           <MySnackbarContentWrapper
-            onClose={this.handleClose}
+            onClose={onCloseHandler}
             variant={type}
             message={text}
           />
