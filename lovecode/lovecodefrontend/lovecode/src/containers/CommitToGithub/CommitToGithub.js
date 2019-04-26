@@ -24,7 +24,8 @@ class CommitToGithub extends React.Component {
 
   state = {
     loading: false,
-    commitedSuccessfully: false
+    commitedSuccessfully: false,
+    error: null
   }
 
   commitFile = () => {
@@ -41,7 +42,13 @@ class CommitToGithub extends React.Component {
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.post('/commit/learn', postData)
     .then(response => {
-      this.setState({loading: false, commitedSuccessfully: true}, this.props.callback ?  () => setTimeout(() => this.props.callback(), 5000) : null)
+      console.log(response.status);
+      if(response.status == 200) {
+        this.setState({loading: false, commitedSuccessfully: true}, this.props.callback ?  () => setTimeout(() => this.props.callback(), 5000) : null)
+      }
+      else {
+        this.setState({loading: false, error: response.data.message})
+      }
     })
     .catch(error => {
       console.log(error);
@@ -55,7 +62,7 @@ class CommitToGithub extends React.Component {
     if (reason === 'clickaway') {
       return;
     }
-    this.setState({ commitedSuccessfully: false });
+    this.setState({ commitedSuccessfully: false, error: null });
   };
 
 	render() {
@@ -69,6 +76,13 @@ class CommitToGithub extends React.Component {
       onCloseHandler={this.handleClose}
       type="success"
       text={"Successfully commited learn.md file to " + this.props.repoName + " to the branch " + this.props.branch }
+      />
+
+      <Snackbar
+      open={this.state.error ? true : false}
+      onCloseHandler={this.handleClose}
+      type="error"
+      text={this.state.error}
       />
 
       <div className={classes.wrapper}>
