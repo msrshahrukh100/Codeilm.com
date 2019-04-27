@@ -6,7 +6,7 @@ class GithubRepoAdmin(admin.ModelAdmin):
 	list_display = ['user', 'created_at', 'updated_at', 'hash_id']
 
 class TutorialAdmin(admin.ModelAdmin):
-	list_display = ['user', 'created_at', 'updated_at', 'hash_id']
+	list_display = ['user', 'created_at', 'updated_at', 'id']
 
 
 class GithubApiResponseAdmin(admin.ModelAdmin):

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_mysql.models import JSONField, Model
 from autoslug import AutoSlugField
-from hashid_field import HashidField
+from hashid_field import HashidAutoField, HashidField
 
 
 # Create your models here.
@@ -18,7 +18,7 @@ class GithubRepo(Model):
 
 
 class Tutorial(Model):
-	hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
+	id = HashidAutoField(primary_key=True)
 	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 	title = models.CharField(max_length=300, null=True, blank=True)
 	slug = AutoSlugField(populate_from='title')

@@ -16,9 +16,8 @@ class TutorialListSerializer(serializers.ModelSerializer):
 		fields = ('hash_id', 'user', 'title','slug', 'repo', 'read_time', 'created_at', 'updated_at')
 
 class TutorialDetailSerializer(serializers.ModelSerializer):
-	hash_id = serializers.CharField(default="")
-	repo = GithubRepoSerializer(read_only=True)
+	id = serializers.CharField(default="")
 
 	class Meta:
 		model = lovecode_model.Tutorial
-		fields = ('hash_id', 'user', 'tutorial_data',  'title','slug', 'repo', 'read_time', 'created_at', 'updated_at')
+		fields = ('id', 'user', 'tutorial_data',  'title','slug', 'read_time', 'created_at', 'updated_at')

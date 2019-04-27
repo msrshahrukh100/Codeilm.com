@@ -4,6 +4,7 @@ from . import views as lovecode_views
 urlpatterns = [
     # path('learn/', lovecode_views.learn, name="learn"),
     path('tutorials/', lovecode_views.TutorialList.as_view() , name="tutorials_list"),
+    path('tutorials/create_or_get', lovecode_views.CreateGetTutorial.as_view(), name="tutorials_get_or_create"),
     path('tutorials/<slug:hash_id>', lovecode_views.TutorialDetail.as_view(), name="tutorials_detail"),
 
     path('userrepositories/<int:page>', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
