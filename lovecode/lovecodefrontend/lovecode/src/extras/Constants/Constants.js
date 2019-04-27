@@ -1,8 +1,6 @@
-const DEFAULT_LEARN_CONTENT = `shahrukh is cool
-somteitn
-asdf
-asdf
-asdf
+const DEFAULT_LEARN_CONTENT = `
+
+# This is the DEFAULT CONTENT
 `
 
 export { DEFAULT_LEARN_CONTENT }

@@ -8,6 +8,7 @@ import BranchChoose from '../BranchChoose/BranchChoose'
 import { withRouter } from "react-router";
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
 import CommitToGithub from '../CommitToGithub/CommitToGithub'
+import getCookie from '../../utils/getCookie'
 
 const styles = theme => ({
   textField: {
@@ -25,7 +26,10 @@ const styles = theme => ({
   },
 });
 
-
+const resetTimeout = (id, newID) => {
+	clearTimeout(id)
+	return newID
+}
 
 class LearnEdit extends React.Component {
 
@@ -42,16 +46,45 @@ class LearnEdit extends React.Component {
   constructor(props) {
     super(props)
     const { repoName } = this.props.match.params;
-    let branchName = this.getBranchName(this.props);
+    const { tutorialId } = this.props.match.params;
+    const branchName = this.getBranchName(this.props);
     this.state = {
-      content_from_api: "",
+      editorContent: "",
       branchName: branchName,
       repoName: repoName,
+      tutorialId: tutorialId,
       error: null,
-      defaultContent: false,
+      hasDefaultContent: false,
       sha: null,
       commitMessage: "Updated learn.md",
+      timeout: null
     }
+  }
+
+
+  saveLearnMd = () => {
+    console.log("this  is cool, magic begins");
+    console.log(this.state);
+
+    const csrftoken = getCookie('csrftoken');
+    const postData = {
+      id: this.state.tutorialId,
+      content: this.state.editorContent
+    };
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+    axios.post('/tutorials/save', postData)
+    .then(response => {
+      console.log(response.data);
+      const data = response.data;
+
+    })
+    .catch(error => {
+      console.log(error);
+      this.setState({
+        error: error,
+      })
+    })
+
   }
 
   componentDidUpdate(prevProps) {
@@ -64,7 +97,13 @@ class LearnEdit extends React.Component {
   }
 
   learnContentUpdate = event => {
-    this.setState({content_from_api: event.target.value})
+    const text = event.target.value;
+    this.setState((prevState, props) => {
+      return {
+        editorContent: text,
+        timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 5000))
+      }
+    })
   }
   commitMessageUpdate = event => {
     this.setState({commitMessage: event.target.value})
@@ -74,13 +113,26 @@ class LearnEdit extends React.Component {
     this.props.history.push('/tutorials/create/' + this.state.repoName + '?branch_name=' + event.target.value);
   }
 
+  get_editorContent = (data) => {
+    if (data.content_from_api === "" && data.content_from_db === "") {
+      return DEFAULT_LEARN_CONTENT;
+    }
+    else if (data.content_from_api === "" && data.content_from_db !== "") {
+      return data.content_from_db;
+    }
+    else if (data.content_from_api !== "" && data.content_from_db === "") {
+      return data.content_from_api;
+    }
+  }
+
   fetchLearnContent = () => {
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
+      console.log(response.data);
       this.setState({
-        content_from_api: response.data.content_from_api ? response.data.content_from_api : DEFAULT_LEARN_CONTENT,
+        editorContent: response.data.content_from_api ? response.data.content_from_api : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
-        defaultContent: response.data.content_from_api ? false : true,
+        hasDefaultContent: response.data.content_from_api ? false : true,
         contentLoaded: true,
       })
     })
@@ -102,7 +154,7 @@ class LearnEdit extends React.Component {
     return (
       <>
       <div className={classes.snackbarDiv}>
-        {this.state.defaultContent ? <Snackbar show={true} type="success" text={"This branch doesn't have the learn.md file. You can start with this template"} /> : null}
+        {this.state.hasDefaultContent ? <Snackbar show={true} type="success" text={"This branch doesn't have the learn.md file. You can start with this template"} /> : null}
       </div>
       <div className={classes.container}>
       {this.state.contentLoaded ?
@@ -124,7 +176,7 @@ class LearnEdit extends React.Component {
         label="learn.md"
         multiline
         rows="20"
-        value={this.state.content_from_api}
+        value={this.state.editorContent}
         onChange={this.learnContentUpdate}
         className={classes.textField}
         margin="normal"
@@ -144,7 +196,7 @@ class LearnEdit extends React.Component {
 
         <CommitToGithub
           commitMessage={this.state.commitMessage}
-          content={this.state.content_from_api}
+          content={this.state.editorContent}
           branch={this.state.branchName}
           repoName={this.state.repoName}
           sha={this.state.sha}

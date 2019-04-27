@@ -53,14 +53,17 @@ class UserRepositoryLearnContent(APIView):
 			branch_name=branch_name
 		)
 		if data_from_db.exists():
-			content_from_db = data_from_db.first().learn_md_content
+			obj = data_from_db.first()
+			content_from_db = obj.learn_md_content
+			date_modified_db = obj.updated_at
 		else:
 			content_from_db = ""
-
+			date_modified_db = ""
 
 		return Response({
 			"content_from_api": base64.b64decode(content_from_api),
 			"content_from_db": content_from_db,
+			"date_modified_db": date_modified_db,
 			"sha": sha
 		})
 
@@ -89,7 +92,43 @@ class CreateUpdateCommitLearnFile(APIView):
 
 	def post(self, request):
 		github_api = GithubApi(request)
+		print(request.data)
 		response = github_api.save_commit_learn(request)
 
 		return Response(response, status=status.HTTP_201_CREATED)
+
+
+class CreateGetTutorial(APIView):
+	permission_classes = (permissions.IsAuthenticated,)
+
+	def post(self, request):
+		data = request.data
+		if data:
+			obj, created = lovecode_models.Tutorial.objects.get_or_create(
+				user=request.user,
+				title=data.get("title", ""),
+				repository_name=data.get("repo_name", ""),
+				branch_name=data.get("branch_name", "")
+			)
+			data = lovecode_serializers.TutorialDetailSerializer(obj)
+			return Response({"created": created, "tutorial_data": data.data}, status=status.HTTP_200_OK)
+		else:
+			return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
+
+
+
+class SaveLearnFileToDb(APIView):
+	permission_classes = (permissions.IsAuthenticated,)
+
+	def post(self, request):
+		data = request.data
+		if data:
+			obj_id = data.get('id')
+			if obj_id:
+				obj = lovecode_models.Tutorial.objects.get(id=obj_id)
+				obj.learn_md_content = data.get('content', "")
+				obj.save()
+				data = lovecode_serializers.TutorialDetailSerializer(obj)
+				return Response(data.data, status=status.HTTP_200_OK)
+		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
 

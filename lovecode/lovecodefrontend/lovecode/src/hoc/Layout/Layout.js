@@ -5,6 +5,7 @@ import TutorialDetail from '../../containers/TutorialDetail/TutorialDetail'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import RepoList from '../../containers/RepoList/RepoList'
 import LearnEdit from '../../containers/LearnEdit/LearnEdit'
+import CreateTutorial from '../../containers/CreateTutorial/CreateTutorial'
 
 class Layout extends React.Component {
   state = {}
@@ -15,7 +16,8 @@ class Layout extends React.Component {
       <SearchAppBar />
 
       <Switch>
-        <Route path='/tutorials/create/:repoName' component={LearnEdit} />
+        <Route path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug' component={LearnEdit} />
+        <Route path='/tutorials/create/:repoName' component={CreateTutorial} />
         <Route path='/tutorials/:hash_id/:slug/' component={TutorialDetail} />
         <Route path='/tutorials/create/' component={RepoList} />
         <Route path='/tutorials' component={TutorialList} />
