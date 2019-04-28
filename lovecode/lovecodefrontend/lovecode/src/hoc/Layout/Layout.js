@@ -18,7 +18,7 @@ class Layout extends React.Component {
       <Switch>
         <Route path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug' component={LearnEdit} />
         <Route path='/tutorials/create/:repoName' component={CreateTutorial} />
-        <Route path='/tutorials/:hash_id/:slug/' component={TutorialDetail} />
+        <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />
         <Route path='/tutorials/create/' component={RepoList} />
         <Route path='/tutorials' component={TutorialList} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />

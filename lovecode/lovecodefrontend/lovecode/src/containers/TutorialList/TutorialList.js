@@ -7,7 +7,7 @@ import { withRouter } from "react-router";
 import {Helmet} from "react-helmet";
 
 
-class ExercisesContainer extends React.Component {
+class TutorialList extends React.Component {
 
   state = {
     tutorials: null,
@@ -34,12 +34,12 @@ class ExercisesContainer extends React.Component {
   }
 
   render() {
-
+    console.log(this.state.tutorials);
     const tutorials = this.state.tutorials ?
     this.state.tutorials.results.map((tutorial, index) => {
       return <MediaCard
-        key={tutorial.hash_id}
-        link={this.props.match.path + '/' + tutorial.hash_id + '/' + tutorial.slug}
+        key={tutorial.id}
+        link={this.props.match.path + '/' + tutorial.id + '/' + tutorial.slug}
         content=<TutorialInfo />
         title={tutorial.title} />
     })
@@ -57,4 +57,4 @@ class ExercisesContainer extends React.Component {
   }
 }
 
-export default withErrorHandler(withRouter(ExercisesContainer), axios, "list")
+export default withErrorHandler(withRouter(TutorialList), axios, "list")

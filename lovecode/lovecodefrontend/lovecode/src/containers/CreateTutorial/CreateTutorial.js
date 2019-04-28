@@ -10,6 +10,8 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import { MdGrade } from 'react-icons/md';
 import { IconContext } from "react-icons";
 import getCookie from '../../utils/getCookie'
+import MediaCard from '../../components/UI/MediaCard/MediaCard'
+import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
 
 const styles = theme => ({
   textField: {
@@ -39,7 +41,8 @@ class CreateTutorial extends React.Component {
   state = {
     title: "",
     error: null,
-    emptyError: false
+    emptyError: false,
+    tutorials: null
   }
 
   titleUpdate = event => {
@@ -58,6 +61,25 @@ class CreateTutorial extends React.Component {
     return null
   }
 
+  componentDidMount() {
+    const { repoName } = this.props.match.params;
+    const branchName = this.getBranchName(this.props);
+    axios.get('/tutorials?repo_name=' + repoName + "&branch_name=" + branchName + "&repo_create=true")
+      .then(response => {
+        this.setState({
+          tutorials: response.data
+        })
+
+      })
+      .catch(error => {
+        console.log(error)
+        this.setState({
+          error: error,
+          loading: false
+        })
+      })
+  }
+
   createTutorial = () => {
     this.setState((prevState, props) => {
       return {loading: prevState.title === "" ? false: true, emptyError: prevState.title === "" ? true: false}
@@ -74,7 +96,6 @@ class CreateTutorial extends React.Component {
       axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
       axios.post('/tutorials/create_or_get', postData)
       .then(response => {
-        console.log(response.data);
         const data = response.data;
         if(data.created) {
           this.setState({loading: false})
@@ -95,6 +116,15 @@ class CreateTutorial extends React.Component {
   render() {
     const { classes } = this.props;
     const { repoName } = this.props.match.params;
+    const tutorials = this.state.tutorials ?
+    this.state.tutorials.results.map((tutorial, index) => {
+      return <MediaCard
+        key={tutorial.id}
+        link={"/tutorials/" + tutorial.id + '/' + tutorial.slug}
+        content=<TutorialInfo />
+        title={tutorial.title} />
+    })
+     : null;
     return (
       <>
 
@@ -126,6 +156,8 @@ class CreateTutorial extends React.Component {
           Create your Story
         </Fab>
         </>
+        <p className={classes.margin}>Tutorials with this branch and repo</p>
+        {tutorials}
         </div>
       </>
     )

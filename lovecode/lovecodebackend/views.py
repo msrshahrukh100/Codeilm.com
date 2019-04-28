@@ -25,10 +25,23 @@ def learn(request):
 	return render(request, 'index.html', {})
 
 
-class TutorialList(generics.ListCreateAPIView):
+class TutorialList(generics.ListAPIView):
 	queryset = lovecode_models.Tutorial.objects.all()
 	serializer_class = lovecode_serializers.TutorialListSerializer
 	pagination_class = TutorialListPaginator
+
+	def get_queryset(self):
+		get_params = self.request.GET
+		repository_name = get_params.get('repo_name')
+		branch_name = get_params.get('branch_name')
+		repo_create = get_params.get('repo_create')
+		if repository_name and branch_name and repo_create and self.request.user.is_authenticated:
+			return lovecode_models.Tutorial.objects.filter(
+				user=self.request.user,
+				repository_name=repository_name,
+				branch_name=branch_name
+			)
+		return lovecode_models.Tutorial.objects.all()
 
 
 class TutorialDetail(generics.RetrieveAPIView):

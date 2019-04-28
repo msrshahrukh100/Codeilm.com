@@ -37,8 +37,8 @@ class TutorialDetail extends React.Component {
 
 
   componentDidMount() {
-    const { hash_id } = this.props.match.params
-    axios.get('/tutorials/' + hash_id)
+    const { tutorialId } = this.props.match.params
+    axios.get('/tutorials/' + tutorialId)
       .then(response => {
         this.setState({
           tutorial: response.data,
