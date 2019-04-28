@@ -34,7 +34,7 @@ class TutorialList(generics.ListCreateAPIView):
 class TutorialDetail(generics.RetrieveAPIView):
 	queryset = lovecode_models.Tutorial.objects.all()
 	serializer_class = lovecode_serializers.TutorialDetailSerializer
-	lookup_field = "hash_id"
+	lookup_field = "id"
 
 
 class UserRepositoryLearnContent(APIView):
