@@ -28,7 +28,7 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
         this.setState({loading: false})
         return response
       }, error => {
-        if(error.response.status === 401){
+        if(error.response.status === 401 || error.response.status === 403){
           console.log("page to be shown");
           const next= this.props.match.url
           this.props.history.push({
