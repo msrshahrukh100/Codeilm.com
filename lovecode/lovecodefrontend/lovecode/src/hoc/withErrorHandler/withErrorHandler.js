@@ -32,7 +32,7 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
           console.log("page to be shown");
           const next= this.props.match.url
           this.props.history.push({
-            pathname: '/login',
+            pathname: '/tutorials/login',
             search: '?next=' + next,
           })
         }
