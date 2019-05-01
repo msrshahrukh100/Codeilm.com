@@ -21,13 +21,16 @@ class RepoList extends React.Component {
   fetchRepositories = () => {
     axios.get('/userrepositories/' + this.state.pageNumber)
       .then(response => {
-        this.setState(state => ({
-          userrepositories: state.userrepositories.concat(response.data.data),
-          links: response.data.links,
-          loading: false,
-          hasMoreRepo: response.data.links.next ? true : false,
-          pageNumber: response.data.links.next ? response.data.links.next : -1
-        }))
+        if(response) {
+
+          this.setState(state => ({
+            userrepositories: state.userrepositories.concat(response.data.data),
+            links: response.data.links,
+            loading: false,
+            hasMoreRepo: response.data.links.next ? true : false,
+            pageNumber: response.data.links.next ? response.data.links.next : -1
+          }))
+        }
 
       })
       .catch(error => {

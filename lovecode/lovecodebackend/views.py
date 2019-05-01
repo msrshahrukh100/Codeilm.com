@@ -51,7 +51,7 @@ class TutorialDetail(generics.RetrieveAPIView):
 
 
 class UserRepositoryLearnContent(APIView):
-	permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
 	def get(self, request, repo_name=None):
 		github_api = GithubApi(request)
@@ -82,7 +82,7 @@ class UserRepositoryLearnContent(APIView):
 
 
 class UserRepositoryBranches(APIView):
-	permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
 	def get(self, request, repo_name=None):
 		github_api = GithubApi(request)
@@ -92,7 +92,7 @@ class UserRepositoryBranches(APIView):
 
 class UserRepositories(APIView):
 
-	permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
 	def get(self, request, page=0):
 		github_api = GithubApi(request, page=page)
@@ -101,7 +101,7 @@ class UserRepositories(APIView):
 
 
 class CreateUpdateCommitLearnFile(APIView):
-	permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
 	def post(self, request):
 		github_api = GithubApi(request)
@@ -112,7 +112,7 @@ class CreateUpdateCommitLearnFile(APIView):
 
 
 class CreateGetTutorial(APIView):
-	permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
 	def post(self, request):
 		data = request.data
@@ -131,7 +131,7 @@ class CreateGetTutorial(APIView):
 
 
 class SaveLearnFileToDb(APIView):
-	permission_classes = (permissions.IsAuthenticated,)
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
 	def post(self, request):
 		data = request.data

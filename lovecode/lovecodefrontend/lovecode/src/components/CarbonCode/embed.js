@@ -49,7 +49,7 @@ class Embed extends React.Component {
       dropShadowOffsetY: "20px",
       exportSize: "2x",
       fontFamily: "Hack",
-      fontSize: "14px",
+      fontSize: "13px",
       language: this.props.language,
       lineHeight: "133%",
       lineNumbers: false,
