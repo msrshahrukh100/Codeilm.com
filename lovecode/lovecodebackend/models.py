@@ -21,7 +21,7 @@ class Tutorial(Model):
 	id = HashidAutoField(primary_key=True)
 	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 	title = models.CharField(max_length=300, null=True, blank=True)
-	slug = AutoSlugField(populate_from='title')
+	slug = AutoSlugField(populate_from='title', always_update=True)
 	tutorial_data = JSONField(null=True, blank=True)
 	learn_md_content = models.TextField(null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
