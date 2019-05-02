@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django_mysql.models import JSONField, Model
 from autoslug import AutoSlugField
 from hashid_field import HashidAutoField, HashidField
-
+from lovecode.lovecodebackend.parser.learnmdparser import LearnMdParser
 
 # Create your models here.
 class GithubRepo(Model):
@@ -33,6 +33,15 @@ class Tutorial(Model):
 
 	def __str__(self):
 		return self.user.username
+
+	def save(self, *args, **kwargs):
+		parser = LearnMdParser()
+		try:
+			self.tutorial_data = parser.get_parsed_content(self.learn_md_content)
+		except Exception as e:
+			self.tutorial_data = {"error": str(e)}
+		super().save(*args, **kwargs)
+
 
 class GithubApiResponse(Model):
 	user = models.ForeignKey(User, related_name="user_github_api", null=True, on_delete=models.SET_NULL)
