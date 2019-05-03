@@ -5,7 +5,7 @@ from . import models as lovecode_models
 from rest_framework import generics, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .permissions import HasGithubAccount
+from .permissions import HasGithubAccount, IsOwner
 from rest_framework.permissions import IsAdminUser
 from .paginators import TutorialListPaginator
 from django.utils.decorators import method_decorator
@@ -41,7 +41,7 @@ class TutorialList(generics.ListAPIView):
 				repository_name=repository_name,
 				branch_name=branch_name
 			)
-		return lovecode_models.Tutorial.objects.all()
+		return lovecode_models.Tutorial.objects.filter(is_published=True)
 
 
 class TutorialDetail(generics.RetrieveAPIView):
@@ -145,3 +145,12 @@ class SaveLearnFileToDb(APIView):
 				return Response(data.data, status=status.HTTP_200_OK)
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
 
+
+class PublishUnpublishTutorial(generics.UpdateAPIView):
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
+	queryset = lovecode_models.Tutorial.objects.all()
+	serializer_class = lovecode_serializers.TutorialDetailSerializer
+	lookup_field = 'id'
+
+	def partial_update(self, serializer):
+		serializer.save()

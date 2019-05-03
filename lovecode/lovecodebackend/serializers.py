@@ -19,4 +19,4 @@ class TutorialDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = lovecode_model.Tutorial
-		fields = ('id', 'user', 'tutorial_data',  'title','slug', 'read_time', 'created_at', 'updated_at')
+		fields = ('id', 'user', 'tutorial_data',  'title','slug', 'read_time', 'is_published',  'created_at', 'updated_at')
