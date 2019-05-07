@@ -32,7 +32,7 @@ class Tutorial(Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.user.username
+		return str(self.user)
 
 	def save(self, *args, **kwargs):
 		parser = LearnMdParser()

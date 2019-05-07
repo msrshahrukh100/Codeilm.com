@@ -146,11 +146,11 @@ class SaveLearnFileToDb(APIView):
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
 
 
-class PublishUnpublishTutorial(generics.UpdateAPIView):
+class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
 	queryset = lovecode_models.Tutorial.objects.all()
 	serializer_class = lovecode_serializers.TutorialDetailSerializer
 	lookup_field = 'id'
 
-	def partial_update(self, serializer):
-		serializer.save()
+	# def partial_update(self, serializer):
+	# 	serializer.save()
