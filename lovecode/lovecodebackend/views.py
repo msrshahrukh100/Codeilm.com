@@ -50,6 +50,18 @@ class TutorialDetail(generics.RetrieveAPIView):
 	lookup_field = "id"
 
 
+class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
+	queryset = lovecode_models.Tutorial.objects.all()
+	serializer_class = lovecode_serializers.TutorialDetailSerializer
+	lookup_field = 'id'
+
+	# def partial_update(self, serializer):
+	# 	serializer.save()
+
+
+# Utility API views
+
 class UserRepositoryLearnContent(APIView):
 	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
@@ -144,13 +156,3 @@ class SaveLearnFileToDb(APIView):
 				data = lovecode_serializers.TutorialDetailSerializer(obj)
 				return Response(data.data, status=status.HTTP_200_OK)
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
-
-
-class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
-	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
-	queryset = lovecode_models.Tutorial.objects.all()
-	serializer_class = lovecode_serializers.TutorialDetailSerializer
-	lookup_field = 'id'
-
-	# def partial_update(self, serializer):
-	# 	serializer.save()
