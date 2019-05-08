@@ -13,18 +13,9 @@ const renderers: ReactMarkdown.Renderers = {
 
 const tutorialPage = (props) => {
   const title = props.page ? props.page.title : null
-  const content = props.page ?
-    props.page.content.map((segment, index) => {
-      if(segment.type == "md") {
-        return <ReactMarkdown
-          key={"markdown" + index}
-          source={segment.value}
-          renderers={renderers} />
-      }
-      else if(segment.type == "code") {
-        return <Embed key={"code"+index} code={segment.value} language="python" />
-      }
-    }) : null
+  const content = props.page ? <ReactMarkdown
+    source={props.page.content}
+    renderers={renderers} /> : null
 
 
   return (

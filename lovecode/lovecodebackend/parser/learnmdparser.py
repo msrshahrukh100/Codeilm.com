@@ -47,7 +47,7 @@ class LearnMdParser:
             title = match.group(1).strip().strip("'").strip('"')
             temp["title"] = title
             temp["slug"] = title
-            content = self.get_content(match.group(2))
+            content = match.group(2)
             temp["content"] = content
             self.parsed_data.append(temp)
 
