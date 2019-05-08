@@ -35,12 +35,15 @@ class TutorialList(generics.ListAPIView):
 		repository_name = get_params.get('repo_name')
 		branch_name = get_params.get('branch_name')
 		repo_create = get_params.get('repo_create')
-		if repository_name and branch_name and repo_create and self.request.user.is_authenticated:
-			return lovecode_models.Tutorial.objects.filter(
-				user=self.request.user,
-				repository_name=repository_name,
-				branch_name=branch_name
-			)
+		if repo_create:
+			if repository_name and branch_name and self.request.user.is_authenticated:
+				return lovecode_models.Tutorial.objects.filter(
+					user=self.request.user,
+					repository_name=repository_name,
+					branch_name=branch_name
+				)
+			else:
+				return []
 		return lovecode_models.Tutorial.objects.filter(is_published=True)
 
 
@@ -52,6 +55,7 @@ class TutorialDetail(generics.RetrieveAPIView):
 
 class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
+
 	queryset = lovecode_models.Tutorial.objects.all()
 	serializer_class = lovecode_serializers.TutorialDetailSerializer
 	lookup_field = 'id'
@@ -77,18 +81,18 @@ class UserRepositoryLearnContent(APIView):
 			repository_name=repo_name,
 			branch_name=branch_name
 		)
+		db_data = None
+
 		if data_from_db.exists():
 			obj = data_from_db.first()
-			content_from_db = obj.learn_md_content
-			date_modified_db = obj.updated_at
+			db_data = lovecode_serializers.TutorialDetailSerializer(obj).data
 		else:
 			content_from_db = ""
 			date_modified_db = ""
 
 		return Response({
 			"content_from_api": base64.b64decode(content_from_api),
-			"content_from_db": content_from_db,
-			"date_modified_db": date_modified_db,
+			"db_data": db_data,
 			"sha": sha
 		})
 

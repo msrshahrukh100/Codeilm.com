@@ -9,6 +9,8 @@ import { withRouter } from "react-router";
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
 import CommitToGithub from '../CommitToGithub/CommitToGithub'
 import getCookie from '../../utils/getCookie'
+import Fab from '@material-ui/core/Fab';
+
 
 const styles = theme => ({
   textField: {
@@ -57,14 +59,14 @@ class LearnEdit extends React.Component {
       hasDefaultContent: false,
       sha: null,
       commitMessage: "Updated learn.md",
-      timeout: null
+      timeout: null,
+      isPublished: false,
+      dbData: null
     }
   }
 
 
   saveLearnMd = () => {
-    console.log("this  is cool, magic begins");
-    console.log(this.state);
 
     const csrftoken = getCookie('csrftoken');
     const postData = {
@@ -74,7 +76,6 @@ class LearnEdit extends React.Component {
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.post('/tutorials/save', postData)
     .then(response => {
-      console.log(response.data);
       const data = response.data;
 
     })
@@ -85,6 +86,25 @@ class LearnEdit extends React.Component {
       })
     })
 
+  }
+
+  publishUnpublishTut = () => {
+    if(this.state.dbData) {
+      let putData = {
+        id: this.state.dbData.id,
+        is_published: !this.state.isPublished
+      }
+      axios.put('/tutorials/' + this.state.dbData.id + '/publish', putData)
+      .then(response => {
+        this.setState({isPublished: response.data.is_published})
+      })
+      .catch(error => {
+        this.setState({
+          error: error,
+        })
+      })
+
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -134,6 +154,8 @@ class LearnEdit extends React.Component {
         sha: response.data.sha,
         hasDefaultContent: response.data.content_from_api ? false : true,
         contentLoaded: true,
+        dbData: response.data.db_data,
+        isPublished: response.data.db_data.is_published
       })
     })
     .catch(error => {
@@ -171,6 +193,21 @@ class LearnEdit extends React.Component {
           variant="outlined"
         />
         <BranchChoose onBranchChange={this.handleBranchChange} repoName={repoName} defaultBranch={this.state.branchName} />
+        {this.state.dbData ?
+          <Fab
+          variant="extended"
+          disabled={this.state.loading}
+          onClick={this.publishUnpublishTut}
+          size="medium"
+          color="secondary"
+          aria-label="publish"
+          className={classes.margin}
+          >
+          {this.state.isPublished ? "Unpublish" : "Publish"}
+          </Fab>
+        : null}
+
+
         <TextField
         id="outlined-multiline-static"
         label="learn.md"
