@@ -7,15 +7,35 @@ import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
+import Slug from 'slug'
 
 class TutorialDetail extends React.Component {
 
-  state = {
-    tutorial: null,
-    loading: true,
-    error: null,
-    activeStep: 0
+  constructor(props) {
+    super(props)
+
+    const { activeStep } = this.props.match.params;
+
+    this.state = {
+      tutorial: null,
+      loading: true,
+      error: null,
+      slugs:null,
+      activeStep: activeStep ? Number(activeStep) : 0
+    }
+
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log("updating");
+    console.log(prevProps)
+    console.log(prevState)
+
+    if(!this.state.loading) {
+      this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + this.state.activeStep)
+    }
+  }
+
 
   handleNext = () => {
     this.setState(state => ({
@@ -38,10 +58,14 @@ class TutorialDetail extends React.Component {
 
   componentDidMount() {
     const { tutorialId } = this.props.match.params
+    this.interval = setInterval(() => {
+      console.log(this.props.match.params.activeStep)} , 1000)
+
     axios.get('/tutorials/' + tutorialId)
       .then(response => {
         this.setState({
           tutorial: response.data,
+          slugs: response.data.tutorial_data.data.map(item => Slug(item.title, {lower: true})),
           loading: false
         })
       })
@@ -53,6 +77,21 @@ class TutorialDetail extends React.Component {
       })
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(nextProps.match.params.activeStep);
+    console.log(this.props.match.params.activeStep);
+    if(nextProps.match.params.activeStep !== this.props.match.params.activeStep) {
+      return true
+    }
+    if(!this.state.loading &&
+      (nextState.activeStep === this.state.activeStep)
+    ) {
+      console.log("returning false buddy");
+      return false
+    }
+    return true
+  }
+
   render() {
     const steps = this.state.tutorial ?
       this.state.tutorial.tutorial_data.data.map(tutorial => tutorial.title)
@@ -61,7 +100,10 @@ class TutorialDetail extends React.Component {
     const currentPage = this.state.tutorial ?
       this.state.tutorial.tutorial_data.data[this.state.activeStep]
       : null;
-    const content = <TutorialPage page={currentPage} />
+    const content = !this.state.loading ?
+      <TutorialPage page={currentPage} />
+      : null
+
     return (
       <>
         <Helmet>
