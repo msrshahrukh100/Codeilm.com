@@ -30,23 +30,30 @@ class TutorialDetail extends React.Component {
     console.log("updating");
     console.log(prevProps)
     console.log(prevState)
+    console.log(!this.state.loading);
+    console.log(this.props.match.params.activeStep);
+    console.log(Number(this.props.match.params.activeStep) !== this.state.activeStep);
+    console.log(prevState.activeStep);
+    console.log(this.state.activeStep);
 
-    if(!this.state.loading) {
-      this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + this.state.activeStep)
-    }
+    // if(!this.state.loading && this.props.match.params.activeStep && prevState.activeStep !== this.state.activeStep) {
+    //   this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + this.state.activeStep)
+    // }
   }
 
 
   handleNext = () => {
     this.setState(state => ({
       activeStep: state.activeStep + 1,
-    }));
+    }), () => this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + this.state.activeStep)
+  );
   };
 
   handleBack = () => {
     this.setState(state => ({
       activeStep: state.activeStep - 1,
-    }));
+    }), () => this.props.history.goBack()
+  );
   };
 
   handleReset = () => {
@@ -77,20 +84,6 @@ class TutorialDetail extends React.Component {
       })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log(nextProps.match.params.activeStep);
-    console.log(this.props.match.params.activeStep);
-    if(nextProps.match.params.activeStep !== this.props.match.params.activeStep) {
-      return true
-    }
-    if(!this.state.loading &&
-      (nextState.activeStep === this.state.activeStep)
-    ) {
-      console.log("returning false buddy");
-      return false
-    }
-    return true
-  }
 
   render() {
     const steps = this.state.tutorial ?

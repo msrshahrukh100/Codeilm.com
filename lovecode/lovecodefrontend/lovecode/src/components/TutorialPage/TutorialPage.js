@@ -4,7 +4,6 @@ import Embed from '../CarbonCode/embed'
 
 const renderers: ReactMarkdown.Renderers = {
     code: (props: string) => {
-      console.log(props);
       return (
         <Embed code={props.value} language="python" />
       )
