@@ -15,7 +15,6 @@ class TutorialDetail extends React.Component {
     super(props)
 
     const { activeStep } = this.props.match.params;
-
     this.state = {
       tutorial: null,
       loading: true,
@@ -23,7 +22,7 @@ class TutorialDetail extends React.Component {
       slugs:null,
       activeStep: activeStep ? Number(activeStep) : 0
     }
-
+    console.log(this.state, "---------");
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -35,31 +34,31 @@ class TutorialDetail extends React.Component {
     console.log(Number(this.props.match.params.activeStep) !== this.state.activeStep);
     console.log(prevState.activeStep);
     console.log(this.state.activeStep);
+    console.log(this.props === prevProps);
+    console.log(this.state.activeStep === prevState.activeStep);
+    if(this.props !== prevProps && prevState === this.state) {
+      let activeStep = this.props.match.params.activeStep !== undefined ?
+        Number(this.props.match.params.activeStep) : 0
+      this.setState({
+        activeStep: activeStep
+      })
+    }
 
-    // if(!this.state.loading && this.props.match.params.activeStep && prevState.activeStep !== this.state.activeStep) {
-    //   this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + this.state.activeStep)
-    // }
   }
 
 
   handleNext = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1,
-    }), () => this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + this.state.activeStep)
-  );
+    const nextStep = this.state.activeStep + 1;
+    this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep)
   };
 
   handleBack = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep - 1,
-    }), () => this.props.history.goBack()
-  );
+    this.props.history.goBack()
   };
 
   handleReset = () => {
-    this.setState({
-      activeStep: 0,
-    });
+    const nextStep = 0;
+    this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep)
   };
 
 
