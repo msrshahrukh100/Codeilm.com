@@ -22,20 +22,10 @@ class TutorialDetail extends React.Component {
       slugs:null,
       activeStep: activeStep ? Number(activeStep) : 0
     }
-    console.log(this.state, "---------");
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    console.log("updating");
-    console.log(prevProps)
-    console.log(prevState)
-    console.log(!this.state.loading);
-    console.log(this.props.match.params.activeStep);
-    console.log(Number(this.props.match.params.activeStep) !== this.state.activeStep);
-    console.log(prevState.activeStep);
-    console.log(this.state.activeStep);
-    console.log(this.props === prevProps);
-    console.log(this.state.activeStep === prevState.activeStep);
+
     if(this.props !== prevProps && prevState === this.state) {
       let activeStep = this.props.match.params.activeStep !== undefined ?
         Number(this.props.match.params.activeStep) : 0
@@ -48,8 +38,9 @@ class TutorialDetail extends React.Component {
 
 
   handleNext = () => {
+    console.log(this.state);
     const nextStep = this.state.activeStep + 1;
-    this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep)
+    this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
   };
 
   handleBack = () => {
@@ -58,20 +49,18 @@ class TutorialDetail extends React.Component {
 
   handleReset = () => {
     const nextStep = 0;
-    this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep)
+    this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
   };
 
 
   componentDidMount() {
     const { tutorialId } = this.props.match.params
-    this.interval = setInterval(() => {
-      console.log(this.props.match.params.activeStep)} , 1000)
 
     axios.get('/tutorials/' + tutorialId)
       .then(response => {
         this.setState({
           tutorial: response.data,
-          slugs: response.data.tutorial_data.data.map(item => Slug(item.title, {lower: true})),
+          slugs: response.data.tutorial_data.data.map(item => Slug(item.title, {lower: true})).concat(["thank-you"]),
           loading: false
         })
       })
