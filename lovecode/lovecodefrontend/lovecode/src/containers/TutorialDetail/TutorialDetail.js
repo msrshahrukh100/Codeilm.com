@@ -38,7 +38,6 @@ class TutorialDetail extends React.Component {
 
 
   handleNext = () => {
-    console.log(this.state);
     const nextStep = this.state.activeStep + 1;
     this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
   };
