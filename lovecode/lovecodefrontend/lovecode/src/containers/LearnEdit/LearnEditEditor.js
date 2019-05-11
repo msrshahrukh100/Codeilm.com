@@ -8,11 +8,13 @@ import TextField from '@material-ui/core/TextField';
 import BranchChoose from '../BranchChoose/BranchChoose'
 import { withRouter } from "react-router";
 import Chip from '@material-ui/core/Chip';
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 
 const styles = theme => ({
   textField: {
-    width: '95%',
+    width: '100%',
     margin: theme.spacing.unit
   },
   repoField: {
@@ -64,20 +66,14 @@ const learnEditEditor = (props) => {
         </Fab>
       : null}
 
-
-      <TextField
-      id="outlined-multiline-static"
-      label="learn.md"
-      multiline
-      rows="20"
-      value={props.editorContent}
-      onChange={props.learnContentUpdate}
-      className={classes.textField}
-      margin="normal"
-      autoFocus={true}
-      spellCheck="false"
-      disabled={props.loading}
-      variant="outlined"
+      <SimpleMDE
+        onChange={props.learnContentUpdate}
+        value={props.editorContent}
+        className={classes.textField}
+        options={{
+          autofocus: true,
+          hideIcons: ["guide"],
+        }}
       />
       {props.showCommitPanel ?
         <>
@@ -109,7 +105,7 @@ const learnEditEditor = (props) => {
        variant="outlined"
      />
       </>
-      
+
       : null}
 
       </div>

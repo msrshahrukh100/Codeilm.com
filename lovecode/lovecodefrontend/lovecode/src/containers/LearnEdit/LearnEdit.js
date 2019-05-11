@@ -99,11 +99,10 @@ class LearnEdit extends React.Component {
     }
   }
 
-  learnContentUpdate = event => {
-    const text = event.target.value;
+  learnContentUpdate = value => {
     this.setState((prevState, props) => {
       return {
-        editorContent: text,
+        editorContent: value,
         timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 5000))
       }
     })

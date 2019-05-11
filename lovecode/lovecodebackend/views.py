@@ -31,7 +31,6 @@ class TutorialList(generics.ListAPIView):
 	pagination_class = TutorialListPaginator
 
 	def get_queryset(self):
-		se
 		get_params = self.request.GET
 		repository_name = get_params.get('repo_name')
 		branch_name = get_params.get('branch_name')
