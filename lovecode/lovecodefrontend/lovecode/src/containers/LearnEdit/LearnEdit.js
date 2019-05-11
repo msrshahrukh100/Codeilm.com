@@ -52,7 +52,8 @@ class LearnEdit extends React.Component {
       commitMessage: "Updated learn.md",
       timeout: null,
       isPublished: false,
-      dbData: null
+      dbData: null,
+      loading: true
     }
   }
 
@@ -65,11 +66,12 @@ class LearnEdit extends React.Component {
       repo_name: this.state.repoName,
       content: this.state.editorContent
     };
+    this.setState({loading: true})
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.post('/tutorials/save', postData)
     .then(response => {
       this.setState({
-        contentLoaded: true,
+        loading: false,
         dbData: response.data,
         isPublished: response.data ? response.data.is_published : false
       })
@@ -77,7 +79,8 @@ class LearnEdit extends React.Component {
     .catch(error => {
       console.log(error);
       this.setState({
-        error: error,
+        loading: false,
+        error: error
       })
     })
 
@@ -89,9 +92,10 @@ class LearnEdit extends React.Component {
         id: this.state.dbData.id,
         is_published: !this.state.isPublished
       }
+      this.setState({loading: true})
       axios.put('/tutorials/' + this.state.dbData.id + '/publish', putData)
       .then(response => {
-        this.setState({isPublished: response.data.is_published})
+        this.setState({isPublished: response.data.is_published, loading: false})
       })
       .catch(error => {
         this.setState({
@@ -129,24 +133,13 @@ class LearnEdit extends React.Component {
     this.props.history.push('/tutorials/create/' + this.state.repoName + '/' + this.state.tutorialId + "/" + tutorialSlug + "/" + event.target.value);
   }
 
-  get_editorContent = (data) => {
-    if (data.content_from_api === "" && data.content_from_db === "") {
-      return DEFAULT_LEARN_CONTENT;
-    }
-    else if (data.content_from_api === "" && data.content_from_db !== "") {
-      return data.content_from_db;
-    }
-    else if (data.content_from_api !== "" && data.content_from_db === "") {
-      return data.content_from_api;
-    }
-  }
-
   fetchLearnContent = () => {
+    this.setState({loading: true})
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
-      console.log(response.data);
       this.setState({
-        editorContent: response.data.db_data ? response.data.db_data.learn_md_content : DEFAULT_LEARN_CONTENT,
+        loading: false,
+        editorContent: response.data.db_data ? response.data.db_data.learn_md_content ? response.data.db_data.learn_md_content : DEFAULT_LEARN_CONTENT : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
         hasDefaultContent: response.data.content_from_api ? false : true,
         contentLoaded: true,
@@ -215,6 +208,7 @@ class LearnEdit extends React.Component {
         margin="normal"
         autoFocus={true}
         spellCheck="false"
+        disabled={this.state.loading}
         variant="outlined"
         />
         <TextField
