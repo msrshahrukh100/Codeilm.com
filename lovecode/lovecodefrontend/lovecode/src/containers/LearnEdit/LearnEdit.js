@@ -35,21 +35,12 @@ const resetTimeout = (id, newID) => {
 
 class LearnEdit extends React.Component {
 
-  getBranchName = (props) => {
-    const query = new URLSearchParams( props.location.search );
-    for ( let param of query.entries() ) {
-      if (param[0] === 'branch_name') {
-        return param[1];
-      }
-    }
-    return null
-  }
-
   constructor(props) {
+
     super(props)
     const { repoName } = this.props.match.params;
     const { tutorialId } = this.props.match.params;
-    const branchName = this.getBranchName(this.props);
+    const { branchName } = this.props.match.params;
     this.state = {
       editorContent: "",
       branchName: branchName,
@@ -76,8 +67,11 @@ class LearnEdit extends React.Component {
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.post('/tutorials/save', postData)
     .then(response => {
-      const data = response.data;
-
+      this.setState({
+        contentLoaded: true,
+        dbData: response.data,
+        isPublished: response.data ? response.data.is_published : false
+      })
     })
     .catch(error => {
       console.log(error);
@@ -108,8 +102,8 @@ class LearnEdit extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    let prevBranchName = this.getBranchName(prevProps);
-    let newBranchName = this.getBranchName(this.props);
+    const newBranchName = this.props.match.params.branchName;
+    const prevBranchName = prevProps.match.params.branchName;
 
     if(prevBranchName !== newBranchName) {
       this.setState({branchName: newBranchName}, () => this.fetchLearnContent())
@@ -130,7 +124,8 @@ class LearnEdit extends React.Component {
   }
 
   handleBranchChange = event => {
-    this.props.history.push('/tutorials/create/' + this.state.repoName + '?branch_name=' + event.target.value);
+    const { tutorialSlug } = this.props.match.params
+    this.props.history.push('/tutorials/create/' + this.state.repoName + '/' + this.state.tutorialId + "/" + tutorialSlug + "/" + event.target.value);
   }
 
   get_editorContent = (data) => {
@@ -148,14 +143,13 @@ class LearnEdit extends React.Component {
   fetchLearnContent = () => {
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
-      console.log(response.data);
       this.setState({
         editorContent: response.data.content_from_api ? response.data.content_from_api : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
         hasDefaultContent: response.data.content_from_api ? false : true,
         contentLoaded: true,
         dbData: response.data.db_data,
-        isPublished: response.data.db_data.is_published
+        isPublished: response.data.db_data ? response.data.db_data.is_published : false
       })
     })
     .catch(error => {

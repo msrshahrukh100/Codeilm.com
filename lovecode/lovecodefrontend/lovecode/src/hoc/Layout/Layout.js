@@ -18,7 +18,7 @@ class Layout extends React.Component {
 
       <Switch>
         <Route path='/tutorials/login' component={LoginPage} />
-        <Route path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug' component={LearnEdit} />
+        <Route path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName' component={LearnEdit} />
         <Route path='/tutorials/create/:repoName' component={CreateTutorial} />
 
         <Route path='/tutorials/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />

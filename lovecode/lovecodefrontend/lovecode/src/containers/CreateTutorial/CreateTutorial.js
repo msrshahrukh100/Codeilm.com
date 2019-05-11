@@ -64,7 +64,7 @@ class CreateTutorial extends React.Component {
   componentDidMount() {
     const { repoName } = this.props.match.params;
     const branchName = this.getBranchName(this.props);
-    axios.get('/tutorials?repo_name=' + repoName + "&branch_name=" + branchName + "&repo_create=true")
+    axios.get('/tutorials/?repo_name=' + repoName + "&branch_name=" + branchName + "&repo_create=true")
       .then(response => {
         this.setState({
           tutorials: response.data
@@ -99,7 +99,7 @@ class CreateTutorial extends React.Component {
         const data = response.data;
         if(data.created) {
           this.setState({loading: false})
-          this.props.history.push("/tutorials/create/" + repoName + "/" + data.tutorial_data.id + "/" + data.tutorial_data.slug + "?branch_name=" + branchName)
+          this.props.history.push("/tutorials/create/" + repoName + "/" + data.tutorial_data.id + "/" + data.tutorial_data.slug + "/" + branchName)
         }
 
       })
@@ -116,11 +116,12 @@ class CreateTutorial extends React.Component {
   render() {
     const { classes } = this.props;
     const { repoName } = this.props.match.params;
+    const branchName = this.getBranchName(this.props)
     const tutorials = this.state.tutorials ?
     this.state.tutorials.results.map((tutorial, index) => {
       return <MediaCard
         key={tutorial.id}
-        link={"/tutorials/" + tutorial.id + '/' + tutorial.slug}
+        link={"/tutorials/create/" + repoName + "/" + tutorial.id + "/" + tutorial.slug + "/" + branchName}
         content=<TutorialInfo />
         title={tutorial.title} />
     })
