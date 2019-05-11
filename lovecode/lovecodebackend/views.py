@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from . import serializers as lovecode_serializers
 from . import models as lovecode_models
@@ -31,6 +31,7 @@ class TutorialList(generics.ListAPIView):
 	pagination_class = TutorialListPaginator
 
 	def get_queryset(self):
+		se
 		get_params = self.request.GET
 		repository_name = get_params.get('repo_name')
 		branch_name = get_params.get('branch_name')
@@ -152,9 +153,10 @@ class SaveLearnFileToDb(APIView):
 	def post(self, request):
 		data = request.data
 		if data:
-			obj_id = data.get('id')
-			if obj_id:
-				obj = lovecode_models.Tutorial.objects.get(id=obj_id)
+			repo_name = data.get('repo_name')
+			branch_name = data.get('branch_name')
+			if repo_name and branch_name:
+				obj =  get_object_or_404(lovecode_models.Tutorial, user=request.user, repository_name=repo_name, branch_name=branch_name)
 				obj.learn_md_content = data.get('content', "")
 				obj.save()
 				data = lovecode_serializers.TutorialDetailSerializer(obj)

@@ -61,7 +61,8 @@ class LearnEdit extends React.Component {
 
     const csrftoken = getCookie('csrftoken');
     const postData = {
-      id: this.state.tutorialId,
+      branch_name: this.state.branchName,
+      repo_name: this.state.repoName,
       content: this.state.editorContent
     };
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
@@ -143,8 +144,9 @@ class LearnEdit extends React.Component {
   fetchLearnContent = () => {
     axios.get('/learn/content/' + this.state.repoName + "?branch_name=" + this.state.branchName)
     .then(response => {
+      console.log(response.data);
       this.setState({
-        editorContent: response.data.content_from_api ? response.data.content_from_api : DEFAULT_LEARN_CONTENT,
+        editorContent: response.data.db_data ? response.data.db_data.learn_md_content : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
         hasDefaultContent: response.data.content_from_api ? false : true,
         contentLoaded: true,
