@@ -10,6 +10,8 @@ import { withRouter } from "react-router";
 import Chip from '@material-ui/core/Chip';
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+import ReactDOMServer from "react-dom/server";
+import LearnPreview from "./LearnPreview"
 
 
 const styles = theme => ({
@@ -71,6 +73,11 @@ const learnEditEditor = (props) => {
         value={props.editorContent}
         className={classes.textField}
         options={{
+          previewRender(text) {
+            return ReactDOMServer.renderToString(
+              <LearnPreview content={text}/>
+            )
+          },
           autofocus: true,
           hideIcons: ["guide"],
         }}
