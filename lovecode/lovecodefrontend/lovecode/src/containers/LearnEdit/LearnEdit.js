@@ -1,32 +1,10 @@
 import React from 'react'
 import axios from '../../lovecodeaxios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
-import BranchChoose from '../BranchChoose/BranchChoose'
 import { withRouter } from "react-router";
-import Snackbar from '../../components/UI/Snackbar/Snackbar'
-import CommitToGithub from '../CommitToGithub/CommitToGithub'
 import getCookie from '../../utils/getCookie'
-import Fab from '@material-ui/core/Fab';
-
-
-const styles = theme => ({
-  textField: {
-    width: '95%',
-    margin: theme.spacing.unit
-  },
-  repoField: {
-    minWidth: 120,
-    margin: theme.spacing.unit
-  },
-  container: {
-    position: 'absolute',
-    top: '90px',
-    width: '95%'
-  },
-});
+import LearnEditEditor from './LearnEditEditor'
 
 const resetTimeout = (id, newID) => {
 	clearTimeout(id)
@@ -53,10 +31,16 @@ class LearnEdit extends React.Component {
       timeout: null,
       isPublished: false,
       dbData: null,
-      loading: true
+      loading: true,
+      showCommitPanel: false
     }
   }
 
+  toggleCommitPanel = () => {
+    this.setState(prevState => {
+      return { showCommitPanel: !prevState.showCommitPanel }
+    })
+  }
 
   saveLearnMd = () => {
 
@@ -141,7 +125,7 @@ class LearnEdit extends React.Component {
         loading: false,
         editorContent: response.data.db_data ? response.data.db_data.learn_md_content ? response.data.db_data.learn_md_content : DEFAULT_LEARN_CONTENT : DEFAULT_LEARN_CONTENT,
         sha: response.data.sha,
-        hasDefaultContent: response.data.content_from_api ? false : true,
+        hasDefaultContent: response.data.db_data ? response.data.db_data.learn_md_content ? false : true : true,
         contentLoaded: true,
         dbData: response.data.db_data,
         isPublished: response.data.db_data ? response.data.db_data.is_published : false
@@ -160,81 +144,18 @@ class LearnEdit extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { repoName } = this.props.match.params;
     return (
-      <>
-      <div className={classes.snackbarDiv}>
-        {this.state.hasDefaultContent ? <Snackbar show={true} type="success" text={"This branch doesn't have the learn.md file. You can start with this template"} /> : null}
-      </div>
-      <div className={classes.container}>
-      {this.state.contentLoaded ?
-        <>
-        <TextField
-          id="outlined-read-only-input"
-          label="Repository"
-          value={this.state.repoName}
-          className={classes.repoField}
-          margin="normal"
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="outlined"
+      <LearnEditEditor
+        {...this.state}
+        handleBranchChange={this.handleBranchChange}
+        publishUnpublishTut={this.publishUnpublishTut}
+        learnContentUpdate={this.learnContentUpdate}
+        commitMessageUpdate={this.commitMessageUpdate}
+        fetchLearnContent={this.fetchLearnContent}
+        toggleCommitPanel={this.toggleCommitPanel}
         />
-        <BranchChoose onBranchChange={this.handleBranchChange} repoName={repoName} defaultBranch={this.state.branchName} />
-        {this.state.dbData ?
-          <Fab
-          variant="extended"
-          disabled={this.state.loading}
-          onClick={this.publishUnpublishTut}
-          size="medium"
-          color="secondary"
-          aria-label="publish"
-          className={classes.margin}
-          >
-          {this.state.isPublished ? "Unpublish" : "Publish"}
-          </Fab>
-        : null}
-
-
-        <TextField
-        id="outlined-multiline-static"
-        label="learn.md"
-        multiline
-        rows="20"
-        value={this.state.editorContent}
-        onChange={this.learnContentUpdate}
-        className={classes.textField}
-        margin="normal"
-        autoFocus={true}
-        spellCheck="false"
-        disabled={this.state.loading}
-        variant="outlined"
-        />
-        <TextField
-          id="outlined-name"
-          label="Commit message"
-          value={this.state.commitMessage}
-          onChange={this.commitMessageUpdate}
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-        />
-
-        <CommitToGithub
-          commitMessage={this.state.commitMessage}
-          content={this.state.editorContent}
-          branch={this.state.branchName}
-          repoName={this.state.repoName}
-          sha={this.state.sha}
-          callback={this.fetchLearnContent}
-         />
-        </>
-        : null}
-        </div>
-      </>
     )
   }
 }
 
-export default withErrorHandler(withStyles(styles)(withRouter(LearnEdit)), axios, "circular")
+export default withErrorHandler(withRouter(LearnEdit), axios, "circular")
