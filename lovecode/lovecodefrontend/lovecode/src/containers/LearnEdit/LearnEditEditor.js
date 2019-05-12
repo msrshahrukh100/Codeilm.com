@@ -9,7 +9,7 @@ import BranchChoose from '../BranchChoose/BranchChoose'
 import { withRouter } from "react-router";
 import Chip from '@material-ui/core/Chip';
 import SimpleMDE from "react-simplemde-editor";
-import "easymde/dist/easymde.min.css";
+import "./easymde.min.css";
 import ReactDOMServer from "react-dom/server";
 
 
