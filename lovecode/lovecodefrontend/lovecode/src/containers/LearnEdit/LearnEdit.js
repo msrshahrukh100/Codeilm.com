@@ -5,6 +5,7 @@ import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
 import { withRouter } from "react-router";
 import getCookie from '../../utils/getCookie'
 import LearnEditEditor from './LearnEditEditor'
+import LearnPreview from "./LearnPreview"
 
 const resetTimeout = (id, newID) => {
 	clearTimeout(id)
@@ -32,7 +33,8 @@ class LearnEdit extends React.Component {
       isPublished: false,
       dbData: null,
       loading: true,
-      showCommitPanel: false
+      showCommitPanel: false,
+			showPreview: false
     }
   }
 
@@ -90,6 +92,12 @@ class LearnEdit extends React.Component {
     }
   }
 
+	togglePreview = () => {
+		this.setState(prevState => {
+			return {showPreview: !prevState.showPreview}
+		})
+	}
+
   componentDidUpdate(prevProps) {
     const newBranchName = this.props.match.params.branchName;
     const prevBranchName = prevProps.match.params.branchName;
@@ -144,15 +152,21 @@ class LearnEdit extends React.Component {
 
   render() {
     return (
-      <LearnEditEditor
-        {...this.state}
-        handleBranchChange={this.handleBranchChange}
-        publishUnpublishTut={this.publishUnpublishTut}
-        learnContentUpdate={this.learnContentUpdate}
-        commitMessageUpdate={this.commitMessageUpdate}
-        fetchLearnContent={this.fetchLearnContent}
-        toggleCommitPanel={this.toggleCommitPanel}
-        />
+			<>
+			{this.state.showPreview ?
+				<LearnPreview  content={this.state.editorContent} togglePreview={this.togglePreview}/>
+				: <LearnEditEditor
+				{...this.state}
+				handleBranchChange={this.handleBranchChange}
+				publishUnpublishTut={this.publishUnpublishTut}
+				learnContentUpdate={this.learnContentUpdate}
+				commitMessageUpdate={this.commitMessageUpdate}
+				fetchLearnContent={this.fetchLearnContent}
+				toggleCommitPanel={this.toggleCommitPanel}
+				togglePreview={this.togglePreview}
+				/>
+			}
+				</>
     )
   }
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
+import { MdClose } from "react-icons/md";
 
 class LearnPreview extends React.Component {
 
@@ -9,12 +10,31 @@ class LearnPreview extends React.Component {
     activeStep: 0
   }
 
+  handleNext = () => {
+    this.setState(prevState => {
+      return {activeStep: prevState.activeStep + 1}
+    })
+  };
+
+  handleBack = () => {
+    this.setState(prevState => {
+      return {activeStep: prevState.activeStep + 1}
+    })
+  };
+
+  handleReset = () => {
+    this.setState({activeStep: 0})
+  };
+
+
+
   getParsedContent = (text) => {
 
-    let regex =/\[Page(.*)\]([\S\s]*?)\[\/Page\]/ig
+
     let result = []
 
     while(text){
+      let regex =/\[Page(.*)\]([\S\s]*?)\[\/Page\]/ig
       text = text.trim("\n\r")
 
       const match = regex.exec(text)
@@ -26,10 +46,8 @@ class LearnPreview extends React.Component {
       }
 
       text = text.slice(match[0].length,)
-      console.log(text)
-      let title = match[1].trim().trim('"').trim("'")
-      title = title.trim('""')
-      console.log(title)
+      let title = match[1].trim()
+      title = title.slice(1,-1)
       temp.title = title
       temp.content = match[2]
       result.push(temp)
@@ -49,6 +67,8 @@ class LearnPreview extends React.Component {
     const leftContent = <TutorialPage page={currentPage} />
 
     return (
+      <>
+      <MdClose size={32} onClick={this.props.togglePreview} style={{margin: '10px', cursor: 'pointer'}} />
       <DetailPageLayout
         left={leftContent}
         right={<VerticalLinearStepper
@@ -57,6 +77,8 @@ class LearnPreview extends React.Component {
           handleNext={this.handleNext}
           handleReset={this.handleReset}
           steps={steps} />}/>
+        </>
+
     )
   }
 
