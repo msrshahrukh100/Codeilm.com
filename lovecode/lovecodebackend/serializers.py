@@ -1,5 +1,25 @@
 from rest_framework import serializers
 from . import models as lovecode_model
+from django.contrib.auth.models import User
+
+
+class UserSerializer(serializers.ModelSerializer):
+	user_profile_pic = serializers.SerializerMethodField()
+	full_name = serializers.SerializerMethodField()
+	intro = serializers.SerializerMethodField()
+
+	def get_intro(self, obj):
+		return obj.user_profile.first().intro
+
+	def get_full_name(self, obj):
+		return obj.get_full_name()
+
+	def get_user_profile_pic(self, obj):
+		return obj.user_profile.first().get_profile_pic_url()
+
+	class Meta:
+		model = User
+		fields = ('full_name', 'first_name', 'last_name', 'intro', 'user_profile_pic')
 
 class GithubRepoSerializer(serializers.ModelSerializer):
 	hash_id = serializers.CharField(default="")
@@ -9,6 +29,7 @@ class GithubRepoSerializer(serializers.ModelSerializer):
 
 class TutorialListSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(default="")
+	user = UserSerializer()
 
 	class Meta:
 		model = lovecode_model.Tutorial

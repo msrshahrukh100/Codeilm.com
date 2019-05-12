@@ -47,8 +47,8 @@ function MediaCard(props) {
           <Typography gutterBottom variant="h5" component="h2">
             {props.title}
           </Typography>
-          <Typography component="p">
-            {props.content}
+          <Typography component="div">
+          {props.content}
           </Typography>
         </CardContent>
         </Link>

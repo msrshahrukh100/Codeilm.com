@@ -64,7 +64,7 @@ class TutorialList extends React.Component {
           return <MediaCard
             key={tutorial.id}
             link={this.props.match.path + '/' + tutorial.id + '/' + tutorial.slug}
-            content=<TutorialInfo />
+            content={<TutorialInfo user={tutorial.user} />}
             title={tutorial.title} />
         })}
         </InfiniteScroll>
