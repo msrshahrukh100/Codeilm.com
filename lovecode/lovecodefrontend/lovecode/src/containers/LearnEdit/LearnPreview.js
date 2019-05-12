@@ -18,7 +18,7 @@ class LearnPreview extends React.Component {
 
   handleBack = () => {
     this.setState(prevState => {
-      return {activeStep: prevState.activeStep + 1}
+      return {activeStep: prevState.activeStep - 1}
     })
   };
 

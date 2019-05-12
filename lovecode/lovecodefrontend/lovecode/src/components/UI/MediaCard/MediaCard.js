@@ -11,15 +11,18 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
 
 
-const styles = {
+const styles = theme => ({
   card: {
     maxWidth: '100%',
-    margin: 50,
+    margin: theme.spacing.unit * 5,
+    [theme.breakpoints.down('xs')]: {
+      margin: theme.spacing.unit * 2,
+    }
   },
   media: {
     height: 140,
   },
-};
+});
 
 function MediaCard(props) {
   const { classes } = props;
