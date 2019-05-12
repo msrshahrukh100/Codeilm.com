@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce'
 import ms from 'ms'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import SpinnerWrapper from './SpinnerWrapper'
-
+import './carbon.css'
 import WindowControls from './WindowControls'
 import {
   COLORS,
@@ -186,7 +186,6 @@ class Carbon extends React.PureComponent {
               padding-left: 12px;
               ${config.lineNumbers ? 'padding-left: 12px;' : ''} border-radius: 5px;
               font-family: ${config.fontFamily}, monospace !important;
-              font-size: ${config.fontSize};
               line-height: ${config.lineHeight};
               font-variant-ligatures: contextual;
               font-feature-settings: 'calt' 1;

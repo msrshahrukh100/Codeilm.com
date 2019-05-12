@@ -1,0 +1,23 @@
+@media only screen and (max-width: 2500px) {
+  .container :global(.CodeMirror__container .CodeMirror) {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .container :global(.CodeMirror__container .CodeMirror) {
+    font-size: 13px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .container :global(.CodeMirror__container .CodeMirror) {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .container :global(.CodeMirror__container .CodeMirror) {
+    font-size: 9px;
+  }
+}
