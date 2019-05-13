@@ -12,12 +12,12 @@
 
 @media only screen and (max-width: 500px) {
   .container :global(.CodeMirror__container .CodeMirror) {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
 @media only screen and (max-width: 400px) {
   .container :global(.CodeMirror__container .CodeMirror) {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
