@@ -2,7 +2,6 @@ import React from 'react'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
-import { MdClose } from "react-icons/md";
 
 class LearnPreview extends React.Component {
 
@@ -68,7 +67,7 @@ class LearnPreview extends React.Component {
 
     return (
       <>
-      <MdClose size={32} onClick={this.props.togglePreview} style={{margin: '10px', cursor: 'pointer'}} />
+      <div style={{paddingTop: 70}}></div>
       <DetailPageLayout
         left={leftContent}
         right={<VerticalLinearStepper

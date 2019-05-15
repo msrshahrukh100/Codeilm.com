@@ -122,7 +122,7 @@ class CreateTutorial extends React.Component {
       return <MediaCard
         key={tutorial.id}
         link={"/tutorials/create/" + repoName + "/" + tutorial.id + "/" + tutorial.slug + "/" + branchName}
-        content=<TutorialInfo />
+        content=<TutorialInfo user={tutorial.user} />
         title={tutorial.title} />
     })
      : null;

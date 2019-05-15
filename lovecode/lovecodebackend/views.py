@@ -69,17 +69,17 @@ class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 class UserRepositoryLearnContent(APIView):
 	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
-	def get(self, request, repo_name=None):
+	def get(self, request, repo_name=None, branch_name=None, tutorial_slug=None):
 		github_api = GithubApi(request)
-		branch_name = request.GET.get('branch_name')
-		response = github_api.get_learn_md_content(request, repo_name, branch_name)
+		response = {}#github_api.get_learn_md_content(request, repo_name, branch_name)
 		data_from_api = response.get("data", {})
 		content_from_api = data_from_api.get("content", "")
 		sha = data_from_api.get("sha", "")
 		data_from_db = lovecode_models.Tutorial.objects.filter(
 			user=request.user,
 			repository_name=repo_name,
-			branch_name=branch_name
+			branch_name=branch_name,
+			slug=tutorial_slug
 		)
 		db_data = None
 
@@ -154,8 +154,14 @@ class SaveLearnFileToDb(APIView):
 		if data:
 			repo_name = data.get('repo_name')
 			branch_name = data.get('branch_name')
+			slug = data.get('tutorial_slug')
 			if repo_name and branch_name:
-				obj =  get_object_or_404(lovecode_models.Tutorial, user=request.user, repository_name=repo_name, branch_name=branch_name)
+				obj =  get_object_or_404(lovecode_models.Tutorial,
+					user=request.user,
+					repository_name=repo_name,
+					branch_name=branch_name,
+					slug=slug
+				)
 				obj.learn_md_content = data.get('content', "")
 				obj.save()
 				data = lovecode_serializers.TutorialDetailSerializer(obj)

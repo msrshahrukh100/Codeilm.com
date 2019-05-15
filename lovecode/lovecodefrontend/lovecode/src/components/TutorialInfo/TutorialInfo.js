@@ -29,12 +29,14 @@ const styles = theme => ({
 
 const tutorialInfo = (props) => {
   const { classes } = props
-  const label = <p><span className={classes.name}>{props.user.full_name}</span><br/><span className={classes.intro}>{props.user.intro}</span></p>
-  return (<Chip
+  const label = props.user ? (
+    <p><span className={classes.name}>{props.user.full_name}</span><br/><span className={classes.intro}>{props.user.intro}</span></p>
+  ) : null
+  return props.user ? (<Chip
         avatar={<Avatar className={classes.avatar} alt={props.user.full_name} src={props.user.user_profile_pic} />}
         label={label}
         className={classes.chip}
-      />)
+      />) : null
 }
 
 
