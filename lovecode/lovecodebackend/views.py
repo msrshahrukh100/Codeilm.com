@@ -167,3 +167,24 @@ class SaveLearnFileToDb(APIView):
 				data = lovecode_serializers.TutorialDetailSerializer(obj)
 				return Response(data.data, status=status.HTTP_200_OK)
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class LikeUnlikeTutorial(APIView):
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
+
+	def post(self, request):
+		data = request.data
+		print(data)
+		if data:
+			tutorial_id = data.get('tutorial_id')
+			liked = data.get('liked')
+			user = request.user
+			obj, created = lovecode_models.TutorialLike.objects.update_or_create(
+				user=user,
+				tutorial_id=tutorial_id,
+				defaults={'liked': liked}
+			)
+			data = lovecode_serializers.TutorialLikeSerializer(obj)
+			return Response(data.data, status=status.HTTP_200_OK)
+		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
+

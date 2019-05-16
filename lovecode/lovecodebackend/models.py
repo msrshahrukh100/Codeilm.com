@@ -59,4 +59,15 @@ class GithubApiResponse(Model):
 		return self.user.username
 
 
+class TutorialLike(models.Model):
+	user = models.ForeignKey(User, related_name="user_tutorial_likes", null=True, on_delete=models.SET_NULL)
+	tutorial = models.ForeignKey(Tutorial, related_name="user_likes", on_delete=models.CASCADE)
+	liked = models.BooleanField(default=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.user.username
+
+
 

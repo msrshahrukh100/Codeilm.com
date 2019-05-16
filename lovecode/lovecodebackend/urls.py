@@ -6,6 +6,7 @@ urlpatterns = [
     path('tutorials/', lovecode_views.TutorialList.as_view() , name="tutorials_list"),
     path('tutorials/create_or_get', lovecode_views.CreateGetTutorial.as_view(), name="tutorials_get_or_create"),
     path('tutorials/save', lovecode_views.SaveLearnFileToDb.as_view(), name="tutorials_save"),
+    path('tutorials/like', lovecode_views.LikeUnlikeTutorial.as_view(), name="tutorials_like"),
     path('tutorials/<slug:id>', lovecode_views.TutorialDetail.as_view(), name="tutorials_detail"),
     path('tutorials/<slug:id>/publish', lovecode_views.PublishUnpublishTutorial.as_view(), name="publish_unpublish_tutorial"),
 
