@@ -67,7 +67,7 @@ class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 # Utility API views
 
 class UserRepositoryLearnContent(APIView):
-	# permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
+	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
 	def get(self, request, repo_name=None, branch_name=None, tutorial_slug=None):
 		github_api = GithubApi(request)
