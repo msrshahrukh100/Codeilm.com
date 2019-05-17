@@ -44,6 +44,7 @@
     "lodash.omitby": "^4.6.0",
     "mini-css-extract-plugin": "0.5.0",
     "morphmorph": "^0.1.2",
+    "netlify-auth-providers": "^1.0.0-alpha5",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "pnp-webpack-plugin": "1.2.1",
     "postcss-flexbugs-fixes": "4.1.0",
@@ -51,6 +52,7 @@
     "postcss-preset-env": "6.5.0",
     "postcss-safe-parser": "4.0.1",
     "prettier": "^1.17.0",
+    "prismjs": "^1.16.0",
     "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
     "react-codemirror2": "^5.1.0",
@@ -61,9 +63,12 @@
     "react-icons": "^3.5.0",
     "react-infinite-scroll-component": "^4.5.2",
     "react-markdown": "^4.0.6",
+    "react-number-format": "^4.0.8",
     "react-router-dom": "^5.0.0",
     "react-simplemde-editor": "^4.0.1",
     "react-spinner": "^0.2.7",
+    "react-swipeable": "^4.3.2",
+    "react-use": "^5.16.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "slug": "^1.1.0",
@@ -75,7 +80,8 @@
     "webpack": "4.28.3",
     "webpack-dev-server": "3.1.14",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.3"
+    "workbox-webpack-plugin": "3.6.3",
+    "workerize-loader": "^1.0.4"
   },
   "scripts": {
     "start": "node scripts/start.js",

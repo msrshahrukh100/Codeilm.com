@@ -174,7 +174,6 @@ class LikeUnlikeTutorial(APIView):
 
 	def post(self, request):
 		data = request.data
-		print(data)
 		if data:
 			tutorial_id = data.get('tutorial_id')
 			liked = data.get('liked')
@@ -184,7 +183,10 @@ class LikeUnlikeTutorial(APIView):
 				tutorial_id=tutorial_id,
 				defaults={'liked': liked}
 			)
-			data = lovecode_serializers.TutorialLikeSerializer(obj)
-			return Response(data.data, status=status.HTTP_200_OK)
+			data = {
+				"like_data": lovecode_serializers.TutorialLikeSerializer(obj).data,
+				"tutorial_like_data": obj.tutorial.like_data
+			}
+			return Response(data, status=status.HTTP_200_OK)
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
 

@@ -8,6 +8,19 @@ import {Helmet} from "react-helmet";
 import InfiniteScroll from "react-infinite-scroll-component"
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
+import { withStyles } from '@material-ui/core/styles';
+import LikeButton from '../LikeButton/LikeButton'
+
+
+const styles = theme => ({
+  margin: {
+    margin: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 3,
+  }
+});
+
+
+
 
 class TutorialList extends React.Component {
 
@@ -23,7 +36,6 @@ class TutorialList extends React.Component {
     const url = this.state.pageNumber ? '/tutorials/?page=' + this.state.pageNumber : "/tutorials"
     axios.get(url)
       .then(response => {
-        console.log(response.data.results)
         this.setState(state => ({
           tutorials: state.tutorials.concat(response.data.results),
           loading: false,
@@ -45,7 +57,7 @@ class TutorialList extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    const { classes } = this.props;
 
 
     return (
@@ -61,10 +73,12 @@ class TutorialList extends React.Component {
             loader={<PageLayout><ListPageSkeleton /></PageLayout>}
         >
         {this.state.tutorials.map((tutorial, index) => {
+          const actionButtons = <LikeButton tutorial={tutorial}/>;
           return <MediaCard
             key={tutorial.id}
             link={this.props.match.path + '/' + tutorial.id + '/' + tutorial.slug}
             content={<TutorialInfo user={tutorial.user} />}
+            actionButtons={actionButtons}
             title={tutorial.title} />
         })}
         </InfiniteScroll>
@@ -73,4 +87,4 @@ class TutorialList extends React.Component {
   }
 }
 
-export default withErrorHandler(withRouter(TutorialList), axios, "list")
+export default withErrorHandler(withRouter(withStyles(styles)(TutorialList)), axios, "list")

@@ -6,7 +6,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
 
@@ -22,6 +21,9 @@ const styles = theme => ({
   media: {
     height: 140,
   },
+  actionBtn: {
+    marginLeft: theme.spacing.unit * 2,
+  }
 });
 
 function MediaCard(props) {
@@ -53,13 +55,8 @@ function MediaCard(props) {
         </CardContent>
         </Link>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
+      <CardActions className={classes.actionBtn}>
+        {props.actionButtons}
       </CardActions>
     </Card>
   );

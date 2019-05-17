@@ -5,6 +5,7 @@ from autoslug import AutoSlugField
 from hashid_field import HashidAutoField, HashidField
 from lovecode.lovecodebackend.parser.learnmdparser import LearnMdParser
 
+
 # Create your models here.
 class GithubRepo(Model):
 	hash_id = HashidField(allow_int_lookup=True, null=True, blank=True, unique=True, editable=False)
@@ -23,6 +24,7 @@ class Tutorial(Model):
 	title = models.CharField(max_length=300, null=True, blank=True)
 	slug = AutoSlugField(populate_from='title', always_update=True)
 	tutorial_data = JSONField(null=True, blank=True)
+	like_data = JSONField(null=True, blank=True)
 	learn_md_content = models.TextField(null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	is_published = models.BooleanField(default=False)
@@ -32,7 +34,7 @@ class Tutorial(Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return str(self.user)
+		return str(self.id)
 
 	def save(self, *args, **kwargs):
 		parser = LearnMdParser()
@@ -68,6 +70,5 @@ class TutorialLike(models.Model):
 
 	def __str__(self):
 		return self.user.username
-
 
 

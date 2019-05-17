@@ -30,10 +30,25 @@ class GithubRepoSerializer(serializers.ModelSerializer):
 class TutorialListSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(default="")
 	user = UserSerializer()
+	liked_by_authenticated_user = serializers.SerializerMethodField()
+
+	def get_liked_by_authenticated_user(self, obj):
+		user_ids = None
+		if obj.like_data:
+			user_ids = obj.like_data["user_ids"]
+		else:
+			return False
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user.id in user_ids:
+				return True
+		return False
 
 	class Meta:
 		model = lovecode_model.Tutorial
-		fields = ('id', 'user', 'title','slug', 'read_time', 'created_at', 'updated_at')
+		fields = ('id', 'user', 'title','slug', 'read_time', 'liked_by_authenticated_user', 'like_data', 'created_at', 'updated_at')
 
 class TutorialDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(default="")
@@ -45,7 +60,7 @@ class TutorialDetailSerializer(serializers.ModelSerializer):
 
 class TutorialLikeSerializer(serializers.ModelSerializer):
 	tutorial = serializers.CharField(default="")
-
+	user = UserSerializer()
 	class Meta:
 		model = lovecode_model.TutorialLike
 		fields = ('id', 'user', 'tutorial', 'liked', 'created_at', 'updated_at')

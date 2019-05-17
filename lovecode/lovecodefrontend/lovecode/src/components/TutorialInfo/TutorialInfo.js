@@ -14,8 +14,8 @@ const styles = theme => ({
   },
   avatar: {
     marginRight: -20,
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
   },
   name: {
     fontSize: 15
