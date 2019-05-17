@@ -13,11 +13,10 @@ def save_languages(sender, instance, created, **kwargs):
 @receiver(post_save, sender=TutorialLike)
 def save_like_data(sender, instance, created, **kwargs):
 	qs = instance.tutorial.user_likes.filter(liked=True)
-	print(list(qs.values_list('user', flat=True)))
 	like_data = {
 		"count": qs.count(),
 		"user_ids": list(qs.values_list('user', flat=True)),
-		"like_users": lovecode_serializers.TutorialLikeSerializer(qs[:5], many=True).data
+		"like_users": lovecode_serializers.TutorialLikeSerializer(qs[:4], many=True).data
 	}
 	instance.tutorial.like_data = like_data
 	instance.tutorial.save()
