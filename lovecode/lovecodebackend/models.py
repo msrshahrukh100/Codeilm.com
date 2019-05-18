@@ -4,7 +4,7 @@ from django_mysql.models import JSONField, Model
 from autoslug import AutoSlugField
 from hashid_field import HashidAutoField, HashidField
 from lovecode.lovecodebackend.parser.learnmdparser import LearnMdParser
-
+from mainapp import models as main_models
 
 # Create your models here.
 class GithubRepo(Model):
@@ -25,6 +25,7 @@ class Tutorial(Model):
 	slug = AutoSlugField(populate_from='title', always_update=True)
 	tutorial_data = JSONField(null=True, blank=True)
 	like_data = JSONField(null=True, blank=True)
+	view_data = JSONField(null=True, blank=True)
 	learn_md_content = models.TextField(null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	is_published = models.BooleanField(default=False)
@@ -43,6 +44,9 @@ class Tutorial(Model):
 		except Exception as e:
 			self.tutorial_data = {"error": str(e)}
 		super().save(*args, **kwargs)
+
+	class Meta:
+		ordering = ["-id"]
 
 
 class GithubApiResponse(Model):
@@ -73,5 +77,19 @@ class TutorialLike(models.Model):
 
 	class Meta:
 		ordering = ["-id"]
+
+
+class TutorialView(models.Model):
+	user = models.ForeignKey(User, related_name="user_tutorial_views", null=True, on_delete=models.SET_NULL)
+	tutorial = models.ForeignKey(Tutorial, related_name="user_views", on_delete=models.CASCADE)
+	ip = models.CharField(max_length=100)
+	session = models.CharField(max_length=100, null=True, blank=True)
+	request_ip_info = models.ForeignKey(main_models.RequestIpInfo, null=True, blank=True, related_name="%(app_label)s_requestipinfos", on_delete=models.SET_NULL)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return str(self.id)
+
 
 

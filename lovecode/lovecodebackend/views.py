@@ -13,11 +13,11 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 from .github import GithubApi
 from rest_framework import status
-
+from . import tasks
 from django.utils.cache import learn_cache_key, get_cache_key
 from django.core.cache import cache
 import base64
-
+from mainapp.utils import save_request_ip_info
 
 # Create your views here.
 
@@ -51,6 +51,27 @@ class TutorialDetail(generics.RetrieveAPIView):
 	queryset = lovecode_models.Tutorial.objects.all()
 	serializer_class = lovecode_serializers.TutorialDetailSerializer
 	lookup_field = "id"
+
+
+	def tutorial_viewed(self, request, id=None):
+		user_id = None
+		request_ip_info_id = None
+		request_ip_info = save_request_ip_info(request)
+		if request_ip_info:
+			request_ip_info_id = request_ip_info.id
+		if request.user.is_authenticated:
+			user_id = request.user.id
+
+		tasks.save_tutorial_view(tutorial_id=id,
+			ip=request.META['REMOTE_ADDR'],
+			session=request.session.session_key,
+			user_id=user_id,
+			request_ip_info_id=request_ip_info_id
+		)
+
+	def retrieve(self, request, *args, **kwargs):
+		self.tutorial_viewed(request, **kwargs)
+		return super().retrieve(request, *args, **kwargs)
 
 
 class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
