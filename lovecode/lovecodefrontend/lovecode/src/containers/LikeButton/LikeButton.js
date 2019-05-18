@@ -111,6 +111,7 @@ class LikeButton extends React.Component {
 
     return (
       <>
+      <Tooltip title={this.state.likeCount ? "Likes" : "Like this"}>
       <Button disabled={this.state.loading} size="small" color="primary" className={classNames(btnClasses)} onClick={this.likeHandler}>
         <MdThumbUp className={classes.iconSmall} />
         <NumberFormat
@@ -119,6 +120,7 @@ class LikeButton extends React.Component {
           thousandSeparator={true}
           renderText={value => <>{value !== "0" && value !== "" ? value : "Like this"}</>} />
       </Button>
+      </Tooltip>
       {avatars}
       </>
     )

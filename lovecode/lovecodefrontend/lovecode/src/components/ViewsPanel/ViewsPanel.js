@@ -18,11 +18,8 @@ const styles = theme => ({
   },
   viewButton: {
     color: 'black',
-    marginLeft: theme.spacing.unit * 2
-  },
-  likeButton: {
     textTransform: 'none',
-    marginLeft: theme.spacing.unit
+    marginLeft: theme.spacing.unit * 2
   }
 });
 
@@ -32,17 +29,20 @@ class LikeButton extends React.Component {
   render() {
     const { classes } = this.props;
     const { tutorial } = this.props;
-
     return (
       <>
-      <Button size="small" color="primary" className={classes.viewButton}>
+      {tutorial.view_data.views_count ?
+        <Tooltip title="Views">
+        <Button size="small" color="primary" className={classes.viewButton}>
         <IoLogoBuffer className={classes.iconSmall} />
         <NumberFormat
-          value={tutorial.view_data.views_count}
-          displayType={'text'}
-          thousandSeparator={true}
-          renderText={value => <>{value !== "0" && value !== "" ? value : "Like this"}</>} />
-      </Button>
+        value={tutorial.view_data.views_count}
+        displayType={'text'}
+        thousandSeparator={true}
+        renderText={value => <>{value !== "0" && value !== "" ? value : ""}</>} />
+        </Button>
+        </Tooltip>
+        : null}
       </>
     )
   }
