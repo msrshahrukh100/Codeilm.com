@@ -48,7 +48,7 @@ class TutorialListSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = lovecode_model.Tutorial
-		fields = ('id', 'user', 'title','slug', 'read_time', 'liked_by_authenticated_user', 'like_data', 'created_at', 'updated_at')
+		fields = ('id', 'user', 'title','slug', 'read_time', 'liked_by_authenticated_user', 'like_data', 'view_data', 'created_at', 'updated_at')
 
 class TutorialDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(default="")
