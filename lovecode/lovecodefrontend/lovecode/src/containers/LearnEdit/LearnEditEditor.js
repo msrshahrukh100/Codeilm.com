@@ -82,6 +82,15 @@ const learnEditEditor = (props) => {
             },
             className: "fa fa-eye",
             title: "Preview",
+          },
+          {
+            name: "Add Page",
+            action: function customFunction(editor){
+              const editorValue = editor.value()
+              editor.value(editorValue + '\n[Page "Title of the Page"]\n\nYour awesome content\n\n[\\Page]\n')
+            },
+            className: "fa fa-file-text",
+            title: "Add Page",
           }
         ],
         }}
