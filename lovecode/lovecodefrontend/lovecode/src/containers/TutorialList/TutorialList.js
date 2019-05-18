@@ -10,7 +10,8 @@ import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
 import { withStyles } from '@material-ui/core/styles';
 import LikeButton from '../LikeButton/LikeButton'
-
+import NumberFormat from 'react-number-format';
+import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 
 const styles = theme => ({
   margin: {
@@ -73,11 +74,21 @@ class TutorialList extends React.Component {
             loader={<PageLayout><ListPageSkeleton /></PageLayout>}
         >
         {this.state.tutorials.map((tutorial, index) => {
-          const actionButtons = <LikeButton tutorial={tutorial}/>;
+
+          const actionButtons = (
+            <>
+            <LikeButton tutorial={tutorial}/>
+            <ViewsPanel tutorial={tutorial} />
+            </>
+          )
+          const content = (<>
+            <TutorialInfo user={tutorial.user} />
+            </>)
+          console.log(tutorial);
           return <MediaCard
             key={tutorial.id}
             link={this.props.match.path + '/' + tutorial.id + '/' + tutorial.slug}
-            content={<TutorialInfo user={tutorial.user} />}
+            content={content}
             actionButtons={actionButtons}
             title={tutorial.title} />
         })}

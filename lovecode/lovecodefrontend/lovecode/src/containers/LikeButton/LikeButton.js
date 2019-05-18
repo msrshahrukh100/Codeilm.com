@@ -23,6 +23,7 @@ const styles = theme => ({
   },
   likeButton: {
     textTransform: 'none',
+    marginLeft: theme.spacing.unit
   },
   notLiked: {
     color: 'black'
@@ -90,6 +91,7 @@ class LikeButton extends React.Component {
     const avatars = this.state.likeUsers ?
       this.state.likeUsers.map(user => {
         return (<Tooltip
+              key={user.id}
               classes={{
                 tooltip: classes.htmlTooltip,
               }}
@@ -115,7 +117,7 @@ class LikeButton extends React.Component {
           value={this.state.likeCount}
           displayType={'text'}
           thousandSeparator={true}
-          renderText={value => <>{value !== "0" && value !== "" ? value + " people like this" : "Like this"}</>} />
+          renderText={value => <>{value !== "0" && value !== "" ? value : "Like this"}</>} />
       </Button>
       {avatars}
       </>
