@@ -1,11 +1,38 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import Embed from '../CarbonCode/embed'
+import YouTube from 'react-youtube';
+import './tutorialPage.css'
 
 const renderers: ReactMarkdown.Renderers = {
     code: (props: string) => {
       return (
         <Embed code={props.value} language={props.language} />
+      )
+    },
+    link: (props) => {
+      console.log(props);
+      if(props.children[0].props.value === "YOUTUBE") {
+        const opts = {
+          playerVars: { // https://developers.google.com/youtube/player_parameters
+            rel: 0,
+            iv_load_policy: 3,
+            loop: 1
+          }
+        };
+
+        return (
+          <div className="videoWrapper">
+            <YouTube
+              videoId={props.href}
+              opts={opts}
+              className={"something"}
+            />
+          </div>
+        )
+      }
+      return (
+        <a {...props} />
       )
     }
 };
