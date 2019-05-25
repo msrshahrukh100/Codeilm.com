@@ -45,6 +45,10 @@ class RepoList extends React.Component {
     this.fetchRepositories()
   }
 
+  setTutorialData = (repoData) => {
+    console.log(repoData);
+  }
+
   render() {
     return (
       <InfiniteScroll
@@ -53,7 +57,7 @@ class RepoList extends React.Component {
           hasMore={this.state.hasMoreRepo}
           loader={<PageLayout><ListPageSkeleton /></PageLayout>}
       >
-      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} link={'/tutorials/create/'+repo.name} search={"?branch_name="+repo.default_branch} title={repo.name} />)}
+      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} onClick={() => this.setTutorialData(repo)} link={'/tutorials/create/'+repo.name} search={"?branch_name="+repo.default_branch} title={repo.name} />)}
       </InfiniteScroll>
     )
   }
