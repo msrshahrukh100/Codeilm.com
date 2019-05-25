@@ -16,6 +16,11 @@ from emailmanager.utils import send_info_mail_to_admins
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from rest_auth.registration.views import SocialLoginView
+from rest_framework.response import Response
+from rest_auth.utils import jwt_encode
+from rest_auth.app_settings import create_token
+from django.conf import settings
+from rest_framework import status
 
 logger = logging.getLogger(__name__)
 # Create your views here.
@@ -26,6 +31,22 @@ class GithubLogin(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
     callback_url = 'https://allywith.com/accounts/github/login/callback/'
     client_class = OAuth2Client
+
+
+class GetGithubToken(SocialLoginView):
+	adapter_class = GitHubOAuth2Adapter
+	callback_url = 'https://allywith.com/accounts/github/login/callback/'
+	client_class = OAuth2Client
+
+	def get(self, request, *args, **kwargs):
+		if not request.user.is_authenticated:
+			return Response({"msg": "Not authorized"}, status=status.HTTP_401_UNAUTHORIZED)
+		self.user = request.user
+		if getattr(settings, 'REST_USE_JWT', False):
+			self.token = jwt_encode(self.user)
+		else:
+			self.token = create_token(self.token_model, self.user, self.serializer)
+		return Response({"token": self.token})
 
 
 def opensearch(request):

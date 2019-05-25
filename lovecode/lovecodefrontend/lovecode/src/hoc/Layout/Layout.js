@@ -57,7 +57,6 @@ class Layout extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.aReducer.authToken);
   return {
     isAuthenticated: state.aReducer.authToken ? true : false
   }
