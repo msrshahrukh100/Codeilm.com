@@ -13,17 +13,17 @@ function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, 
   return (
     <Route
       {...rest}
-      render={props =>
-        isAuthenticated ? (
+      render={props => {
+        console.log(props);
+        const next= props.match.url
+        return isAuthenticated ? (
           <Component {...props} />
         ) : (
-          <Redirect
-            to={{
-              pathname: "/tutorials/login",
-              state: { from: props.location }
-            }}
-          />
+          <LoginPage {...props} />
         )
+      }
+
+
       }
     />
   );
