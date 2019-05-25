@@ -16,6 +16,8 @@ import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import { FaGithub } from 'react-icons/fa';
 import { IconContext } from "react-icons";
+import { connect } from 'react-redux'
+import * as actionCreators from '../../store/actions/index'
 
 const styles = theme => ({
   main: {
@@ -60,41 +62,55 @@ const styles = theme => ({
   }
 });
 
-function LoginPage(props) {
+class LoginPage extends React.Component {
 
-  const { classes } = props;
-  const next = props.history.location.search
-  const loginUrl = "https://allywith.com/accounts/github/login" + next;
-  return (
-    <main className={classes.main}>
+  componentDidMount() {
+    this.props.auth()
+  }
+
+  render() {
+
+    const { classes } = this.props;
+    const next = this.props.history.location.search
+    const loginUrl = "https://allywith.com/accounts/github/login" + next;
+    return (
+      <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-        <img src="https://allywith.com/static/images/logo/logo-transparent.png" />
-        <Typography component="p" className={classes.para}>
-          You must continue with your GitHub account
-        </Typography>
-        <form className={classes.form}>
-          <Fab
-            variant="extended"
-            size="medium"
-            color="primary"
-            aria-label="Add"
-            className={classes.margin}
-            href={loginUrl}
-          >
-            <IconContext.Provider value={{ size: '2em' }}>
-            <FaGithub className={classes.extendedIcon} />
-            </IconContext.Provider>
-            Continue with GitHub
-          </Fab>
-        </form>
+      <img src="https://allywith.com/static/images/logo/logo-transparent.png" />
+      <Typography component="p" className={classes.para}>
+      You must continue with your GitHub account
+      </Typography>
+      <form className={classes.form}>
+      <Fab
+      variant="extended"
+      size="medium"
+      color="primary"
+      aria-label="Add"
+      className={classes.margin}
+      href={loginUrl}
+      >
+      <IconContext.Provider value={{ size: '2em' }}>
+      <FaGithub className={classes.extendedIcon} />
+      </IconContext.Provider>
+      Continue with GitHub
+      </Fab>
+      </form>
       </Paper>
-    </main>
-  );
+      </main>
+    );
+
+  }
 }
 
 LoginPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginPage);
+const matchDispatchToProps = dispatch => {
+  return {
+    auth: () => dispatch(actionCreators.auth())
+  }
+}
+
+export default withStyles(styles)(connect(null, matchDispatchToProps)(LoginPage));

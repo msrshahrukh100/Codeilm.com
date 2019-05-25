@@ -72,6 +72,7 @@
     "react-use": "^5.16.1",
     "react-youtube": "^7.9.0",
     "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "slug": "^1.1.0",

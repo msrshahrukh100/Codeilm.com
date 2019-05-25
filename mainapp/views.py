@@ -33,21 +33,6 @@ class GithubLogin(SocialLoginView):
     client_class = OAuth2Client
 
 
-class GetGithubToken(SocialLoginView):
-	adapter_class = GitHubOAuth2Adapter
-	callback_url = 'https://allywith.com/accounts/github/login/callback/'
-	client_class = OAuth2Client
-
-	def get(self, request, *args, **kwargs):
-		if not request.user.is_authenticated:
-			return Response({"msg": "Not authorized"}, status=status.HTTP_401_UNAUTHORIZED)
-		self.user = request.user
-		if getattr(settings, 'REST_USE_JWT', False):
-			self.token = jwt_encode(self.user)
-		else:
-			self.token = create_token(self.token_model, self.user, self.serializer)
-		return Response({"token": self.token})
-
 
 def opensearch(request):
 	return render(request, 'open_search.xml', content_type="application/xhtml+xml")

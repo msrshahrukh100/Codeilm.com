@@ -4,17 +4,22 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom'
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux'
 import repoDataReducer from './store/reducers/repoDataReducer'
 import authReducer from './store/reducers/authReducer'
+import thunk from 'redux-thunk';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   rdReducer: repoDataReducer,
   aReducer: authReducer
 })
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, composeEnhancers(
+    applyMiddleware(thunk)
+));
 
 const app = (
   <BrowserRouter basename='/'>

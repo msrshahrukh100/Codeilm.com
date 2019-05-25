@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import RepoList from '../../containers/RepoList/RepoList'
 import LearnEdit from '../../containers/LearnEdit/LearnEdit'
 import CreateTutorial from '../../containers/CreateTutorial/CreateTutorial'
-import LoginPage from '../../components/LoginPage/LoginPage'
+import LoginPage from '../../containers/LoginPage/LoginPage'
 import { connect } from 'react-redux'
 
 function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, ...rest }) {

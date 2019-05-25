@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import home, mark_notifications_read, redirect_to_page, group_join, save_group_creation_request, how_it_works, redirect_for_server_error
-from .views import GithubLogin, GetGithubToken
+from .views import GithubLogin
 from rest_framework_jwt.views import obtain_jwt_token
 
 
@@ -8,7 +8,6 @@ urlpatterns = [
     path('', home, name="home"),
     path('rest-auth/github/', GithubLogin.as_view(), name='github_login'),
     path('api-token-auth/', obtain_jwt_token),
-    path('get-github-token/', GetGithubToken.as_view(), name='get_github_token'),
 
     path('how-it-works/', how_it_works, name="how_it_works"),
     path('redirect/', redirect_to_page, name="redirect_to_page"),
