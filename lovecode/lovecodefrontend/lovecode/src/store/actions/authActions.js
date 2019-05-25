@@ -7,12 +7,24 @@ export const authStart = () => {
   }
 }
 
+export const authSuccess = (token, user) => {
+  return {
+    type: actionTypes.AUTH_SUCCESS,
+    authToken: token,
+    user: user
+  }
+}
+
 export const auth = () => {
   return dispatch => {
     dispatch(authStart());
-    // axios.get('/get-github-token')
-    //   .then(response => {
-    //     console.log(response.data);
-    //   })
+    axios.get('/get-github-token')
+      .then(response => {
+        console.log(response.data);
+        dispatch(authSuccess(response.data.token, response.data.user))
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 }
