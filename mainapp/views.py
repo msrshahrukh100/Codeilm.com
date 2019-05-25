@@ -13,9 +13,19 @@ from . import community_utils
 from . import models as main_models
 from .utils import save_request_ip_info
 from emailmanager.utils import send_info_mail_to_admins
+from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from rest_auth.registration.views import SocialLoginView
 
 logger = logging.getLogger(__name__)
 # Create your views here.
+
+
+
+class GithubLogin(SocialLoginView):
+    adapter_class = GitHubOAuth2Adapter
+    callback_url = 'https://allywith.com/accounts/github/login/callback/'
+    client_class = OAuth2Client
 
 
 def opensearch(request):

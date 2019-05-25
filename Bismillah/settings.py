@@ -67,6 +67,8 @@ INSTALLED_APPS = [
     'compressor',
     'guardian',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
     'corsheaders',
 
     # custom apps
@@ -110,6 +112,7 @@ AUTHENTICATION_BACKENDS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
@@ -333,3 +336,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 GITHUB_CLIENT_ID = "755685d9cb60cc87e15f"
 GITHUB_CLIENT_SECRET = "d11f7aedba5186461ec384a8084ceab016e2abc7"
+
+
+REST_USE_JWT = True

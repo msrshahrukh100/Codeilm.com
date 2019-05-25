@@ -7,9 +7,11 @@ import { BrowserRouter } from 'react-router-dom'
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux'
 import repoDataReducer from './store/reducers/repoDataReducer'
+import authReducer from './store/reducers/authReducer'
 
 const rootReducer = combineReducers({
-  rdReducer: repoDataReducer
+  rdReducer: repoDataReducer,
+  aReducer: authReducer
 })
 
 const store = createStore(rootReducer)

@@ -7,10 +7,31 @@ import RepoList from '../../containers/RepoList/RepoList'
 import LearnEdit from '../../containers/LearnEdit/LearnEdit'
 import CreateTutorial from '../../containers/CreateTutorial/CreateTutorial'
 import LoginPage from '../../components/LoginPage/LoginPage'
+import { connect } from 'react-redux'
+
+function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated ? (
+          <Component {...props} />
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/tutorials/login",
+              state: { from: props.location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
 
 class Layout extends React.Component {
   state = {}
-
   render() {
     return (
       <>
@@ -18,14 +39,15 @@ class Layout extends React.Component {
 
       <Switch>
         <Route path='/tutorials/login' component={LoginPage} />
-        <Route path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName' component={LearnEdit} />
-        <Route path='/tutorials/create/:repoName' component={CreateTutorial} />
+        <PrivateRoute path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName' component={LearnEdit} isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute path='/tutorials/create/:repoName' component={CreateTutorial} isAuthenticated={this.props.isAuthenticated} />
 
         <Route path='/tutorials/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />
 
-        <Route path='/tutorials/create/' component={RepoList} />
+        <PrivateRoute path="/tutorials/create/" component={RepoList} isAuthenticated={this.props.isAuthenticated} />
+        // <Route path='/tutorials/create/' component={RepoList} />
         <Route path='/tutorials' component={TutorialList} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />
       </Switch>
@@ -34,4 +56,11 @@ class Layout extends React.Component {
   }
 }
 
-export default Layout
+const mapStateToProps = state => {
+  console.log(state.aReducer.authToken);
+  return {
+    isAuthenticated: state.aReducer.authToken ? true : false
+  }
+}
+
+export default connect(mapStateToProps, null)(Layout)

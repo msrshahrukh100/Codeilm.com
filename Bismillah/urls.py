@@ -41,7 +41,8 @@ urlpatterns = [
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('user-management/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
     path('email/', include(('emailmanager.urls', 'emailmanager'), namespace="emailmanager")),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    path('rest-auth/', include('rest_auth.urls'))
     # urls for different communities
 ]
 
