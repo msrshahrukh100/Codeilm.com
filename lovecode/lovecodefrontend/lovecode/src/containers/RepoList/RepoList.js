@@ -6,6 +6,8 @@ import InfiniteScroll from "react-infinite-scroll-component"
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
 import { withRouter } from "react-router";
+import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions/index'
 
 class RepoList extends React.Component {
 
@@ -45,10 +47,6 @@ class RepoList extends React.Component {
     this.fetchRepositories()
   }
 
-  setTutorialData = (repoData) => {
-    console.log(repoData);
-  }
-
   render() {
     return (
       <InfiniteScroll
@@ -57,10 +55,16 @@ class RepoList extends React.Component {
           hasMore={this.state.hasMoreRepo}
           loader={<PageLayout><ListPageSkeleton /></PageLayout>}
       >
-      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} onClick={() => this.setTutorialData(repo)} link={'/tutorials/create/'+repo.name} search={"?branch_name="+repo.default_branch} title={repo.name} />)}
+      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} onClick={() => this.props.setRepoData(repo)} link={'/tutorials/create/'+repo.name} search={"?branch_name="+repo.default_branch} title={repo.name} />)}
       </InfiniteScroll>
     )
   }
 }
 
-export default withErrorHandler(withRouter(RepoList), axios, "list")
+const matchDispatchToProps = dispatch => {
+  return {
+    setRepoData: data => dispatch(actionCreators.setRepoData(data))
+  }
+}
+
+export default withErrorHandler(withRouter(connect(null, matchDispatchToProps)(RepoList)), axios, "list")

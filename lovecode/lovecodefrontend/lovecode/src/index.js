@@ -4,10 +4,21 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom'
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux'
+import repoDataReducer from './store/reducers/repoDataReducer'
+
+const rootReducer = combineReducers({
+  rdReducer: repoDataReducer
+})
+
+const store = createStore(rootReducer)
 
 const app = (
   <BrowserRouter basename='/'>
-    <App/>
+    <Provider store={store}>
+      <App/>
+    </Provider>
   </BrowserRouter>
 )
 

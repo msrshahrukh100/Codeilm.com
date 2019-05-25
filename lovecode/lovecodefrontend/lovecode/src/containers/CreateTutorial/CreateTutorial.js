@@ -12,6 +12,7 @@ import { IconContext } from "react-icons";
 import getCookie from '../../utils/getCookie'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   textField: {
@@ -92,6 +93,7 @@ class CreateTutorial extends React.Component {
         title: this.state.title,
         branch_name: branchName,
         repo_name: repoName,
+        repo_data: this.props.repoData
       };
       axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
       axios.post('/tutorials/create_or_get', postData)
@@ -165,4 +167,10 @@ class CreateTutorial extends React.Component {
   }
 }
 
-export default withErrorHandler(withStyles(styles)(withRouter(CreateTutorial)), axios, "circular")
+const connectStateToProps = state => {
+  return {
+    repoData: state.rdReducer.repoData
+  }
+}
+
+export default withErrorHandler(withStyles(styles)(withRouter(connect(connectStateToProps, null)(CreateTutorial))), axios, "circular")

@@ -158,6 +158,7 @@ class CreateGetTutorial(APIView):
 				user=request.user,
 				title=data.get("title", ""),
 				repository_name=data.get("repo_name", ""),
+				repository_data=data.get("repo_data"),
 				branch_name=data.get("branch_name", "")
 			)
 			data = lovecode_serializers.TutorialDetailSerializer(obj)
