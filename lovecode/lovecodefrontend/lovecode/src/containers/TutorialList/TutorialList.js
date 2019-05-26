@@ -12,11 +12,21 @@ import { withStyles } from '@material-ui/core/styles';
 import LikeButton from '../LikeButton/LikeButton'
 import NumberFormat from 'react-number-format';
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
+import { MdTrendingUp } from "react-icons/md";
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   margin: {
     margin: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 3,
+  },
+  metricsButton: {
+    textTransform: 'none',
+    marginLeft: theme.spacing.unit
+  },
+  iconSmall: {
+    marginRight: theme.spacing.unit,
+    fontSize: 20,
   }
 });
 
@@ -79,6 +89,14 @@ class TutorialList extends React.Component {
             <>
             <LikeButton tutorial={tutorial}/>
             <ViewsPanel tutorial={tutorial} />
+
+            <Button
+              size="small"
+              color="primary"
+              className={classes.metricsButton}
+              onClick={() => this.props.history.push(this.props.match.path + '/metrics/' + tutorial.id + '/' + tutorial.slug )}>
+              <MdTrendingUp className={classes.iconSmall} /> Metrics
+            </Button>
             </>
           )
           const content = (<>

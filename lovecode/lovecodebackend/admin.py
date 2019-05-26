@@ -14,7 +14,7 @@ class GithubApiResponseAdmin(admin.ModelAdmin):
 
 
 class TutorialViewAdmin(admin.ModelAdmin):
-	list_display = ['user', 'tutorial', 'city', 'country_name', 'region', 'time_zone']
+	list_display = ['user', 'tutorial', 'ip', 'city', 'country_name', 'region', 'time_zone']
 
 	def city(self, obj):
 		if obj.request_ip_info:

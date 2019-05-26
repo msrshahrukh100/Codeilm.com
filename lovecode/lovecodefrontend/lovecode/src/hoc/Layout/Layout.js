@@ -42,6 +42,7 @@ class Layout extends React.Component {
         <PrivateRoute path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName' component={LearnEdit} isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute path='/tutorials/create/:repoName' component={CreateTutorial} isAuthenticated={this.props.isAuthenticated} />
 
+        <Route path='/tutorials/metrics/:tutorialId/:slug' component={() => <h1>Shahrukh</h1>} />
         <Route path='/tutorials/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />
