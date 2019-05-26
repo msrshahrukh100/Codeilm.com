@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ('full_name', 'first_name', 'last_name', 'intro', 'user_profile_pic')
+		fields = ('id', 'full_name', 'first_name', 'last_name', 'intro', 'user_profile_pic')
 
 class GithubRepoSerializer(serializers.ModelSerializer):
 	hash_id = serializers.CharField(default="")
