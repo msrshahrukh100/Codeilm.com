@@ -1,6 +1,6 @@
 import React from 'react'
 import { MdThumbUp } from "react-icons/md";
-import classNames from 'classnames';
+import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
@@ -112,7 +112,7 @@ class LikeButton extends React.Component {
     return (
       <>
       <Tooltip title={this.state.likeCount ? "Likes" : "Like this"}>
-      <Button disabled={this.state.loading} size="small" color="primary" className={classNames(btnClasses)} onClick={this.likeHandler}>
+      <Button disabled={this.state.loading} size="small" color="primary" className={clsx(btnClasses)} onClick={this.likeHandler}>
         <MdThumbUp className={classes.iconSmall} />
         <NumberFormat
           value={this.state.likeCount}

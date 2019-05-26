@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import RepoList from '../../containers/RepoList/RepoList'
 import LearnEdit from '../../containers/LearnEdit/LearnEdit'
 import CreateTutorial from '../../containers/CreateTutorial/CreateTutorial'
+import TutorialMetrics from '../../containers/TutorialMetrics/TutorialMetrics'
 import LoginPage from '../../containers/LoginPage/LoginPage'
 import { connect } from 'react-redux'
 
@@ -42,7 +43,7 @@ class Layout extends React.Component {
         <PrivateRoute path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName' component={LearnEdit} isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute path='/tutorials/create/:repoName' component={CreateTutorial} isAuthenticated={this.props.isAuthenticated} />
 
-        <Route path='/tutorials/metrics/:tutorialId/:slug' component={() => <h1>Shahrukh</h1>} />
+        <Route path='/tutorials/metrics/:tutorialId/:slug' component={TutorialMetrics} />
         <Route path='/tutorials/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />

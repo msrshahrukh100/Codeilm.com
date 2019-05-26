@@ -1,6 +1,5 @@
 import React from 'react'
 import { IoLogoBuffer } from "react-icons/io";
-import classNames from 'classnames';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
