@@ -11,8 +11,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
-import FolderIcon from '@material-ui/icons/Folder';
 import axios from '../../lovecodeaxios'
+import response from './temp'
+import NumberFormat from 'react-number-format';
 
 const styles = theme => ({
   root: {
@@ -33,7 +34,11 @@ class TutorialMetrics extends React.Component {
     const { tutorialId } = this.props.match.params;
 
     this.state = {
-      tutorialId: tutorialId
+      tutorialId: tutorialId,
+      allViews: null,
+      distinctViews: null,
+      likeData: null,
+      loggedInViewData: null
     }
   }
 
@@ -53,45 +58,52 @@ class TutorialMetrics extends React.Component {
           loading: false
         })
       })
+
+    console.log(response);
+    const data = response.data
+    this.setState({
+      loggedInViewData: data.logged_in_view_data,
+      allViews: data.all_views,
+      distinctViews: data.distinct_viewers,
+      likeData: data.like_data
+    })
+
   }
   render() {
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
       <Container maxWidth="lg">
       <Grid container spacing={3}>
       <Grid item xs={12} sm={4}>
       <Paper className={classes.paper}>
-      <h2 style={{fontSize: '3em'}}>12,343</h2>
+      <h2 style={{fontSize: '3em'}}>
+      <NumberFormat
+        value={this.state.loggedInViewData ? this.state.loggedInViewData.length : 0}
+        displayType={'text'}
+        thousandSeparator={true}
+      />
+      </h2>
       <Typography variant="h6" className={classes.title}>
       Post Views
       </Typography>
       <List>
+      {this.state.loggedInViewData ? this.state.loggedInViewData.slice(0,3).map((item, index) => {
+        return (
+          <ListItem key={index}>
+          <ListItemAvatar>
+          <Avatar alt={item.user.full_name} src={item.user.user_profile_pic} />
+          </ListItemAvatar>
+          <ListItemText
+          primary={item.user.full_name}
+          secondary={item.created_at}
+          />
+          </ListItem>
 
-      <ListItem>
-      <ListItemAvatar>
-      <Avatar>
-      <FolderIcon />
-      </Avatar>
-      </ListItemAvatar>
-      <ListItemText
-      primary="Single-line item"
-      secondary={true ? 'Secondary text' : null}
-      />
-      </ListItem>
+        )
+      })
+    : null}
 
-      <ListItem>
-      <ListItemAvatar>
-      <Avatar>
-      <FolderIcon />
-      </Avatar>
-      </ListItemAvatar>
-      <ListItemText
-      primary="Single-line item"
-      secondary={true ? 'Secondary text' : null}
-      />
-      </ListItem>
 
       </List>
 
@@ -99,11 +111,31 @@ class TutorialMetrics extends React.Component {
       </Grid>
       <Grid item xs={12} sm={4}>
       <Paper className={classes.paper}>
-
+        <h2 style={{fontSize: '3em'}}>
+          <NumberFormat
+            value={this.state.distinctViews ? this.state.distinctViews.length : 0}
+            displayType={'text'}
+            thousandSeparator={true}
+          />
+        </h2>
+        <Typography variant="h6" className={classes.title}>
+        Distinct User Views
+        </Typography>
       </Paper>
       </Grid>
       <Grid item xs={12} sm={4}>
-      <Paper className={classes.paper}>xs=6 sm=3</Paper>
+      <Paper className={classes.paper}>
+        <h2 style={{fontSize: '3em'}}>
+          <NumberFormat
+            value={this.state.likeData ? this.state.likeData.length : 0}
+            displayType={'text'}
+            thousandSeparator={true}
+          />
+        </h2>
+        <Typography variant="h6" className={classes.title}>
+        Likes
+        </Typography>
+      </Paper>
       </Grid>
       </Grid>
       </Container>
