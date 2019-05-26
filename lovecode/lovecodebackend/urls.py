@@ -18,4 +18,6 @@ urlpatterns = [
     path('commit/learn', lovecode_views.CreateUpdateCommitLearnFile.as_view(), name="commit_learn"),
     # path('userrepositories/<slug:datetime>', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
     path('get-github-token/', lovecode_views.GetGithubToken.as_view(), name='get_github_token'),
+    path('echo', lovecode_views.Echo.as_view(), name='echo'),
+
 ]

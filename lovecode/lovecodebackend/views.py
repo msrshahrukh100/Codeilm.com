@@ -256,3 +256,11 @@ class GetGithubToken(SocialLoginView):
 
 		user = lovecode_serializers.UserSerializer(request.user).data
 		return Response({"token": self.token, "user": user})
+
+
+class Echo(APIView):
+
+	def get(self, request):
+		if request.user.is_authenticated:
+			return Response(lovecode_serializers.UserSerializer(request.user).data)
+		return Response({"msg": "Not Allowed"}, status=status.HTTP_401_UNAUTHORIZED)
