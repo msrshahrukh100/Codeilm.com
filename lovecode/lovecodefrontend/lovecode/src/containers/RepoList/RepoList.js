@@ -21,6 +21,7 @@ class RepoList extends React.Component {
   }
 
   fetchRepositories = () => {
+    axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem('token')}`;
     axios.get('/userrepositories/' + this.state.pageNumber)
       .then(response => {
         if(response) {

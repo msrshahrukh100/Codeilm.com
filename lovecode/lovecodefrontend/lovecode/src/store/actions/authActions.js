@@ -8,6 +8,7 @@ export const authStart = () => {
 }
 
 export const authSuccess = (token, user) => {
+  localStorage.setItem('token', token)
   return {
     type: actionTypes.AUTH_SUCCESS,
     authToken: token,

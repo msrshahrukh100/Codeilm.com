@@ -72,12 +72,12 @@ class LoginPage extends React.Component {
 
     const { classes } = this.props;
     const next = this.props.history.location.search
-    const loginUrl = "https://allywith.com/accounts/github/login" + next;
+    const loginUrl = "http://54.218.212.69/accounts/github/login" + next;
     return (
       <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-      <img src="https://allywith.com/static/images/logo/logo-transparent.png" />
+      <img src="http://54.218.212.69/static/images/logo/logo-transparent.png" />
       <Typography component="p" className={classes.para}>
       You must continue with your GitHub account
       </Typography>

@@ -28,21 +28,10 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
         this.setState({loading: false})
         return response
       }, error => {
-        if(error.response.status === 401 || error.response.status === 403){
-          console.log("page to be shown");
-          const next= this.props.match.url
-          this.props.history.push({
-            pathname: '/tutorials/login',
-            search: '?next=' + next,
-          })
-        }
-        else {
-
-          this.setState({
-            error: error,
-            loading: false
-          })
-        }
+        this.setState({
+          error: error,
+          loading: false
+        })
       })
     }
 
