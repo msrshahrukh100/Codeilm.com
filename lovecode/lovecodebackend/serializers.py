@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from . import models as lovecode_model
+from mainapp import models as mainapp_models
 from django.contrib.auth.models import User
 
 
@@ -69,9 +70,26 @@ class TutorialDetailSerializer(serializers.ModelSerializer):
 		fields = ('id', 'user', 'tutorial_data', 'learn_md_content', 'title','slug', 'read_time', 'is_published',  'created_at', 'updated_at')
 
 
+class RequestIPInfoSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = mainapp_models.RequestIpInfo
+		fields = ('__all__')
+
+
 class TutorialLikeSerializer(serializers.ModelSerializer):
 	tutorial = serializers.CharField(default="")
 	user = UserSerializer()
 	class Meta:
 		model = lovecode_model.TutorialLike
 		fields = ('id', 'user', 'tutorial', 'liked', 'created_at', 'updated_at')
+
+
+class TutorialViewSerializer(serializers.ModelSerializer):
+	tutorial = serializers.CharField(default="")
+	user = UserSerializer()
+	request_ip_info = RequestIPInfoSerializer()
+
+	class Meta:
+		model = lovecode_model.TutorialLike
+		fields = ('id', 'user', 'tutorial', 'request_ip_info', 'created_at', 'updated_at')
+

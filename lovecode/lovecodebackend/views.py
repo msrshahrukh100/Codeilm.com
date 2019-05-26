@@ -218,6 +218,20 @@ class LikeUnlikeTutorial(APIView):
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
 
 
+class TutorialMetricsData(APIView):
+
+	def get(self, request, tutorial_id):
+		obj = get_object_or_404(lovecode_models.Tutorial, id=tutorial_id, user=request.user)
+		like_data = lovecode_serializers.TutorialLikeSerializer(obj.user_likes.all(), many=True).data
+		logged_in_view_data = lovecode_serializers.TutorialViewSerializer(obj.user_views.exclude(user=None), many=True).data
+		annonymous_view_data = lovecode_serializers.TutorialViewSerializer(obj.user_views.filter(user=None), many=True).data
+
+		return Response({
+			"like_data": like_data,
+			"logged_in_view_data": logged_in_view_data,
+			"annonymous_view_data": annonymous_view_data
+		})
+
 class GetGithubToken(SocialLoginView):
 	adapter_class = GitHubOAuth2Adapter
 	callback_url = 'https://allywith.com/accounts/github/login/callback/'
