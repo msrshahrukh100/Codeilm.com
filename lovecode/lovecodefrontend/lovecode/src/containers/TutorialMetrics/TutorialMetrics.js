@@ -26,6 +26,52 @@ const styles = theme => ({
   },
 });
 
+const ViewsPanel = (props) => {
+  const { classes } = props;
+  return (
+    <Grid item xs={12} sm={4}>
+    <Paper className={classes.paper}>
+    <h2 style={{fontSize: '3em'}}>
+    <NumberFormat
+      value={props.data ? props.data.length : 0}
+      displayType={'text'}
+      thousandSeparator={true}
+    />
+    </h2>
+    <Typography variant="h6" className={classes.title}>
+      {props.title}
+    </Typography>
+    <List>
+    {props.data ? props.data.slice(0,3).map((item, index) => {
+
+      const avatarSrc = props.type === "POST_VIEWS" || props.type === "LIKES" ?
+        item.user.user_profile_pic : item.user_profile_pic
+      const primaryText = props.type === "POST_VIEWS" || props.type === "LIKES" ?
+        item.user.full_name : item.full_name
+      const secondaryText = props.type === "POST_VIEWS" || props.type === "LIKES" ?
+        item.created_at : item.intro
+
+      return (
+        <ListItem key={index}>
+        <ListItemAvatar>
+        <Avatar alt={primaryText} src={avatarSrc} />
+        </ListItemAvatar>
+        <ListItemText
+        primary={primaryText}
+        secondary={secondaryText}
+        />
+        </ListItem>
+
+      )
+    })
+  : null}
+    </List>
+    </Paper>
+    </Grid>
+  )
+
+}
+
 class TutorialMetrics extends React.Component {
 
   constructor(props) {
@@ -75,68 +121,9 @@ class TutorialMetrics extends React.Component {
       <div className={classes.root}>
       <Container maxWidth="lg">
       <Grid container spacing={3}>
-      <Grid item xs={12} sm={4}>
-      <Paper className={classes.paper}>
-      <h2 style={{fontSize: '3em'}}>
-      <NumberFormat
-        value={this.state.loggedInViewData ? this.state.loggedInViewData.length : 0}
-        displayType={'text'}
-        thousandSeparator={true}
-      />
-      </h2>
-      <Typography variant="h6" className={classes.title}>
-      Post Views
-      </Typography>
-      <List>
-      {this.state.loggedInViewData ? this.state.loggedInViewData.slice(0,3).map((item, index) => {
-        return (
-          <ListItem key={index}>
-          <ListItemAvatar>
-          <Avatar alt={item.user.full_name} src={item.user.user_profile_pic} />
-          </ListItemAvatar>
-          <ListItemText
-          primary={item.user.full_name}
-          secondary={item.created_at}
-          />
-          </ListItem>
-
-        )
-      })
-    : null}
-
-
-      </List>
-
-      </Paper>
-      </Grid>
-      <Grid item xs={12} sm={4}>
-      <Paper className={classes.paper}>
-        <h2 style={{fontSize: '3em'}}>
-          <NumberFormat
-            value={this.state.distinctViews ? this.state.distinctViews.length : 0}
-            displayType={'text'}
-            thousandSeparator={true}
-          />
-        </h2>
-        <Typography variant="h6" className={classes.title}>
-        Distinct User Views
-        </Typography>
-      </Paper>
-      </Grid>
-      <Grid item xs={12} sm={4}>
-      <Paper className={classes.paper}>
-        <h2 style={{fontSize: '3em'}}>
-          <NumberFormat
-            value={this.state.likeData ? this.state.likeData.length : 0}
-            displayType={'text'}
-            thousandSeparator={true}
-          />
-        </h2>
-        <Typography variant="h6" className={classes.title}>
-        Likes
-        </Typography>
-      </Paper>
-      </Grid>
+        <ViewsPanel type="POST_VIEWS" data={this.state.loggedInViewData} title="Post Views" {...this.props}/>
+        <ViewsPanel type="DISTINCT_VIEWS" data={this.state.distinctViews} title="Distinct Views" {...this.props}/>
+        <ViewsPanel type="LIKES" data={this.state.likeData} title="Likes" {...this.props}/>
       </Grid>
       </Container>
       </div>
