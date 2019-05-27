@@ -26,6 +26,8 @@ from rest_framework_simplejwt.serializers import (
 	TokenRefreshSerializer
 )
 
+from .serializers import CustomTokenObtainPairSerializer
+
 logger = logging.getLogger(__name__)
 # Create your views here.
 
@@ -116,7 +118,7 @@ def redirect_for_server_error(request, template_name="500errorpage.html"):
 
 
 class GetJSONWebToken(TokenObtainPairView):
-	serializer_class = TokenObtainPairSerializer
+	serializer_class = CustomTokenObtainPairSerializer
 
 class GetRefreshJSONWebToken(TokenRefreshView):
 	serializer_class = TokenRefreshSerializer
