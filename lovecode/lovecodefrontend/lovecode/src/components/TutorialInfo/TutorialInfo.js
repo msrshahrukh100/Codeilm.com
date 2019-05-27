@@ -8,8 +8,8 @@ import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
   chip: {
-    marginLeft: theme.spacing.unit * 2,
-    marginTop: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
+    marginTop: theme.spacing(2),
     backgroundColor: 'white'
   },
   avatar: {

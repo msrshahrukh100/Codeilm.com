@@ -7,10 +7,10 @@ import Grid from '@material-ui/core/Grid';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    paddingTop: theme.spacing.unit * 2
+    paddingTop: theme.spacing(2)
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
   },
 });

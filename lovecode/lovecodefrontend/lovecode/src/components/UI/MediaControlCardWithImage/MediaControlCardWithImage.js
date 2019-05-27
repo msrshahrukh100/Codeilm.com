@@ -15,10 +15,10 @@ import { Link } from 'react-router-dom'
 const styles = theme => ({
   card: {
     display: 'flex',
-    marginBottom: theme.spacing.unit + 20,
-    marginLeft: theme.spacing.unit + 30,
-    marginRight: theme.spacing.unit + 30,
-    marginTop: theme.spacing.unit + 30,
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    marginTop: theme.spacing(3),
   },
   details: {
     display: 'flex',
@@ -34,8 +34,8 @@ const styles = theme => ({
   controls: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   playIcon: {
     height: 38,

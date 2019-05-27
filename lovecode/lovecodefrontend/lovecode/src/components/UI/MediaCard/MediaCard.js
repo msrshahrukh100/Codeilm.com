@@ -13,16 +13,16 @@ import { Link } from 'react-router-dom'
 const styles = theme => ({
   card: {
     maxWidth: '100%',
-    margin: theme.spacing.unit * 5,
+    margin: theme.spacing(5),
     [theme.breakpoints.down('xs')]: {
-      margin: theme.spacing.unit * 2,
+      margin: theme.spacing(2),
     }
   },
   media: {
     height: 140,
   },
   actionBtn: {
-    marginLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing(2),
   }
 });
 

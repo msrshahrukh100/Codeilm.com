@@ -17,15 +17,15 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   margin: {
-    margin: theme.spacing.unit * 2,
-    marginRight: theme.spacing.unit * 3,
+    margin: theme.spacing(2),
+    marginRight: theme.spacing(3),
   },
   metricsButton: {
     textTransform: 'none',
-    marginLeft: theme.spacing.unit
+    marginLeft: theme.spacing()
   },
   iconSmall: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(),
     fontSize: 20,
   }
 });

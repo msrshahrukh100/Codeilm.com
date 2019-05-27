@@ -12,10 +12,10 @@ import Chips from '../Chips/Chips'
 
 const styles = theme => ({
   card: {
-    marginBottom: theme.spacing.unit + 20,
-    marginLeft: theme.spacing.unit + 30,
-    marginRight: theme.spacing.unit + 30,
-    marginTop: theme.spacing.unit + 30,
+    marginBottom: theme.spacing(2),
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+    marginTop: theme.spacing(3),
   },
   playIcon: {
     height: 38,
