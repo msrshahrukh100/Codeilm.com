@@ -13,7 +13,7 @@ const styles = theme => ({
     backgroundColor: 'white'
   },
   avatar: {
-    marginRight: -20,
+    marginRight: theme.spacing(1),
     width: 50,
     height: 50,
   },
