@@ -72,7 +72,8 @@ class TutorialDetail(generics.RetrieveAPIView):
 		)
 
 	def retrieve(self, request, *args, **kwargs):
-		self.tutorial_viewed(request, **kwargs)
+		if request.user.id != id:
+			self.tutorial_viewed(request, **kwargs)
 		return super().retrieve(request, *args, **kwargs)
 
 
