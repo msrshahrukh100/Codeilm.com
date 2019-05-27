@@ -15,24 +15,19 @@ from .utils import save_request_ip_info
 from emailmanager.utils import send_info_mail_to_admins
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from rest_auth.registration.views import SocialLoginView
-from rest_framework.response import Response
-from rest_auth.utils import jwt_encode
-from rest_auth.app_settings import create_token
 from django.conf import settings
 from rest_framework import status
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+from rest_framework_simplejwt.serializers import (
+	TokenObtainPairSerializer,
+	TokenRefreshSerializer
+)
 
 logger = logging.getLogger(__name__)
 # Create your views here.
-
-
-
-class GithubLogin(SocialLoginView):
-    adapter_class = GitHubOAuth2Adapter
-    callback_url = 'https://allywith.com/accounts/github/login/callback/'
-    client_class = OAuth2Client
-
-
 
 def opensearch(request):
 	return render(request, 'open_search.xml', content_type="application/xhtml+xml")
@@ -118,3 +113,10 @@ def redirect_to_page(request, exception, template_name="feedback_page.html"):
 
 def redirect_for_server_error(request, template_name="500errorpage.html"):
 	return render(request, '500errorpage.html', {})
+
+
+class GetJSONWebToken(TokenObtainPairView):
+	serializer_class = TokenObtainPairSerializer
+
+class GetRefreshJSONWebToken(TokenRefreshView):
+	serializer_class = TokenRefreshSerializer
