@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import axios from '../../lovecodeaxios'
 import response from './temp'
 import NumberFormat from 'react-number-format';
+import Map from '../../components/Map/Map'
 
 const styles = theme => ({
   root: {
@@ -130,7 +131,7 @@ class TutorialMetrics extends React.Component {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-
+            <Map />
           </Paper>
         </Grid>
       </Grid>
