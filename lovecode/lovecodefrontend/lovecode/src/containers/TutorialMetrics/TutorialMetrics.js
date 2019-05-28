@@ -119,6 +119,13 @@ class TutorialMetrics extends React.Component {
   }
   render() {
     const { classes } = this.props;
+    const mapData = this.state.allViews ? this.state.allViews.map(item => {
+      return {
+        city: item.request_ip_info.city,
+        coordinates: [item.request_ip_info.longitude, item.request_ip_info.latitude]
+      }
+    }) : null;
+    console.log(mapData);
     return (
       <div className={classes.root}>
       <Container maxWidth="lg">
@@ -131,7 +138,7 @@ class TutorialMetrics extends React.Component {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <Map />
+            <Map mapData={mapData} />
           </Paper>
         </Grid>
       </Grid>
