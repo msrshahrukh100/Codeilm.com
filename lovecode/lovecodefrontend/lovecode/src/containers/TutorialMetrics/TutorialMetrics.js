@@ -49,7 +49,8 @@ const ViewsPanel = (props) => {
       const primaryText = props.type === "POST_VIEWS" || props.type === "LIKES" ?
         item.user.full_name : item.full_name
       const secondaryText = props.type === "POST_VIEWS" || props.type === "LIKES" ?
-        item.created_at : item.intro
+        new Date(item.created_at).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+        : item.intro
 
       return (
         <ListItem key={index}>
@@ -124,6 +125,14 @@ class TutorialMetrics extends React.Component {
         <ViewsPanel type="POST_VIEWS" data={this.state.loggedInViewData} title="Post Views" {...this.props}/>
         <ViewsPanel type="DISTINCT_VIEWS" data={this.state.distinctViews} title="Distinct Views" {...this.props}/>
         <ViewsPanel type="LIKES" data={this.state.likeData} title="Likes" {...this.props}/>
+      </Grid>
+
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+
+          </Paper>
+        </Grid>
       </Grid>
       </Container>
       </div>
