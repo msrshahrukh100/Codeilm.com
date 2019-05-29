@@ -47,7 +47,7 @@ class VerticalLinearStepper extends React.Component {
         <Stepper activeStep={this.props.activeStep} orientation="vertical">
           {steps.map((label, index) => (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepLabel style={{cursor: 'pointer'}} onClick={() => this.props.setStep(index)}>{label}</StepLabel>
               <StepContent>
                 <div className={classes.actionsContainer}>
                   <div>

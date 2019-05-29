@@ -36,6 +36,9 @@ class TutorialDetail extends React.Component {
 
   }
 
+  setStep = (step) => {
+    this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + step + "/" + this.state.slugs[step])
+  }
 
   handleNext = () => {
     const nextStep = this.state.activeStep + 1;
@@ -98,6 +101,7 @@ class TutorialDetail extends React.Component {
               handleBack={this.handleBack}
               handleNext={this.handleNext}
               handleReset={this.handleReset}
+              setStep={this.setStep}
               steps={steps} />}/>
           : null
         }

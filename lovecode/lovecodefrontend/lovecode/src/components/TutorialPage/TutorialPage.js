@@ -10,6 +10,9 @@ const renderers: ReactMarkdown.Renderers = {
         <Embed code={props.value} language={props.language} />
       )
     },
+    paragraph: (props) => {
+      return <p className="paddedText" {...props}/>
+    },
     link: (props) => {
       console.log(props);
       if(props.children[0].props.value === "YOUTUBE") {
