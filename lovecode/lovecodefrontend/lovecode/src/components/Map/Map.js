@@ -41,9 +41,9 @@ class WorldMap extends Component {
                 key={ `path-${ i }` }
                 d={ geoPath().projection(this.projection())(d) }
                 className="country"
-                fill="#f3e5f5"
-                stroke="#8e24aa"
-                strokeWidth={ 0.5 }
+                fill="#2196f3"
+                stroke="#fafafa"
+                strokeWidth={ 0.2 }
                 onClick={ () => this.handleCountryClick(i) }
               />
             ))
@@ -52,18 +52,23 @@ class WorldMap extends Component {
 
         <g className="markers">
           {
-            this.props.mapData ? this.props.mapData.map((city, i) => (
-              <circle
+            this.props.mapData ? this.props.mapData.map((city, i) => {
+              const color = COLORS[Math.floor(Math.random()*COLORS.length)]
+              return (
+                <circle
                 key={ `marker-${i}` }
                 cx={ this.projection()(city.coordinates)[0] }
                 cy={ this.projection()(city.coordinates)[1] }
-                r={ 1 }
-                fill={COLORS[Math.floor(Math.random()*COLORS.length)]}
-                stroke={COLORS[Math.floor(Math.random()*COLORS.length)]}
+                r={ 2 }
+                fill={color}
+                stroke={color}
                 className="marker"
                 onClick={ () => this.handleMarkerClick(i) }
-              />
-            )) : null
+                />
+              )
+            }
+          )
+            : null
           }
         </g>
       </svg>
