@@ -125,7 +125,6 @@ class TutorialMetrics extends React.Component {
         coordinates: [item.request_ip_info.longitude, item.request_ip_info.latitude]
       }
     }) : null;
-    console.log(mapData);
     return (
       <div className={classes.root}>
       <Container maxWidth="lg">
@@ -138,6 +137,10 @@ class TutorialMetrics extends React.Component {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
+            <Typography variant="h6" className={classes.title}>
+              Your readers around the world
+            </Typography>
+            <br/>
             <Map mapData={mapData} />
           </Paper>
         </Grid>

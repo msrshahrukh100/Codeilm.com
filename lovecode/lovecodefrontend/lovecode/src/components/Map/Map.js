@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import { geoMercator, geoPath } from "d3-geo"
-  import { feature } from "topojson-client"
+import { feature } from "topojson-client"
 import worlddata from './static/world-10m'
+import { COLORS } from '../../extras/Constants/Constants'
 
 class WorldMap extends Component {
   constructor() {
@@ -30,8 +31,8 @@ class WorldMap extends Component {
     })
   }
   render() {
-    console.log(this.state.worlddata.length);
     return (
+
       <svg style={{width: '80%', height: '45%'}} viewBox="0 0 800 450">
         <g className="countries">
           {
@@ -40,8 +41,8 @@ class WorldMap extends Component {
                 key={ `path-${ i }` }
                 d={ geoPath().projection(this.projection())(d) }
                 className="country"
-                fill="#3f51b5"
-                stroke="#FFFFFF"
+                fill="#f3e5f5"
+                stroke="#8e24aa"
                 strokeWidth={ 0.5 }
                 onClick={ () => this.handleCountryClick(i) }
               />
@@ -56,9 +57,9 @@ class WorldMap extends Component {
                 key={ `marker-${i}` }
                 cx={ this.projection()(city.coordinates)[0] }
                 cy={ this.projection()(city.coordinates)[1] }
-                r={ 30000000 / 3000000 }
-                fill="#E91E63"
-                stroke="#FFFFFF"
+                r={ 1 }
+                fill={COLORS[Math.floor(Math.random()*COLORS.length)]}
+                stroke={COLORS[Math.floor(Math.random()*COLORS.length)]}
                 className="marker"
                 onClick={ () => this.handleMarkerClick(i) }
               />
