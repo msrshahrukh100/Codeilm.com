@@ -2,7 +2,7 @@ import React from 'react'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
-
+import getParsedContent from '../../utils/getParsedContent'
 class LearnPreview extends React.Component {
 
   state = {
@@ -25,38 +25,14 @@ class LearnPreview extends React.Component {
     this.setState({activeStep: 0})
   };
 
-
-
-  getParsedContent = (text) => {
-
-
-    let result = []
-
-    while(text){
-      let regex =/\[Page(.*)\]([\S\s]*?)\[\\Page\]/ig
-      text = text.trim("\n\r")
-
-      const match = regex.exec(text)
-      let temp = {}
-
-
-      if(match === undefined) {
-        console.log("unable to parse")
-      }
-
-      text = text.slice(match[0].length,)
-      let title = match[1].trim()
-      title = title.slice(1,-1)
-      temp.title = title
-      temp.content = match[2]
-      result.push(temp)
-    }
-    return {"data": result}
+  setStep = (step) => {
+    this.setState({activeStep: step})
   }
+
 
   render() {
     const { content } = this.props
-    const data = this.getParsedContent(content)
+    const data = getParsedContent(content)
     const steps = data ?
       data.data.map(tutorial => tutorial.title)
       : null;
@@ -75,6 +51,7 @@ class LearnPreview extends React.Component {
           handleBack={this.handleBack}
           handleNext={this.handleNext}
           handleReset={this.handleReset}
+          setStep={this.setStep}
           steps={steps} />}/>
         </>
 
