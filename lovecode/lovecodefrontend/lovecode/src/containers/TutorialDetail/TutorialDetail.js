@@ -8,6 +8,8 @@ import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLay
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
 import Slug from 'slug'
+import { animateScroll as scroll } from 'react-scroll'
+
 
 class TutorialDetail extends React.Component {
 
@@ -38,20 +40,24 @@ class TutorialDetail extends React.Component {
 
   setStep = (step) => {
     this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + step + "/" + this.state.slugs[step])
+    scroll.scrollToTop();
   }
 
   handleNext = () => {
     const nextStep = this.state.activeStep + 1;
     this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
+    scroll.scrollToTop();
   };
 
   handleBack = () => {
     this.props.history.goBack()
+    scroll.scrollToTop();
   };
 
   handleReset = () => {
     const nextStep = 0;
     this.props.history.push('/tutorials/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
+    scroll.scrollToTop();
   };
 
 
