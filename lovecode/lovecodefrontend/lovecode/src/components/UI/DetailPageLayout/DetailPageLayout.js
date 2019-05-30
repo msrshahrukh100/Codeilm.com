@@ -19,12 +19,14 @@ function FullWidthGrid(props) {
   return (
     <div className={classes.root}>
       <Grid container spacing={0}>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={ props.right ? 8 : 12 }>
           <Paper elevation={0} className={classes.paper}>{props.left}</Paper>
         </Grid>
-        <Grid item xs={12} sm={4}>
-          <Paper elevation={0} className={classes.paper}>{props.right}</Paper>
-        </Grid>
+        { props.right ?
+          <Grid item xs={12} sm={4}>
+            <Paper elevation={0} className={classes.paper}>{props.right}</Paper>
+          </Grid>
+          : null}
       </Grid>
     </div>
   );

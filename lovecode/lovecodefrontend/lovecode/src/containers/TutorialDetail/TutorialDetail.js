@@ -92,6 +92,13 @@ class TutorialDetail extends React.Component {
     const content = !this.state.loading ?
       <TutorialPage page={currentPage} />
       : null
+    const right = steps.length > 1 ? (<VerticalLinearStepper
+      activeStep={this.state.activeStep}
+      handleBack={this.handleBack}
+      handleNext={this.handleNext}
+      handleReset={this.handleReset}
+      setStep={this.setStep}
+      steps={steps} />) : null;
 
     return (
       <>
@@ -102,13 +109,8 @@ class TutorialDetail extends React.Component {
         {!this.state.loading ?
           <DetailPageLayout
             left={content}
-            right={<VerticalLinearStepper
-              activeStep={this.state.activeStep}
-              handleBack={this.handleBack}
-              handleNext={this.handleNext}
-              handleReset={this.handleReset}
-              setStep={this.setStep}
-              steps={steps} />}/>
+            right={right}
+            />
           : null
         }
       </>

@@ -3,6 +3,9 @@ import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLay
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
 import getParsedContent from '../../utils/getParsedContent'
+import Snackbar from '../../components/UI/Snackbar/Snackbar'
+
+
 class LearnPreview extends React.Component {
 
   state = {
@@ -39,20 +42,26 @@ class LearnPreview extends React.Component {
     const currentPage = data ?
       data.data[this.state.activeStep]
       : null;
+    const msg = data.msg ? data.msg : null;
     const leftContent = <TutorialPage page={currentPage} />
+    const right = steps.length > 1 ? (<VerticalLinearStepper
+      activeStep={this.state.activeStep}
+      handleBack={this.handleBack}
+      handleNext={this.handleNext}
+      handleReset={this.handleReset}
+      setStep={this.setStep}
+      steps={steps} />) : null;
 
     return (
       <>
       <div style={{paddingTop: 70}}></div>
       <DetailPageLayout
         left={leftContent}
-        right={<VerticalLinearStepper
-          activeStep={this.state.activeStep}
-          handleBack={this.handleBack}
-          handleNext={this.handleNext}
-          handleReset={this.handleReset}
-          setStep={this.setStep}
-          steps={steps} />}/>
+        right={right}
+        />
+        { msg ?
+          <Snackbar open={true} type={msg.type} text={msg.text}/>
+          : null }
         </>
 
     )
