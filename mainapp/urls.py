@@ -1,9 +1,11 @@
 from django.urls import path
 from .views import home, mark_notifications_read, redirect_to_page, group_join, save_group_creation_request, how_it_works, redirect_for_server_error
-from .views import GetJSONWebToken, GetRefreshJSONWebToken
+from .views import GetJSONWebToken, GetRefreshJSONWebToken, codeilm
 
 urlpatterns = [
-    path('', home, name="home"),
+
+    path('old/allywith.com', home, name="home"),
+    path('', codeilm, name="codeilm"),
 
     path('how-it-works/', how_it_works, name="how_it_works"),
     path('redirect/', redirect_to_page, name="redirect_to_page"),

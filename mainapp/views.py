@@ -35,6 +35,10 @@ def opensearch(request):
 	return render(request, 'open_search.xml', content_type="application/xhtml+xml")
 
 
+def codeilm(request):
+	context = {}
+	return render(request, 'codeilm.html', context)
+
 def how_it_works(request):
 	context = {
 		"video_id_list": ['aCpiaYshXNY', 'aCpiaYshXNY']
