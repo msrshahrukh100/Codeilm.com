@@ -4,7 +4,6 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
 import { withRouter } from "react-router";
-import {Helmet} from "react-helmet";
 import InfiniteScroll from "react-infinite-scroll-component"
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
@@ -14,6 +13,7 @@ import NumberFormat from 'react-number-format';
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import { MdTrendingUp } from "react-icons/md";
 import Button from '@material-ui/core/Button';
+import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 
 const styles = theme => ({
   margin: {
@@ -73,10 +73,9 @@ class TutorialList extends React.Component {
 
     return (
       <>
-        <Helmet>
-          <meta charSet="utf-8" />
-          <title>Tutorials on Allywith</title>
-        </Helmet>
+        <BasicMetaTags
+          title="Posts on Codeilm - Codeilm.com"
+        />
         <InfiniteScroll
             dataLength={this.state.tutorials.length}
             next={this.fetchTutorials}
