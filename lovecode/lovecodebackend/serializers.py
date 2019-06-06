@@ -65,9 +65,32 @@ class TutorialListSerializer(serializers.ModelSerializer):
 class TutorialDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(default="")
 
+	def get_owner_is_authenticated_user(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user == obj.user:
+				return True
+		return False
+
+	def get_liked_by_authenticated_user(self, obj):
+		user_ids = None
+		if obj.like_data:
+			user_ids = obj.like_data["user_ids"]
+		else:
+			return False
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user.id in user_ids:
+				return True
+		return False
+
 	class Meta:
 		model = lovecode_model.Tutorial
-		fields = ('id', 'user', 'tutorial_data', 'learn_md_content', 'title','slug', 'read_time', 'is_published',  'created_at', 'updated_at')
+		fields = ('id', 'user', 'tutorial_data', 'learn_md_content', 'owner_is_authenticated_user', 'liked_by_authenticated_user', 'like_data', 'view_data', 'title','slug', 'read_time', 'is_published',  'created_at', 'updated_at')
 
 
 class RequestIPInfoSerializer(serializers.ModelSerializer):
