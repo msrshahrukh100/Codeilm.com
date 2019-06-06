@@ -64,6 +64,9 @@ class TutorialListSerializer(serializers.ModelSerializer):
 
 class TutorialDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(default="")
+	user = UserSerializer()
+	liked_by_authenticated_user = serializers.SerializerMethodField()
+	owner_is_authenticated_user = serializers.SerializerMethodField()
 
 	def get_owner_is_authenticated_user(self, obj):
 		user = None
