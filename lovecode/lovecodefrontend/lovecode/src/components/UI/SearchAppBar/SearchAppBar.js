@@ -24,6 +24,7 @@ const styles = theme => ({
   },
   title: {
     display: 'none',
+    fontSize: 25,
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -92,8 +93,8 @@ class SearchAppBar extends React.Component {
       <IconButton onClick={() => this.toggleDrawer(true)() } className={classes.menuButton} color="inherit" aria-label="Open drawer">
       <MenuIcon />
       </IconButton>
-      <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-        Allywith
+      <Typography className={classes.title} variant="body1" color="inherit" noWrap>
+        Codeilm
       </Typography>
       <div className={classes.grow} />
       <div className={classes.search}>

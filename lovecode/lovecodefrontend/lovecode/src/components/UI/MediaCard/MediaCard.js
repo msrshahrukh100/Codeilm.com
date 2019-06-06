@@ -28,33 +28,42 @@ const styles = theme => ({
 
 function MediaCard(props) {
   const { classes } = props;
+
+  const cardContent = (
+    <>
+    {props.image ?
+      <CardMedia
+      className={classes.media}
+      image="/static/images/cards/contemplative-reptile.jpg"
+      title="Contemplative Reptile"
+      />
+    : null}
+
+    <CardContent onClick={props.onClick}>
+      <Typography gutterBottom variant={props.header ? props.header : "h3"} component={props.headerComponent ? props.headerComponent : "h2"}>
+        {props.title}
+      </Typography>
+      <Typography component="div">
+      {props.content}
+      </Typography>
+    </CardContent>
+    </>
+  )
+
+  const linkedContent = props.link ? (
+    <CardActionArea>
+    <Link to={{
+          pathname: props.link,
+          search: props.search,
+        }} >
+          {cardContent}
+      </Link>
+    </CardActionArea>
+  ) : cardContent
+
   return (
     <Card className={classes.card} elevation={props.elevation}>
-      <CardActionArea>
-
-      <Link to={{
-            pathname: props.link,
-            search: props.search,
-          }} >
-
-      {props.image ?
-        <CardMedia
-        className={classes.media}
-        image="/static/images/cards/contemplative-reptile.jpg"
-        title="Contemplative Reptile"
-        />
-      : null}
-
-        <CardContent onClick={props.onClick}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.title}
-          </Typography>
-          <Typography component="div">
-          {props.content}
-          </Typography>
-        </CardContent>
-        </Link>
-      </CardActionArea>
+      {linkedContent}
       <CardActions className={classes.actionBtn}>
         {props.actionButtons}
       </CardActions>
