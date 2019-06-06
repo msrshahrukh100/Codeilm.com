@@ -40,7 +40,7 @@ function MediaCard(props) {
     : null}
 
     <CardContent onClick={props.onClick}>
-      <Typography gutterBottom variant={props.header ? props.header : "h3"} component={props.headerComponent ? props.headerComponent : "h2"}>
+      <Typography gutterBottom variant={props.headerVariant ? props.headerVariant : "h3"} component={props.headerComponent ? props.headerComponent : "h2"}>
         {props.title}
       </Typography>
       <Typography component="div">

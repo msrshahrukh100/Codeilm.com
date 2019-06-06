@@ -101,8 +101,8 @@ class TutorialList extends React.Component {
           const content = (<>
             <TutorialInfo user={tutorial.user} />
             </>)
-          console.log(tutorial);
           return <MediaCard
+            headerVariant="h5"
             key={tutorial.id}
             link={this.props.match.path + '/' + tutorial.id + '/' + tutorial.slug}
             content={content}
