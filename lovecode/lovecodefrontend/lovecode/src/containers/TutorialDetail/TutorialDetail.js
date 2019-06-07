@@ -155,9 +155,10 @@ class TutorialDetail extends React.Component {
       setStep={this.setStep}
       steps={steps} />) : null;
 
+    const postTitle = this.state.tutorial ? this.state.tutorial.title : null
     return (
       <>
-        <BasicMetaTags />
+        <BasicMetaTags title={postTitle} />
 
         {!this.state.loading ?
           <DetailPageLayout

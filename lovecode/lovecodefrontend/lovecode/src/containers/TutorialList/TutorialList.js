@@ -75,7 +75,7 @@ class TutorialList extends React.Component {
     return (
       <>
         <BasicMetaTags
-          title="Posts on Codeilm - Codeilm.com"
+          title="Posts on Codeilm"
         />
         <InfiniteScroll
             dataLength={this.state.tutorials.length}
@@ -88,7 +88,7 @@ class TutorialList extends React.Component {
             <>
             <LikeButton tutorial={tutorial}/>
             <ViewsPanel tutorial={tutorial} />
-            <ShareButton url="https://codeilm.com" title={tutorial.title} />
+            <ShareButton url={'https://codeilm.com/tutorials/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
 
             <Button
               size="small"

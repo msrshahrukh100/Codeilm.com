@@ -9,7 +9,7 @@ const basicMetaTags = (props) => {
 
   return (
     <Helmet
-      titleTemplate="%s | Codeilm"
+      titleTemplate="%s - Codeilm"
       defaultTitle="Codeilm"
     >
 
