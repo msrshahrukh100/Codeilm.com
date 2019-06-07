@@ -12,7 +12,7 @@ import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import { withStyles } from '@material-ui/core/styles';
 
-
+import ShareButton from '../ShareButton/ShareButton'
 import LikeButton from '../LikeButton/LikeButton'
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import { MdTrendingUp } from "react-icons/md";
@@ -119,6 +119,7 @@ class TutorialDetail extends React.Component {
       <>
       <LikeButton tutorial={this.state.tutorial}/>
       <ViewsPanel tutorial={this.state.tutorial} />
+      <ShareButton tutorial={this.state.tutorial} />
 
       <Button
         size="small"

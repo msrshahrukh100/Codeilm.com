@@ -14,6 +14,7 @@ import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import { MdTrendingUp } from "react-icons/md";
 import Button from '@material-ui/core/Button';
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
+import ShareButton from '../ShareButton/ShareButton'
 
 const styles = theme => ({
   margin: {
@@ -83,11 +84,11 @@ class TutorialList extends React.Component {
             loader={<PageLayout><ListPageSkeleton /></PageLayout>}
         >
         {this.state.tutorials.map((tutorial, index) => {
-
           const actionButtons = (
             <>
             <LikeButton tutorial={tutorial}/>
             <ViewsPanel tutorial={tutorial} />
+            <ShareButton url="https://codeilm.com" title={tutorial.title} />
 
             <Button
               size="small"
@@ -104,7 +105,7 @@ class TutorialList extends React.Component {
           return <MediaCard
             headerVariant="h5"
             key={tutorial.id}
-            link={this.props.match.path + '/' + tutorial.id + '/' + tutorial.slug}
+            link={'/tutorials/' + tutorial.id + '/' + tutorial.slug}
             content={content}
             actionButtons={actionButtons}
             title={tutorial.title} />
