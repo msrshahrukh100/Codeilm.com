@@ -1,27 +1,15 @@
 const sidelist = [
   {
-    text: "Home",
-    icon: "HomeIcon",
-    key:"home123",
-    link:""
+    text: "All Stories",
+    icon: "All",
+    key:"all123",
+    link:"/tutorials"
   },
   {
-    text: "All Exercises",
-    icon: "FitnessCenterIcon",
-    key:"allexercises123",
-    link:""
-  },
-  {
-    text: "Inbox",
-    icon: "InboxIcon",
-    key:"asfd",
-    link:""
-  },
-  {
-    text: "Mail",
-    icon: "MailIcon",
-    key:"gfd",
-    link:""
+    text: "Create",
+    icon: "Create",
+    key:"create123",
+    link:"/tutorials/create"
   }
 ]
 

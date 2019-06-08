@@ -6,10 +6,15 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import HomeIcon from '@material-ui/icons/Home';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import CreateIcon from '@material-ui/icons/Create';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
+
+import { MdViewComfy } from "react-icons/md";
+
 
 const styles = {
   list: {
@@ -18,8 +23,8 @@ const styles = {
 };
 
 const iconMap = {
-  InboxIcon: <InboxIcon />,
-  MailIcon: <MailIcon />,
+  All: <ArrowForwardIosIcon />,
+  Create: <CreateIcon />,
   HomeIcon: <HomeIcon />,
   FitnessCenterIcon: <FitnessCenterIcon />
 
