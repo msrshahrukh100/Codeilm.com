@@ -1,14 +1,34 @@
 import React from 'react'
 import SearchAppBar from '../../components/UI/SearchAppBar/SearchAppBar'
 import TutorialList from '../../containers/TutorialList/TutorialList'
-import TutorialDetail from '../../containers/TutorialDetail/TutorialDetail'
 import { Route, Switch } from 'react-router-dom'
-import RepoList from '../../containers/RepoList/RepoList'
-import LearnEdit from '../../containers/LearnEdit/LearnEdit'
-import CreateTutorial from '../../containers/CreateTutorial/CreateTutorial'
-import TutorialMetrics from '../../containers/TutorialMetrics/TutorialMetrics'
-import LoginPage from '../../containers/LoginPage/LoginPage'
 import { connect } from 'react-redux'
+import asyncComponent from '../asyncComponent/asyncComponent';
+
+const RepoList = asyncComponent(() => {
+  return import('../../containers/RepoList/RepoList');
+});
+
+const LearnEdit = asyncComponent(() => {
+  return import('../../containers/LearnEdit/LearnEdit');
+});
+
+const TutorialDetail = asyncComponent(() => {
+  return import('../../containers/TutorialDetail/TutorialDetail');
+});
+
+const LoginPage = asyncComponent(() => {
+  return import('../../containers/LoginPage/LoginPage');
+});
+
+const TutorialMetrics = asyncComponent(() => {
+  return import('../../containers/TutorialMetrics/TutorialMetrics');
+});
+
+const CreateTutorial = asyncComponent(() => {
+  return import('../../containers/CreateTutorial/CreateTutorial');
+});
+
 
 function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, ...rest }) {
   return (
