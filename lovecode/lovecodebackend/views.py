@@ -21,6 +21,7 @@ from mainapp.utils import save_request_ip_info
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.conf import settings
+
 # Create your views here.
 
 def learn(request):
@@ -30,7 +31,8 @@ def tutorial_detail(request, tutorial_id, tutorial_slug):
 	tutorial = lovecode_models.Tutorial.objects.get(id=tutorial_id)
 	context = {
 		"title": tutorial.title,
-		"description": tutorial.title + " by " + tutorial.user.get_full_name()
+		"description": tutorial.title + " by " + tutorial.user.get_full_name(),
+		"url": request.build_absolute_uri()
 	}
 	return render(request, 'lovecode.html', context)
 
