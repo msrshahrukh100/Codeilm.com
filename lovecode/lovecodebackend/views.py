@@ -26,6 +26,14 @@ from django.conf import settings
 def learn(request):
 	return render(request, 'index.html', {})
 
+def tutorial_detail(request, tutorial_id, tutorial_slug):
+	tutorial = lovecode_models.objects.get(id=tutorial_id)
+	context = {
+		"title": tutorial.title,
+		"description": "Some reasonable description"
+	}
+	return render(request, 'lovecode.html', context)
+
 
 class TutorialList(generics.ListAPIView):
 	queryset = lovecode_models.Tutorial.objects.all()

@@ -1,11 +1,15 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import home, mark_notifications_read, redirect_to_page, group_join, save_group_creation_request, how_it_works, redirect_for_server_error
 from .views import GetJSONWebToken, GetRefreshJSONWebToken, codeilm
+from django.views.generic import TemplateView
+import lovecode.lovecodebackend.views as lovecode_views
 
 urlpatterns = [
 
     path('old/allywith.com', home, name="home"),
     path('', codeilm, name="codeilm"),
+    path('tutorials/<slug:tutorial_id>/<slug:tutorial_slug>', lovecode_views.tutorial_detail , name="tutorial_detail"),
+    re_path(r'^tutorials/', TemplateView.as_view(template_name="lovecode.html")),
 
     path('how-it-works/', how_it_works, name="how_it_works"),
     path('redirect/', redirect_to_page, name="redirect_to_page"),

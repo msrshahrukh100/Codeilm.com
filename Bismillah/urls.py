@@ -21,7 +21,6 @@ import notifications.urls
 from mainapp.views import opensearch
 from . import community_urls
 from . import android_urls
-from django.views.generic import TemplateView
 
 
 handler404 = 'mainapp.views.redirect_to_page'
@@ -33,7 +32,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ally_search.xml/', opensearch, name="opensearch"),
     path('api/v1/', include(('lovecode.lovecodebackend.urls', 'lovecode'), namespace="lovecode")),
-    re_path(r'^tutorials/', TemplateView.as_view(template_name="lovecode.html")),
     path('', include(('mainapp.urls', 'mainapp'), namespace="mainapp")),
     path('', include((community_urls))),
     path('', include((android_urls))),
@@ -48,4 +46,3 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
