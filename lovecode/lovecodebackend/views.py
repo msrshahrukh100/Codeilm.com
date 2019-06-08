@@ -30,7 +30,7 @@ def tutorial_detail(request, tutorial_id, tutorial_slug):
 	tutorial = lovecode_models.Tutorial.objects.get(id=tutorial_id)
 	context = {
 		"title": tutorial.title,
-		"description": "Some reasonable description"
+		"description": tutorial.title + " by " + tutorial.user.get_full_name()
 	}
 	return render(request, 'lovecode.html', context)
 
