@@ -8,7 +8,6 @@ import axios from '../../lovecodeaxios2'
 import getCookie from '../../utils/getCookie'
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
 
 
 const styles = theme => ({
@@ -85,7 +84,6 @@ class LikeButton extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { tutorial } = this.props;
     const btnClasses = this.state.liked ? [classes.likeButton] : [classes.likeButton, classes.notLiked]
 
     const avatars = this.state.likeUsers ?

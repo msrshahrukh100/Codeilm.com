@@ -2,7 +2,6 @@ import React from 'react'
 import axios from '../../lovecodeaxios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
 import { FaGithub } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import { withStyles } from '@material-ui/core/styles';

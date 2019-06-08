@@ -1,14 +1,11 @@
 import React from 'react'
 import axios from '../../lovecodeaxios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import TextField from '@material-ui/core/TextField';
-import { DEFAULT_LEARN_CONTENT } from '../../extras/Constants/Constants'
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import { withStyles } from '@material-ui/core/styles';
-import ReactDOM from 'react-dom';
 import { withRouter } from "react-router";
 
 const styles = theme => ({

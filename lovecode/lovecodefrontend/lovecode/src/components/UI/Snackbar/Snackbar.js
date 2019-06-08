@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import Button from '@material-ui/core/Button';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
@@ -107,7 +106,7 @@ class CustomizedSnackbars extends React.Component {
   };
 
   render() {
-    const { classes, type, text } = this.props;
+    const { type, text } = this.props;
     const onCloseHandler = this.props.onCloseHandler ? this.props.onCloseHandler
     : this.handleClose
     const openValue = this.props.onCloseHandler ? this.props.open

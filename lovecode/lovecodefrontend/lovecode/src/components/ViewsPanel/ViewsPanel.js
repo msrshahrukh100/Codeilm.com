@@ -3,11 +3,7 @@ import { IoLogoBuffer } from "react-icons/io";
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import NumberFormat from 'react-number-format';
-import axios from '../../lovecodeaxios2'
-import getCookie from '../../utils/getCookie'
-import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
 
 
 const styles = theme => ({

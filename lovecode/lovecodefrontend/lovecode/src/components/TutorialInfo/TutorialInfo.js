@@ -1,6 +1,4 @@
 import React from 'react'
-import { FaPython } from 'react-icons/fa';
-import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';

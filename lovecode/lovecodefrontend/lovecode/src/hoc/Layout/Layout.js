@@ -2,7 +2,7 @@ import React from 'react'
 import SearchAppBar from '../../components/UI/SearchAppBar/SearchAppBar'
 import TutorialList from '../../containers/TutorialList/TutorialList'
 import TutorialDetail from '../../containers/TutorialDetail/TutorialDetail'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import RepoList from '../../containers/RepoList/RepoList'
 import LearnEdit from '../../containers/LearnEdit/LearnEdit'
 import CreateTutorial from '../../containers/CreateTutorial/CreateTutorial'
@@ -16,7 +16,6 @@ function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, 
       {...rest}
       render={props => {
         console.log(props);
-        const next= props.match.url
         return isAuthenticated ? (
           <Component {...props} />
         ) : (
@@ -49,7 +48,6 @@ class Layout extends React.Component {
         <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />
 
         <PrivateRoute path="/tutorials/create/" component={RepoList} isAuthenticated={this.props.isAuthenticated} />
-        // <Route path='/tutorials/create/' component={RepoList} />
         <Route path='/tutorials' component={TutorialList} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />
       </Switch>

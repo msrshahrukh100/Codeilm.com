@@ -4,9 +4,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { withRouter } from "react-router";
-import Snackbar from '../../components/UI/Snackbar/Snackbar'
 import Fab from '@material-ui/core/Fab';
-import NavigationIcon from '@material-ui/icons/Navigation';
 import { MdGrade } from 'react-icons/md';
 import { IconContext } from "react-icons";
 import getCookie from '../../utils/getCookie'

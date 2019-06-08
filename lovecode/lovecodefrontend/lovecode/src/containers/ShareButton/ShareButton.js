@@ -3,10 +3,7 @@ import { MdShare } from "react-icons/md";
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import axios from '../../lovecodeaxios2'
-import getCookie from '../../utils/getCookie'
 import Tooltip from '@material-ui/core/Tooltip';
-import Typography from '@material-ui/core/Typography';
 import './share.css'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';

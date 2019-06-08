@@ -1,8 +1,6 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles';
-import Snackbar from '../../components/UI/Snackbar/Snackbar'
 import CommitToGithub from '../CommitToGithub/CommitToGithub'
-import getCookie from '../../utils/getCookie'
 import Fab from '@material-ui/core/Fab';
 import TextField from '@material-ui/core/TextField';
 import BranchChoose from '../BranchChoose/BranchChoose'
@@ -10,7 +8,6 @@ import { withRouter } from "react-router";
 import Chip from '@material-ui/core/Chip';
 import SimpleMDE from "react-simplemde-editor";
 import "./easymde.min.css";
-import ReactDOMServer from "react-dom/server";
 
 
 const styles = theme => ({

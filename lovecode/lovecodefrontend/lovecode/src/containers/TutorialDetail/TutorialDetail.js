@@ -1,8 +1,6 @@
 import React from 'react'
 import axios from '../../lovecodeaxios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import { List } from 'react-content-loader'
-import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
@@ -111,25 +109,24 @@ class TutorialDetail extends React.Component {
     const steps = this.state.tutorial ?
       this.state.tutorial.tutorial_data.data.map(tutorial => tutorial.title)
       : [];
-    const title = steps ? steps[this.state.activeStep] : null
     const currentPage = this.state.tutorial ?
       this.state.tutorial.tutorial_data.data[this.state.activeStep]
       : null;
-    const actionButtons = this.state.tutorial ? (
-      <>
-      <LikeButton tutorial={this.state.tutorial}/>
-      <ViewsPanel tutorial={this.state.tutorial} />
-      <ShareButton tutorial={this.state.tutorial} />
-
-      <Button
-        size="small"
-        color="primary"
-        className={classes.metricsButton}
-        onClick={() => this.props.history.push('/tutorials/metrics/' + this.state.tutorial.id + '/' + this.state.tutorial.slug )}>
-        <MdTrendingUp className={classes.iconSmall} /> Metrics
-      </Button>
-      </>
-    ) : null
+    // const actionButtons = this.state.tutorial ? (
+    //   <>
+    //   <LikeButton tutorial={this.state.tutorial}/>
+    //   <ViewsPanel tutorial={this.state.tutorial} />
+    //   <ShareButton tutorial={this.state.tutorial} />
+    //
+    //   <Button
+    //     size="small"
+    //     color="primary"
+    //     className={classes.metricsButton}
+    //     onClick={() => this.props.history.push('/tutorials/metrics/' + this.state.tutorial.id + '/' + this.state.tutorial.slug )}>
+    //     <MdTrendingUp className={classes.iconSmall} /> Metrics
+    //   </Button>
+    //   </>
+    // ) : null
     const info = this.state.tutorial ? (<>
       <TutorialInfo user={this.state.tutorial.user} />
       </>) : null

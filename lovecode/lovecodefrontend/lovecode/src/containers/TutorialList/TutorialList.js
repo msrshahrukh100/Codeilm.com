@@ -9,7 +9,6 @@ import PageLayout from '../../components/UI/PageLayout/PageLayout'
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
 import { withStyles } from '@material-ui/core/styles';
 import LikeButton from '../LikeButton/LikeButton'
-import NumberFormat from 'react-number-format';
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import { MdTrendingUp } from "react-icons/md";
 import Button from '@material-ui/core/Button';

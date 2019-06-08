@@ -25,22 +25,11 @@ const styles = theme => ({
   },
 });
 
-function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
-}
-
-
 class VerticalLinearStepper extends React.Component {
-  state = {
-    activeStep: 0,
-  };
-
-
 
   render() {
     const { classes } = this.props;
     const { steps } = this.props;
-    const { activeStep } = this.state;
 
     return (
       <div className={classes.root}>
