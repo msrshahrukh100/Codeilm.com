@@ -37,19 +37,6 @@ const styles = theme => ({
 
 class CreateTutorial extends React.Component {
 
-  state = {
-    title: "",
-    error: null,
-    emptyError: false,
-    tutorials: null
-  }
-
-  titleUpdate = event => {
-    this.setState({
-      title: event.target.value
-    })
-  }
-
   getBranchName = (props) => {
     const query = new URLSearchParams( props.location.search );
     for ( let param of query.entries() ) {
@@ -60,13 +47,32 @@ class CreateTutorial extends React.Component {
     return null
   }
 
+  constructor(props) {
+
+    super(props)
+    const { repoName } = props.match.params;
+    const branchName = this.getBranchName(props);
+
+    this.state = {
+      title: "",
+      error: null,
+      emptyError: false,
+      tutorials: null,
+      repoName: repoName,
+      branchName: branchName
+    }
+  }
+
+  titleUpdate = event => {
+    this.setState({
+      title: event.target.value
+    })
+  }
+
   componentDidMount() {
-    const { repoName } = this.props.match.params;
-    const branchName = this.getBranchName(this.props);
-    console.log(repoName);
-    console.log(branchName);
+
     if(repoName && branchName) {
-      axios.get('/tutorials/?repo_name=' + repoName + "&branch_name=" + branchName + "&repo_create=true")
+      axios.get('/tutorials/?repo_name=' + this.state.repoName + "&branch_name=" + this.state.branchName + "&repo_create=true")
       .then(response => {
         this.setState({
           tutorials: response.data
