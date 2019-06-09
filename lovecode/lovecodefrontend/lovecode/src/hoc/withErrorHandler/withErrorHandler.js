@@ -33,7 +33,7 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
       }, error => {
         if (error.response.status === 401 || error.response.status === 403) {
           this.props.onLogout()
-          this.props.history.push("/tutorials/login")
+          this.props.history.push("/tutorials/login/?next=" + this.props.match.path)
         }
         else {
           this.setState({
