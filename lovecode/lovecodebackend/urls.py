@@ -18,5 +18,6 @@ urlpatterns = [
     path('commit/learn', lovecode_views.CreateUpdateCommitLearnFile.as_view(), name="commit_learn"),
     # path('userrepositories/<slug:datetime>', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
     path('echo', lovecode_views.Echo.as_view(), name='echo'),
+    path('get-auth-status/', lovecode_views.auth, name='auth'),
 
 ]

@@ -21,8 +21,17 @@ from mainapp.utils import save_request_ip_info
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.conf import settings
+from django.http import JsonResponse
 
 # Create your views here.
+
+def auth(request):
+	authenticated = request.user.is_authenticated
+	data = {
+		"authenticated": authenticated,
+		"user": lovecode_serializers.UserSerializer(request.user).data if authenticated else None
+	}
+	return JsonResponse(data)
 
 def learn(request):
 	return render(request, 'index.html', {})
