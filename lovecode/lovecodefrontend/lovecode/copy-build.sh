@@ -1,5 +1,7 @@
 npm run build
 
+git rm -r ../../lovecodebackend/static/*
+rm -r ../../lovecodebackend/static/*
 cp -r build/static/* ../../lovecodebackend/static/
 cp -r build/index.html ../../lovecodebackend/templates/lovecode.html
 #
