@@ -71,7 +71,7 @@ class CreateTutorial extends React.Component {
 
   componentDidMount() {
 
-    if(repoName && branchName) {
+    if(this.state.repoName && this.state.branchName) {
       axios.get('/tutorials/?repo_name=' + this.state.repoName + "&branch_name=" + this.state.branchName + "&repo_create=true")
       .then(response => {
         this.setState({
