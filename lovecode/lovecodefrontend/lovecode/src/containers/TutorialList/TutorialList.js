@@ -88,14 +88,16 @@ class TutorialList extends React.Component {
             <LikeButton tutorial={tutorial}/>
             <ViewsPanel tutorial={tutorial} />
             <ShareButton url={'https://codeilm.com/tutorials/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
-
-            <Button
+            {tutorial.owner_is_authenticated_user ?
+              <Button
               size="small"
               color="primary"
               className={classes.metricsButton}
               onClick={() => this.props.history.push(this.props.match.path + '/metrics/' + tutorial.id + '/' + tutorial.slug )}>
               <MdTrendingUp className={classes.iconSmall} /> Metrics
-            </Button>
+              </Button>
+              : null
+            }
             </>
           )
           const content = (<>

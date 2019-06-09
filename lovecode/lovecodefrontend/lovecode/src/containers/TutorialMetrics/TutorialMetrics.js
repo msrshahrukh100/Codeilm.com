@@ -11,7 +11,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import axios from '../../lovecodeaxios'
-import response from './temp'
 import NumberFormat from 'react-number-format';
 import Map from '../../components/Map/Map'
 
@@ -94,8 +93,13 @@ class TutorialMetrics extends React.Component {
     axios.get('/tutorials/' + this.state.tutorialId + '/metrics')
       .then(response => {
         if(response) {
-
-          console.log(response);
+          const data = response.data
+          this.setState({
+            loggedInViewData: data.logged_in_view_data,
+            allViews: data.all_views,
+            distinctViews: data.distinct_viewers,
+            likeData: data.like_data
+          })
         }
 
       })
@@ -106,14 +110,7 @@ class TutorialMetrics extends React.Component {
         })
       })
 
-    console.log(response);
-    const data = response.data
-    this.setState({
-      loggedInViewData: data.logged_in_view_data,
-      allViews: data.all_views,
-      distinctViews: data.distinct_viewers,
-      likeData: data.like_data
-    })
+
 
   }
   render() {
