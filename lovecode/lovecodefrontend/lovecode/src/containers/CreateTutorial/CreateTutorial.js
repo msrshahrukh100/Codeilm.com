@@ -157,8 +157,14 @@ class CreateTutorial extends React.Component {
           Create your Story
         </Fab>
         </>
-        <p className={classes.margin}>Tutorials with this branch and repo</p>
-        {tutorials}
+
+        {tutorials ?
+          <>
+            <h5 className={classes.margin}>Tutorials with this branch and repo</h5>
+            tutorials
+          </>
+        : null}
+
         </div>
       </>
     )
