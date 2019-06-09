@@ -160,8 +160,8 @@ class CreateTutorial extends React.Component {
 
         {tutorials ?
           <>
-            <h5 className={classes.margin}>Tutorials with this branch and repo</h5>
-            tutorials
+            <h4 className={classes.margin}>Tutorials with this branch and repo</h4>
+            {tutorials}
           </>
         : null}
 
