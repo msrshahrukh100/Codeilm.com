@@ -8,7 +8,7 @@ import axios from '../../lovecodeaxios2'
 import getCookie from '../../utils/getCookie'
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 const styles = theme => ({
   iconSmall: {
@@ -74,11 +74,10 @@ class LikeButton extends React.Component {
       })
     })
     .catch(error => {
-      console.log(error);
-      this.setState({
-        error: error,
-        loading: false
-      })
+      // this.setState({
+      //   error: error,
+      //   loading: false
+      // })
     })
   }
 
@@ -125,4 +124,4 @@ class LikeButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(LikeButton)
+export default withStyles(styles)(withErrorHandler(LikeButton, axios))

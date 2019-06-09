@@ -68,7 +68,7 @@ class LoginPage extends React.Component {
       <main className={classes.main}>
       <CssBaseline />
       <Paper className={classes.paper}>
-      <img alt="Codeilm logo" src="http://54.218.212.69/static/images/logo/logo-transparent.png" />
+      <img width="300" alt="Codeilm logo" src="https://codeilm.com/static/images/logo/codeilmbanner.png" />
       <Typography component="p" className={classes.para}>
       You must continue with your GitHub account
       </Typography>

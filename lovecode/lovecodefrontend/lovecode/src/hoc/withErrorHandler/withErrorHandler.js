@@ -7,6 +7,7 @@ import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLay
 import LinearPreloader from '../../components/UI/SkeletonLoaders/LinearPreloader'
 import { connect } from 'react-redux'
 import * as actionCreators from '../../store/actions/index'
+import { withRouter } from "react-router";
 
 const withErrorHandler = (WrappedCompenent, axios, type) => {
   class Cmp extends React.Component {
@@ -30,8 +31,9 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
         this.setState({loading: false})
         return response
       }, error => {
-        if (error.response.status === 401 || error.response.status === 401) {
+        if (error.response.status === 401 || error.response.status === 403) {
           this.props.onLogout()
+          this.props.history.push("/tutorials/login")
         }
         else {
           this.setState({
@@ -89,7 +91,7 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
     }
   }
 
-  return connect(mapStateToProps, mapDispatchToProps)(Cmp)
+  return connect(mapStateToProps, mapDispatchToProps)(withRouter(Cmp))
 }
 
 

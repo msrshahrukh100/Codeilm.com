@@ -28,7 +28,6 @@ export const auth = () => {
     dispatch(authStart());
     axios.get('/get-auth-status')
       .then(response => {
-        console.log(response.data);
         dispatch(authSuccess(response.data.authenticated ? "true" : "", response.data.user))
       })
       .catch(error => {
