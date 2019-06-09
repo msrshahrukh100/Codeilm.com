@@ -63,7 +63,7 @@ class LoginPage extends React.Component {
 
     const { classes } = this.props;
     const next = this.props.history.location.search
-    const loginUrl = "http://54.218.212.69/accounts/github/login" + next;
+    const loginUrl = "https://codeilm.com/accounts/github/login" + next;
     return (
       <main className={classes.main}>
       <CssBaseline />

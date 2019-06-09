@@ -5,9 +5,11 @@ import DetailPageSkeleton from '../../components/UI/SkeletonLoaders/DetailPageSk
 import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import LinearPreloader from '../../components/UI/SkeletonLoaders/LinearPreloader'
+import { connect } from 'react-redux'
+import * as actionCreators from '../../store/actions/index'
 
 const withErrorHandler = (WrappedCompenent, axios, type) => {
-  return class extends React.Component {
+  class Cmp extends React.Component {
     state = {
       error: null,
       loading: null
@@ -28,10 +30,16 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
         this.setState({loading: false})
         return response
       }, error => {
-        this.setState({
-          error: error,
-          loading: false
-        })
+        if (error.response.status === 401 || error.response.status === 401) {
+          this.props.onLogout()
+        }
+        else {
+          this.setState({
+            error: error,
+            loading: false
+          })
+        }
+
       })
     }
 
@@ -68,6 +76,21 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
       )
     }
   }
+
+  const mapStateToProps = state => {
+    return {
+      authenticated: state.aReducer.authenticated
+    }
+  }
+
+  const mapDispatchToProps = dispatch => {
+    return {
+      onLogout: () => dispatch(actionCreators.authLogout())
+    }
+  }
+
+  return connect(mapStateToProps, mapDispatchToProps)(Cmp)
 }
+
 
 export default withErrorHandler

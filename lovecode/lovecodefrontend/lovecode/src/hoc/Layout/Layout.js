@@ -35,7 +35,6 @@ function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, 
     <Route
       {...rest}
       render={props => {
-        console.log(props);
         return isAuthenticated ? (
           <Component {...props} />
         ) : (
@@ -78,7 +77,7 @@ class Layout extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: localStorage.getItem('token') ? true : false
+    isAuthenticated: localStorage.getItem('authenticated')
   }
 }
 

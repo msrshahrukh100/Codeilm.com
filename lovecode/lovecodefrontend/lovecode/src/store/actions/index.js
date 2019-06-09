@@ -3,5 +3,6 @@ export {
 } from './repoDataActions'
 
 export {
-  auth
+  auth,
+  authLogout
 } from './authActions'

@@ -7,22 +7,29 @@ export const authStart = () => {
   }
 }
 
-export const authSuccess = (token, user) => {
-  localStorage.setItem('token', token)
+export const authSuccess = (authenticated, user) => {
+  localStorage.setItem('authenticated', authenticated)
   return {
     type: actionTypes.AUTH_SUCCESS,
-    authToken: token,
+    authenticated: authenticated,
     user: user
+  }
+}
+
+export const authLogout = () => {
+  localStorage.setItem('authenticated', "")
+  return {
+    type: actionTypes.AUTH_LOGOUT,
   }
 }
 
 export const auth = () => {
   return dispatch => {
     dispatch(authStart());
-    axios.get('/get-github-token')
+    axios.get('/get-auth-status')
       .then(response => {
         console.log(response.data);
-        dispatch(authSuccess(response.data.token, response.data.user))
+        dispatch(authSuccess(response.data.authenticated ? "true" : "", response.data.user))
       })
       .catch(error => {
         console.log(error);
