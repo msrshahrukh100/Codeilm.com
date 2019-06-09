@@ -63,7 +63,8 @@ class CreateTutorial extends React.Component {
   componentDidMount() {
     const { repoName } = this.props.match.params;
     const branchName = this.getBranchName(this.props);
-    axios.get('/tutorials/?repo_name=' + repoName + "&branch_name=" + branchName + "&repo_create=true")
+    if(repoName && branchName) {
+      axios.get('/tutorials/?repo_name=' + repoName + "&branch_name=" + branchName + "&repo_create=true")
       .then(response => {
         this.setState({
           tutorials: response.data
@@ -77,6 +78,7 @@ class CreateTutorial extends React.Component {
           loading: false
         })
       })
+    }
   }
 
   createTutorial = () => {

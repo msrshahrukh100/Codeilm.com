@@ -62,16 +62,32 @@ class Layout extends React.Component {
 
       <Switch>
         <Route path='/tutorials/login' component={LoginPage} />
-        <PrivateRoute path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName' component={LearnEdit} isAuthenticated={this.props.isAuthenticated} />
-        <PrivateRoute path='/tutorials/create/:repoName' component={CreateTutorial} isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute
+          exact
+          path="/tutorials/create/"
+          component={TutorialCreateDialog}
+          isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute
+          exact
+          path="/tutorials/create/github"
+          component={RepoList}
+          isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute
+          exact
+          path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName'
+          component={LearnEdit}
+          isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute
+          exact
+          path='/tutorials/create/:repoName'
+          component={CreateTutorial}
+          isAuthenticated={this.props.isAuthenticated} />
 
         <Route path='/tutorials/metrics/:tutorialId/:slug' component={TutorialMetrics} />
         <Route path='/tutorials/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />
 
-        <PrivateRoute path="/tutorials/create/" component={TutorialCreateDialog} isAuthenticated={this.props.isAuthenticated} />
-        <PrivateRoute path="/tutorials/create/github" component={RepoList} isAuthenticated={this.props.isAuthenticated} />
         <Route path='/tutorials' component={TutorialList} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />
       </Switch>
