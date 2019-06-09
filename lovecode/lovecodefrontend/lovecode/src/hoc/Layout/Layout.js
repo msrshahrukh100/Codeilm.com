@@ -9,6 +9,10 @@ const RepoList = asyncComponent(() => {
   return import('../../containers/RepoList/RepoList');
 });
 
+const TutorialCreateDialog = asyncComponent(() => {
+  return import('../../components/TutorialCreateDialog/TutorialCreateDialog');
+});
+
 const LearnEdit = asyncComponent(() => {
   return import('../../containers/LearnEdit/LearnEdit');
 });
@@ -66,7 +70,8 @@ class Layout extends React.Component {
         <Route path='/tutorials/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
         <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />
 
-        <PrivateRoute path="/tutorials/create/" component={RepoList} isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute path="/tutorials/create/" component={TutorialCreateDialog} isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute path="/tutorials/create/github" component={RepoList} isAuthenticated={this.props.isAuthenticated} />
         <Route path='/tutorials' component={TutorialList} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />
       </Switch>
