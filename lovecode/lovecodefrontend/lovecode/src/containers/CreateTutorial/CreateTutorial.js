@@ -63,6 +63,8 @@ class CreateTutorial extends React.Component {
   componentDidMount() {
     const { repoName } = this.props.match.params;
     const branchName = this.getBranchName(this.props);
+    console.log(repoName);
+    console.console.log(branchName);
     if(repoName && branchName) {
       axios.get('/tutorials/?repo_name=' + repoName + "&branch_name=" + branchName + "&repo_create=true")
       .then(response => {
