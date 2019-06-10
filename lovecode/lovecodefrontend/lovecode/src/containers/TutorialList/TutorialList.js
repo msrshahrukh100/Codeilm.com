@@ -87,7 +87,7 @@ class TutorialList extends React.Component {
             <>
             <LikeButton tutorial={tutorial}/>
             <ViewsPanel tutorial={tutorial} />
-            <ShareButton url={'https://codeilm.com/tutorials/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
+            <ShareButton url={'https://codeilm.com/story/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
             {tutorial.owner_is_authenticated_user ?
               <Button
               size="small"
@@ -106,7 +106,7 @@ class TutorialList extends React.Component {
           return <MediaCard
             headerVariant="h5"
             key={tutorial.id}
-            link={'/tutorials/' + tutorial.id + '/' + tutorial.slug}
+            link={'/story/' + tutorial.id + '/' + tutorial.slug}
             content={content}
             actionButtons={actionButtons}
             title={tutorial.title} />

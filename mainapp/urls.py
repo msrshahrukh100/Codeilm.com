@@ -8,8 +8,8 @@ urlpatterns = [
 
     path('old/allywith.com', home, name="home"),
     path('', codeilm, name="codeilm"),
-    path('tutorials/<slug:tutorial_id>/<slug:tutorial_slug>', lovecode_views.tutorial_detail , name="tutorial_detail"),
-    re_path(r'^tutorials/', TemplateView.as_view(template_name="lovecode.html")),
+    path('story/<slug:tutorial_id>/<slug:tutorial_slug>', lovecode_views.tutorial_detail , name="tutorial_detail"),
+    re_path(r'^stories/', TemplateView.as_view(template_name="lovecode.html")),
 
     path('how-it-works/', how_it_works, name="how_it_works"),
     path('redirect/', redirect_to_page, name="redirect_to_page"),

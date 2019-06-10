@@ -147,7 +147,7 @@ class LearnEdit extends React.Component {
 
   handleBranchChange = event => {
     const { tutorialSlug } = this.props.match.params
-    this.props.history.push('/tutorials/create/' + this.state.repoName + '/' + this.state.tutorialId + "/" + tutorialSlug + "/" + event.target.value);
+    this.props.history.push('/story/create/' + this.state.repoName + '/' + this.state.tutorialId + "/" + tutorialSlug + "/" + event.target.value);
   }
 
   fetchLearnContent = () => {

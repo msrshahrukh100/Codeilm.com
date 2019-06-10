@@ -61,34 +61,34 @@ class Layout extends React.Component {
       <SearchAppBar />
 
       <Switch>
-        <Route path='/tutorials/login' component={LoginPage} />
+        <Route path='/login' component={LoginPage} />
         <PrivateRoute
           exact
-          path="/tutorials/create/"
+          path="/story/create/"
           component={TutorialCreateDialog}
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact
-          path="/tutorials/create/github"
+          path="/story/create/github"
           component={RepoList}
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact
-          path='/tutorials/create/:repoName/:tutorialId/:tutorialSlug/:branchName'
+          path='/story/create/:repoName/:tutorialId/:tutorialSlug/:branchName'
           component={LearnEdit}
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact
-          path='/tutorials/create/:repoName'
+          path='/story/create/:repoName'
           component={CreateTutorial}
           isAuthenticated={this.props.isAuthenticated} />
 
-        <Route path='/tutorials/metrics/:tutorialId/:slug' component={TutorialMetrics} />
-        <Route path='/tutorials/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
-        <Route path='/tutorials/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
-        <Route path='/tutorials/:tutorialId/:slug/' component={TutorialDetail} />
+        <Route path='/story/metrics/:tutorialId/:slug' component={TutorialMetrics} />
+        <Route path='/story/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
+        <Route path='/story/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
+        <Route path='/story/:tutorialId/:slug/' component={TutorialDetail} />
 
-        <Route path='/tutorials' component={TutorialList} />
+        <Route path='/stories' component={TutorialList} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />
       </Switch>
       </>

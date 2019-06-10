@@ -109,7 +109,7 @@ class CreateTutorial extends React.Component {
         const data = response.data;
         if(data.created) {
           this.setState({loading: false})
-          this.props.history.push("/tutorials/create/" + repoName + "/" + data.tutorial_data.id + "/" + data.tutorial_data.slug + "/" + branchName)
+          this.props.history.push("/story/create/" + repoName + "/" + data.tutorial_data.id + "/" + data.tutorial_data.slug + "/" + branchName)
         }
 
       })
