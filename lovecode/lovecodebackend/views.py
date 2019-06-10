@@ -37,7 +37,7 @@ def learn(request):
 	return render(request, 'index.html', {})
 
 def tutorial_detail(request, tutorial_id, tutorial_slug):
-	tutorial = lovecode_models.Tutorial.objects.get(id=tutorial_id)
+	tutorial = get_object_or_404(lovecode_models.Tutorial, id=tutorial_id)
 	context = {
 		"title": tutorial.title,
 		"description": tutorial.title + " by " + tutorial.user.get_full_name(),
