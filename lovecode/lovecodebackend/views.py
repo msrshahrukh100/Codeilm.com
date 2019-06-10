@@ -22,6 +22,8 @@ from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.conf import settings
 from django.http import JsonResponse
+from django.shortcuts import redirect
+
 
 # Create your views here.
 
@@ -37,12 +39,16 @@ def learn(request):
 	return render(request, 'index.html', {})
 
 def tutorial_detail(request, tutorial_id, tutorial_slug):
-	tutorial = get_object_or_404(lovecode_models.Tutorial, id=tutorial_id)
-	context = {
-		"title": tutorial.title,
-		"description": tutorial.title + " by " + tutorial.user.get_full_name(),
-		"url": request.build_absolute_uri()
-	}
+	tutorial = lovecode_models.Tutorial.objects.filter(id=tutorial_id)
+	if tutorial.exists():
+		tutorial = tutorial.first()
+		context = {
+			"title": tutorial.title,
+			"description": tutorial.title + " by " + tutorial.user.get_full_name(),
+			"url": request.build_absolute_uri()
+		}
+	else:
+		context = {}
 	return render(request, 'lovecode.html', context)
 
 
