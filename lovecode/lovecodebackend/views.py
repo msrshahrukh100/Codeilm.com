@@ -23,7 +23,7 @@ from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import redirect
-
+import re
 
 # Create your views here.
 
@@ -38,17 +38,30 @@ def auth(request):
 def learn(request):
 	return render(request, 'index.html', {})
 
+
+def get_context_from_url(url):
+	tutorial_detail_re = re.compile(r'[\s\S]*\/stories\/(\w*)\/([\w\-]*)')
+	match = re.match(tutorial_detail_re, url)
+	if match:
+		tutorial_id = match.group(1)
+		tutorial = lovecode_models.Tutorial.objects.filter(id=tutorial_id)
+		if tutorial.exists():
+			tutorial = tutorial.first()
+			return {
+				"title": tutorial.title,
+				"description": tutorial.title + " by " + tutorial.user.get_full_name(),
+				"url": url
+			}
+
+	return {
+		"title": "Codeilm - A storytelling site for developers",
+		"description": "Codeilm is the online community for developers to Share, Inspire & Teach how they build their Projects, in the form of Tutorials using Markdown.",
+		"url": url
+	}
+
+
 def lovecode_home(request):
-	# tutorial = lovecode_models.Tutorial.objects.filter(id=tutorial_id)
-	# if tutorial.exists():
-	# 	tutorial = tutorial.first()
-	# 	context = {
-	# 		"title": tutorial.title,
-	# 		"description": tutorial.title + " by " + tutorial.user.get_full_name(),
-	# 		"url": request.build_absolute_uri()
-	# 	}
-	# else:
-	context = {}
+	context = get_context_from_url(request.build_absolute_uri())
 	return render(request, 'lovecode.html', context)
 
 
