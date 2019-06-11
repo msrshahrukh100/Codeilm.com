@@ -87,7 +87,7 @@ class TutorialList extends React.Component {
             <>
             <LikeButton tutorial={tutorial}/>
             <ViewsPanel tutorial={tutorial} />
-            <ShareButton url={'https://codeilm.com/story/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
+            <ShareButton url={'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
             {tutorial.owner_is_authenticated_user ?
               <Button
               size="small"
