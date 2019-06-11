@@ -13,3 +13,15 @@
 	width: 90%;
 	height: 90%;
 }
+
+@media only screen and (min-width: 600px) {
+	.paddedText {
+		margin-left: 16px;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.paddedText {
+		margin-left: 0px;
+	}
+}
