@@ -93,7 +93,7 @@ class TutorialList extends React.Component {
               size="small"
               color="primary"
               className={classes.metricsButton}
-              onClick={() => this.props.history.push(this.props.match.path + '/metrics/' + tutorial.id + '/' + tutorial.slug )}>
+              onClick={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}>
               <MdTrendingUp className={classes.iconSmall} /> Metrics
               </Button>
               : null

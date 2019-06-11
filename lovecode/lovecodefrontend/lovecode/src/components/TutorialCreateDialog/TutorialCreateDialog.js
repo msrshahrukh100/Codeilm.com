@@ -27,7 +27,7 @@ export default function TutorialCreateDialog() {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <Link to="/tutorials/create/github">
+          <Link to="/create/github">
             <Paper className={classes.paper}>
               <IconContext.Provider value={{ size: '4em' }}>
                 <FaGithub />
@@ -39,13 +39,13 @@ export default function TutorialCreateDialog() {
           </Link>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Link to="/tutorials/create/github">
+          <Link to="/create/github">
             <Paper className={classes.paper}>
               <IconContext.Provider value={{ size: '4em' }}>
                 <FaRegPaperPlane />
               </IconContext.Provider>
               <Typography gutterBottom variant="h5" component="h2">
-                Create a new story 
+                Create a new story
               </Typography>
             </Paper>
           </Link>

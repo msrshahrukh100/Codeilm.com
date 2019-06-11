@@ -83,7 +83,7 @@ class Layout extends React.Component {
           component={CreateTutorial}
           isAuthenticated={this.props.isAuthenticated} />
 
-        <Route path='/stories/metrics/:tutorialId/:slug' component={TutorialMetrics} />
+        <Route path='/metrics/:tutorialId/:slug' component={TutorialMetrics} />
         <Route path='/stories/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
         <Route path='/stories/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
         <Route path='/stories/:tutorialId/:slug/' component={TutorialDetail} />
