@@ -56,7 +56,7 @@ class RepoList extends React.Component {
           hasMore={this.state.hasMoreRepo}
           loader={<PageLayout><ListPageSkeleton /></PageLayout>}
       >
-      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} onClick={() => this.props.setRepoData(repo)} link={'/tutorials/create/'+repo.name} search={"?branch_name="+repo.default_branch} title={repo.name} />)}
+      {this.state.userrepositories.map(repo => <MediaCard key={repo.id} onClick={() => this.props.setRepoData(repo)} link={'/create/'+repo.name} search={"?branch_name="+repo.default_branch} title={repo.name} />)}
       </InfiniteScroll>
     )
   }

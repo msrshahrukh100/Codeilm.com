@@ -131,7 +131,7 @@ class CreateTutorial extends React.Component {
     this.state.tutorials.results.map((tutorial, index) => {
       return <MediaCard
         key={tutorial.id}
-        link={"/tutorials/create/" + repoName + "/" + tutorial.id + "/" + tutorial.slug + "/" + branchName}
+        link={"/create/" + repoName + "/" + tutorial.id + "/" + tutorial.slug + "/" + branchName}
         content=<TutorialInfo user={tutorial.user} />
         title={tutorial.title} />
     })
@@ -170,7 +170,7 @@ class CreateTutorial extends React.Component {
 
         {tutorials ?
           <>
-            <h4 className={classes.margin}>Tutorials with this branch and repo</h4>
+            <h4 className={classes.margin}>Stories with this branch and repo</h4>
             {tutorials}
           </>
         : null}
