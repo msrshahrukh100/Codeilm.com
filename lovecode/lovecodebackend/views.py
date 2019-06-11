@@ -38,17 +38,17 @@ def auth(request):
 def learn(request):
 	return render(request, 'index.html', {})
 
-def tutorial_detail(request, tutorial_id, tutorial_slug):
-	tutorial = lovecode_models.Tutorial.objects.filter(id=tutorial_id)
-	if tutorial.exists():
-		tutorial = tutorial.first()
-		context = {
-			"title": tutorial.title,
-			"description": tutorial.title + " by " + tutorial.user.get_full_name(),
-			"url": request.build_absolute_uri()
-		}
-	else:
-		context = {}
+def lovecode_home(request):
+	# tutorial = lovecode_models.Tutorial.objects.filter(id=tutorial_id)
+	# if tutorial.exists():
+	# 	tutorial = tutorial.first()
+	# 	context = {
+	# 		"title": tutorial.title,
+	# 		"description": tutorial.title + " by " + tutorial.user.get_full_name(),
+	# 		"url": request.build_absolute_uri()
+	# 	}
+	# else:
+	context = {}
 	return render(request, 'lovecode.html', context)
 
 
