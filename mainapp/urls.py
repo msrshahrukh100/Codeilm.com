@@ -9,6 +9,9 @@ urlpatterns = [
     path('old/allywith.com', home, name="home"),
     path('', codeilm, name="codeilm"),
     re_path(r'^stories/', lovecode_views.lovecode_home , name="lovecode_home"),
+    re_path(r'^login/', TemplateView.as_view(template_name="lovecode.html")),
+    re_path(r'^create/', TemplateView.as_view(template_name="lovecode.html")),
+    re_path(r'^metrics/', TemplateView.as_view(template_name="lovecode.html")),
 
     path('how-it-works/', how_it_works, name="how_it_works"),
     path('redirect/', redirect_to_page, name="redirect_to_page"),
