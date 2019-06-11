@@ -106,7 +106,7 @@ class TutorialList extends React.Component {
           return <MediaCard
             headerVariant="h5"
             key={tutorial.id}
-            link={'/story/' + tutorial.id + '/' + tutorial.slug}
+            link={'/stories/' + tutorial.id + '/' + tutorial.slug}
             content={content}
             actionButtons={actionButtons}
             title={tutorial.title} />

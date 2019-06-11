@@ -64,29 +64,29 @@ class Layout extends React.Component {
         <Route path='/login' component={LoginPage} />
         <PrivateRoute
           exact
-          path="/story/create/"
+          path="/create/"
           component={TutorialCreateDialog}
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact
-          path="/story/create/github"
+          path="/create/github"
           component={RepoList}
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact
-          path='/story/create/:repoName/:tutorialId/:tutorialSlug/:branchName'
+          path='/create/:repoName/:tutorialId/:tutorialSlug/:branchName'
           component={LearnEdit}
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact
-          path='/story/create/:repoName'
+          path='/create/:repoName'
           component={CreateTutorial}
           isAuthenticated={this.props.isAuthenticated} />
 
-        <Route path='/story/metrics/:tutorialId/:slug' component={TutorialMetrics} />
-        <Route path='/story/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
-        <Route path='/story/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
-        <Route path='/story/:tutorialId/:slug/' component={TutorialDetail} />
+        <Route path='/stories/metrics/:tutorialId/:slug' component={TutorialMetrics} />
+        <Route path='/stories/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
+        <Route path='/stories/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
+        <Route path='/stories/:tutorialId/:slug/' component={TutorialDetail} />
 
         <Route path='/stories' component={TutorialList} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />

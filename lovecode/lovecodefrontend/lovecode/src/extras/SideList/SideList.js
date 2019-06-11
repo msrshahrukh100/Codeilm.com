@@ -9,7 +9,7 @@ const sidelist = [
     text: "Create",
     icon: "Create",
     key:"create123",
-    link:"/story/create"
+    link:"/create"
   }
 ]
 

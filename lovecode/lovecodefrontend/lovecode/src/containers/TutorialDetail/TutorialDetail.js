@@ -60,13 +60,13 @@ class TutorialDetail extends React.Component {
   }
 
   setStep = (step) => {
-    this.props.history.push('/story/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + step + "/" + this.state.slugs[step])
+    this.props.history.push('/stories/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + step + "/" + this.state.slugs[step])
     scroll.scrollToTop();
   }
 
   handleNext = () => {
     const nextStep = this.state.activeStep + 1;
-    this.props.history.push('/story/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
+    this.props.history.push('/stories/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
     scroll.scrollToTop();
   };
 
@@ -77,7 +77,7 @@ class TutorialDetail extends React.Component {
 
   handleReset = () => {
     const nextStep = 0;
-    this.props.history.push('/story/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
+    this.props.history.push('/stories/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
     scroll.scrollToTop();
   };
 
@@ -122,7 +122,7 @@ class TutorialDetail extends React.Component {
     //     size="small"
     //     color="primary"
     //     className={classes.metricsButton}
-    //     onClick={() => this.props.history.push('/story/metrics/' + this.state.tutorial.id + '/' + this.state.tutorial.slug )}>
+    //     onClick={() => this.props.history.push('/stories/metrics/' + this.state.tutorial.id + '/' + this.state.tutorial.slug )}>
     //     <MdTrendingUp className={classes.iconSmall} /> Metrics
     //   </Button>
     //   </>
