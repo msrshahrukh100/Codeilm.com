@@ -2,14 +2,13 @@ const DEFAULT_LEARN_CONTENT = `
 [Page "This is a default content"]
 
 Ok so here you are. You want to show the world 🌎 how you made this awesome ✨ open source project or maybe want to
-explain how it works 👨‍💻, or maybe want to tell something else about it.
+explain how it works 👨‍💻, or maybe want to tell a different story about it.
 
 
 ### This is the place to do it.
 
 ![Codeilm](https://codeilm.com/static/images/logo/codeilmbanner.png "Codeilm.com")
 
-Describe your process in making this.
 
 1. You can use, what we call **Pages** to describe each step.
 2. You use Markdown for writing your content. Here is [a cheat sheet for you](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet).
