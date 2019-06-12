@@ -42,7 +42,7 @@ class CommitToGithub extends React.Component {
     axios.post('/commit/learn', postData)
     .then(response => {
       console.log(response.status);
-      if(response.status == 200) {
+      if(response.status == 200 || response.status == 201) {
         this.setState({loading: false, commitedSuccessfully: true}, this.props.callback ?  () => setTimeout(() => this.props.callback(), 5000) : null)
       }
       else {
