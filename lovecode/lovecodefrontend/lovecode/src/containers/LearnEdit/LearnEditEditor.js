@@ -27,6 +27,9 @@ const styles = theme => ({
   chip: {
    margin: theme.spacing.unit,
  },
+ commitPanel: {
+   marginTop: theme.spacing(2)
+ }
 });
 
 const learnEditEditor = (props) => {
@@ -39,32 +42,6 @@ const learnEditEditor = (props) => {
     <div className={classes.container}>
     {props.contentLoaded ?
       <>
-      <TextField
-        id="outlined-read-only-input"
-        label="Repository"
-        value={props.repoName}
-        className={classes.repoField}
-        margin="normal"
-        InputProps={{
-          readOnly: true,
-        }}
-        variant="outlined"
-      />
-      <BranchChoose onBranchChange={props.handleBranchChange} repoName={repoName} defaultBranch={props.branchName} />
-      {props.dbData ?
-        <Fab
-        variant="extended"
-        disabled={props.loading}
-        onClick={props.publishUnpublishTut}
-        size="medium"
-        color="secondary"
-        aria-label="publish"
-        className={classes.margin}
-        >
-        {props.isPublished ? "Unpublish" : "Publish"}
-        </Fab>
-      : null}
-
       <SimpleMDE
         onChange={props.learnContentUpdate}
         value={props.editorContent}
@@ -106,8 +83,37 @@ const learnEditEditor = (props) => {
         ],
         }}
       />
+
+      {props.dbData ?
+        <Fab
+        variant="extended"
+        disabled={props.loading}
+        onClick={props.publishUnpublishTut}
+        size="medium"
+        color="secondary"
+        aria-label="publish"
+        className={classes.chip}
+        >
+        {props.isPublished ? "Unpublish" : "Publish"}
+        </Fab>
+
+      : null}
+
+
       {props.showCommitPanel ?
-        <>
+        <div className={classes.commitPanel}>
+        <TextField
+          id="outlined-read-only-input"
+          label="Repository"
+          value={props.repoName}
+          className={classes.repoField}
+          margin="normal"
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="outlined"
+        />
+        <BranchChoose onBranchChange={props.handleBranchChange} repoName={repoName} defaultBranch={props.branchName} />
         <TextField
         id="outlined-name"
         label="Commit message"
@@ -126,11 +132,11 @@ const learnEditEditor = (props) => {
         sha={props.sha}
         callback={props.fetchLearnContent}
         />
-        </>
+        </div>
       : null}
 
       <Chip
-       label={props.showCommitPanel ? "Hide commit panel" : "Want to commit it to GitHub"}
+       label={props.showCommitPanel ? "Hide commit panel" : "Want to commit it to GitHub ?"}
        onClick={props.toggleCommitPanel}
        className={classes.chip}
        variant="outlined"
