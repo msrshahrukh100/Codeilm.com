@@ -13,6 +13,17 @@ const renderers: ReactMarkdown.Renderers = {
     paragraph: (props) => {
       return <p className="paddedText" {...props}/>
     },
+    list: (props) => {
+      if(props.ordered) {
+        return <ol className="paddedText" {...props} />
+      }
+      else {
+        return <ul className="paddedText" {...props} />
+      }
+    },
+    image: props => {
+      return <img {...props} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '100%'}} />
+    },
     link: (props) => {
       console.log(props);
       if(props.children[0].props.value === "YOUTUBE") {
