@@ -337,3 +337,9 @@ GITHUB_CLIENT_SECRET = "d11f7aedba5186461ec384a8084ceab016e2abc7"
 
 
 CODEILM_LAUNCH_DATE = "2019 07 1"
+
+TUTORIAL_RANK = {
+    "like": 0.1,
+    "unlike": -0.1,
+    "view": 0.02
+}

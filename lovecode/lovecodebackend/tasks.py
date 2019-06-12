@@ -34,6 +34,11 @@ def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_id):
 			session=session,
 			tutorial=tutorial,
 		)
+		if created:
+			# update the rank of the tutorial
+			rank_change = settings.TUTORIAL_RANK.get("view", 0)
+			tutorial.rank = tutorial.rank + rank_change
+			tutorial.save()
 	else:
 		obj = TutorialView.objects.create(
 			ip=ip,

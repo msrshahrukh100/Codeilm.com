@@ -241,6 +241,13 @@ class LikeUnlikeTutorial(APIView):
 			tutorial_id = data.get('tutorial_id')
 			liked = data.get('liked')
 			user = request.user
+
+			# update the rank of the tutorial
+			tutorial = lovecode_models.Tutorial.objects.get(id=id)
+			rank_change = settings.TUTORIAL_RANK.get("like", 0) if liked else settings.TUTORIAL_RANK.get("unlike", 0)
+			tutorial.rank = tutorial.rank + rank_change
+			tutorial.save()
+
 			obj, created = lovecode_models.TutorialLike.objects.update_or_create(
 				user=user,
 				tutorial_id=tutorial_id,
