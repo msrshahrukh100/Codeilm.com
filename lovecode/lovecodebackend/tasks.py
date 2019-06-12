@@ -48,7 +48,7 @@ def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_id):
 	obj.request_ip_info_id = request_ip_info_id
 	obj.save()
 	anonymous_views_count = tutorial.user_views.filter(user=None).count()
-	views_count = tutorial.user_views.filter(~Q(user=None)).count()
+	views_count = tutorial.user_views.filter(~Q(user=None) | ~Q(user__id=user_id)).count()
 	view_data = {
 		"views_count": views_count,
 		"anonymous_views_count": anonymous_views_count
