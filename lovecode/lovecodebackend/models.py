@@ -5,6 +5,9 @@ from autoslug import AutoSlugField
 from hashid_field import HashidAutoField, HashidField
 from lovecode.lovecodebackend.parser.learnmdparser import LearnMdParser
 from mainapp import models as main_models
+from django.utils import timezone
+from django.conf import settings
+from datetime import datetime
 
 # Create your models here.
 class GithubRepo(Model):
@@ -16,6 +19,9 @@ class GithubRepo(Model):
 
 	def __str__(self):
 		return self.user.username
+
+def get_default_rank():
+	return (timezone.now().date() - datetime.strptime(settings.CODEILM_LAUNCH_DATE, "%Y %m %d").date()).days
 
 
 class Tutorial(Model):
@@ -32,6 +38,7 @@ class Tutorial(Model):
 	repository_name = models.CharField(max_length=200, null=True, blank=True)
 	repository_data = JSONField(null=True, blank=True)
 	branch_name = models.CharField(max_length=150, null=True, blank=True)
+	rank = models.FloatField(default=get_default_rank, editable=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
@@ -47,7 +54,7 @@ class Tutorial(Model):
 		super().save(*args, **kwargs)
 
 	class Meta:
-		ordering = ["-id"]
+		ordering = ["-rank"]
 
 
 class GithubApiResponse(Model):
