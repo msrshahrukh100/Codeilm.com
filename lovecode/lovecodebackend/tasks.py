@@ -6,6 +6,7 @@ import simplejson
 from allauth.socialaccount.models import SocialApp
 from django.db.models import Q
 from mainapp.utils import create_request_ip_info_object
+from django.conf import settings
 
 @background(schedule=20)
 def add_languages(githubrepo_id):
