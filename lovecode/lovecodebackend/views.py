@@ -17,7 +17,7 @@ from . import tasks
 from django.utils.cache import learn_cache_key, get_cache_key
 from django.core.cache import cache
 import base64
-from mainapp.utils import save_request_ip_info
+from mainapp.utils import get_ip_info
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from django.conf import settings
@@ -95,10 +95,7 @@ class TutorialDetail(generics.RetrieveAPIView):
 
 	def tutorial_viewed(self, request, id=None):
 		user_id = None
-		request_ip_info_id = None
-		request_ip_info = save_request_ip_info(request)
-		if request_ip_info:
-			request_ip_info_id = request_ip_info.id
+		request_ip_info_data = get_ip_info(request)
 		if request.user.is_authenticated:
 			user_id = request.user.id
 
@@ -106,7 +103,7 @@ class TutorialDetail(generics.RetrieveAPIView):
 			ip=request.META['REMOTE_ADDR'],
 			session=request.session.session_key,
 			user_id=user_id,
-			request_ip_info_id=request_ip_info_id
+			request_ip_info_data=request_ip_info_data
 		)
 
 

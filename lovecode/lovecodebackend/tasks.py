@@ -5,6 +5,7 @@ import requests
 import simplejson
 from allauth.socialaccount.models import SocialApp
 from django.db.models import Q
+from mainapp.utils import create_request_ip_info_object
 
 @background(schedule=20)
 def add_languages(githubrepo_id):
@@ -25,8 +26,11 @@ def add_languages(githubrepo_id):
 
 
 @background(schedule=8)
-def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_id):
-	tutorial = Tutorial.objects.get(id=tutorial_id)
+def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_data):
+	tutorial = Tutorial.objects.filter(id=tutorial_id)
+	if not tutorial.exists():
+		return
+	tutorial = tutorial.first()
 	if user_id:
 		obj, created = TutorialView.objects.get_or_create(
 			user_id=user_id,
@@ -35,6 +39,8 @@ def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_id):
 			tutorial=tutorial,
 		)
 		if created:
+			obj.request_ip_info = create_request_ip_info_object(request_ip_info_data)
+			obj.save()
 			# update the rank of the tutorial
 			rank_change = settings.TUTORIAL_RANK.get("view", 0)
 			tutorial.rank = tutorial.rank + rank_change
@@ -44,9 +50,8 @@ def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_id):
 			ip=ip,
 			session=session,
 			tutorial=tutorial,
+			request_ip_info=create_request_ip_info_object(request_ip_info_data)
 		)
-	obj.request_ip_info_id = request_ip_info_id
-	obj.save()
 	anonymous_views_count = tutorial.user_views.filter(user=None).count()
 	views_count = tutorial.user_views.filter(~Q(user=None) | ~Q(user__id=user_id)).count()
 	view_data = {

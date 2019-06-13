@@ -35,11 +35,7 @@ def get_ip_info(request):
 		data = None
 	return data
 
-
-def save_request_ip_info(request):
-	data = get_ip_info(request)
-	if not data:
-		return None
+def create_request_ip_info_object(data):
 	obj = RequestIpInfo.objects.create(
 		city=data.get('city'),
 		country_code=data.get('country_code'),
@@ -53,6 +49,13 @@ def save_request_ip_info(request):
 	)
 	obj.save()
 	return obj
+
+
+def save_request_ip_info(request):
+	data = get_ip_info(request)
+	if not data:
+		return None
+	return create_request_ip_info_object(data)
 
 
 def get_user_display_name(user):
