@@ -24,14 +24,23 @@ def get_default_rank():
 	return (timezone.now().date() - datetime.strptime(settings.CODEILM_LAUNCH_DATE, "%Y %m %d").date()).days
 
 
+def get_view_data_default():
+	return {
+		"views_count": 0,
+		"anonymous_views_count": 0
+	}
+
+def get_like_data_default():
+	return {}
+
 class Tutorial(Model):
 	id = HashidAutoField(primary_key=True)
 	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
 	title = models.CharField(max_length=300, null=True, blank=True)
 	slug = AutoSlugField(populate_from='title', always_update=True)
 	tutorial_data = JSONField(null=True, blank=True)
-	like_data = JSONField(null=True, blank=True)
-	view_data = JSONField(null=True, blank=True)
+	like_data = JSONField(default=get_like_data_default)
+	view_data = JSONField(default=get_view_data_default)
 	learn_md_content = models.TextField(null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	is_published = models.BooleanField(default=False)
