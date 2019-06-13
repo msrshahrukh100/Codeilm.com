@@ -43,8 +43,9 @@ def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_data):
 			obj.ip = ip
 			obj.save()
 			# update the rank of the tutorial
-			rank_change = settings.TUTORIAL_RANK.get("view", 0)
-			tutorial.rank = tutorial.rank + rank_change
+			if user_id != tutorial.user.id:
+				rank_change = settings.TUTORIAL_RANK.get("view", 0)
+				tutorial.rank = tutorial.rank + rank_change
 
 		anonymous_views_count = tutorial.user_views.filter(user=None).count()
 		views_count = tutorial.user_views.filter(~Q(user=None) & ~Q(user__id=user_id)).count()
