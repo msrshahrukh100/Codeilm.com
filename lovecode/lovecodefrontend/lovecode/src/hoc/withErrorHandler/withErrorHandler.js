@@ -64,6 +64,9 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
       else if(type == "circular") {
         skeleton = <LinearPreloader />
       }
+      else if(type == "detail") {
+        skeleton = <DetailPageSkeleton />
+      }
       else {
         skeleton = null
       }

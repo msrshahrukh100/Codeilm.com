@@ -40,7 +40,6 @@ class TutorialDetail extends React.Component {
     const { activeStep } = this.props.match.params;
     this.state = {
       tutorial: null,
-      loading: true,
       error: null,
       slugs:null,
       activeStep: activeStep ? Number(activeStep) : 0
@@ -87,17 +86,14 @@ class TutorialDetail extends React.Component {
 
     axios.get('/tutorials/' + tutorialId)
       .then(response => {
-        console.log(response.data);
         this.setState({
           tutorial: response.data,
           slugs: response.data.tutorial_data.data.map(item => Slug(item.title, {lower: true})).concat(["thank-you"]),
-          loading: false
         })
       })
       .catch(error => {
         this.setState({
           error: error,
-          loading: false
         })
       })
   }
@@ -130,7 +126,7 @@ class TutorialDetail extends React.Component {
     const info = this.state.tutorial ? (<>
       <TutorialInfo user={this.state.tutorial.user} />
       </>) : null
-    const content = !this.state.loading ?
+    const content = this.state.tutorial ?
       <>
       <div style={this.state.activeStep !== 0 ? {display: 'none'} : null}>
       <MediaCard
@@ -157,7 +153,7 @@ class TutorialDetail extends React.Component {
       <>
         <BasicMetaTags title={postTitle} />
 
-        {!this.state.loading ?
+        {this.state.tutorial ?
           <DetailPageLayout
             left={content}
             right={right}
@@ -169,4 +165,4 @@ class TutorialDetail extends React.Component {
   }
 }
 
-export default withErrorHandler(withStyles(styles)(TutorialDetail), axios)
+export default withErrorHandler(withStyles(styles)(TutorialDetail), axios, "circular")
