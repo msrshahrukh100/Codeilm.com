@@ -23,6 +23,9 @@ const styles = theme => ({
   },
   actionBtn: {
     marginLeft: theme.spacing(2),
+  },
+  title: {
+    marginLeft: 16
   }
 });
 
@@ -41,7 +44,7 @@ function MediaCard(props) {
 
     <CardContent onClick={props.onClick}>
     {props.title ?
-      <Typography style={{marginLeft: 16}} gutterBottom variant={props.headerVariant ? props.headerVariant : "h3"} component={props.headerComponent ? props.headerComponent : "h2"}>
+      <Typography className={classes.title} gutterBottom variant={props.headerVariant ? props.headerVariant : "h3"} component={props.headerComponent ? props.headerComponent : "h2"}>
       {props.title}
       </Typography>
 
