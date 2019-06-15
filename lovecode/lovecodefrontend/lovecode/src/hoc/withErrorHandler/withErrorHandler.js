@@ -59,7 +59,7 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
     render() {
       let skeleton = (<DetailPageLayout left=<PageLayout><DetailPageSkeleton /></PageLayout> />)
       if(type == "list") {
-        skeleton = (<PageLayout><ListPageSkeleton /></PageLayout>)
+        skeleton = (<ListPageSkeleton />)
       }
       else if(type == "circular") {
         skeleton = <LinearPreloader />

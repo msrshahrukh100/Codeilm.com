@@ -1,26 +1,36 @@
 import ContentLoader from "react-content-loader"
 import React from 'react'
+import MediaCard from '../MediaCard/MediaCard'
 
-const ListPageSkeleton = () => (
-  <ContentLoader
-    height={160}
-    width={400}
-    speed={2}
-    primaryColor="#f3f3f3"
-    secondaryColor="#ecebeb"
-  >
-    <rect x="0" y="18" rx="0" ry="0" width="249" height="5" />
-    <rect x="0" y="31" rx="0" ry="0" width="91" height="3" />
-    <rect x="0" y="40" rx="0" ry="0" width="91" height="3" />
-    <rect x="0" y="52" rx="0" ry="0" width="18" height="7" />
+const ListPageSkeleton = () => {
+    const preloader = (
+      <ContentLoader
+        height='155'
+        width='1793'
+        speed={2}
+        primaryColor="#f3f3f3"
+        secondaryColor="#ecebeb"
+        preserveAspectRatio="true"
+      >
+        <rect x="0" y="18" rx="0" ry="0" width="1500" height="25" />
 
-    <rect x="0" y="70" rx="0" ry="0" width="249" height="5" />
-    <rect x="0" y="83" rx="0" ry="0" width="91" height="3" />
-    <rect x="0" y="92" rx="0" ry="0" width="91" height="3" />
-    <rect x="0" y="104" rx="0" ry="0" width="18" height="7" />
+        <circle cx="30" cy="90" r="25" />
+        <rect x="70" y="70" rx="0" ry="0" width="190" height="8" />
+        <rect x="70" y="90" rx="0" ry="0" width="80" height="6" />
 
-  </ContentLoader>
+        <rect x="5" y="140" rx="0" ry="0" width="30" height="13" />
+        <rect x="40" y="140" rx="0" ry="0" width="30" height="13" />
+      </ContentLoader>
+    )
 
-)
+    return (
+      <>
+      <MediaCard content={preloader} />
+      <MediaCard content={preloader} />
+      <MediaCard content={preloader} />
+      </>
+    )
+
+}
 
 export default ListPageSkeleton

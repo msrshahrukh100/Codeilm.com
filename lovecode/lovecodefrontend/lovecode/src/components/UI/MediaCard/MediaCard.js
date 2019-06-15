@@ -40,9 +40,12 @@ function MediaCard(props) {
     : null}
 
     <CardContent onClick={props.onClick}>
+    {props.title ?
       <Typography style={{marginLeft: 16}} gutterBottom variant={props.headerVariant ? props.headerVariant : "h3"} component={props.headerComponent ? props.headerComponent : "h2"}>
-        {props.title}
+      {props.title}
       </Typography>
+
+      : null}
       <Typography component="div">
       {props.content}
       </Typography>
@@ -64,9 +67,12 @@ function MediaCard(props) {
   return (
     <Card className={classes.card} elevation={props.elevation}>
       {linkedContent}
-      <CardActions className={classes.actionBtn}>
+      {props.actionButtons ?
+        <CardActions className={classes.actionBtn}>
         {props.actionButtons}
-      </CardActions>
+        </CardActions>
+
+        : null}
     </Card>
   );
 }
