@@ -21,7 +21,7 @@ class GithubRepo(Model):
 		return self.user.username
 
 def get_default_rank():
-	return (timezone.now().date() - datetime.strptime(settings.CODEILM_LAUNCH_DATE, "%Y %m %d").date()).days
+	return (timezone.now().date() - datetime.strptime(settings.CODEILM_LAUNCH_DATE, "%Y %m %d").date()).days + timezone.now().hour / 10000
 
 
 def get_view_data_default():
@@ -54,13 +54,13 @@ class Tutorial(Model):
 	def __str__(self):
 		return str(self.id)
 
-	def save(self, *args, **kwargs):
-		parser = LearnMdParser()
-		try:
-			self.tutorial_data = parser.get_parsed_content(self.learn_md_content)
-		except Exception as e:
-			self.tutorial_data = {"error": str(e)}
-		super().save(*args, **kwargs)
+	# def save(self, *args, **kwargs):
+	# 	parser = LearnMdParser()
+	# 	try:
+	# 		self.tutorial_data = parser.get_parsed_content(self.learn_md_content)
+	# 	except Exception as e:
+	# 		self.tutorial_data = {"error": str(e)}
+	# 	super().save(*args, **kwargs)
 
 	class Meta:
 		ordering = ["-rank"]

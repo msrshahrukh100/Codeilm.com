@@ -65,7 +65,7 @@ const learnEditEditor = (props) => {
             action: function customFunction(editor){
               const pos = editor.codemirror.getCursor();
               editor.codemirror.setSelection(pos, pos);
-              editor.codemirror.replaceSelection('\n[Page "Title of the Page"]\n\nYour awesome content\n\n[\\Page]\n');
+              editor.codemirror.replaceSelection('\n[Page "Title of the Page"]\n\nYour awesome content\n\n[Page]\n');
             },
             className: "fa fa-file-text",
             title: "Add Page",

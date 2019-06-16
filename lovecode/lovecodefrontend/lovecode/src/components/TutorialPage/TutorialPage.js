@@ -15,10 +15,11 @@ const renderers: ReactMarkdown.Renderers = {
     },
     list: (props) => {
       if(props.ordered) {
-        return <ol className="paddedText" {...props} />
+
+        return <ol className="paddedText" {...props} ordered="true" tight="true" />
       }
       else {
-        return <ul className="paddedText" {...props} />
+        return <ul className="paddedText" {...props} tight="true" />
       }
     },
     image: props => {

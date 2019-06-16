@@ -4,7 +4,7 @@ const getParsedContent = (text) => {
   let result = []
 
   while(text){
-    let regex =/\[Page(.*)\]([\S\s]*?)\[\\Page\]/ig
+    let regex =/\[Page(.*)\]([\S\s]*?)\[Page\]/ig
     text = text.trim("\n\r")
     const match = regex.exec(text)
     let temp = {}

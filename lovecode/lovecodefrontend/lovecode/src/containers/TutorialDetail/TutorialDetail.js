@@ -9,7 +9,7 @@ import { animateScroll as scroll } from 'react-scroll'
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import { withStyles } from '@material-ui/core/styles';
-
+import getParsedContent from '../../utils/getParsedContent';
 import ShareButton from '../ShareButton/ShareButton'
 import LikeButton from '../LikeButton/LikeButton'
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
@@ -88,7 +88,8 @@ class TutorialDetail extends React.Component {
       .then(response => {
         this.setState({
           tutorial: response.data,
-          slugs: response.data.tutorial_data.data.map(item => Slug(item.title, {lower: true})).concat(["thank-you"]),
+          parsedTutorial: getParsedContent(response.data.learn_md_content),
+          slugs: response.data.tutorial_data.data.map(item => Slug(item.title, {lower: true})).concat(["last"]),
         })
       })
       .catch(error => {
@@ -101,12 +102,11 @@ class TutorialDetail extends React.Component {
 
   render() {
     const classes = this.props
-
-    const steps = this.state.tutorial ?
-      this.state.tutorial.tutorial_data.data.map(tutorial => tutorial.title)
+    const steps = this.state.parsedTutorial ?
+      this.state.parsedTutorial.data.map(tutorial => tutorial.title)
       : [];
-    const currentPage = this.state.tutorial ?
-      this.state.tutorial.tutorial_data.data[this.state.activeStep]
+    const currentPage = this.state.parsedTutorial ?
+      this.state.parsedTutorial.data[this.state.activeStep]
       : null;
     // const actionButtons = this.state.tutorial ? (
     //   <>

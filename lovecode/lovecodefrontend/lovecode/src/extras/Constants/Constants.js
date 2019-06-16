@@ -29,7 +29,7 @@ change_the_world("A software developer")
 
 See how it appears by clicking **Preview** button.
 
-[\\Page]
+[Page]
 
 `
 

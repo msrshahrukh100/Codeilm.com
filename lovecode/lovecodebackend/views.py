@@ -223,6 +223,7 @@ class SaveLearnFileToDb(APIView):
 					slug=slug
 				)
 				obj.learn_md_content = data.get('content', "")
+				obj.tutorial_data = data.get('tutorial_data', {})
 				obj.save()
 				data = lovecode_serializers.TutorialDetailSerializer(obj)
 				return Response(data.data, status=status.HTTP_200_OK)

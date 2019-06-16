@@ -34,8 +34,7 @@ class LearnPreview extends React.Component {
 
 
   render() {
-    const { content } = this.props
-    const data = getParsedContent(content)
+    const data = this.props.content
     const steps = data ?
       data.data.map(tutorial => tutorial.title)
       : null;

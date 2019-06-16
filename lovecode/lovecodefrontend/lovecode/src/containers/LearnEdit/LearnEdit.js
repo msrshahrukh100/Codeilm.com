@@ -14,6 +14,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
+import getParsedContent from '../../utils/getParsedContent';
 
 const styles = {
   appBar: {
@@ -59,7 +60,8 @@ class LearnEdit extends React.Component {
       loading: true,
       showCommitPanel: false,
 			showPreview: false,
-			tutorialSlug: tutorialSlug
+			tutorialSlug: tutorialSlug,
+      tutorialData: ""
     }
   }
 
@@ -76,7 +78,8 @@ class LearnEdit extends React.Component {
       branch_name: this.state.branchName,
       repo_name: this.state.repoName,
       content: this.state.editorContent,
-			tutorial_slug: this.state.tutorialSlug
+			tutorial_slug: this.state.tutorialSlug,
+      tutorial_data: this.state.tutorialData
     };
     this.setState({loading: true})
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
@@ -154,9 +157,11 @@ class LearnEdit extends React.Component {
     this.setState({loading: true})
     axios.get('/learn/content/' + this.state.repoName + "/" + this.state.branchName + "/" + this.state.tutorialSlug)
     .then(response => {
+      const editorContent = response.data.db_data ? response.data.db_data.learn_md_content ? response.data.db_data.learn_md_content : DEFAULT_LEARN_CONTENT : DEFAULT_LEARN_CONTENT;
       this.setState({
         loading: false,
-        editorContent: response.data.db_data ? response.data.db_data.learn_md_content ? response.data.db_data.learn_md_content : DEFAULT_LEARN_CONTENT : DEFAULT_LEARN_CONTENT,
+        editorContent: editorContent,
+        tutorialData: getParsedContent(editorContent),
         sha: response.data.sha,
         hasDefaultContent: response.data.db_data ? response.data.db_data.learn_md_content ? false : true : true,
         contentLoaded: true,
@@ -179,7 +184,6 @@ class LearnEdit extends React.Component {
 
   render() {
 		const classes = this.props
-
     return (
 			<>
 			<Dialog
@@ -198,7 +202,7 @@ class LearnEdit extends React.Component {
           </Typography>
         </Toolbar>
       </AppBar>
-				<LearnPreview  content={this.state.editorContent}/>
+				<LearnPreview  content={this.state.tutorialData}/>
 			</Dialog>
 				<LearnEditEditor
 				{...this.state}

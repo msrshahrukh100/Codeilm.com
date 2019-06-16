@@ -6,7 +6,7 @@ class LearnMdParser:
         self.page = re.compile(
             r'\[Page(.*)\]'
             r'([\S\s]*?)'
-            r'\[\\Page\]'
+            r'\[Page\]'
             , re.IGNORECASE | re.MULTILINE
         )
         self.code = re.compile( 
