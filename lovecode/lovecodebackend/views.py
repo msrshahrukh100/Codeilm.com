@@ -128,7 +128,7 @@ class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 class UserRepositoryLearnContent(APIView):
 	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
 
-	def get(self, request, repo_name=None, branch_name=None, tutorial_slug=None):
+	def get(self, request, tutorial_id=None):
 		github_api = GithubApi(request)
 		response = {}#github_api.get_learn_md_content(request, repo_name, branch_name)
 		data_from_api = response.get("data", {})
@@ -136,9 +136,7 @@ class UserRepositoryLearnContent(APIView):
 		sha = data_from_api.get("sha", "")
 		data_from_db = lovecode_models.Tutorial.objects.filter(
 			user=request.user,
-			repository_name=repo_name,
-			branch_name=branch_name,
-			slug=tutorial_slug
+			id=tutorial_id
 		)
 		db_data = None
 
@@ -194,10 +192,10 @@ class CreateGetTutorial(APIView):
 		if data:
 			obj, created = lovecode_models.Tutorial.objects.get_or_create(
 				user=request.user,
-				title=data.get("title", ""),
-				repository_name=data.get("repo_name", ""),
+				title=data.get("title", "").strip(),
+				repository_name=data.get("repo_name"),
 				repository_data=data.get("repo_data"),
-				branch_name=data.get("branch_name", "")
+				branch_name=data.get("branch_name")
 			)
 			data = lovecode_serializers.TutorialDetailSerializer(obj)
 			return Response({"created": created, "tutorial_data": data.data}, status=status.HTTP_200_OK)
@@ -215,18 +213,17 @@ class SaveLearnFileToDb(APIView):
 			repo_name = data.get('repo_name')
 			branch_name = data.get('branch_name')
 			slug = data.get('tutorial_slug')
-			if repo_name and branch_name:
-				obj =  get_object_or_404(lovecode_models.Tutorial,
-					user=request.user,
-					repository_name=repo_name,
-					branch_name=branch_name,
-					slug=slug
-				)
-				obj.learn_md_content = data.get('content', "")
-				obj.tutorial_data = data.get('tutorial_data', {})
-				obj.save()
-				data = lovecode_serializers.TutorialDetailSerializer(obj)
-				return Response(data.data, status=status.HTTP_200_OK)
+			obj =  get_object_or_404(lovecode_models.Tutorial,
+				user=request.user,
+				repository_name=repo_name,
+				branch_name=branch_name,
+				slug=slug
+			)
+			obj.learn_md_content = data.get('content', "")
+			obj.tutorial_data = data.get('tutorial_data', {})
+			obj.save()
+			data = lovecode_serializers.TutorialDetailSerializer(obj)
+			return Response(data.data, status=status.HTTP_200_OK)
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
 
 

@@ -155,7 +155,7 @@ class LearnEdit extends React.Component {
 
   fetchLearnContent = () => {
     this.setState({loading: true})
-    axios.get('/learn/content/' + this.state.repoName + "/" + this.state.branchName + "/" + this.state.tutorialSlug)
+    axios.get('/learn/content/' + this.state.tutorialId)
     .then(response => {
       const editorContent = response.data.db_data ? response.data.db_data.learn_md_content ? response.data.db_data.learn_md_content : DEFAULT_LEARN_CONTENT : DEFAULT_LEARN_CONTENT;
       this.setState({

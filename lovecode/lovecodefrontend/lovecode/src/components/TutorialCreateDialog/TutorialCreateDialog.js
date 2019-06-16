@@ -39,7 +39,7 @@ export default function TutorialCreateDialog() {
           </Link>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Link to="/create/github">
+          <Link to="/create/new">
             <Paper className={classes.paper}>
               <IconContext.Provider value={{ size: '4em' }}>
                 <FaRegPaperPlane />

@@ -26,7 +26,6 @@ const renderers: ReactMarkdown.Renderers = {
       return <img {...props} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '100%'}} />
     },
     link: (props) => {
-      console.log(props);
       if(props.children[0].props.value === "YOUTUBE") {
         const opts = {
           playerVars: { // https://developers.google.com/youtube/player_parameters

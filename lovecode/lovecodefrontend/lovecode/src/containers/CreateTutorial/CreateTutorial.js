@@ -65,7 +65,9 @@ class CreateTutorial extends React.Component {
 
   titleUpdate = event => {
     this.setState({
-      title: event.target.value
+      title: event.target.value,
+      emptyError: event.target.value === "" ? true : false,
+      error: null,
     })
   }
 
@@ -77,7 +79,6 @@ class CreateTutorial extends React.Component {
         this.setState({
           tutorials: response.data
         })
-
       })
       .catch(error => {
         console.log(error)
@@ -91,7 +92,11 @@ class CreateTutorial extends React.Component {
 
   createTutorial = () => {
     this.setState((prevState, props) => {
-      return {loading: prevState.title === "" ? false: true, emptyError: prevState.title === "" ? true: false}
+      return {
+        loading: prevState.title === "" ? false: true,
+        emptyError: prevState.title === "" ? true: false,
+        error: prevState.title === "" ? "Title can't be blank": null
+      }
     })
     if(this.state.title !== "") {
       const csrftoken = getCookie('csrftoken');
@@ -109,7 +114,15 @@ class CreateTutorial extends React.Component {
         const data = response.data;
         if(data.created) {
           this.setState({loading: false})
-          this.props.history.push("/create/" + repoName + "/" + data.tutorial_data.id + "/" + data.tutorial_data.slug + "/" + branchName)
+          if(data.tutorial_data.repository_name) {
+            this.props.history.push("/create/" + repoName + "/" + data.tutorial_data.id + "/" + data.tutorial_data.slug + "/" + branchName)
+          }
+          else {
+            this.props.history.push("/create/new/" + data.tutorial_data.id + "/" + data.tutorial_data.slug)
+          }
+        }
+        else {
+          this.setState({loading: false, emptyError: true, error: "A story with this name already exists"})
         }
 
       })
@@ -151,6 +164,7 @@ class CreateTutorial extends React.Component {
           margin="normal"
           variant="outlined"
         />
+        <p style={{color: 'red', paddingLeft: '10px'}}>{this.state.error}</p>
 
         <Fab
           variant="extended"

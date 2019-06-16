@@ -74,6 +74,16 @@ class Layout extends React.Component {
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact
+          path='/create/new'
+          component={CreateTutorial}
+          isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute
+          exact
+          path='/create/new/:tutorialId/:tutorialSlug'
+          component={LearnEdit}
+          isAuthenticated={this.props.isAuthenticated} />
+        <PrivateRoute
+          exact
           path='/create/:repoName/:tutorialId/:tutorialSlug/:branchName'
           component={LearnEdit}
           isAuthenticated={this.props.isAuthenticated} />
