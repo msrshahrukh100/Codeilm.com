@@ -63,7 +63,7 @@ class VerticalLinearStepper extends React.Component {
         </Stepper>
         {this.props.activeStep === steps.length && (
           <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>All steps completed - you&apos;re finished</Typography>
+            <Typography>You went through all the steps!</Typography>
             <Button onClick={this.props.handleReset} className={classes.button}>
               Reset
             </Button>

@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import axios from '../../lovecodeaxios'
 import NumberFormat from 'react-number-format';
 import Map from '../../components/Map/Map'
+import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 
 const styles = theme => ({
   root: {
@@ -123,6 +124,9 @@ class TutorialMetrics extends React.Component {
     }) : null;
     return (
       <div className={classes.root}>
+      <BasicMetaTags
+        title="Posts on Codeilm"
+      />
       <Container maxWidth="lg">
       <Grid container spacing={3}>
         <ViewsPanel type="POST_VIEWS" data={this.state.loggedInViewData} title="Post Views" {...this.props}/>

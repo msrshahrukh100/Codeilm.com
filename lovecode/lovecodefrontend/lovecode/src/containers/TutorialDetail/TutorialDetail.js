@@ -108,24 +108,26 @@ class TutorialDetail extends React.Component {
     const currentPage = this.state.parsedTutorial ?
       this.state.parsedTutorial.data[this.state.activeStep]
       : null;
-    // const actionButtons = this.state.tutorial ? (
-    //   <>
-    //   <LikeButton tutorial={this.state.tutorial}/>
-    //   <ViewsPanel tutorial={this.state.tutorial} />
-    //   <ShareButton tutorial={this.state.tutorial} />
-    //
-    //   <Button
-    //     size="small"
-    //     color="primary"
-    //     className={classes.metricsButton}
-    //     onClick={() => this.props.history.push('/stories/metrics/' + this.state.tutorial.id + '/' + this.state.tutorial.slug )}>
-    //     <MdTrendingUp className={classes.iconSmall} /> Metrics
-    //   </Button>
-    //   </>
-    // ) : null
+    const actionButtons = this.state.tutorial ? (
+      <>
+      <LikeButton tutorial={this.state.tutorial}/>
+      <ViewsPanel tutorial={this.state.tutorial} />
+      <ShareButton tutorial={this.state.tutorial} />
+      </>
+    ) : null
     const info = this.state.tutorial ? (<>
       <TutorialInfo user={this.state.tutorial.user} />
       </>) : null
+    const lastPage = this.state.tutorial ? (
+      <MediaCard
+        onDetailPage={true}
+        elevation={1}
+        content={info}
+        headerComponent="h2"
+        actionButtons={actionButtons}
+        title={this.state.tutorial.title} />
+    ) : null
+
     const content = this.state.tutorial ?
       <>
       <div style={this.state.activeStep !== 0 ? {display: 'none'} : null}>
@@ -137,7 +139,7 @@ class TutorialDetail extends React.Component {
         // actionButtons={actionButtons}
         title={this.state.tutorial.title} />
         </div>
-        <TutorialPage page={currentPage} />
+        <TutorialPage lastPage={lastPage} page={currentPage} />
       </>
       : null
     const right = steps.length > 1 ? (<VerticalLinearStepper

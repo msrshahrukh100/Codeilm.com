@@ -61,7 +61,7 @@ const tutorialPage = (props) => {
   return (
     <>
       <h2>{title}</h2>
-      {content}
+      {content ? content : props.lastPage}
     </>
   )
 }
