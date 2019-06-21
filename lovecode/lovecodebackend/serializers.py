@@ -14,7 +14,7 @@ class UserSerializer(serializers.ModelSerializer):
 		return obj.user_profile.first().intro
 
 	def get_github_username(self, obj):
-		return obj.socialaccount_set.first().extra_data.get('login')
+		return obj.socialaccount_set.filter(provider="GitHub").first().extra_data.get('login')
 
 	def get_full_name(self, obj):
 		return obj.get_full_name()

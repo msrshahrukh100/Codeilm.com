@@ -10,7 +10,6 @@ const ListPageSkeleton = () => {
         speed={2}
         primaryColor="#f3f3f3"
         secondaryColor="#ecebeb"
-        preserveAspectRatio="true"
       >
         <rect x="0" y="18" rx="0" ry="0" width="1500" height="25" />
 
