@@ -8,7 +8,7 @@ import { withRouter } from "react-router";
 import Chip from '@material-ui/core/Chip';
 import SimpleMDE from "react-simplemde-editor";
 import "./easymde.min.css";
-
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   textField: {
@@ -35,6 +35,51 @@ const styles = theme => ({
 const learnEditEditor = (props) => {
   const { classes } = props;
   const { repoName } = props.match.params;
+  let toolbar = ["bold", "italic", "heading", "|",
+  {
+    name: "Add YouTube video",
+    action: function customFunction(editor){
+      const pos = editor.codemirror.getCursor();
+      editor.codemirror.setSelection(pos, pos);
+      editor.codemirror.replaceSelection('\n[YOUTUBE](YouTube video Id)\n');
+    },
+    className: "fa fa-youtube-play",
+    title: "Add YouTube video",
+  },
+  {
+    name: "Add Page",
+    action: function customFunction(editor){
+      const pos = editor.codemirror.getCursor();
+      editor.codemirror.setSelection(pos, pos);
+      editor.codemirror.replaceSelection('\n[Page "Title of the Page"]\n\nYour awesome content\n\n[Page]\n');
+    },
+    className: "fa fa-file-text",
+    title: "Add Page",
+  },
+  "|",
+  {
+    name: "Preview",
+    action: function customFunction(editor){
+      props.togglePreview()
+    },
+    className: "fa fa-eye",
+    title: "Preview",
+  }
+]
+  if (props.repoName != "") {
+    toolbar = toolbar.concat([
+      "|",
+      {
+        name: "See it on GitHub",
+        action: function customFunction(editor){
+          const url = `https://github.com/${props.githubUsername}/${props.repoName}`
+          window.open(url, '_blank')
+        },
+        className: "fa fa-github",
+        title: "See it on GitHub",
+      }
+    ])
+  }
 
   return (
     <>
@@ -48,38 +93,7 @@ const learnEditEditor = (props) => {
     options={{
       autofocus: true,
       hideIcons: ["guide"],
-      toolbar: ["bold", "italic", "heading", "|",
-      {
-        name: "Add YouTube video",
-        action: function customFunction(editor){
-          const pos = editor.codemirror.getCursor();
-          editor.codemirror.setSelection(pos, pos);
-          editor.codemirror.replaceSelection('\n[YOUTUBE](YouTube video Id)\n');
-        },
-        className: "fa fa-youtube-play",
-        title: "Add YouTube video",
-      },
-      {
-        name: "Add Page",
-        action: function customFunction(editor){
-          const pos = editor.codemirror.getCursor();
-          editor.codemirror.setSelection(pos, pos);
-          editor.codemirror.replaceSelection('\n[Page "Title of the Page"]\n\nYour awesome content\n\n[Page]\n');
-        },
-        className: "fa fa-file-text",
-        title: "Add Page",
-      },
-      "|",
-      {
-        name: "Preview",
-        action: function customFunction(editor){
-          props.togglePreview()
-        },
-        className: "fa fa-eye",
-        title: "Preview",
-      }
-
-    ],
+      toolbar: toolbar
   }}
   />
 
@@ -149,4 +163,10 @@ const learnEditEditor = (props) => {
   )
 }
 
-export default withStyles(styles)(withRouter(learnEditEditor))
+const matchStateToProps = state => {
+  return {
+    githubUsername: state.aReducer.user ? state.aReducer.user.github_username : null
+  }
+}
+
+export default withStyles(styles)(withRouter(connect(matchStateToProps, null)(learnEditEditor)))
