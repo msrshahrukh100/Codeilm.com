@@ -8,9 +8,13 @@ class UserSerializer(serializers.ModelSerializer):
 	user_profile_pic = serializers.SerializerMethodField()
 	full_name = serializers.SerializerMethodField()
 	intro = serializers.SerializerMethodField()
+	github_username = serializers.SerializerMethodField()
 
 	def get_intro(self, obj):
 		return obj.user_profile.first().intro
+
+	def get_github_username(self, obj):
+		return obj.socialaccount_set.first().extra_data.get('login')
 
 	def get_full_name(self, obj):
 		return obj.get_full_name()
@@ -20,7 +24,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ('id', 'full_name', 'first_name', 'last_name', 'intro', 'user_profile_pic')
+		fields = ('id', 'full_name', 'first_name', 'last_name', 'intro', 'user_profile_pic', 'github_username')
 
 class GithubRepoSerializer(serializers.ModelSerializer):
 	hash_id = serializers.CharField(default="")
