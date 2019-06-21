@@ -108,7 +108,7 @@ class Layout extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: localStorage.getItem('authenticated')
+    isAuthenticated: state.aReducer.authenticated
   }
 }
 
