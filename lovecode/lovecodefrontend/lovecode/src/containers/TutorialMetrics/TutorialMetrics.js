@@ -137,9 +137,9 @@ class TutorialMetrics extends React.Component {
       />
       <Container maxWidth="lg">
       <Grid container spacing={3}>
-        <ViewsPanel type="POST_VIEWS" data={this.state.loggedInViewData} title="Post Views" {...this.props}/>
-        <ViewsPanel type="DISTINCT_VIEWS" data={this.state.distinctViews} title="Distinct Views" {...this.props}/>
-        <ViewsPanel type="LIKES" data={this.state.likeData} title="Likes" {...this.props}/>
+        <ViewsPanel type="POST_VIEWS" data={this.state.loggedInViewData} title={this.state.loggedInViewData > 1 ? "Post Views" : "Post View"} {...this.props}/>
+        <ViewsPanel type="DISTINCT_VIEWS" data={this.state.distinctViews} title={this.state.distinctViews > 1 ? "Distinct Views" : "Distinct View"} {...this.props}/>
+        <ViewsPanel type="LIKES" data={this.state.likeData} title={this.state.likeData > 1 ? "Likes" : "Like"} {...this.props}/>
       </Grid>
 
       <Grid container spacing={3}>
