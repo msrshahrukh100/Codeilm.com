@@ -23,11 +23,8 @@ const styles = theme => ({
     marginRight: 20,
   },
   title: {
-    display: 'none',
     fontSize: 25,
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
+    display: 'block',
   },
   search: {
     position: 'relative',
@@ -96,19 +93,7 @@ class SearchAppBar extends React.Component {
       <Typography className={classes.title} variant="body1" color="inherit" noWrap>
         Codeilm
       </Typography>
-      <div className={classes.grow} />
-      <div className={classes.search}>
-      <div className={classes.searchIcon}>
-      <SearchIcon />
-      </div>
-      <InputBase
-      placeholder="Search…"
-      classes={{
-        root: classes.inputRoot,
-        input: classes.inputInput,
-      }}
-      />
-      </div>
+
       </Toolbar>
       </AppBar>
       <SwipeableTemporaryDrawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />

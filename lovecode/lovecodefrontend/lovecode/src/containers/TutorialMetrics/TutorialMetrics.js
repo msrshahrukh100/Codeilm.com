@@ -14,6 +14,7 @@ import axios from '../../lovecodeaxios'
 import NumberFormat from 'react-number-format';
 import Map from '../../components/Map/Map'
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 const styles = theme => ({
   root: {
@@ -155,4 +156,4 @@ TutorialMetrics.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TutorialMetrics);
+export default withStyles(styles)(withErrorHandler(TutorialMetrics, axios, 'circular'));
