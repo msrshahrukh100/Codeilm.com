@@ -15,6 +15,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import getParsedContent from '../../utils/getParsedContent';
+import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 
 const styles = {
   appBar: {
@@ -186,6 +187,7 @@ class LearnEdit extends React.Component {
 		const classes = this.props
     return (
 			<>
+      <BasicMetaTags title="Create your story" />
 			<Dialog
 				fullScreen
 				open={this.state.showPreview}

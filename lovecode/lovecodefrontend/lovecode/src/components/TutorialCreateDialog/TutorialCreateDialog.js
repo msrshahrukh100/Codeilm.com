@@ -7,7 +7,7 @@ import { IconContext } from "react-icons";
 import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom'
 import { FaRegPaperPlane } from "react-icons/fa";
-
+import BasicMetaTags from '../MetaTags/BasicMetaTags'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -25,6 +25,7 @@ export default function TutorialCreateDialog() {
 
   return (
     <div className={classes.root}>
+      <BasicMetaTags title="Create your story" />
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Link to="/create/github">
