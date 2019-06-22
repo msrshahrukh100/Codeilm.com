@@ -16,6 +16,8 @@ import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import { MdTrendingUp } from "react-icons/md";
 import Button from '@material-ui/core/Button';
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
+import ReactGA from 'react-ga';
+
 
 const styles = theme => ({
   margin: {
@@ -67,17 +69,39 @@ class TutorialDetail extends React.Component {
     const nextStep = this.state.activeStep + 1;
     this.props.history.push('/stories/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
     scroll.scrollToTop();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked next button on story detail',
+      label: 'NEXT_BUTTON_CLICKED',
+    });
+
   };
 
   handleBack = () => {
     this.props.history.goBack()
     scroll.scrollToTop();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked back button on story detail',
+      label: 'BACK_BUTTON_CLICKED',
+    });
+
   };
 
   handleReset = () => {
     const nextStep = 0;
     this.props.history.push('/stories/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
     scroll.scrollToTop();
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked reset button on story detail',
+      label: 'RESET_BUTTON_CLICKED',
+    });
+
+
   };
 
 

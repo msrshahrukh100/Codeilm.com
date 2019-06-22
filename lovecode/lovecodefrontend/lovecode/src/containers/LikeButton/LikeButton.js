@@ -64,7 +64,7 @@ class LikeButton extends React.Component {
       category: 'User',
       action: 'Clicked like button',
       label: 'LIKE_BUTTON_CLICKED',
-      value: !this.state.liked
+      value: !this.state.liked ? 1 : 0
     });
 
     const csrftoken = getCookie('csrftoken');
