@@ -123,3 +123,9 @@ class TutorialViewSerializer(serializers.ModelSerializer):
 		model = lovecode_model.TutorialLike
 		fields = ('id', 'user', 'tutorial', 'request_ip_info', 'created_at', 'updated_at')
 
+
+
+class TutorialTagsSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = lovecode_model.TutorialTags
+		fields = ('__all__')

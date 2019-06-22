@@ -33,6 +33,16 @@ def get_view_data_default():
 def get_like_data_default():
 	return {}
 
+
+class TutorialTags(models.Model):
+	value = models.CharField(max_length=50)
+	label = models.CharField(max_length=50)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return str(self.id)
+
 class Tutorial(Model):
 	id = HashidAutoField(primary_key=True)
 	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
@@ -42,6 +52,7 @@ class Tutorial(Model):
 	like_data = JSONField(blank=True, default=get_like_data_default)
 	view_data = JSONField(blank=True, default=get_view_data_default)
 	learn_md_content = models.TextField(null=True, blank=True)
+	tags = models.ManyToManyField(TutorialTags, null=True, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	is_published = models.BooleanField(default=False)
 	repository_name = models.CharField(max_length=200, null=True, blank=True)

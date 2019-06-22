@@ -16,8 +16,9 @@ urlpatterns = [
     path('repo/branches/<str:repo_name>', lovecode_views.UserRepositoryBranches.as_view(), name="user_repositories_branches"),
     path('learn/content/<slug:tutorial_id>', lovecode_views.UserRepositoryLearnContent.as_view(), name="user_repo_learn_content"),
     path('commit/learn', lovecode_views.CreateUpdateCommitLearnFile.as_view(), name="commit_learn"),
+
+    path('get-tags/', lovecode_views.GetTags.as_view(), name="get_tags"),
     # path('userrepositories/<slug:datetime>', lovecode_views.UserRepositories.as_view(), name="user_repositories"),
     path('echo', lovecode_views.Echo.as_view(), name='echo'),
     path('get-auth-status/', lovecode_views.auth, name='auth'),
-
 ]

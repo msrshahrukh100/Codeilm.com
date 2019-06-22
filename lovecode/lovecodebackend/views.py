@@ -259,7 +259,6 @@ class LikeUnlikeTutorial(APIView):
 class TutorialMetricsData(APIView):
 
 	def get(self, request, tutorial_id):
-
 		if request.user.is_authenticated:
 			obj = get_object_or_404(lovecode_models.Tutorial, id=tutorial_id, user=request.user)
 			like_data = lovecode_serializers.TutorialLikeSerializer(obj.user_likes.all(), many=True).data
@@ -285,3 +284,15 @@ class Echo(APIView):
 		if request.user.is_authenticated:
 			return Response(lovecode_serializers.UserSerializer(request.user).data)
 		return Response({"msg": "Not Allowed"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class GetTags(APIView):
+	permission_classes = (permissions.IsAuthenticated)
+
+	def get(self, request):
+		q = request.GET.get("q")
+		if q:
+			queryset = lovecode_models.TutorialTags.objects.filter(value__icontains=q)
+			response = lovecode_serializers.TutorialTagsSerializer(queryset, many=True).data
+			return Response(response, status=status.HTTP_200_OK)
+		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
