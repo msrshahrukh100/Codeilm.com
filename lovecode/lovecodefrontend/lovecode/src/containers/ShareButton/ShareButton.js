@@ -10,6 +10,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ReactGA from 'react-ga';
+
 import {
   FacebookShareCount,
   RedditShareCount,
@@ -55,6 +57,12 @@ class ShareButton extends React.Component {
 
   shareHandler = () => {
     this.setState({open: true})
+    ReactGA.modalview(`sharing ${this.props.url}`);
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked share button',
+      label: 'SHARE_BUTTON_CLICKED'
+    });
   }
 
   handleClose = () => {
@@ -70,7 +78,7 @@ class ShareButton extends React.Component {
     return (
       <>
       <Tooltip title="Share">
-      <Button size="small" color="primary" className={clsx(btnClasses)} onClick={() => this.setState({open: true})}>
+      <Button size="small" color="primary" className={clsx(btnClasses)} onClick={this.shareHandler}>
         <MdShare className={classes.iconSmall} />
       </Button>
       </Tooltip>

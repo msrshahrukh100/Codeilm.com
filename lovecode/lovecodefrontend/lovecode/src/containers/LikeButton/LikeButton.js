@@ -9,6 +9,7 @@ import getCookie from '../../utils/getCookie'
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import ReactGA from 'react-ga';
 
 const styles = theme => ({
   iconSmall: {
@@ -57,6 +58,15 @@ class LikeButton extends React.Component {
 
   likeHandler = () => {
     this.setState({loading: true})
+    ReactGA.modalview(`liked ${this.state.tutorialId}`);
+
+    ReactGA.event({
+      category: 'User',
+      action: 'Clicked like button',
+      label: 'LIKE_BUTTON_CLICKED',
+      value: !this.state.liked
+    });
+
     const csrftoken = getCookie('csrftoken');
     const postData = {
       liked: !this.state.liked,

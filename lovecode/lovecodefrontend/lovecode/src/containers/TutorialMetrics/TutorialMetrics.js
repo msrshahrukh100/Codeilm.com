@@ -15,6 +15,8 @@ import NumberFormat from 'react-number-format';
 import Map from '../../components/Map/Map'
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import ReactGA from 'react-ga';
+
 
 const styles = theme => ({
   root: {
@@ -91,7 +93,12 @@ class TutorialMetrics extends React.Component {
   }
 
   componentDidMount() {
-    axios.defaults.headers.common['Authorization'] = `JWT ${localStorage.getItem('token')}`;
+    ReactGA.event({
+      category: 'User',
+      action: 'Visited metrics page',
+      label: 'VISITED_METRICS_PAGE',
+    });
+
     axios.get('/tutorials/' + this.state.tutorialId + '/metrics')
       .then(response => {
         if(response) {

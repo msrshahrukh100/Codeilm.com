@@ -18,6 +18,7 @@ const history = createBrowserHistory();
 history.listen(function (location) {
   ReactGA.pageview(location.pathname + location.search)
 })
+ReactGA.pageview("/stories")
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
