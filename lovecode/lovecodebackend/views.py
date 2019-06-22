@@ -287,7 +287,7 @@ class Echo(APIView):
 
 
 class GetTags(APIView):
-	permission_classes = (permissions.IsAuthenticated)
+	permission_classes = (permissions.IsAuthenticated,)
 
 	def get(self, request):
 		q = request.GET.get("q")
