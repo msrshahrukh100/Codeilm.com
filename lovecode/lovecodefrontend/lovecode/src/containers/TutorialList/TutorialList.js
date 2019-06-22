@@ -10,7 +10,7 @@ import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkelet
 import { withStyles } from '@material-ui/core/styles';
 import LikeButton from '../LikeButton/LikeButton'
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
-import { MdTrendingUp } from "react-icons/md";
+import { MdTrendingUp, MdModeEdit } from "react-icons/md";
 import Button from '@material-ui/core/Button';
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import ShareButton from '../ShareButton/ShareButton'
@@ -83,12 +83,15 @@ class TutorialList extends React.Component {
             loader={<PageLayout><ListPageSkeleton /></PageLayout>}
         >
         {this.state.tutorials.map((tutorial, index) => {
+          const editUrl = tutorial.repository_name ? `/create/${tutorial.repository_name}/${tutorial.id}/${tutorial.slug}/${tutorial.branch_name}`
+          : `/create/new/${tutorial.id}/${tutorial.slug}`
           const actionButtons = (
             <>
             <LikeButton tutorial={tutorial}/>
             <ViewsPanel tutorial={tutorial} />
             <ShareButton url={'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
             {tutorial.owner_is_authenticated_user ?
+              <>
               <Button
               size="small"
               color="primary"
@@ -96,6 +99,14 @@ class TutorialList extends React.Component {
               onClick={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}>
               <MdTrendingUp className={classes.iconSmall} /> Metrics
               </Button>
+              <Button
+              size="small"
+              color="primary"
+              className={classes.metricsButton}
+              onClick={() => this.props.history.push(editUrl)}>
+              <MdModeEdit className={classes.iconSmall} /> Edit
+              </Button>
+              </>
               : null
             }
             </>
