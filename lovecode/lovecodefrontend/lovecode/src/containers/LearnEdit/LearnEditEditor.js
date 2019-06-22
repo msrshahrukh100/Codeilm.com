@@ -9,6 +9,7 @@ import Chip from '@material-ui/core/Chip';
 import SimpleMDE from "react-simplemde-editor";
 import "./easymde.min.css";
 import { connect } from 'react-redux'
+import TagsInput from '../../components/UI/TagsInput/TagsInput'
 
 const styles = theme => ({
   textField: {
@@ -96,7 +97,7 @@ const learnEditEditor = (props) => {
       toolbar: toolbar
   }}
   />
-
+  <TagsInput setTags={props.setTags} tags={props.tags} />
   {props.dbData ?
     <Fab
     variant="extended"
@@ -157,7 +158,6 @@ const learnEditEditor = (props) => {
 
         : null}
       </>
-
       </div>
     </>
   )

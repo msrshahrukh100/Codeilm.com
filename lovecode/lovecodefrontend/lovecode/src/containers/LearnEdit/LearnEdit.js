@@ -62,7 +62,8 @@ class LearnEdit extends React.Component {
       showCommitPanel: false,
 			showPreview: false,
 			tutorialSlug: tutorialSlug,
-      tutorialData: ""
+      tutorialData: "",
+      tags: []
     }
   }
 
@@ -76,11 +77,11 @@ class LearnEdit extends React.Component {
 
     const csrftoken = getCookie('csrftoken');
     const postData = {
-      branch_name: this.state.branchName,
-      repo_name: this.state.repoName,
+      tutorial_id: this.state.tutorialId,
       content: this.state.editorContent,
 			tutorial_slug: this.state.tutorialSlug,
-      tutorial_data: this.state.tutorialData
+      tutorial_data: this.state.tutorialData,
+      tags: this.state.tags
     };
     this.setState({loading: true})
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
@@ -89,7 +90,7 @@ class LearnEdit extends React.Component {
       this.setState({
         loading: false,
         dbData: response.data,
-        isPublished: response.data ? response.data.is_published : false
+        isPublished: response.data ? response.data.is_published : false,
       })
     })
     .catch(error => {
@@ -154,6 +155,15 @@ class LearnEdit extends React.Component {
     this.props.history.push('/story/create/' + this.state.repoName + '/' + this.state.tutorialId + "/" + tutorialSlug + "/" + event.target.value);
   }
 
+  setTags = value => {
+    this.setState((prevState, props) => {
+      return {
+        tags: value,
+        timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 5000))
+      }
+    })
+  }
+
   fetchLearnContent = () => {
     this.setState({loading: true})
     axios.get('/learn/content/' + this.state.tutorialId)
@@ -167,6 +177,7 @@ class LearnEdit extends React.Component {
         hasDefaultContent: response.data.db_data ? response.data.db_data.learn_md_content ? false : true : true,
         contentLoaded: true,
         dbData: response.data.db_data,
+        tags: response.data.db_data ? response.data.db_data.tutorial_tags : [],
 				tutorialTitle: response.data.db_data.title,
         isPublished: response.data.db_data ? response.data.db_data.is_published : false
       })
@@ -215,6 +226,7 @@ class LearnEdit extends React.Component {
 				fetchLearnContent={this.fetchLearnContent}
 				toggleCommitPanel={this.toggleCommitPanel}
 				togglePreview={this.togglePreview}
+        setTags={this.setTags}
 				/>
 
 				</>

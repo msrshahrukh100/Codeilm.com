@@ -210,17 +210,15 @@ class SaveLearnFileToDb(APIView):
 	def post(self, request):
 		data = request.data
 		if data:
-			repo_name = data.get('repo_name')
-			branch_name = data.get('branch_name')
-			slug = data.get('tutorial_slug')
+			tutorial_id = data.get('tutorial_id')
+			tutorial_tags = data.get('tags')
 			obj =  get_object_or_404(lovecode_models.Tutorial,
-				user=request.user,
-				repository_name=repo_name,
-				branch_name=branch_name,
-				slug=slug
+				id=tutorial_id
 			)
 			obj.learn_md_content = data.get('content', "")
 			obj.tutorial_data = data.get('tutorial_data', {})
+			tags = [lovecode_models.TutorialTags.objects.get_or_create(value=tag.get('value', "").lower(), label=tag.get('label'))[0] for tag in tutorial_tags]
+			obj.tags.set(tags, clear=True)
 			obj.save()
 			data = lovecode_serializers.TutorialDetailSerializer(obj)
 			return Response(data.data, status=status.HTTP_200_OK)
