@@ -17,7 +17,7 @@ const styles = theme => ({
     flexGrow: 1,
   },
   title: {
-    paddingBottom: theme.spacing.unit * 3
+    paddingBottom: theme.spacing(3)
   },
   mobileStepper: {
    position: 'fixed',

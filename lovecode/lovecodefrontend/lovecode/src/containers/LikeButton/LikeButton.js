@@ -12,7 +12,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 const styles = theme => ({
   iconSmall: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(),
     fontSize: 20,
   },
   avatar: {
@@ -22,7 +22,7 @@ const styles = theme => ({
   },
   likeButton: {
     textTransform: 'none',
-    marginLeft: theme.spacing.unit
+    marginLeft: theme.spacing()
   },
   notLiked: {
     color: 'black'

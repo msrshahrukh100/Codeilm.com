@@ -74,7 +74,7 @@ class TutorialList extends React.Component {
     return (
       <>
         <BasicMetaTags
-          title="Posts on Codeilm"
+          title="Stories on Codeilm"
         />
         <InfiniteScroll
             dataLength={this.state.tutorials.length}

@@ -11,11 +11,11 @@ import Snackbar from '../../components/UI/Snackbar/Snackbar'
 
 const styles = theme => ({
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(),
     textTransform: 'none'
   },
   extendedIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(),
   }
 });
 

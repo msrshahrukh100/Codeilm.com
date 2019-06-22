@@ -15,11 +15,11 @@ import { connect } from 'react-redux'
 const styles = theme => ({
   textField: {
     width: '95%',
-    margin: theme.spacing.unit
+    margin: theme.spacing()
   },
   repoField: {
     minWidth: 120,
-    margin: theme.spacing.unit
+    margin: theme.spacing()
   },
   container: {
     position: 'absolute',
@@ -27,11 +27,11 @@ const styles = theme => ({
     width: '95%'
   },
   margin: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(),
     textTransform: 'none'
   },
   extendedIcon: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(),
   }
 });
 

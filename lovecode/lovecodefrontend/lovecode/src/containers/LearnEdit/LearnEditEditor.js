@@ -13,11 +13,11 @@ import { connect } from 'react-redux'
 const styles = theme => ({
   textField: {
     width: '100%',
-    margin: theme.spacing.unit
+    margin: theme.spacing()
   },
   repoField: {
     minWidth: 120,
-    margin: theme.spacing.unit
+    margin: theme.spacing()
   },
   container: {
     position: 'absolute',
@@ -25,7 +25,7 @@ const styles = theme => ({
     width: '95%'
   },
   chip: {
-   margin: theme.spacing.unit,
+   margin: theme.spacing(),
  },
  commitPanel: {
    marginTop: theme.spacing(2)

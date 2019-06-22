@@ -8,13 +8,13 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   iconSmall: {
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(),
     fontSize: 20,
   },
   viewButton: {
     color: 'black',
     textTransform: 'none',
-    marginLeft: theme.spacing.unit * 2
+    marginLeft: theme.spacing(2)
   }
 });
 
