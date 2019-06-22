@@ -14,6 +14,8 @@ import { MdTrendingUp, MdModeEdit } from "react-icons/md";
 import Button from '@material-ui/core/Button';
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import ShareButton from '../ShareButton/ShareButton'
+import Grid from '@material-ui/core/Grid';
+import CoolButton from '../../components/UI/CoolButton/CoolButton'
 
 const styles = theme => ({
   margin: {
@@ -27,6 +29,10 @@ const styles = theme => ({
   iconSmall: {
     marginRight: theme.spacing(),
     fontSize: 20,
+  },
+  coolButton: {
+    marginLeft: theme.spacing(2),
+    marginTop: theme.spacing(5)
   }
 });
 
@@ -69,60 +75,71 @@ class TutorialList extends React.Component {
 
   render() {
     const { classes } = this.props;
-
+    const storiesList = (
+      <InfiniteScroll
+          dataLength={this.state.tutorials.length}
+          next={this.fetchTutorials}
+          hasMore={this.state.pageNumber}
+          loader={<PageLayout><ListPageSkeleton /></PageLayout>}
+      >
+      {this.state.tutorials.map((tutorial, index) => {
+        const editUrl = tutorial.repository_name ? `/create/${tutorial.repository_name}/${tutorial.id}/${tutorial.slug}/${tutorial.branch_name}`
+        : `/create/new/${tutorial.id}/${tutorial.slug}`
+        const actionButtons = (
+          <>
+          <LikeButton tutorial={tutorial}/>
+          <ViewsPanel tutorial={tutorial} />
+          <ShareButton url={'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
+          {tutorial.owner_is_authenticated_user ?
+            <>
+            <Button
+            size="small"
+            color="primary"
+            className={classes.metricsButton}
+            onClick={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}>
+            <MdTrendingUp className={classes.iconSmall} /> Metrics
+            </Button>
+            <Button
+            size="small"
+            color="primary"
+            className={classes.metricsButton}
+            onClick={() => this.props.history.push(editUrl)}>
+            <MdModeEdit className={classes.iconSmall} /> Edit
+            </Button>
+            </>
+            : null
+          }
+          </>
+        )
+        const content = (<>
+          <TutorialInfo user={tutorial.user} />
+          </>)
+        return <MediaCard
+          headerVariant="h5"
+          key={tutorial.id}
+          link={'/stories/' + tutorial.id + '/' + tutorial.slug}
+          content={content}
+          actionButtons={actionButtons}
+          title={tutorial.title} />
+      })}
+      </InfiniteScroll>
+    )
 
     return (
       <>
         <BasicMetaTags
           title="Stories on Codeilm"
         />
-        <InfiniteScroll
-            dataLength={this.state.tutorials.length}
-            next={this.fetchTutorials}
-            hasMore={this.state.pageNumber}
-            loader={<PageLayout><ListPageSkeleton /></PageLayout>}
-        >
-        {this.state.tutorials.map((tutorial, index) => {
-          const editUrl = tutorial.repository_name ? `/create/${tutorial.repository_name}/${tutorial.id}/${tutorial.slug}/${tutorial.branch_name}`
-          : `/create/new/${tutorial.id}/${tutorial.slug}`
-          const actionButtons = (
-            <>
-            <LikeButton tutorial={tutorial}/>
-            <ViewsPanel tutorial={tutorial} />
-            <ShareButton url={'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
-            {tutorial.owner_is_authenticated_user ?
-              <>
-              <Button
-              size="small"
-              color="primary"
-              className={classes.metricsButton}
-              onClick={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}>
-              <MdTrendingUp className={classes.iconSmall} /> Metrics
-              </Button>
-              <Button
-              size="small"
-              color="primary"
-              className={classes.metricsButton}
-              onClick={() => this.props.history.push(editUrl)}>
-              <MdModeEdit className={classes.iconSmall} /> Edit
-              </Button>
-              </>
-              : null
-            }
-            </>
-          )
-          const content = (<>
-            <TutorialInfo user={tutorial.user} />
-            </>)
-          return <MediaCard
-            headerVariant="h5"
-            key={tutorial.id}
-            link={'/stories/' + tutorial.id + '/' + tutorial.slug}
-            content={content}
-            actionButtons={actionButtons}
-            title={tutorial.title} />
-        })}
-        </InfiniteScroll>
+        <Grid container spacing={0}>
+          <Grid item xs={12} lg={9} sm={10}>
+            {storiesList}
+          </Grid>
+          <Grid item lg={3} sm={2}>
+              <div className={classes.coolButton}>
+                <CoolButton text="Create" link="/create" />
+              </div>
+          </Grid>
+        </Grid>
       </>
     )
   }
