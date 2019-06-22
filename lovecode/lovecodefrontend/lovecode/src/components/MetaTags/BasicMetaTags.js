@@ -20,12 +20,12 @@ const basicMetaTags = (props) => {
     <meta property="og:title" content={ title } />
     <meta property="og:description" content={ description } />
     <meta property="og:url" content={ canonicalUrl } />
-    <meta property="og:image" content="http://mysite.com/img/apple-touch-icon-57x57.png" />
+    <meta property="og:image" content="https://codeilm.com/static/images/logo/codeilm.png" />
 
     <link rel="canonical" href={ canonicalUrl } />
 
-    <link rel="apple-touch-icon" href="http://mysite.com/img/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon" sizes="72x72" href="http://mysite.com/img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" href="https://codeilm.com/static/images/logo/codeilm.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="https://codeilm.com/static/images/logo/codeilm.png" />
 
 
 </Helmet>
