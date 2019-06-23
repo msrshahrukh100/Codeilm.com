@@ -12,6 +12,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import SwipeableTemporaryDrawer from '../SwipeableTemporaryDrawer/SwipeableTemporaryDrawer'
 import { ThemeProvider } from '@material-ui/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey'
+import Avatar from '@material-ui/core/Avatar';
+import { connect } from 'react-redux';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -40,6 +43,15 @@ const styles = theme => ({
     color: 'black',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
+    },
+  },
+  avatar: {
+    marginRight: theme.spacing(),
+    height: 40,
+    width: 40,
+    [theme.breakpoints.down('xs')]: {
+      height: 30,
+      width: 30,
     },
   },
   search: {
@@ -125,9 +137,14 @@ class SearchAppBar extends React.Component {
         <MenuIcon />
         </IconButton>
 
-        <img className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
+        <img alt="Codeilm.com logo" className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
+
 
         <div className={classes.grow} />
+        {this.props.user ?
+          <Avatar alt={this.props.user.full_name} src={this.props.user.user_profile_pic} className={classes.avatar} />
+          : null
+        }
         <div className={classes.search}>
         <div className={classes.searchIcon}>
         <SearchIcon />
@@ -147,7 +164,7 @@ class SearchAppBar extends React.Component {
 
       <SwipeableTemporaryDrawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />
 
-      <img className={classes.mobileLogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png"/>
+      <img alt="Codeilm.com logo" className={classes.mobileLogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png"/>
       </div>
     );
 
@@ -159,4 +176,10 @@ SearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SearchAppBar);
+const matchStateToProps = state => {
+  return {
+    user: state.aReducer.user
+  }
+}
+
+export default withStyles(styles)(connect(matchStateToProps, null)(SearchAppBar));
