@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CircularPreloader from '../../components/UI/CircularPreloader/CircularPreloader'
 
 const asyncComponent = (importComponent) => {
     return class extends Component {
@@ -16,7 +17,7 @@ const asyncComponent = (importComponent) => {
         render () {
             const C = this.state.component;
 
-            return C ? <C {...this.props} /> : null;
+            return C ? <C {...this.props} /> : <CircularPreloader />;
         }
     }
 }

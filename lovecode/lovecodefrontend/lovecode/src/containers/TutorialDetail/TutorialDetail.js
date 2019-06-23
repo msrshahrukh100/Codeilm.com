@@ -110,10 +110,11 @@ class TutorialDetail extends React.Component {
 
     axios.get('/tutorials/' + tutorialId)
       .then(response => {
+        const parsedContent = getParsedContent(response.data.learn_md_content)
         this.setState({
           tutorial: response.data,
-          parsedTutorial: getParsedContent(response.data.learn_md_content),
-          slugs: response.data.tutorial_data.data.map(item => Slug(item.title, {lower: true})).concat(["last"]),
+          parsedTutorial: parsedContent,
+          slugs: parsedContent.data.map(item => Slug(item.title, {lower: true})).concat(["last"]),
         })
       })
       .catch(error => {
