@@ -24,6 +24,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import redirect
 import re
+from django.db.models import Q
 
 # Create your views here.
 
@@ -75,6 +76,14 @@ class TutorialList(generics.ListAPIView):
 		repository_name = get_params.get('repo_name')
 		branch_name = get_params.get('branch_name')
 		repo_create = get_params.get('repo_create')
+		q = get_params.get('q')
+		if q:
+			return lovecode_models.Tutorial.objects.filter(
+				Q(is_published=True),
+				Q(tags__value__icontains=q) |
+				Q(tags__label__icontains=q) |
+				Q(title__icontains=q)
+				)
 		if repo_create:
 			if repository_name and branch_name and self.request.user.is_authenticated:
 				return lovecode_models.Tutorial.objects.filter(
