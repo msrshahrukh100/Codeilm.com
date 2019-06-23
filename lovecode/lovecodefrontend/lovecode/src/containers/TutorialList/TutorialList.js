@@ -59,6 +59,7 @@ class TutorialList extends React.Component {
       error: null,
       pageNumber: null,
       count: 0,
+      loading: true,
       q:q
     }
   }
@@ -76,6 +77,7 @@ class TutorialList extends React.Component {
   }
 
   fetchTutorials = () => {
+    this.setState({loading: true})
     const url = this.state.pageNumber ?
       this.state.q ?
         `/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
@@ -168,7 +170,7 @@ class TutorialList extends React.Component {
           <Grid item xs={12} lg={9} sm={10}>
             {this.state.tutorials && this.state.tutorials.length != 0 ?
               storiesList
-              : <>
+              : !this.state.loading ? (<>
               <p style={{fontSize: 20, margin: 30}}>Sorry we couldn't find any story with the search query
                 <strong style={{fontSize: 30}}> {this.state.q}</strong>
               </p>
@@ -177,7 +179,7 @@ class TutorialList extends React.Component {
                   See all the stories
                 </Link>
               </p>
-            </>
+            </>) : null
           }
           </Grid>
           <Grid item lg={3} sm={2}>
