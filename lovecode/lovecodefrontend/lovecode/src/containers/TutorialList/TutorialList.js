@@ -170,7 +170,9 @@ class TutorialList extends React.Component {
           </Grid>
           <Grid item lg={3} sm={2}>
               <div className={classes.coolButton}>
+              {this.state.loading ? null : 
                 <CoolButton text="Create" link="/create" />
+              }
               </div>
           </Grid>
         </Grid>
