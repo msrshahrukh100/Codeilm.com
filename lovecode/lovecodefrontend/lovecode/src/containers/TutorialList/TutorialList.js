@@ -17,6 +17,7 @@ import ShareButton from '../ShareButton/ShareButton'
 import Grid from '@material-ui/core/Grid';
 import CoolButton from '../../components/UI/CoolButton/CoolButton'
 import Chips from '../../components/UI/Chips/Chips'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   margin: {
@@ -158,7 +159,6 @@ class TutorialList extends React.Component {
       })}
       </InfiniteScroll>
     )
-
     return (
       <>
         <BasicMetaTags
@@ -166,11 +166,23 @@ class TutorialList extends React.Component {
         />
         <Grid container spacing={0}>
           <Grid item xs={12} lg={9} sm={10}>
-            {storiesList}
+            {this.state.tutorials && this.state.tutorials.length != 0 ?
+              storiesList
+              : <>
+              <p style={{fontSize: 20, margin: 30}}>Sorry we couldn't find any story with the search query
+                <strong style={{fontSize: 30}}> {this.state.q}</strong>
+              </p>
+              <p style={{fontSize: 20, margin: 30}}>
+                <Link to="/stories">
+                  See all the stories
+                </Link>
+              </p>
+            </>
+          }
           </Grid>
           <Grid item lg={3} sm={2}>
               <div className={classes.coolButton}>
-              {this.state.loading ? null : 
+              {this.state.loading ? null :
                 <CoolButton text="Create" link="/create" />
               }
               </div>

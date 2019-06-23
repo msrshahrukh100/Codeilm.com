@@ -14,6 +14,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey'
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 
 const theme = createMuiTheme({
@@ -113,10 +114,17 @@ const styles = theme => ({
   },
 });
 
+const resetTimeout = (id, newID) => {
+	clearTimeout(id)
+	return newID
+}
+
+
 class SearchAppBar extends React.Component {
 
   state = {
-    drawerOpen: false
+    drawerOpen: false,
+    timeout: null
   }
 
   toggleDrawer = (open) => () => {
@@ -124,6 +132,19 @@ class SearchAppBar extends React.Component {
       drawerOpen: open,
     });
   };
+
+  search = (value) => {
+    this.props.history.push("/stories/?q=" + value)
+  }
+
+  handleInput = event => {
+    const value = event.target.value
+    this.setState((prevState, props) => {
+      return {
+        timeout: resetTimeout(prevState.timeout, setTimeout(() => this.search(value), 2000))
+      }
+    })
+  }
 
   render() {
     const { classes } = this.props
@@ -151,6 +172,7 @@ class SearchAppBar extends React.Component {
         </div>
         <InputBase
         placeholder="Search…"
+        onChange={this.handleInput}
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput,
@@ -182,4 +204,4 @@ const matchStateToProps = state => {
   }
 }
 
-export default withStyles(styles)(connect(matchStateToProps, null)(SearchAppBar));
+export default withStyles(styles)(connect(matchStateToProps, null)(withRouter(SearchAppBar)));
