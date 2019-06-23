@@ -47,16 +47,39 @@ const styles = theme => ({
 
 class TutorialList extends React.Component {
 
-  state = {
-    tutorials: [],
-    loading: true,
-    error: null,
-    pageNumber: null,
-    count: 0
+  constructor(props) {
+    super(props)
+
+    const params = new URLSearchParams(props.location.search);
+    const q = params.get('q');
+    this.state = {
+      tutorials: [],
+      loading: true,
+      error: null,
+      pageNumber: null,
+      count: 0,
+      q:q
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevParams = new URLSearchParams(prevProps.location.search);
+    const prevq = prevParams.get('q');
+
+    const params = new URLSearchParams(this.props.location.search);
+    const q = params.get('q');
+
+    if(prevq !== q) {
+      this.setState({q: q, tutorials: []}, () => this.fetchTutorials())
+    }
   }
 
   fetchTutorials = () => {
-    const url = this.state.pageNumber ? '/tutorials/?page=' + this.state.pageNumber : "/tutorials"
+    const url = this.state.pageNumber ?
+      this.state.q ?
+        `/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
+        : `/tutorials/?page=${this.state.pageNumber}`
+    : this.state.q ? `/tutorials/?q=${this.state.q}` : "/tutorials";
     axios.get(url)
       .then(response => {
         this.setState(state => ({
