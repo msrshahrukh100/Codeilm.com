@@ -5,6 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import FaceIcon from '@material-ui/icons/Face';
 import DoneIcon from '@material-ui/icons/Done';
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -12,6 +13,11 @@ const styles = theme => ({
     justifyContent: 'center',
     flexWrap: 'wrap',
   },
+  chip: {
+    height: theme.spacing(3),
+    fontSize: theme.spacing(1.5),
+    marginRight: theme.spacing(0.4)
+  }
 
 });
 
@@ -19,8 +25,9 @@ function handleDelete() {
   alert('You clicked the delete icon.'); // eslint-disable-line no-alert
 }
 
-function handleClick() {
-  alert('You clicked the Chip.'); // eslint-disable-line no-alert
+function handleClick(event, props) {
+  event.stopPropagation();
+  props.history.push(props.link);
 }
 
 function Chips(props) {
@@ -127,13 +134,26 @@ function Chips(props) {
     />
     </>
   )
-  return (
-    <Chip
+  const chip = (
+    chipsData.image ?
+      <Chip
       avatar={<Avatar alt={chipsData.text} src={chipsData.image} />}
       label={chipsData.text}
       className={classes.chip}
       variant="outlined"
-    />
+      />
+      : <Chip
+      label={chipsData.text}
+      clickable
+      onClick={(event) => handleClick(event, props)}
+      className={classes.chip}
+      variant="outlined"
+      />
+  )
+  return (
+    <>
+    {chip}
+    </>
   );
 }
 
@@ -141,4 +161,4 @@ Chips.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Chips);
+export default withStyles(styles)(withRouter(Chips));

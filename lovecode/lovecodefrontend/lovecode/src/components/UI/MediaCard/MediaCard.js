@@ -56,14 +56,9 @@ function MediaCard(props) {
     </>
   )
 
-  const linkedContent = props.link ? (
+  const linkedContent = props.onClick ? (
     <CardActionArea>
-    <Link to={{
-          pathname: props.link,
-          search: props.search,
-        }} >
-          {cardContent}
-      </Link>
+        {cardContent}
     </CardActionArea>
   ) : cardContent
 

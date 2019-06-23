@@ -16,11 +16,17 @@ import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import ShareButton from '../ShareButton/ShareButton'
 import Grid from '@material-ui/core/Grid';
 import CoolButton from '../../components/UI/CoolButton/CoolButton'
+import Chips from '../../components/UI/Chips/Chips'
 
 const styles = theme => ({
   margin: {
     margin: theme.spacing(2),
     marginRight: theme.spacing(3),
+  },
+  chips: {
+    marginTop: theme.spacing(1.5),
+    marginLeft: theme.spacing(2),
+    marginBottom: theme.spacing(1.5)
   },
   metricsButton: {
     textTransform: 'none',
@@ -111,14 +117,19 @@ class TutorialList extends React.Component {
           }
           </>
         )
+        const linkUrl = "/stories/?q="
         const content = (<>
+          <div className={classes.chips}>
+          {tutorial.tutorial_tags ? tutorial.tutorial_tags.map(tag => <Chips key={tag.id} link={linkUrl + tag.value} chipsData={{text: tag.label}} />) : null}
+          </div>
+
           <TutorialInfo user={tutorial.user} />
           </>)
         return <MediaCard
           headerVariant="h5"
           key={tutorial.id}
-          link={'/stories/' + tutorial.id + '/' + tutorial.slug}
           content={content}
+          onClick={() => this.props.history.push('/stories/' + tutorial.id + '/' + tutorial.slug)}
           actionButtons={actionButtons}
           title={tutorial.title} />
       })}
