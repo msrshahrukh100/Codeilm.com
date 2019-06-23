@@ -37,6 +37,11 @@ class TutorialListSerializer(serializers.ModelSerializer):
 	user = UserSerializer()
 	liked_by_authenticated_user = serializers.SerializerMethodField()
 	owner_is_authenticated_user = serializers.SerializerMethodField()
+	tutorial_tags = serializers.SerializerMethodField()
+
+	def get_tutorial_tags(self, obj):
+		qs = obj.tags.all()
+		return TutorialTagsSerializer(qs, many=True).data
 
 
 	def get_owner_is_authenticated_user(self, obj):
@@ -64,7 +69,7 @@ class TutorialListSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = lovecode_model.Tutorial
-		fields = ('id', 'user', 'title','slug', 'read_time', 'repository_name', 'branch_name', 'owner_is_authenticated_user', 'liked_by_authenticated_user', 'like_data', 'view_data', 'created_at', 'updated_at')
+		fields = ('id', 'user', 'title','slug', 'tutorial_tags', 'read_time', 'repository_name', 'branch_name', 'owner_is_authenticated_user', 'liked_by_authenticated_user', 'like_data', 'view_data', 'created_at', 'updated_at')
 
 class TutorialDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(default="")

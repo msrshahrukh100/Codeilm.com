@@ -52,7 +52,7 @@ class Tutorial(Model):
 	like_data = JSONField(blank=True, default=get_like_data_default)
 	view_data = JSONField(blank=True, default=get_view_data_default)
 	learn_md_content = models.TextField(null=True, blank=True)
-	tags = models.ManyToManyField(TutorialTags, null=True, blank=True)
+	tags = models.ManyToManyField(TutorialTags, blank=True)
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	is_published = models.BooleanField(default=False)
 	repository_name = models.CharField(max_length=200, null=True, blank=True)
