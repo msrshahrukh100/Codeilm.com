@@ -83,7 +83,7 @@ class TutorialList(generics.ListAPIView):
 				Q(tags__value__icontains=q) |
 				Q(tags__label__icontains=q) |
 				Q(title__icontains=q)
-				)
+				).distinct()
 		if repo_create:
 			if repository_name and branch_name and self.request.user.is_authenticated:
 				return lovecode_models.Tutorial.objects.filter(
