@@ -71,7 +71,7 @@ const styles = theme => ({
   searchIcon: {
     width: theme.spacing(9),
     [theme.breakpoints.down('xs')]: {
-      width: theme.spacing(7),
+      width: theme.spacing(6),
     },
     height: '100%',
     position: 'absolute',
