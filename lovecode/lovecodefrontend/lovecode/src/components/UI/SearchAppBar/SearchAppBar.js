@@ -135,12 +135,9 @@ class SearchAppBar extends React.Component {
   }
 
   handleInput = event => {
-    const value = event.target.value
-    this.setState((prevState, props) => {
-      return {
-        timeout: resetTimeout(prevState.timeout, setTimeout(() => this.search(value), 2000))
-      }
-    })
+    if(event.key == 'Enter') {
+      this.search(event.target.value)
+    }
   }
 
   render() {
@@ -169,7 +166,7 @@ class SearchAppBar extends React.Component {
         </div>
         <InputBase
         placeholder="Search…"
-        onChange={this.handleInput}
+        onKeyDown={this.handleInput}
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput,
