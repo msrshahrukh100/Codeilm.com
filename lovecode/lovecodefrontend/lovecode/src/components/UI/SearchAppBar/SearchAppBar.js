@@ -51,8 +51,7 @@ const styles = theme => ({
     height: 40,
     width: 40,
     [theme.breakpoints.down('xs')]: {
-      height: 30,
-      width: 30,
+      display: 'none'
     },
   },
   search: {
@@ -71,6 +70,9 @@ const styles = theme => ({
   },
   searchIcon: {
     width: theme.spacing(9),
+    [theme.breakpoints.down('xs')]: {
+      width: theme.spacing(7),
+    },
     height: '100%',
     position: 'absolute',
     pointerEvents: 'none',
@@ -83,19 +85,11 @@ const styles = theme => ({
     width: '100%',
   },
   appbarlogo: {
-    width: theme.spacing(25),
+    width: theme.spacing(18),
     [theme.breakpoints.down('xs')]: {
-      display: 'none'
-    },
-  },
-  mobileLogo: {
-    paddingTop: theme.spacing(2),
-    display: 'none',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    width: '50%',
-    [theme.breakpoints.down('xs')]: {
-      display: 'block'
+      width: theme.spacing(14),
+      marginLeft: theme.spacing(-3),
+      paddingRight: theme.spacing()
     },
   },
   inputInput: {
@@ -103,6 +97,9 @@ const styles = theme => ({
     paddingRight: theme.spacing(),
     paddingBottom: theme.spacing(),
     paddingLeft: theme.spacing(10),
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: theme.spacing(6),
+    },
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -186,7 +183,7 @@ class SearchAppBar extends React.Component {
 
       <SwipeableTemporaryDrawer open={this.state.drawerOpen} toggleDrawer={this.toggleDrawer} />
 
-      <img alt="Codeilm.com logo" className={classes.mobileLogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png"/>
+
       </div>
     );
 
