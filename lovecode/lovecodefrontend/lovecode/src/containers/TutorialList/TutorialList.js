@@ -129,14 +129,14 @@ class TutorialList extends React.Component {
             color="primary"
             className={classes.metricsButton}
             onClick={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}>
-            <MdTrendingUp className={classes.iconSmall} /> Metrics
+            <MdTrendingUp className={classes.iconSmall} />
             </Button>
             <Button
             size="small"
             color="primary"
             className={classes.metricsButton}
             onClick={() => this.props.history.push(editUrl)}>
-            <MdModeEdit className={classes.iconSmall} /> Edit
+            <MdModeEdit className={classes.iconSmall} />
             </Button>
             </>
             : null

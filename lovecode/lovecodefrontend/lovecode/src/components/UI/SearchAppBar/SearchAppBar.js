@@ -15,7 +15,7 @@ import blueGrey from '@material-ui/core/colors/blueGrey'
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 
 const theme = createMuiTheme({
   palette: {
@@ -154,9 +154,9 @@ class SearchAppBar extends React.Component {
         <IconButton onClick={() => this.toggleDrawer(true)() } className={classes.menuButton} color="inherit" aria-label="Open drawer">
         <MenuIcon />
         </IconButton>
-
-        <img alt="Codeilm.com logo" className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
-
+        <Link to="/stories">
+          <img alt="Codeilm.com logo" className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
+        </Link>
 
         <div className={classes.grow} />
         {this.props.user ?
