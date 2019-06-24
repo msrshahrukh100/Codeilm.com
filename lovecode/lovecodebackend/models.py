@@ -45,7 +45,7 @@ class TutorialTags(models.Model):
 
 class Tutorial(Model):
 	id = HashidAutoField(primary_key=True)
-	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+	user = models.ForeignKey(User, null=True, related_name="user_tutorials", on_delete=models.SET_NULL)
 	title = models.CharField(max_length=300, null=True, blank=True)
 	slug = AutoSlugField(populate_from='title', always_update=True)
 	tutorial_data = JSONField(null=True, blank=True)
@@ -118,6 +118,3 @@ class TutorialView(models.Model):
 
 	def __str__(self):
 		return str(self.id)
-
-
-
