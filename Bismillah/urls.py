@@ -21,12 +21,14 @@ import notifications.urls
 from mainapp.views import opensearch
 from . import community_urls
 from . import android_urls
+from django.views.generic import TemplateView
 
 
 handler404 = 'mainapp.views.redirect_to_page'
 handler500 = 'mainapp.views.redirect_for_server_error'
 
 urlpatterns = [
+    path('u/', TemplateView.as_view(template_name='usermanagement.html')),
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
