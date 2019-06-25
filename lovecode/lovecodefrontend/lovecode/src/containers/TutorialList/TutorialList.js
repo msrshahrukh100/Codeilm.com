@@ -34,7 +34,6 @@ const styles = theme => ({
     marginLeft: theme.spacing()
   },
   iconSmall: {
-    marginRight: theme.spacing(),
     fontSize: 20,
   },
   coolButton: {
