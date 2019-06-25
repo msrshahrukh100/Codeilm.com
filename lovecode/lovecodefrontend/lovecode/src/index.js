@@ -11,7 +11,10 @@ import authReducer from './store/reducers/authReducer'
 import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history'
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-142472289-1', {debug: false});
+
+const debug = window.location.hostname === "localhost"
+
+ReactGA.initialize('UA-142472289-1', {debug: debug});
 
 const history = createBrowserHistory();
 
