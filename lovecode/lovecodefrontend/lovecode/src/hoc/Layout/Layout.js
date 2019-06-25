@@ -1,9 +1,12 @@
 import React from 'react'
 import SearchAppBar from '../../components/UI/SearchAppBar/SearchAppBar'
-import TutorialList from '../../containers/TutorialList/TutorialList'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import asyncComponent from '../asyncComponent/asyncComponent';
+
+const TutorialList = asyncComponent(() => {
+  return import('../../containers/TutorialList/TutorialList');
+});
 
 const RepoList = asyncComponent(() => {
   return import('../../containers/RepoList/RepoList');
