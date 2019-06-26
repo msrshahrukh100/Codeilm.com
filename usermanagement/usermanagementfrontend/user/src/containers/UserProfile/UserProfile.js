@@ -29,141 +29,148 @@ const useStyles = makeStyles({
   },
 });
 
-function ProfilePage() {
-  const [tabIndex, setTabIndex] = React.useState(0);
-  const upSm = useMediaQuery(theme.breakpoints.up('sm'), { defaultMatches: true });
+class ProfilePage extends React.Component {
+  state = {
+    tabIndex: 0
+  }
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
+  setTabIndex = index => {
+    this.setState({tabIndex: index})
+  }
 
-      <Box component="main" maxWidth={935} margin="auto" padding="60px 20px 0">
-        <Box mb="44px">
-          <Grid container>
+  render() {
+
+    return (
+      <React.Fragment>
+        <CssBaseline />
+
+        <Box component="main" maxWidth={935} margin="auto" padding="60px 20px 0">
+          <Box mb="44px">
+            <Grid container>
+              <Grid item xs={4}>
+                <Avatar
+                  style={{ margin: 'auto' }}
+                  alt="My profile"
+                  src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
+                />
+              </Grid>
+              <Grid item xs={8}>
+                <Box clone mb="20px">
+                  <Grid container alignItems="center">
+                    <Typography component="h1" variant="h4" lightWeight>
+                      siriwatknp
+                    </Typography>
+                  </Grid>
+                </Box>
+                <Box mb="20px">
+                  <Grid container spacing={5}>
+                    <Grid item>
+                      <Typography variant="subtitle1">
+                        <b>132</b> posts
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="subtitle1">
+                        <b>325</b> followers
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="subtitle1">
+                        <b>260</b> following
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Typography variant="subtitle1" bold>
+                  Siriwat Kunaporn
+                </Typography>
+                <Typography variant="subtitle1">Bangkok Christian College</Typography>
+                <Typography variant="subtitle1">CU intania 96.</Typography>
+              </Grid>
+            </Grid>
+          </Box>
+          <Tabs
+            value={this.state.tabIndex}
+            centered
+            onChange={(event, value) => {
+              this.setTabIndex(value);
+            }}
+          >
+            <Tab label="Posts" icon={<Icon>grid_on_outlined</Icon>} />
+            <Tab label="IGTV" icon={<Icon>live_tv</Icon>} />
+            <Tab label="Saved" icon={<Icon>bookmark_border_outlined</Icon>} />
+            <Tab label="Tagged" />
+          </Tabs>
+          <Grid container spacing={4}>
             <Grid item xs={4}>
-              <Avatar
-                ultraLarge={upSm}
-                medium={!upSm}
-                style={{ margin: 'auto' }}
-                alt="My profile"
-                src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
               />
             </Grid>
-            <Grid item xs={8}>
-              <Box clone mb="20px">
-                <Grid container alignItems="center">
-                  <Typography component="h1" variant="h4" lightWeight>
-                    siriwatknp
-                  </Typography>
-                </Grid>
-              </Box>
-              <Box mb="20px">
-                <Grid container spacing={5}>
-                  <Grid item>
-                    <Typography variant="subtitle1">
-                      <b>132</b> posts
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle1">
-                      <b>325</b> followers
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle1">
-                      <b>260</b> following
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Box>
-              <Typography variant="subtitle1" bold>
-                Siriwat Kunaporn
-              </Typography>
-              <Typography variant="subtitle1">Bangkok Christian College</Typography>
-              <Typography variant="subtitle1">CU intania 96.</Typography>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <img
+                alt="post"
+                style={{ width: '100%' }}
+                src="https://via.placeholder.com/500/f5f5f5"
+              />
             </Grid>
           </Grid>
         </Box>
-        <Tabs
-          value={tabIndex}
-          centered
-          onChange={(event, value) => {
-            setTabIndex(value);
-          }}
-        >
-          <Tab label="Posts" icon={<Icon>grid_on_outlined</Icon>} />
-          <Tab label="IGTV" icon={<Icon>live_tv</Icon>} />
-          <Tab label="Saved" icon={<Icon>bookmark_border_outlined</Icon>} />
-          <Tab label="Tagged" />
-        </Tabs>
-        <Grid container spacing={4}>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <img
-              alt="post"
-              style={{ width: '100%' }}
-              src="https://via.placeholder.com/500/f5f5f5"
-            />
-          </Grid>
-        </Grid>
-      </Box>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
+
 }
 
 export default withTheme(theme)(ProfilePage);
