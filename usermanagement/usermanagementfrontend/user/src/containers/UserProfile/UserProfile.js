@@ -1,13 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
 
-import Header from './Header';
 import withTheme from './withTheme';
 import theme from './theme';
 import atoms from './atoms';
@@ -34,13 +31,12 @@ const useStyles = makeStyles({
 
 function ProfilePage() {
   const [tabIndex, setTabIndex] = React.useState(0);
-  const classes = useStyles();
   const upSm = useMediaQuery(theme.breakpoints.up('sm'), { defaultMatches: true });
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <Header />
+
       <Box component="main" maxWidth={935} margin="auto" padding="60px 20px 0">
         <Box mb="44px">
           <Grid container>
@@ -59,14 +55,6 @@ function ProfilePage() {
                   <Typography component="h1" variant="h4" lightWeight>
                     siriwatknp
                   </Typography>
-                  <Button className={classes.editButton} variant="outlined" fullWidth={!upSm}>
-                    Edit Profile
-                  </Button>
-                  <div className={classes.settings}>
-                    <IconButton>
-                      <Icon>settings</Icon>
-                    </IconButton>
-                  </div>
                 </Grid>
               </Box>
               <Box mb="20px">
