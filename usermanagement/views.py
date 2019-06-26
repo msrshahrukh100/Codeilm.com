@@ -4,6 +4,7 @@ from rest_framework import generics
 from django.contrib.auth.models import User
 from . import serializers as usermanagementserializers
 from .paginators import UsersListPagination
+from .permissions import IsOwnerOrReadOnly
 # Create your views here.
 
 
@@ -19,6 +20,7 @@ class UserProfile(generics.RetrieveUpdateAPIView):
 	queryset = User.objects.all()
 	lookup_field = 'id'
 	serializer_class = usermanagementserializers.UserProfilePageSerializer
+	permission_classes = (IsOwnerOrReadOnly, )
 
 
 class UsersList(generics.ListAPIView):
