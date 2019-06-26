@@ -14,8 +14,6 @@ import ReactGA from 'react-ga';
 
 const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
 
-console.log("debug", debug);
-
 ReactGA.initialize('UA-142472289-1', {debug: debug});
 
 const history = createBrowserHistory();
