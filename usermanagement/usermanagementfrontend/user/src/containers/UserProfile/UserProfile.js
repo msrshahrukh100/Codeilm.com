@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import { MdGridOn } from "react-icons/md";
-
+import TutorialList from '../TutorialList/TutorialList'
 import withTheme from './withTheme';
 import theme from './theme';
 import atoms from './atoms';
@@ -18,11 +18,11 @@ const { Tabs, Tab } = molecules;
 
 const styles = theme => ({
   avatar: {
-    height: theme.spacing(30),
-    width: theme.spacing(30),
+    height: theme.spacing(25),
+    width: theme.spacing(25),
     [theme.breakpoints.down('sm')]: {
-      height: theme.spacing(25),
-      width: theme.spacing(25),
+      height: theme.spacing(21),
+      width: theme.spacing(21),
     },
     [theme.breakpoints.down('xs')]: {
       height: theme.spacing(15),
@@ -140,10 +140,12 @@ class ProfilePage extends React.Component {
               this.setTabIndex(value);
             }}
           >
-            <Tab label="Posts" icon={<MdGridOn />} />
-            <Tab label="Following" icon={<Icon>live_tv</Icon>} />
-            <Tab label="Followers" icon={<Icon>bookmark_border_outlined</Icon>} />
+            <Tab value="posts" label="Posts" icon={<MdGridOn />} />
+            <Tab value="following" label="Following" icon={<Icon>live_tv</Icon>} />
+            <Tab value="followers" label="Followers" icon={<Icon>bookmark_border_outlined</Icon>} />
           </Tabs>
+          {this.state.tabIndex === "posts" && <TutorialList />}
+
           <Grid container spacing={4}>
             <Grid item xs={4}>
               <img
