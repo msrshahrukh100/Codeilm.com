@@ -73,17 +73,18 @@ class TutorialList(generics.ListAPIView):
 
 	def get_queryset(self):
 		get_params = self.request.GET
+		user = self.request.user
 		repository_name = get_params.get('repo_name')
 		branch_name = get_params.get('branch_name')
 		repo_create = get_params.get('repo_create')
+		profile_view = get_params.get('profile_view')
+		try:
+			user_id = int(get_params.get('user_id')) if get_params.get('user_id') else None
+		except:
+			return []
+
 		q = get_params.get('q')
-		if q:
-			return lovecode_models.Tutorial.objects.filter(
-				Q(is_published=True),
-				Q(tags__value__icontains=q) |
-				Q(tags__label__icontains=q) |
-				Q(title__icontains=q)
-				).distinct()
+
 		if repo_create:
 			if repository_name and branch_name and self.request.user.is_authenticated:
 				return lovecode_models.Tutorial.objects.filter(
@@ -93,8 +94,26 @@ class TutorialList(generics.ListAPIView):
 				)
 			else:
 				return []
-		return lovecode_models.Tutorial.objects.filter(is_published=True)
 
+		qs = lovecode_models.Tutorial.objects.all()
+
+		if user_id:
+			qs = qs.filter(user__id=user_id)
+
+		if profile_view and user.is_authenticated and (user_id == user.id):
+			pass
+		else:
+			qs = qs.filter(is_published=True)
+
+		if q:
+			qs = qs.filter(
+				Q(is_published=True),
+				Q(tags__value__icontains=q) |
+				Q(tags__label__icontains=q) |
+				Q(title__icontains=q)
+				).distinct()
+
+		return qs
 
 class TutorialDetail(generics.RetrieveAPIView):
 	queryset = lovecode_models.Tutorial.objects.all()
