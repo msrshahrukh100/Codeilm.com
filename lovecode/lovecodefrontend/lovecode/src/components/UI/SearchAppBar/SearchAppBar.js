@@ -135,9 +135,19 @@ class SearchAppBar extends React.Component {
   }
 
   handleInput = event => {
+    const value = event.target.value
     if(event.key == 'Enter') {
-      this.search(event.target.value)
+      this.search(value)
     }
+  }
+
+  handleChange = event => {
+    const value = event.target.value
+    this.setState((prevState, props) => {
+      return {
+        timeout: resetTimeout(prevState.timeout, setTimeout(() => this.search(value), 1000))
+      }
+    })
   }
 
   render() {
@@ -167,6 +177,7 @@ class SearchAppBar extends React.Component {
         <InputBase
         placeholder="Search…"
         onKeyDown={this.handleInput}
+        onChange={this.handleChange}
         classes={{
           root: classes.inputRoot,
           input: classes.inputInput,
