@@ -113,8 +113,8 @@ class TutorialList extends React.Component {
           loader={<PageLayout><ListPageSkeleton /></PageLayout>}
       >
       {this.state.tutorials.map((tutorial, index) => {
-        const editUrl = tutorial.repository_name ? `/create/${tutorial.repository_name}/${tutorial.id}/${tutorial.slug}/${tutorial.branch_name}`
-        : `/create/new/${tutorial.id}/${tutorial.slug}`
+        const editUrl = tutorial.repository_name ? `https://codeilm.com/create/${tutorial.repository_name}/${tutorial.id}/${tutorial.slug}/${tutorial.branch_name}`
+        : `https://codeilm.com/create/new/${tutorial.id}/${tutorial.slug}`
         const actionButtons = (
           <>
           <LikeButton tutorial={tutorial}/>
@@ -126,14 +126,14 @@ class TutorialList extends React.Component {
             size="small"
             color="primary"
             className={classes.metricsButton}
-            onClick={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}>
+            onClick={() => window.location = 'https://codeilm.com/metrics/' + tutorial.id + '/' + tutorial.slug }>
             <MdTrendingUp className={classes.iconSmall} />
             </Button>
             <Button
             size="small"
             color="primary"
             className={classes.metricsButton}
-            onClick={() => this.props.history.push(editUrl)}>
+            onClick={() => window.location = editUrl}>
             <MdModeEdit className={classes.iconSmall} />
             </Button>
             </>
@@ -141,7 +141,7 @@ class TutorialList extends React.Component {
           }
           </>
         )
-        const linkUrl = "/stories/?q="
+        const linkUrl = "https://codeilm.com/stories/?q="
         const content = (<>
           <div className={classes.chips}>
           {tutorial.tutorial_tags ? tutorial.tutorial_tags.map(tag => <Chips key={tag.id} link={linkUrl + tag.value} chipsData={{text: tag.label}} />) : null}
@@ -153,7 +153,7 @@ class TutorialList extends React.Component {
           headerVariant="h5"
           key={tutorial.id}
           content={content}
-          onClick={() => this.props.history.push('/stories/' + tutorial.id + '/' + tutorial.slug)}
+          onClick={() => window.location = 'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug}
           actionButtons={actionButtons}
           title={tutorial.title} />
       })}

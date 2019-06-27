@@ -27,7 +27,8 @@ function handleDelete() {
 
 function handleClick(event, props) {
   event.stopPropagation();
-  props.history.push(props.link);
+  // props.history.push(props.link);
+  window.location = props.link;
 }
 
 function Chips(props) {

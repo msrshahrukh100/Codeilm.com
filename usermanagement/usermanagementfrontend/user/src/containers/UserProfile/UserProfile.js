@@ -25,8 +25,8 @@ const styles = theme => ({
       width: theme.spacing(21),
     },
     [theme.breakpoints.down('xs')]: {
-      height: theme.spacing(15),
-      width: theme.spacing(15),
+      height: theme.spacing(13),
+      width: theme.spacing(13),
     },
   }
 });
@@ -144,73 +144,9 @@ class ProfilePage extends React.Component {
             <Tab value="following" label="Following" icon={<Icon>live_tv</Icon>} />
             <Tab value="followers" label="Followers" icon={<Icon>bookmark_border_outlined</Icon>} />
           </Tabs>
-          {this.state.tabIndex === "posts" && <TutorialList />}
-
-          <Grid container spacing={4}>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <img
-                alt="post"
-                style={{ width: '100%' }}
-                src="https://via.placeholder.com/500/f5f5f5"
-              />
-            </Grid>
-          </Grid>
+          <div style={this.state.tabIndex == "posts" ? {display: 'block'} : {display: 'none'}}>
+            <TutorialList/>
+          </div>
         </Box>
       </React.Fragment>
     );
