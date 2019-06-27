@@ -1,32 +1,34 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { makeStyles } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Box from '@material-ui/core/Box';
+import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from 'react-router-dom'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import { MdGridOn } from "react-icons/md";
 
 import withTheme from './withTheme';
 import theme from './theme';
 import atoms from './atoms';
 import molecules from './molecules';
+import axios from '../../user_axios'
 
 const { Avatar, Icon, Typography } = atoms;
 const { Tabs, Tab } = molecules;
 
-const useStyles = makeStyles({
-  editButton: {
-    marginLeft: 0,
-    marginTop: 12,
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: 20,
-      marginTop: 0,
+const styles = theme => ({
+  avatar: {
+    height: theme.spacing(30),
+    width: theme.spacing(30),
+    [theme.breakpoints.down('sm')]: {
+      height: theme.spacing(25),
+      width: theme.spacing(25),
     },
-  },
-  settings: {
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: 5,
+    [theme.breakpoints.down('xs')]: {
+      height: theme.spacing(15),
+      width: theme.spacing(15),
     },
-  },
+  }
 });
 
 class ProfilePage extends React.Component {
@@ -34,31 +36,71 @@ class ProfilePage extends React.Component {
     tabIndex: 0
   }
 
+  constructor(props) {
+    super(props)
+    const { userId } = this.props.match.params;
+    this.state = {
+      userId: userId,
+      profileData: null
+    }
+  }
+
+  fetchProfileData = () => {
+    axios.get(`/users/${this.state.userId}`)
+    .then(response => {
+      this.setState({
+        profileData: response.data
+      })
+    })
+    .catch(error => {
+      this.setState({
+        loading: false,
+        error: error
+      })
+    })
+  }
+
+  componentDidMount() {
+    this.fetchProfileData()
+  }
+
+  componentDidUpdate(prevProps) {
+    const newUserId = this.props.match.params.userId;
+    const prevUserId = prevProps.match.params.userId;
+
+    if(prevUserId !== newUserId) {
+      this.setState({userId: newUserId}, () => this.fetchProfileData())
+    }
+  }
+
+
+
   setTabIndex = index => {
     this.setState({tabIndex: index})
   }
 
   render() {
-
+    const { classes } = this.props;
     return (
       <React.Fragment>
         <CssBaseline />
-
         <Box component="main" maxWidth={935} margin="auto" padding="60px 20px 0">
           <Box mb="44px">
+            {this.state.profileData ?
             <Grid container>
               <Grid item xs={4}>
                 <Avatar
+                className={classes.avatar}
                   style={{ margin: 'auto' }}
-                  alt="My profile"
-                  src="https://cc-media-foxit.fichub.com/image/fox-it-mondofox/e8c0f288-781d-4d0b-98ad-fd169782b53b/scene-sottacqua-per-i-sequel-di-avatar-maxw-654.jpg"
+                  alt={this.state.profileData.full_name ? this.state.profileData.full_name : this.state.profileData.username}
+                  src={this.state.profileData.user_profile_pic}
                 />
               </Grid>
               <Grid item xs={8}>
                 <Box clone mb="20px">
                   <Grid container alignItems="center">
                     <Typography component="h1" variant="h4" lightWeight>
-                      siriwatknp
+                      {this.state.profileData.full_name ? this.state.profileData.full_name : this.state.profileData.username}
                     </Typography>
                   </Grid>
                 </Box>
@@ -66,7 +108,7 @@ class ProfilePage extends React.Component {
                   <Grid container spacing={5}>
                     <Grid item>
                       <Typography variant="subtitle1">
-                        <b>132</b> posts
+                        <b>{this.state.profileData.tutorials.length != 0 ? this.state.profileData.tutorials.length : null}</b> posts
                       </Typography>
                     </Grid>
                     <Grid item>
@@ -81,13 +123,15 @@ class ProfilePage extends React.Component {
                     </Grid>
                   </Grid>
                 </Box>
-                <Typography variant="subtitle1" bold>
-                  Siriwat Kunaporn
-                </Typography>
-                <Typography variant="subtitle1">Bangkok Christian College</Typography>
-                <Typography variant="subtitle1">CU intania 96.</Typography>
+                {this.state.profileData.username ?
+                  <Typography variant="subtitle1" bold>
+                  @{this.state.profileData.username}
+                  </Typography>
+                  : null}
+                <Typography variant="subtitle1">{this.state.profileData.intro}</Typography>
               </Grid>
             </Grid>
+            : null}
           </Box>
           <Tabs
             value={this.state.tabIndex}
@@ -96,10 +140,9 @@ class ProfilePage extends React.Component {
               this.setTabIndex(value);
             }}
           >
-            <Tab label="Posts" icon={<Icon>grid_on_outlined</Icon>} />
-            <Tab label="IGTV" icon={<Icon>live_tv</Icon>} />
-            <Tab label="Saved" icon={<Icon>bookmark_border_outlined</Icon>} />
-            <Tab label="Tagged" />
+            <Tab label="Posts" icon={<MdGridOn />} />
+            <Tab label="Following" icon={<Icon>live_tv</Icon>} />
+            <Tab label="Followers" icon={<Icon>bookmark_border_outlined</Icon>} />
           </Tabs>
           <Grid container spacing={4}>
             <Grid item xs={4}>
@@ -173,4 +216,4 @@ class ProfilePage extends React.Component {
 
 }
 
-export default withTheme(theme)(ProfilePage);
+export default withTheme(theme)(withStyles(styles)(withRouter(withErrorHandler(ProfilePage, axios, "list"))));
