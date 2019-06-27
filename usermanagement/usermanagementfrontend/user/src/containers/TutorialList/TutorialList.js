@@ -50,6 +50,8 @@ class TutorialList extends React.Component {
     super(props)
 
     const params = new URLSearchParams(props.location.search);
+    const { userId } = props.match.params;
+
     const q = params.get('q');
     this.state = {
       tutorials: [],
@@ -58,7 +60,8 @@ class TutorialList extends React.Component {
       pageNumber: null,
       count: 0,
       loading: true,
-      q:q
+      q:q,
+      userId: userId
     }
   }
 
@@ -76,11 +79,13 @@ class TutorialList extends React.Component {
 
   fetchTutorials = () => {
     this.setState({loading: true})
-    const url = this.state.pageNumber ?
+    let url = this.state.pageNumber ?
       this.state.q ?
         `https://codeilm.com/api/v1/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
         : `https://codeilm.com/api/v1/tutorials/?page=${this.state.pageNumber}`
-    : this.state.q ? `https://codeilm.com/api/v1/tutorials/?q=${this.state.q}` : "https://codeilm.com/api/v1/tutorials";
+    : this.state.q ? `https://codeilm.com/api/v1/tutorials/?q=${this.state.q}` : "https://codeilm.com/api/v1/tutorials/?temp=asdf";
+
+    url += `&user_id=${this.state.userId}&profile_view=true`
     axios.get(url)
       .then(response => {
         this.setState(state => ({
@@ -171,11 +176,6 @@ class TutorialList extends React.Component {
               : !this.state.loading ? (<>
               <p style={{fontSize: 20, margin: 30}}>Sorry we couldn't find any story with the search query
                 <strong style={{fontSize: 30}}> {this.state.q}</strong>
-              </p>
-              <p style={{fontSize: 20, margin: 30}}>
-                <Link to="/stories">
-                  See all the stories
-                </Link>
               </p>
             </>) : null
           }
