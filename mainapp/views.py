@@ -114,7 +114,7 @@ def save_group_creation_request(request):
 
 
 def redirect_to_page(request, exception, template_name="feedback_page.html"):
-	return redirect(reverse("feedback:feedback_page", kwargs={"id": 1, "slug": "join-the-community"}))
+	return render(request, '400errorpage.html', {})
 
 
 def redirect_for_server_error(request, template_name="500errorpage.html"):
