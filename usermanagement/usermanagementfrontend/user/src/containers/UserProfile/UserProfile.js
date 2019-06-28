@@ -12,6 +12,8 @@ import theme from './theme';
 import atoms from './atoms';
 import molecules from './molecules';
 import axios from '../../user_axios'
+import Paper from '@material-ui/core/Paper';
+import UserPaper from '../../components/UI/UserPaper/UserPaper'
 
 const { Avatar, Icon, Typography } = atoms;
 const { Tabs, Tab } = molecules;
@@ -42,7 +44,7 @@ class ProfilePage extends React.Component {
     this.state = {
       userId: userId,
       profileData: null,
-      tabIndex: "posts"
+      tabIndex: "followers"
     }
   }
 
@@ -82,6 +84,23 @@ class ProfilePage extends React.Component {
 
   render() {
     const { classes } = this.props;
+    const followers = this.state.profileData ? this.state.profileData.follower.map((value, index) => {
+      return <UserPaper name={value.user.full_name} intro={value.user.intro} imageUrl={value.user.user_profile_pic} />
+    }) : null;
+    const followersGrid = (
+      <Grid container spacing={3}>
+        {followers}
+      </Grid>
+    )
+    const following = this.state.profileData ? this.state.profileData.following.map((value, index) => {
+      return <UserPaper name={value.following.full_name} intro={value.following.intro} imageUrl={value.following.user_profile_pic} />
+    }) : null;
+    const followingGrid = (
+      <Grid container spacing={3}>
+        {following}
+      </Grid>
+    )
+
     return (
       <React.Fragment>
         <CssBaseline />
@@ -154,6 +173,8 @@ class ProfilePage extends React.Component {
           <div style={this.state.tabIndex == "posts" ? {display: 'block'} : {display: 'none'}}>
             <TutorialList/>
           </div>
+          {this.state.tabIndex == "followers" ? followersGrid : null}
+          {this.state.tabIndex == "following" ? followingGrid : null}
         </Box>
       </React.Fragment>
     );
