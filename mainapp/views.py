@@ -113,8 +113,8 @@ def save_group_creation_request(request):
 	return redirect('mainapp:home')
 
 
-def redirect_to_page(request, exception, template_name="feedback_page.html"):
-	return render(request, '400errorpage.html', {})
+def redirect_to_page(request, exception, template_name="404errorpage.html"):
+	return render(request, '404errorpage.html', {})
 
 
 def redirect_for_server_error(request, template_name="500errorpage.html"):
