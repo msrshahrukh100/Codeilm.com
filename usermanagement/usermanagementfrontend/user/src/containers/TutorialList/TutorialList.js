@@ -17,6 +17,7 @@ import ShareButton from '../ShareButton/ShareButton'
 import Grid from '@material-ui/core/Grid';
 import Chips from '../../components/UI/Chips/Chips'
 import { Link } from 'react-router-dom'
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
   margin: {
@@ -127,20 +128,24 @@ class TutorialList extends React.Component {
           <ShareButton url={'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
           {tutorial.owner_is_authenticated_user ?
             <>
-            <Button
-            size="small"
-            color="primary"
-            className={classes.metricsButton}
-            onClick={() => window.location = 'https://codeilm.com/metrics/' + tutorial.id + '/' + tutorial.slug }>
-            <MdTrendingUp className={classes.iconSmall} />
-            </Button>
-            <Button
-            size="small"
-            color="primary"
-            className={classes.metricsButton}
-            onClick={() => window.location = editUrl}>
-            <MdModeEdit className={classes.iconSmall} />
-            </Button>
+            <Tooltip title="See Metrics" aria-label="See Metrics">
+              <Button
+              size="small"
+              color="primary"
+              className={classes.metricsButton}
+              onClick={() => window.location = 'https://codeilm.com/metrics/' + tutorial.id + '/' + tutorial.slug }>
+              <MdTrendingUp className={classes.iconSmall} />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Edit" aria-label="Edit">
+              <Button
+              size="small"
+              color="primary"
+              className={classes.metricsButton}
+              onClick={() => window.location = editUrl}>
+              <MdModeEdit className={classes.iconSmall} />
+              </Button>
+            </Tooltip>
             </>
             : null
           }

@@ -25,7 +25,13 @@ const styles = theme => ({
     marginLeft: theme.spacing(2),
   },
   title: {
-    marginLeft: 16
+    marginLeft: 16,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: 40,
+    },
+    [theme.breakpoints.down('xs')]: {
+      fontSize: 30,
+    },
   }
 });
 
