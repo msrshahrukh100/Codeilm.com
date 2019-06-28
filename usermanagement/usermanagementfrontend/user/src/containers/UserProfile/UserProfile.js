@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router-dom'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-import { MdGridOn } from "react-icons/md";
+import { MdGridOn, MdPersonAdd, MdPeople } from "react-icons/md";
 import TutorialList from '../TutorialList/TutorialList'
 import withTheme from './withTheme';
 import theme from './theme';
@@ -116,12 +116,16 @@ class ProfilePage extends React.Component {
                     </Grid>
                     <Grid item>
                       <Typography variant="subtitle1">
-                        <b>325</b> followers
+                        {this.state.profileData.follower.length ?
+                          <><b>{this.state.profileData.follower.length }</b> follower{this.state.profileData.follower.length > 1 ? "s" : "" }</>
+                          : null}
                       </Typography>
                     </Grid>
                     <Grid item>
                       <Typography variant="subtitle1">
-                        <b>260</b> following
+                      {this.state.profileData.following.length ?
+                        <><b>{this.state.profileData.following.length }</b> following</>
+                        : null}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -144,8 +148,8 @@ class ProfilePage extends React.Component {
             }}
           >
             <Tab value="posts" label="Posts" icon={<MdGridOn />} />
-            <Tab value="following" label="Following" icon={<Icon>live_tv</Icon>} />
-            <Tab value="followers" label="Followers" icon={<Icon>bookmark_border_outlined</Icon>} />
+            <Tab value="following" label="Following" icon={<MdPersonAdd />} />
+            <Tab value="followers" label="Followers" icon={<MdPeople />} />
           </Tabs>
           <div style={this.state.tabIndex == "posts" ? {display: 'block'} : {display: 'none'}}>
             <TutorialList/>
