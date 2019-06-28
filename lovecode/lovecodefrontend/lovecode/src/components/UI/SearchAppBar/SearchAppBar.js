@@ -16,6 +16,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import ReactGA from 'react-ga';
 
 const theme = createMuiTheme({
   palette: {
@@ -131,6 +132,11 @@ class SearchAppBar extends React.Component {
   };
 
   search = (value) => {
+    ReactGA.event({
+      category: 'User',
+      action: `Performed Search ${value}`,
+      label: 'PERFORMED_SEARCH',
+    });
     this.props.history.push("/stories/?q=" + value)
   }
 
