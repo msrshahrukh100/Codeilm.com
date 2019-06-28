@@ -179,9 +179,12 @@ class TutorialList extends React.Component {
             {this.state.tutorials && this.state.tutorials.length != 0 ?
               storiesList
               : !this.state.loading ? (<>
-              <p style={{fontSize: 20, margin: 30}}>Sorry we couldn't find any story with the search query
-                <strong style={{fontSize: 30}}> {this.state.q}</strong>
-              </p>
+                {this.state.q ?
+                  <p style={{fontSize: 20, margin: 30}}>Sorry we couldn't find any story with the search query
+                  <strong style={{fontSize: 30}}> {this.state.q}</strong>
+                  </p>
+
+                  : null}
             </>) : null
           }
           </Grid>
@@ -191,4 +194,4 @@ class TutorialList extends React.Component {
   }
 }
 
-export default withErrorHandler(withRouter(withStyles(styles)(TutorialList)), axios, "list")
+export default withErrorHandler(withRouter(withStyles(styles)(TutorialList)), axios)

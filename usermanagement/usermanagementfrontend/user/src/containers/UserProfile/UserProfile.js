@@ -41,7 +41,8 @@ class ProfilePage extends React.Component {
     const { userId } = this.props.match.params;
     this.state = {
       userId: userId,
-      profileData: null
+      profileData: null,
+      tabIndex: "posts"
     }
   }
 
@@ -108,7 +109,9 @@ class ProfilePage extends React.Component {
                   <Grid container spacing={5}>
                     <Grid item>
                       <Typography variant="subtitle1">
-                        <b>{this.state.profileData.tutorials.length != 0 ? this.state.profileData.tutorials.length : null}</b> posts
+                      {this.state.profileData.tutorial_count != "0"
+                        ? <span><b>{this.state.profileData.tutorial_count}</b> post{this.state.profileData.tutorial_count != "1" ? "s" : ""}</span>
+                        : null}
                       </Typography>
                     </Grid>
                     <Grid item>

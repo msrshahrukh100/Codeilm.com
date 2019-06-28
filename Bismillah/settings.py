@@ -280,7 +280,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 #     },
 # }
 
-ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'shahrukh@allywith.com')]
+ADMINS = [('shahrukh', 'msr.concordfly@gmail.com')]
 SERVER_EMAIL = "shahrukh@allywith.com"
 
 GEOIP_PATH = os.path.join(BASE_DIR, 'geo-ip-db')
@@ -288,7 +288,7 @@ GEOIP_PATH = os.path.join(BASE_DIR, 'geo-ip-db')
 if DEBUG:
     BASE_URL = "http://127.0.0.1:8000"
 else:
-    BASE_URL = "https://allywith.com"
+    BASE_URL = "https://codeilm.com"
 
 
 CACHES = {
