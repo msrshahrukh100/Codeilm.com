@@ -77,8 +77,6 @@ class ProfilePage extends React.Component {
     }
   }
 
-
-
   setTabIndex = index => {
     this.setState({tabIndex: index})
   }
@@ -190,8 +188,12 @@ class ProfilePage extends React.Component {
           <div style={this.state.tabIndex == "posts" ? {display: 'block'} : {display: 'none'}}>
             <TutorialList/>
           </div>
-          {this.state.tabIndex == "followers" ? followersGrid : null}
-          {this.state.tabIndex == "following" ? followingGrid : null}
+          <div style={this.state.tabIndex == "followers" ? {display: 'block'} : {display: 'none'}}>
+            {followersGrid}
+          </div>
+          <div style={this.state.tabIndex == "following" ? {display: 'block'} : {display: 'none'}}>
+            {followingGrid}
+          </div>
         </Box>
       </React.Fragment>
     );
