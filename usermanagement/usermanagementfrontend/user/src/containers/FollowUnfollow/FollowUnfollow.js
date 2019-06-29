@@ -11,8 +11,7 @@ const styles = theme => ({
     margin: theme.spacing(1),
   },
   buttonSmall: {
-    height: theme.spacing(1),
-    width: theme.spacing(1),
+    marginTop: theme.spacing(1),
     fontSize: theme.spacing(1.5)
   }
 })
@@ -51,7 +50,6 @@ class OutlinedButtons extends React.Component {
   render() {
     const { classes } = this.props;
     const { connection } = this.props;
-    console.log(this.props);
     return (
       <Button
         disabled={this.state.loading}

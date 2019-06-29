@@ -88,11 +88,11 @@ class ProfilePage extends React.Component {
     const followers = this.state.profileData ? this.state.profileData.follower.map((value, index) => {
       return <UserPaper
         key={`follower_${index}`}
-        userId={value.user.id}
-        connection={value.user.connection_with_logged_in_user}
-        name={value.user.full_name}
-        intro={value.user.intro}
-        imageUrl={value.user.user_profile_pic} />
+        userId={value.connection.user.id}
+        connection={value.connection_with_logged_in_user}
+        name={value.connection.user.full_name}
+        intro={value.connection.user.intro}
+        imageUrl={value.connection.user.user_profile_pic} />
     }) : null;
     const followersGrid = (
       <Grid container spacing={3}>
@@ -103,11 +103,11 @@ class ProfilePage extends React.Component {
     const following = this.state.profileData ? this.state.profileData.following.map((value, index) => {
       return <UserPaper
         key={`following_${index}`}
-        userId={value.following.id}
-        connection={value.following.connection_with_logged_in_user}
-        name={value.following.full_name}
-        intro={value.following.intro}
-        imageUrl={value.following.user_profile_pic}
+        userId={value.connection.following.id}
+        connection={value.connection_with_logged_in_user}
+        name={value.connection.following.full_name}
+        intro={value.connection.following.intro}
+        imageUrl={value.connection.following.user_profile_pic}
         />
     }) : null;
     const followingGrid = (
