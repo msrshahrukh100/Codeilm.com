@@ -27,6 +27,15 @@ class FollowerConnectionsSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'following')
 
 
+class ConnectionsSerializer(serializers.ModelSerializer):
+    user = UserSimpleSerializer()
+    following = UserSimpleSerializer()
+
+    class Meta:
+        model = usermanagement_models.Connections
+        fields = ('user', 'following', 'active')
+
+
 class UserProfilePageSerializer(serializers.ModelSerializer):
     user_profile_pic = serializers.CharField(read_only=True, source='user_profile.first.get_profile_pic_url')
     full_name = serializers.CharField(read_only=True, source='get_full_name')
