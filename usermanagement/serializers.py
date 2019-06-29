@@ -8,35 +8,10 @@ class UserSimpleSerializer(serializers.ModelSerializer):
     user_profile_pic = serializers.CharField(read_only=True, source='user_profile.first.get_profile_pic_url')
     full_name = serializers.CharField(read_only=True, source='get_full_name')
     intro = serializers.CharField(source='user_profile.first.intro')
-    connection_with_logged_in_user = serializers.SerializerMethodField()
-
-    def get_connection_with_logged_in_user(self, obj):
-        user = None
-        request = self.context.get("request")
-        if request and hasattr(request, "user"):
-            request_user = request.user
-            if request_user.is_authenticated and obj != request_user:
-                connection = usermanagement_models.Connections.objects.filter(user=request_user, following=obj)
-                if connection.exists():
-                    return ConnectionsSerializer(connection.first()).data
-        return None
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'full_name', 'intro', 'connection_with_logged_in_user', 'user_profile_pic']
-
-class FollowingConnectionsSerializer(serializers.ModelSerializer):
-    following = UserSimpleSerializer()
-    class Meta:
-        model = usermanagement_models.Connections
-        fields = ('id', 'user', 'following')
-
-class FollowerConnectionsSerializer(serializers.ModelSerializer):
-    user = UserSimpleSerializer()
-
-    class Meta:
-        model = usermanagement_models.Connections
-        fields = ('id', 'user', 'following')
+        fields = ['id', 'username', 'full_name', 'intro', 'user_profile_pic']
 
 
 class ConnectionsSerializer(serializers.ModelSerializer):
@@ -71,10 +46,38 @@ class UserProfilePageSerializer(serializers.ModelSerializer):
 
 
     def get_following(self, obj):
-        return FollowingConnectionsSerializer(obj.user_followings.all(), many=True).data
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            request_user = request.user
+            if request_user.is_authenticated:
+                user = request_user
+
+        following = obj.user_followings.filter(active=True)
+        data = []
+        for connection in following:
+            data.append({
+                'connection_with_logged_in_user': ConnectionsSerializer(connection.following.user_followers.filter(user=user).first()).data,
+                'connection': ConnectionsSerializer(connection).data
+            })
+        return data
 
     def get_follower(self, obj):
-        return FollowerConnectionsSerializer(obj.user_followers.all(), many=True).data
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            request_user = request.user
+            if request_user.is_authenticated:
+                user = request_user
+
+        follower = obj.user_followers.filter(active=True)
+        data = []
+        for connection in follower:
+            data.append({
+                'connection_with_logged_in_user': ConnectionsSerializer(connection.user.user_followers.filter(user=user).first()).data,
+                'connection': ConnectionsSerializer(connection).data
+            })
+        return data
 
     def get_my_profile(self, obj):
         user = None
