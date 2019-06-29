@@ -50,7 +50,7 @@ const userPaper = props => {
     </p>
   )
   return (
-    <Grid item xs={12} lg={3} sm={6}>
+    <Grid item xs={12} lg={4} sm={6}>
       <Paper className={classes.userPaper}>
         <Chip
          avatar={<Avatar alt={props.name} className={classes.avatar} src={props.imageUrl} />}

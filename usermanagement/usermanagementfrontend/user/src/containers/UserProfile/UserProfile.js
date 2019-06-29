@@ -14,6 +14,7 @@ import molecules from './molecules';
 import axios from '../../user_axios'
 import Paper from '@material-ui/core/Paper';
 import UserPaper from '../../components/UI/UserPaper/UserPaper'
+import FollowUnfollow from '../FollowUnfollow/FollowUnfollow'
 
 const { Avatar, Icon, Typography } = atoms;
 const { Tabs, Tab } = molecules;
@@ -122,6 +123,7 @@ class ProfilePage extends React.Component {
                     <Typography component="h1" variant="h4" lightWeight>
                       {this.state.profileData.full_name ? this.state.profileData.full_name : this.state.profileData.username}
                     </Typography>
+                    <FollowUnfollow />
                   </Grid>
                 </Box>
                 <Box mb="20px">
