@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
     this.state = {
       userId: userId,
       profileData: null,
-      tabIndex: "followers"
+      tabIndex: "posts"
     }
   }
 
@@ -86,15 +86,29 @@ class ProfilePage extends React.Component {
   render() {
     const { classes } = this.props;
     const followers = this.state.profileData ? this.state.profileData.follower.map((value, index) => {
-      return <UserPaper name={value.user.full_name} intro={value.user.intro} imageUrl={value.user.user_profile_pic} />
+      return <UserPaper
+        key={`follower_${index}`}
+        userId={value.user.id}
+        connection={value.user.connection_with_logged_in_user}
+        name={value.user.full_name}
+        intro={value.user.intro}
+        imageUrl={value.user.user_profile_pic} />
     }) : null;
     const followersGrid = (
       <Grid container spacing={3}>
         {followers}
       </Grid>
     )
+
     const following = this.state.profileData ? this.state.profileData.following.map((value, index) => {
-      return <UserPaper name={value.following.full_name} intro={value.following.intro} imageUrl={value.following.user_profile_pic} />
+      return <UserPaper
+        key={`following_${index}`}
+        userId={value.following.id}
+        connection={value.following.connection_with_logged_in_user}
+        name={value.following.full_name}
+        intro={value.following.intro}
+        imageUrl={value.following.user_profile_pic}
+        />
     }) : null;
     const followingGrid = (
       <Grid container spacing={3}>
@@ -102,6 +116,7 @@ class ProfilePage extends React.Component {
       </Grid>
     )
 
+    console.log(this.state);
     return (
       <React.Fragment>
         <CssBaseline />
@@ -123,7 +138,7 @@ class ProfilePage extends React.Component {
                     <Typography component="h1" variant="h4" lightWeight>
                       {this.state.profileData.full_name ? this.state.profileData.full_name : this.state.profileData.username}
                     </Typography>
-                    <FollowUnfollow />
+                    <FollowUnfollow followingUserId={this.state.userId} connection={this.state.profileData.connection_with_logged_in_user} />
                   </Grid>
                 </Box>
                 <Box mb="20px">
@@ -184,4 +199,4 @@ class ProfilePage extends React.Component {
 
 }
 
-export default withTheme(theme)(withStyles(styles)(withRouter(withErrorHandler(ProfilePage, axios, "list"))));
+export default withTheme(theme)(withStyles(styles)(withRouter(withErrorHandler(ProfilePage, axios))));

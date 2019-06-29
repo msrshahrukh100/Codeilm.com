@@ -1,7 +1,12 @@
 import React from 'react'
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
 import PageLayout from '../../components/UI/PageLayout/PageLayout'
+import DetailPageSkeleton from '../../components/UI/SkeletonLoaders/DetailPageSkeleton'
+import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkeleton'
+import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import LinearPreloader from '../../components/UI/SkeletonLoaders/LinearPreloader'
+import { connect } from 'react-redux'
+import * as actionCreators from '../../store/actions/index'
 import { withRouter } from "react-router";
 
 const withErrorHandler = (WrappedCompenent, axios, type) => {
@@ -24,11 +29,15 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
 
       this.resInterceptor = axios.interceptors.response.use(response => {
         this.setState({loading: false})
-        return response
+        if(response) {
+          return response
+        }
+        this.setState({error: "No response received"})
+        return {data: null}
       }, error => {
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
           this.props.onLogout()
-          this.props.history.push("/login/?next=" + this.props.match.path)
+          this.props.history.push("/login/?next=" + this.props.match.url)
         }
         else {
           this.setState({
@@ -52,15 +61,15 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
     }
 
     render() {
-      let skeleton = null
+      let skeleton = (<DetailPageLayout left=<PageLayout><DetailPageSkeleton /></PageLayout> />)
       if(type == "list") {
-        skeleton = (<LinearPreloader />)
+        skeleton = (<ListPageSkeleton />)
       }
       else if(type == "circular") {
         skeleton = <LinearPreloader />
       }
       else if(type == "detail") {
-        skeleton = <LinearPreloader />
+        skeleton = <DetailPageSkeleton />
       }
       else {
         skeleton = null
@@ -77,8 +86,19 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
     }
   }
 
+  const mapStateToProps = state => {
+    return {
+      authenticated: state.aReducer.authenticated
+    }
+  }
 
-  return withRouter(Cmp)
+  const mapDispatchToProps = dispatch => {
+    return {
+      onLogout: () => dispatch(actionCreators.authLogout())
+    }
+  }
+
+  return connect(mapStateToProps, mapDispatchToProps)(withRouter(Cmp))
 }
 
 

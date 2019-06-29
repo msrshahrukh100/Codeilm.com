@@ -194,4 +194,4 @@ class TutorialList extends React.Component {
   }
 }
 
-export default withErrorHandler(withRouter(withStyles(styles)(TutorialList)), axios)
+export default withErrorHandler(withRouter(withStyles(styles)(TutorialList)), axios, "list")

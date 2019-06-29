@@ -4,18 +4,19 @@ import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
+import FollowUnfollow from '../../../containers/FollowUnfollow/FollowUnfollow'
 
 const styles = theme => ({
   avatar: {
-    height: theme.spacing(7),
-    width: theme.spacing(7),
+    height: theme.spacing(9),
+    width: theme.spacing(9),
     [theme.breakpoints.down('sm')]: {
-      height: theme.spacing(5),
-      width: theme.spacing(5),
+      height: theme.spacing(8),
+      width: theme.spacing(8),
     },
     [theme.breakpoints.down('xs')]: {
-      height: theme.spacing(7),
-      width: theme.spacing(7),
+      height: theme.spacing(8),
+      width: theme.spacing(8),
     },
   },
   chip: {
@@ -47,8 +48,15 @@ const userPaper = props => {
       <span className={classes.intro}>
         {props.intro}
       </span>
+      <br/>
+      <FollowUnfollow
+        small={true}
+        followingUserId={props.userId}
+        connection={props.connection}
+        />
     </p>
   )
+  console.log(props);
   return (
     <Grid item xs={12} lg={4} sm={6}>
       <Paper className={classes.userPaper}>
