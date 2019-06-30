@@ -54,6 +54,7 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       display: 'none'
     },
+    cursor: 'pointer'
   },
   search: {
     position: 'relative',
