@@ -132,7 +132,7 @@ class ProfilePage extends React.Component {
         showFollowUnfollowButton={!(this.state.userId === value.connection.user.id)}
         userId={value.connection.user.id}
         connection={value.connection_with_logged_in_user}
-        name={value.connection.user.full_name}
+        name={value.connection.user.full_name ? value.connection.user.full_name : value.connection.user.username}
         intro={value.connection.user.intro}
         imageUrl={value.connection.user.user_profile_pic} />
     }) : null;
@@ -148,7 +148,7 @@ class ProfilePage extends React.Component {
         showFollowUnfollowButton={!(this.state.userId === value.connection.following.id)}
         userId={value.connection.following.id}
         connection={value.connection_with_logged_in_user}
-        name={value.connection.following.full_name}
+        name={value.connection.following.full_name ? value.connection.following.full_name : value.connection.following.username}
         intro={value.connection.following.intro}
         imageUrl={value.connection.following.user_profile_pic}
         />
