@@ -12,7 +12,6 @@ import LikeButton from '../LikeButton/LikeButton'
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import { MdTrendingUp, MdModeEdit } from "react-icons/md";
 import Button from '@material-ui/core/Button';
-import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import ShareButton from '../ShareButton/ShareButton'
 import Grid from '@material-ui/core/Grid';
 import Chips from '../../components/UI/Chips/Chips'
@@ -171,9 +170,6 @@ class TutorialList extends React.Component {
     )
     return (
       <>
-        <BasicMetaTags
-          title="Stories on Codeilm"
-        />
         <Grid container spacing={0}>
           <Grid item xs={12} lg={12} sm={12}>
             {this.state.tutorials && this.state.tutorials.length != 0 ?

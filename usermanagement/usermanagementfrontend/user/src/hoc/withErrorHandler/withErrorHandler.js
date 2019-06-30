@@ -65,7 +65,7 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
       if(type == "list") {
         skeleton = (<ListPageSkeleton />)
       }
-      else if(type == "circular") {
+      else if(type == "linear") {
         skeleton = <LinearPreloader />
       }
       else if(type == "detail") {

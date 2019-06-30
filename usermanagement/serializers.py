@@ -27,7 +27,7 @@ class UserProfilePageSerializer(serializers.ModelSerializer):
     user_profile_pic = serializers.CharField(read_only=True, source='user_profile.first.get_profile_pic_url')
     full_name = serializers.CharField(read_only=True, source='get_full_name')
     intro = serializers.CharField(source='user_profile.first.intro')
-    tutorial_count = serializers.CharField(source='user_tutorials.all.count')
+    tutorial_count = serializers.CharField(read_only=True, source='user_tutorials.all.count')
     my_profile = serializers.SerializerMethodField()
     following = serializers.SerializerMethodField()
     follower = serializers.SerializerMethodField()

@@ -16,6 +16,9 @@ import Paper from '@material-ui/core/Paper';
 import UserPaper from '../../components/UI/UserPaper/UserPaper'
 import FollowUnfollow from '../FollowUnfollow/FollowUnfollow'
 import ReactGA from 'react-ga';
+import EditIntro from '../EditIntro/EditIntro'
+import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
+
 
 const { Avatar, Icon, Typography } = atoms;
 const { Tabs, Tab } = molecules;
@@ -46,7 +49,9 @@ class ProfilePage extends React.Component {
     this.state = {
       userId: userId,
       profileData: null,
-      tabIndex: "posts"
+      intro: null,
+      tabIndex: "posts",
+      loading: false
     }
   }
 
@@ -54,7 +59,9 @@ class ProfilePage extends React.Component {
     axios.get(`/users/${this.state.userId}`)
     .then(response => {
       this.setState({
-        profileData: response.data
+        profileData: response.data,
+        intro: response.data.intro,
+        loading: false
       })
     })
     .catch(error => {
@@ -75,6 +82,28 @@ class ProfilePage extends React.Component {
     ReactGA.pageview(this.props.match.url);
   }
 
+  handleIntroSave = () => {
+    this.setState({loading: true})
+    const putData = {
+      intro: this.state.intro
+    }
+
+    axios.put(`/users/${this.state.userId}`, putData)
+    .then(response => {
+      this.setState({
+        intro: response.data.intro,
+        loading: false
+      })
+    })
+    .catch(error => {
+      this.setState({
+        loading: false,
+        error: error
+      })
+    })
+
+  }
+
   componentDidUpdate(prevProps) {
     const newUserId = this.props.match.params.userId;
     const prevUserId = prevProps.match.params.userId;
@@ -86,6 +115,10 @@ class ProfilePage extends React.Component {
 
   setTabIndex = index => {
     this.setState({tabIndex: index})
+  }
+
+  handleIntroChange = event => {
+    this.setState({intro: event.target.value})
   }
 
   render() {
@@ -125,6 +158,9 @@ class ProfilePage extends React.Component {
 
     return (
       <React.Fragment>
+      <BasicMetaTags
+        title={this.state.profileData ? this.state.profileData.full_name : null}
+      />
         <CssBaseline />
         <Box component="main" maxWidth={935} margin="auto" padding="60px 20px 0">
           <Box mb="44px">
@@ -179,7 +215,16 @@ class ProfilePage extends React.Component {
                   @{this.state.profileData.username}
                   </Typography>
                   : null}
-                <Typography variant="subtitle1">{this.state.profileData.intro}</Typography>
+                <Typography variant="subtitle1">
+                  {this.state.intro}
+                </Typography>
+                {this.state.profileData.my_profile ?
+                  <EditIntro
+                    loading={this.state.loading}
+                    intro={this.state.intro}
+                    handleIntroChange={this.handleIntroChange}
+                    handleIntroSave={this.handleIntroSave} />
+                  : null}
               </Grid>
             </Grid>
             : null}
@@ -211,4 +256,4 @@ class ProfilePage extends React.Component {
 
 }
 
-export default withTheme(theme)(withStyles(styles)(withRouter(withErrorHandler(ProfilePage, axios))));
+export default withTheme(theme)(withStyles(styles)(withRouter(withErrorHandler(ProfilePage, axios, "linear"))));
