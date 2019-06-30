@@ -12,6 +12,7 @@ import theme from './theme';
 import atoms from './atoms';
 import molecules from './molecules';
 import axios from '../../user_axios'
+import getCookie from '../../utils/getCookie'
 import Paper from '@material-ui/core/Paper';
 import UserPaper from '../../components/UI/UserPaper/UserPaper'
 import FollowUnfollow from '../FollowUnfollow/FollowUnfollow'
@@ -87,7 +88,9 @@ class ProfilePage extends React.Component {
     const putData = {
       intro: this.state.intro
     }
+    const csrftoken = getCookie('csrftoken');
 
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.put(`/users/${this.state.userId}`, putData)
     .then(response => {
       this.setState({
