@@ -49,14 +49,15 @@ const userPaper = props => {
         {props.intro}
       </span>
       <br/>
-      <FollowUnfollow
+      {props.showFollowUnfollowButton ?
+        <FollowUnfollow
         small={true}
         followingUserId={props.userId}
         connection={props.connection}
         />
+        : null}
     </p>
   )
-  console.log(props);
   return (
     <Grid item xs={12} lg={4} sm={6}>
       <Paper className={classes.userPaper}>

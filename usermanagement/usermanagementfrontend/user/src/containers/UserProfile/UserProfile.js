@@ -15,6 +15,7 @@ import axios from '../../user_axios'
 import Paper from '@material-ui/core/Paper';
 import UserPaper from '../../components/UI/UserPaper/UserPaper'
 import FollowUnfollow from '../FollowUnfollow/FollowUnfollow'
+import ReactGA from 'react-ga';
 
 const { Avatar, Icon, Typography } = atoms;
 const { Tabs, Tab } = molecules;
@@ -66,6 +67,12 @@ class ProfilePage extends React.Component {
 
   componentDidMount() {
     this.fetchProfileData()
+    ReactGA.event({
+      category: 'User',
+      action: "Visited profile page",
+      label: 'VISITED_PROFILE_PAGE',
+    });
+    ReactGA.pageview(this.props.match.url);
   }
 
   componentDidUpdate(prevProps) {
@@ -86,6 +93,7 @@ class ProfilePage extends React.Component {
     const followers = this.state.profileData ? this.state.profileData.follower.map((value, index) => {
       return <UserPaper
         key={`follower_${index}`}
+        showFollowUnfollowButton={!(this.state.userId === value.connection.user.id)}
         userId={value.connection.user.id}
         connection={value.connection_with_logged_in_user}
         name={value.connection.user.full_name}
@@ -101,6 +109,7 @@ class ProfilePage extends React.Component {
     const following = this.state.profileData ? this.state.profileData.following.map((value, index) => {
       return <UserPaper
         key={`following_${index}`}
+        showFollowUnfollowButton={!(this.state.userId === value.connection.following.id)}
         userId={value.connection.following.id}
         connection={value.connection_with_logged_in_user}
         name={value.connection.following.full_name}
@@ -114,7 +123,6 @@ class ProfilePage extends React.Component {
       </Grid>
     )
 
-    console.log(this.state);
     return (
       <React.Fragment>
         <CssBaseline />
@@ -136,7 +144,9 @@ class ProfilePage extends React.Component {
                     <Typography component="h1" variant="h4" lightWeight>
                       {this.state.profileData.full_name ? this.state.profileData.full_name : this.state.profileData.username}
                     </Typography>
-                    <FollowUnfollow followingUserId={this.state.userId} connection={this.state.profileData.connection_with_logged_in_user} />
+                    {!this.state.profileData.my_profile ?
+                      <FollowUnfollow followingUserId={this.state.userId} connection={this.state.profileData.connection_with_logged_in_user} />
+                      : null}
                   </Grid>
                 </Box>
                 <Box mb="20px">
