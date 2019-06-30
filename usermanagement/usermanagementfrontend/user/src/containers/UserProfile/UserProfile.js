@@ -19,6 +19,7 @@ import FollowUnfollow from '../FollowUnfollow/FollowUnfollow'
 import ReactGA from 'react-ga';
 import EditIntro from '../EditIntro/EditIntro'
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
+import { connect } from 'react-redux';
 
 
 const { Avatar, Icon, Typography } = atoms;
@@ -129,7 +130,7 @@ class ProfilePage extends React.Component {
     const followers = this.state.profileData ? this.state.profileData.follower.map((value, index) => {
       return <UserPaper
         key={`follower_${index}`}
-        showFollowUnfollowButton={!(this.state.userId === value.connection.user.id)}
+        showFollowUnfollowButton={this.props.user ? !(this.props.user.id === value.connection.user.id) : true}
         userId={value.connection.user.id}
         userName={value.connection.user.username}
         connection={value.connection_with_logged_in_user}
@@ -146,7 +147,7 @@ class ProfilePage extends React.Component {
     const following = this.state.profileData ? this.state.profileData.following.map((value, index) => {
       return <UserPaper
         key={`following_${index}`}
-        showFollowUnfollowButton={!(this.state.userId === value.connection.following.id)}
+        showFollowUnfollowButton={this.props.user ? !(this.props.user.id === value.connection.following.id) : true}
         userId={value.connection.following.id}
         userName={value.connection.following.username}
         connection={value.connection_with_logged_in_user}
@@ -261,4 +262,10 @@ class ProfilePage extends React.Component {
 
 }
 
-export default withTheme(theme)(withStyles(styles)(withRouter(withErrorHandler(ProfilePage, axios, "linear"))));
+const matchStateToProps = state => {
+  return {
+    user: state.aReducer.user
+  }
+}
+
+export default withTheme(theme)(withStyles(styles)(withRouter(withErrorHandler(connect(matchStateToProps, null)(ProfilePage), axios, "linear"))));
