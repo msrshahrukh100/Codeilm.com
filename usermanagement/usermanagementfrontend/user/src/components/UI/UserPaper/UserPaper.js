@@ -5,11 +5,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 import { withStyles } from '@material-ui/core/styles';
 import FollowUnfollow from '../../../containers/FollowUnfollow/FollowUnfollow'
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   avatar: {
     height: theme.spacing(9),
     width: theme.spacing(9),
+    cursor: 'pointer',
     [theme.breakpoints.down('sm')]: {
       height: theme.spacing(8),
       width: theme.spacing(8),
@@ -29,46 +31,55 @@ const styles = theme => ({
     height: 150,
   },
   name: {
-    fontSize: 18
+    fontSize: 18,
+    cursor: 'pointer'
   },
   intro: {
     fontSize: 13,
-    color: 'grey'
+    color: 'grey',
+    cursor: 'pointer',
   }
 });
 
-const userPaper = props => {
-  const { classes } = props;
-  const label = (
-    <p>
-      <span className={classes.name}>
-        {props.name}
+class UserPaper extends React.Component {
+
+  redirectToProfile = () => {
+    this.props.history.push(`/u/${this.props.userId}/${this.props.userName}`)
+  }
+
+  render() {
+    const { classes } = this.props;
+    const label = (
+      <p>
+      <span className={classes.name} onClick={this.redirectToProfile}>
+      {this.props.name}
       </span>
       <br/>
-      <span className={classes.intro}>
-        {props.intro}
+      <span className={classes.intro} onClick={this.redirectToProfile}>
+      {this.props.intro}
       </span>
       <br/>
-      {props.showFollowUnfollowButton ?
+      {this.props.showFollowUnfollowButton ?
         <FollowUnfollow
         small={true}
-        followingUserId={props.userId}
-        connection={props.connection}
+        followingUserId={this.props.userId}
+        connection={this.props.connection}
         />
         : null}
-    </p>
-  )
-  return (
-    <Grid item xs={12} lg={4} sm={6}>
-      <Paper className={classes.userPaper}>
+        </p>
+      )
+      return (
+        <Grid item xs={12} lg={4} sm={6}>
+        <Paper className={classes.userPaper}>
         <Chip
-         avatar={<Avatar alt={props.name} className={classes.avatar} src={props.imageUrl} />}
-         label={label}
-         className={classes.chip}
-       />
-      </Paper>
-    </Grid>
-  )
+        avatar={<Avatar onClick={this.redirectToProfile} alt={this.props.name} className={classes.avatar} src={this.props.imageUrl} />}
+        label={label}
+        className={classes.chip}
+        />
+        </Paper>
+        </Grid>
+      )
+  }
 }
 
-export default withStyles(styles)(userPaper);
+export default withStyles(styles)(withRouter(UserPaper));

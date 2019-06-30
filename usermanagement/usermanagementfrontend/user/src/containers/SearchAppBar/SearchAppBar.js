@@ -86,6 +86,7 @@ const styles = theme => ({
   },
   appbarlogo: {
     width: theme.spacing(18),
+    cursor: 'pointer',
     [theme.breakpoints.down('xs')]: {
       width: theme.spacing(14),
       marginLeft: theme.spacing(-3),
@@ -163,13 +164,13 @@ class SearchAppBar extends React.Component {
       <ThemeProvider theme={theme}>
         <AppBar elevation={1} position="static">
         <Toolbar>
-        <Link to="/stories">
-          <img alt="Codeilm.com logo" className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
-        </Link>
+        <img onClick={() => window.location = '/stories'} alt="Codeilm.com logo" className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
 
         <div className={classes.grow} />
         {this.props.user ?
-          <Avatar alt={this.props.user.full_name} src={this.props.user.user_profile_pic} className={classes.avatar} />
+          <Link to={`/u/${this.props.user.id}/${this.props.user.username}`}>
+            <Avatar alt={this.props.user.full_name} src={this.props.user.user_profile_pic} className={classes.avatar} />
+          </Link>
           : null
         }
         <div className={classes.search}>
