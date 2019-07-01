@@ -55,6 +55,14 @@ class RepoList extends React.Component {
     this.fetchRepositories()
   }
 
+  handleClick = repo => {
+    this.props.setRepoData(repo)
+    this.props.history.push({
+      pathname: `/create/${repo.name}`,
+      search: `?branch_name=${repo.default_branch}`
+    })
+  }
+
   render() {
     return (
       <InfiniteScroll
@@ -97,9 +105,7 @@ class RepoList extends React.Component {
         return (
           <MediaCard
           key={repo.id}
-          onClick={() => this.props.setRepoData(repo)}
-          link={'/create/'+repo.name}
-          search={"?branch_name="+repo.default_branch}
+          onClick={() => this.handleClick(repo)}
           title={repo.name}
           content={content}
           />
