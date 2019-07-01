@@ -321,15 +321,15 @@ MOOC_COMMUNITY_ID = 7
 HASHID_FIELD_SALT = "Drz3/ay3eS+o4/Sgxxx/UBrq3Bms3Fi52NCu+kPhT5Y="
 
 
-SOCIALACCOUNT_PROVIDERS = {
-    'github': {
-        'SCOPE': [
-            'user',
-            'repo',
-            'read:org',
-        ],
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'github': {
+#         'SCOPE': [
+#             'user',
+#             'repo',
+#             'read:org',
+#         ],
+#     }
+# }
 
 
 GITHUB_CLIENT_ID = "755685d9cb60cc87e15f"
