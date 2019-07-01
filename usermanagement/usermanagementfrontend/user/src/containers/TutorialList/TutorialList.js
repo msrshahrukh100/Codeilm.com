@@ -75,6 +75,12 @@ class TutorialList extends React.Component {
     if(prevq !== q) {
       this.setState({q: q, tutorials: []}, () => this.fetchTutorials())
     }
+
+    const prevUserId = prevProps.match.params.userId;
+    const userId = props.match.params.userId;
+    if(prevUserId !== userId) {
+      this.setState({userId: userId}, () => this.fetchTutorials())
+    }
   }
 
   fetchTutorials = () => {
