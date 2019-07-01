@@ -16,6 +16,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { withStyles } from '@material-ui/core/styles';
 import getParsedContent from '../../utils/getParsedContent';
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
+import { animateScroll as scroll } from 'react-scroll'
+
 
 const styles = {
   appBar: {
@@ -71,6 +73,7 @@ class LearnEdit extends React.Component {
     this.setState(prevState => {
       return { showCommitPanel: !prevState.showCommitPanel }
     })
+    scroll.scrollToBottom();
   }
 
   saveLearnMd = () => {

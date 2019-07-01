@@ -20,6 +20,10 @@ const styles = theme => ({
     minWidth: 120,
     margin: theme.spacing()
   },
+  titleField: {
+    minWidth: theme.spacing(40),
+    margin: theme.spacing()
+  },
   container: {
     position: 'absolute',
     top: '90px',
@@ -28,6 +32,12 @@ const styles = theme => ({
   chip: {
    margin: theme.spacing(),
  },
+ publishButton: {
+  margin: theme.spacing(),
+  [theme.breakpoints.up('sm')]: {
+    marginTop: theme.spacing(1.5)
+  },
+},
  commitPanel: {
    marginTop: theme.spacing(2)
  }
@@ -87,6 +97,33 @@ const learnEditEditor = (props) => {
 
     <div className={classes.container}>
     <>
+    <TextField
+    id="outlined-read-only-input"
+    label="Title"
+    value={props.dbData ? props.dbData.title : ""}
+    className={classes.titleField}
+    margin="normal"
+    InputProps={{
+      readOnly: true,
+    }}
+    variant="outlined"
+    />
+
+    {props.dbData ?
+      <Fab
+      variant="extended"
+      disabled={props.loading}
+      onClick={props.publishUnpublishTut}
+      size="medium"
+      color="secondary"
+      aria-label="publish"
+      className={classes.publishButton}
+      >
+      {props.isPublished ? "Unpublish" : "Publish"}
+      </Fab>
+
+      : null}
+
     <SimpleMDE
     onChange={props.learnContentUpdate}
     value={props.editorContent}
@@ -98,20 +135,6 @@ const learnEditEditor = (props) => {
   }}
   />
   <TagsInput setTags={props.setTags} tags={props.tags} />
-  {props.dbData ?
-    <Fab
-    variant="extended"
-    disabled={props.loading}
-    onClick={props.publishUnpublishTut}
-    size="medium"
-    color="secondary"
-    aria-label="publish"
-    className={classes.chip}
-    >
-    {props.isPublished ? "Unpublish" : "Publish"}
-    </Fab>
-
-    : null}
 
 
     {props.showCommitPanel && props.repoName ?
