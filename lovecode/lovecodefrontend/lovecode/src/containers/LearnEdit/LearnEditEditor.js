@@ -10,11 +10,25 @@ import SimpleMDE from "react-simplemde-editor";
 import "./easymde.min.css";
 import { connect } from 'react-redux'
 import TagsInput from '../../components/UI/TagsInput/TagsInput'
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
   textField: {
     width: '100%',
     margin: theme.spacing()
+  },
+  button: {
+    margin: theme.spacing(1),
+    backgroundColor: 'red'
+  },
+  rightIcon: {
+    marginLeft: theme.spacing(1),
   },
   repoField: {
     minWidth: 120,
@@ -46,6 +60,8 @@ const styles = theme => ({
 const learnEditEditor = (props) => {
   const { classes } = props;
   const { repoName } = props.match.params;
+  const [open, setOpen] = React.useState(false);
+
   let toolbar = ["bold", "italic", "heading", "|",
   {
     name: "Add YouTube video",
@@ -180,6 +196,35 @@ const learnEditEditor = (props) => {
         />
 
         : null}
+        <br/>
+        <Button onClick={() => setOpen(true)} variant="contained" color="secondary" className={classes.button}>
+          Delete this story
+          <DeleteIcon className={classes.rightIcon} />
+        </Button>
+
+        <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Delete the story <b>"{props.dbData ? props.dbData.title : " this"}"</b> ? </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          "{props.dbData ? props.dbData.title : null}"<br/>
+            This story will be permanently deleted. We are waiting for another awesome story from you.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={props.handleDeleteStory} variant="contained" color="secondary" className={classes.button}>
+            Delete this story
+            <DeleteIcon className={classes.rightIcon} />
+          </Button>
+          <Button onClick={() => setOpen(false)} color="primary" autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       </>
       </div>
     </>

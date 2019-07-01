@@ -149,6 +149,20 @@ class LearnEdit extends React.Component {
       }
     })
   }
+
+  handleDeleteStory = () => {
+      axios.delete('/tutorials/' + this.state.tutorialId)
+      .then(response => {
+        console.log(response.data);
+        this.props.history.push("/stories")
+      })
+      .catch(error => {
+        this.setState({
+          error: error,
+        })
+      })
+  }
+
   commitMessageUpdate = event => {
     this.setState({commitMessage: event.target.value})
   }
@@ -229,6 +243,7 @@ class LearnEdit extends React.Component {
 				fetchLearnContent={this.fetchLearnContent}
 				toggleCommitPanel={this.toggleCommitPanel}
 				togglePreview={this.togglePreview}
+        handleDeleteStory={this.handleDeleteStory}
         setTags={this.setTags}
 				/>
 
