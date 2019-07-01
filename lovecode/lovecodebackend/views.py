@@ -115,7 +115,7 @@ class TutorialList(generics.ListAPIView):
 
 		return qs
 
-class TutorialDetail(generics.RetrieveAPIView):
+class TutorialDetail(generics.RetrieveDestroyAPIView):
 	queryset = lovecode_models.Tutorial.objects.all()
 	serializer_class = lovecode_serializers.TutorialDetailSerializer
 	lookup_field = "id"
@@ -139,6 +139,10 @@ class TutorialDetail(generics.RetrieveAPIView):
 		self.tutorial_viewed(request, **kwargs)
 		return super().retrieve(request, *args, **kwargs)
 
+	def destroy(self, request, *args, **kwargs):
+		if request.user == self.get_object().user:
+			return super().destroy(request, *args, **kwargs)
+		return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
