@@ -113,7 +113,7 @@ class ProfilePage extends React.Component {
     const prevUserId = prevProps.match.params.userId;
 
     if(prevUserId !== newUserId) {
-      this.setState({userId: newUserId}, () => this.fetchProfileData())
+      this.setState({userId: newUserId, tabIndex: "posts"}, () => this.fetchProfileData())
     }
   }
 

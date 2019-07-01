@@ -68,7 +68,6 @@ class TutorialList extends React.Component {
   componentDidUpdate(prevProps) {
     const prevParams = new URLSearchParams(prevProps.location.search);
     const prevq = prevParams.get('q');
-
     const params = new URLSearchParams(this.props.location.search);
     const q = params.get('q');
 
@@ -79,8 +78,9 @@ class TutorialList extends React.Component {
     const prevUserId = prevProps.match.params.userId;
     const userId = this.props.match.params.userId;
     if(prevUserId !== userId) {
-      this.setState({userId: userId}, () => this.fetchTutorials())
+      this.setState({userId: userId, tutorials: []}, () => this.fetchTutorials())
     }
+
   }
 
   fetchTutorials = () => {
