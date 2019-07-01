@@ -110,7 +110,7 @@ class TutorialDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = lovecode_model.Tutorial
-		fields = ('id', 'user', 'tutorial_data', 'tutorial_tags', 'learn_md_content', 'owner_is_authenticated_user', 'liked_by_authenticated_user', 'like_data', 'view_data', 'title','slug', 'read_time', 'repository_name', 'branch_name', 'is_published',  'created_at', 'updated_at')
+		fields = ('id', 'user', 'tutorial_data', 'title', 'tutorial_tags', 'learn_md_content', 'owner_is_authenticated_user', 'liked_by_authenticated_user', 'like_data', 'view_data', 'title','slug', 'read_time', 'repository_name', 'branch_name', 'is_published',  'created_at', 'updated_at')
 
 
 class RequestIPInfoSerializer(serializers.ModelSerializer):
