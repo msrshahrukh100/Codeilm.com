@@ -152,6 +152,9 @@ class LearnEdit extends React.Component {
   }
 
   handleDeleteStory = () => {
+      const csrftoken = getCookie('csrftoken');
+
+      axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
       axios.delete('/tutorials/' + this.state.tutorialId)
       .then(response => {
         console.log(response.data);
