@@ -7,6 +7,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import HomeIcon from '@material-ui/icons/Home';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import CreateIcon from '@material-ui/icons/Create';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -26,8 +27,8 @@ const iconMap = {
   All: <ArrowForwardIosIcon />,
   Create: <CreateIcon />,
   HomeIcon: <HomeIcon />,
-  FitnessCenterIcon: <FitnessCenterIcon />
-
+  FitnessCenterIcon: <FitnessCenterIcon />,
+  LogOut: <PowerSettingsNewIcon />
 }
 
 

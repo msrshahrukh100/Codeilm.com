@@ -10,7 +10,14 @@ const sidelist = [
     icon: "Create",
     key:"create123",
     link:"/create"
+  },
+  {
+    text: "Logout",
+    icon: "LogOut",
+    key:"create123",
+    link:"/logout"
   }
+
 ]
 
 
