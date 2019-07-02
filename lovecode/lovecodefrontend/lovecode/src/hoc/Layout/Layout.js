@@ -3,6 +3,7 @@ import SearchAppBar from '../../components/UI/SearchAppBar/SearchAppBar'
 import { Route, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import asyncComponent from '../asyncComponent/asyncComponent';
+import LogOut from '../../containers/LogOut/LogOut'
 
 const TutorialList = asyncComponent(() => {
   return import('../../containers/TutorialList/TutorialList');
@@ -102,6 +103,7 @@ class Layout extends React.Component {
         <Route path='/stories/:tutorialId/:slug/' component={TutorialDetail} />
 
         <Route path='/stories' component={TutorialList} />
+        <Route path='/logout' component={LogOut} />
         <Route render={() => <h1>404 page is yet to be found</h1>} />
       </Switch>
       </>
