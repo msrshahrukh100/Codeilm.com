@@ -19,7 +19,8 @@ const styles = theme => ({
   avatar: {
     margin: 3,
     width: 25,
-     height: 25
+   height: 25,
+   cursor: 'pointer'
   },
   likeButton: {
     textTransform: 'none',
@@ -111,7 +112,7 @@ class LikeButton extends React.Component {
                 </>
               }
             >
-              <Avatar key={user.id} onClick={() => window.location = `\u\${user.user.id}\${user.user.username}`} alt={user.user.full_name} src={user.user.user_profile_pic} className={classes.avatar} />
+              <Avatar key={user.id} onClick={() => window.location = `u/${user.user.id}/${user.user.username}`} alt={user.user.full_name} src={user.user.user_profile_pic} className={classes.avatar} />
             </Tooltip>)
       })
       : null;
