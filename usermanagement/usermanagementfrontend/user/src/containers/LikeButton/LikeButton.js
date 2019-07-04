@@ -19,7 +19,8 @@ const styles = theme => ({
   avatar: {
     margin: 3,
     width: 25,
-     height: 25
+     height: 25,
+     cursor: 'pointer'
   },
   likeButton: {
     textTransform: 'none',
@@ -105,13 +106,13 @@ class LikeButton extends React.Component {
               title={
                 <>
                   <div>
-                    <h4>{user.user.full_name}</h4>
+                    <h4>{user.user.full_name ? user.user.full_name : user.user.username}</h4>
                     <p style={{color: 'grey'}}>{user.user.intro}</p>
                     </div>
                 </>
               }
             >
-              <Avatar key={user.id} alt={user.user.full_name} src={user.user.user_profile_pic} className={classes.avatar} />
+              <Avatar key={user.id} onClick={() => this.props.history.push(`/u/${user.user.id}/${user.user.username}`)} alt={user.user.full_name} src={user.user.user_profile_pic} className={classes.avatar} />
             </Tooltip>)
       })
       : null;
