@@ -147,7 +147,8 @@ const learnEditEditor = (props) => {
     options={{
       autofocus: true,
       hideIcons: ["guide"],
-      toolbar: toolbar
+      toolbar: toolbar,
+      spellChecker: false
   }}
   />
   <TagsInput setTags={props.setTags} tags={props.tags} />
