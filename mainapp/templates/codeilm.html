@@ -1,29 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
+
+{% extends "base_template.html" %}
+{% load static %}
+{% load thumbnail %}
+{% load main_extras %}
+{% block css %}
+{% endblock %}
+{% block meta_tags %}
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-142472289-1"></script>
-	<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
+	
 
-	gtag('config', 'UA-142472289-1');
-	</script>
+	{% include "mainapp/partials/meta_tags_homepage.html" %}
+{% endblock %}
+{% block title %}
+	Codeilm - A storytelling site for developers
+{% endblock %}
+{% block content %} <!-- blue lime -->
 
-	<title>Codeilm - A storytelling site for developers</title>
-	<meta name="description" content="Codeilm is the online community for developers to Share, Inspire & Teach how they build their Projects, in the form of Tutorials using Markdown."/>
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
-		<meta property="og:type" content="website" />
-    <meta property="og:title" content="Codeilm - A storytelling site for developers" />
-    <meta property="og:description" content="Codeilm is the online community for developers to Share, Inspire & Teach how they build their Projects, in the form of Tutorials using Markdown." />
-    <meta property="og:url" content="https://codeilm.com" />
-    <meta property="og:image" content="https://codeilm.com/static/images/logo/codeilm.png" />
-		<link rel="mask-icon" href="https://codeilm.com/static/images/logo/codeilmicon.png">
-		<link rel="shortcut icon" href="https://codeilm.com/static/images/logo/codeilmicon.png" />
-</head>
-<body>
-<h1>Codeilm</h1>
-<a href="/stories">Read the stories</a>
-</body>
-</html>
+{% if messages %}
+	{% for message in messages %}
+		<div class="row">
+			<div class="col s12 center">
+				<p class="center-align"></p>
+				<div class="chip {{ message.tags }}">
+					{{ message }}
+					<i class="close material-icons">close</i>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endif %}
+
+<a href="/stories">Read Stories</a>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
