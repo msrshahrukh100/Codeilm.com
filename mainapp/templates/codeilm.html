@@ -15,7 +15,7 @@
 	Codeilm - A storytelling site for developers
 {% endblock %}
 {% block content %} <!-- blue lime -->
-
+{% include "mainapp/partials/simple-navbar.html" %}
 {% if messages %}
 	{% for message in messages %}
 		<div class="row">
@@ -31,6 +31,8 @@
 {% endif %}
 
 <a href="/stories">Read Stories</a>
+
+
 
 {% endblock %}
 
