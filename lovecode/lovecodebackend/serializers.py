@@ -20,7 +20,10 @@ class UserSerializer(serializers.ModelSerializer):
 		return ""
 
 	def get_full_name(self, obj):
-		return obj.get_full_name()
+		full_name = obj.get_full_name()
+		if full_name:
+			return full_name
+		return obj.username
 
 	def get_user_profile_pic(self, obj):
 		return obj.user_profile.first().get_profile_pic_url()
