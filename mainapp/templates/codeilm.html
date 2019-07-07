@@ -55,7 +55,7 @@
 			<h5>Create "beautiful" stories explaining how you made your project in steps</h5>
 		</div>
 		<div class="col l8 s8 m8 s12">
-			<img width="100%" class="z-depth-3" src="{% static 'images/screenshots/main.png' %}">
+			<img width="100%" class="lazyload z-depth-3" data-src="{% static 'images/screenshots/main.png' %}">
 		</div>
 	</div>
 
@@ -65,7 +65,7 @@
 			<h5>Use your "favourite" markup language to create your stories.</h5>
 		</div>
 		<div class="col l8 s8 m8 s12">
-			<img width="100%" class="z-depth-3" src="{% static 'images/screenshots/editor.png' %}">
+			<img width="100%" class="lazyload z-depth-3" data-src="{% static 'images/screenshots/editor.png' %}">
 		</div>
 	</div>
 
@@ -75,20 +75,21 @@
 			<h5>Keep an eye on how your story performs over time</h5>
 		</div>
 		<div class="col l8 s8 m8 s12">
-			<img width="100%" class="z-depth-3" src="{% static 'images/screenshots/metrics.png' %}">
+			<img width="100%" class="lazyload z-depth-3" data-src="{% static 'images/screenshots/metrics.png' %}">
 		</div>
 	</div>
 </div>
 	
-	<div class="row">
+	<div class="row hide-on-small-only">
 		<div class="col s1"></div>
 		<div class="col s10">
 			<h3 class="center" id="why-codeilm">Why Codeilm ?</h3>
+			<p class="center flow-text">Read the story of Russell to find out why you need Codeilm</p>
 				<div class="row">
 				<div class="col s12">
 				    <div class="card z-depth-0 horizontal">
 				      <div class="card-image">
-				        <img src="{% static 'images/story/Russell2.png' %}">
+				        <img class="lazyload" data-src="{% static 'images/story/Russell2.png' %}">
 				      </div>
 				      <div class="card-stacked">
 				        <div class="card-content valign-wrapper">
@@ -110,7 +111,7 @@
 				<div class="col s12">
 					<div class="card z-depth-0 horizontal">
 						<div class="card-image">
-						<img src="{% static 'images/story/Russell.jpg' %}">
+						<img class="lazyload" data-src="{% static 'images/story/Russell.jpg' %}">
 						</div>
 						<div class="card-stacked">
 						<div class="card-content valign-wrapper">
@@ -130,14 +131,14 @@
 					<div class="col s12">
 				    <div class="card z-depth-0 horizontal">
 				      <div class="card-image">
-				        <img src="{% static 'images/story/Russell3.png' %}">
+				        <img class="lazyload" data-src="{% static 'images/story/Russell3.png' %}">
 				      </div>
 				      <div class="card-stacked">
 				        <div class="card-content valign-wrapper">
 				          <p class="flow-text">
 							Then one day he discovered exactly what he needed.
 							<br/>
-							<img width="100%" alt="codeilm" src="{% static 'images/logo/codeilmbanner.png' %}">
+							<img class="lazyload" width="100%" alt="codeilm" data-src="{% static 'images/logo/codeilmbanner.png' %}">
 							<br/>
 							So he created a <b>"beautiful"</b> story of his <b>"awesome"</b> project, and shared it with the world.
 							<br/>
@@ -153,10 +154,65 @@
 		<div class="col s1"></div>
 	</div>
 
-	
+	<div class="row hide-on-med-and-up">
+		<div class="col s1"></div>
+		<div class="col s10">
+			<h3 class="center" id="why-codeilm">Why Codeilm ?</h3>
+			<p class="center flow-text">Read the story of Russell to find out why you need Codeilm</p>
+				<div class="row">
+					<div class="col s2"></div>
+				<div class="col s8">
+			        <img width="100%" class="lazyload" data-src="{% static 'images/story/Russell2.png' %}">
+				</div>
+				<div class="col s12">
+					<p class="flow-text">After his adventures at the Paradise falls in South America, Russell is all set to learn programming and apply for programming jobs.
+							<br/>
+							If someone asks him <b>"what"</b> all projects he did?
+							He forwards them his <b>LinkedIn</b> profile.
+							<br/>
+							If someone asks him about the <b>source code</b> of his projects, he gives them the <b>GitHub</b> repo url.
+						</p>
+				</div>
+				</div>
+				<div class="row">
+				<div class="col s12">
+						<img width="100%" class="lazyload" data-src="{% static 'images/story/Russell.jpg' %}">
+				  </div>
+				  <div class="col s12">
+				  	<p class="flow-text">
+							But then one day Mr. Fredricksen, Dug and Kevin came asking <b>"how"</b> he made his awesome projects and tell them the <b>story of their projects</b>. <br/>
+							Russell didn't know what to give them.
+							</p>
+
+				  </div>
+
+				</div>
 
 
-<footer class="page-footer white">
+				<div class="row">
+					<div class="col s2"></div>
+					<div class="col s8">
+				        <img width="100%" class="lazyload" data-src="{% static 'images/story/Russell3.png' %}">
+				  </div>
+				  <div class="col s12">
+				  	<p class="flow-text">
+							Then one day he discovered exactly what he needed.
+							<br/>
+							<img class="lazyload" width="100%" alt="codeilm" data-src="{% static 'images/logo/codeilmbanner.png' %}">
+							<br/>
+							So he created a <b>"beautiful"</b> story of his <b>"awesome"</b> project, and shared it with the world.
+							<br/>
+							Everyone was very happy with him and his school gave him yet another badge for the <b>"Best Programmer"</b>
+				          </p>
+				  </div>
+				</div>
+
+		</div>
+		<div class="col s1"></div>
+	</div>	
+
+
+<footer class="page-footer white z-depth-3">
   <div class="container">
     <div class="row">
       <div class="col l6 s12">
