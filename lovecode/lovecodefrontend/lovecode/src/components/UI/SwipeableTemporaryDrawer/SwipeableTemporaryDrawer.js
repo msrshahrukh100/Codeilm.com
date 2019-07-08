@@ -2,8 +2,20 @@ import React from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import IconList from '../IconList/IconList';
 import sidelist from '../../../extras/SideList/SideList'
+import { connect } from 'react-redux'
 
 const SwipeableTemporaryDrawer = (props) => {
+    const logout = {
+        text: "Logout",
+        icon: "LogOut",
+        key:"logout123",
+        link:"/logout"
+      }
+
+    let newSideList = sidelist
+    if(props.user !== null) {
+      newSideList = newSideList.concat(logout);
+    }
     return (
       <div>
         <SwipeableDrawer
@@ -17,7 +29,7 @@ const SwipeableTemporaryDrawer = (props) => {
             onClick={props.toggleDrawer(false)}
             onKeyDown={props.toggleDrawer(false)}
           >
-            <IconList listitems={sidelist} />
+            <IconList listitems={newSideList} />
           </div>
         </SwipeableDrawer>
       </div>
@@ -25,4 +37,10 @@ const SwipeableTemporaryDrawer = (props) => {
 
 }
 
-export default SwipeableTemporaryDrawer;
+const matchStateToProps = state => {
+  return {
+    user: state.aReducer.user
+  }
+}
+
+export default connect(matchStateToProps, null)(SwipeableTemporaryDrawer);
