@@ -148,7 +148,7 @@ class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
 
 	queryset = lovecode_models.Tutorial.objects.all()
-	serializer_class = lovecode_serializers.TutorialDetailSerializer
+	serializer_class = lovecode_serializers.TutorialUpdateSerializer
 	lookup_field = 'id'
 
 	# def partial_update(self, serializer):

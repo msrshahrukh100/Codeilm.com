@@ -116,6 +116,12 @@ class TutorialDetailSerializer(serializers.ModelSerializer):
 		fields = ('id', 'user', 'tutorial_data', 'title', 'tutorial_tags', 'learn_md_content', 'owner_is_authenticated_user', 'liked_by_authenticated_user', 'like_data', 'view_data', 'title','slug', 'read_time', 'repository_name', 'branch_name', 'is_published',  'created_at', 'updated_at')
 
 
+class TutorialUpdateSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = lovecode_model.Tutorial
+		fields = ('is_published', )
+
+
 class RequestIPInfoSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = mainapp_models.RequestIpInfo
