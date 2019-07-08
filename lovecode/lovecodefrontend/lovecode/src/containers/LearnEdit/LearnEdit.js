@@ -113,6 +113,9 @@ class LearnEdit extends React.Component {
         is_published: !this.state.isPublished
       }
       this.setState({loading: true})
+      const csrftoken = getCookie('csrftoken');
+
+      axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
       axios.put('/tutorials/' + this.state.dbData.id + '/publish', putData)
       .then(response => {
         this.setState({isPublished: response.data.is_published, loading: false})
