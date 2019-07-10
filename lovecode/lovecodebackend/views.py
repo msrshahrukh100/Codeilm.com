@@ -298,7 +298,7 @@ class TutorialMetricsData(APIView):
 			distinct_viewers = obj.user_views.exclude(user=None).values_list('user', flat=True).distinct()
 			users = User.objects.filter(id__in=distinct_viewers).order_by('-id')
 			distinct_viewers_data = lovecode_serializers.UserSerializer(users, many=True).data
-			all_views = lovecode_serializers.TutorialViewSerializer(obj.user_views.all(), many=True).data
+			all_views = lovecode_serializers.TutorialViewSerializer(obj.user_views.all().order_by('-id'), many=True).data
 
 			return Response({
 				"all_views": all_views,
