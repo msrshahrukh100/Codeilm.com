@@ -291,11 +291,11 @@ class TutorialMetricsData(APIView):
 	def get(self, request, tutorial_id):
 		if request.user.is_authenticated:
 			obj = get_object_or_404(lovecode_models.Tutorial, id=tutorial_id, user=request.user)
-			like_data = lovecode_serializers.TutorialLikeSerializer(obj.user_likes.all(), many=True).data
-			logged_in_view_data = lovecode_serializers.TutorialViewSerializer(obj.user_views.exclude(user=None), many=True).data
+			like_data = lovecode_serializers.TutorialLikeSerializer(obj.user_likes.all().order_by('-id'), many=True).data
+			logged_in_view_data = lovecode_serializers.TutorialViewSerializer(obj.user_views.exclude(user=None).order_by('-id'), many=True).data
 
 			distinct_viewers = obj.user_views.exclude(user=None).values_list('user', flat=True).distinct()
-			users = User.objects.filter(id__in=distinct_viewers)
+			users = User.objects.filter(id__in=distinct_viewers).order_by('-id')
 			distinct_viewers_data = lovecode_serializers.UserSerializer(users, many=True).data
 			all_views = lovecode_serializers.TutorialViewSerializer(obj.user_views.all(), many=True).data
 
