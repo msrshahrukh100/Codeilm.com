@@ -45,7 +45,7 @@ const ViewsPanel = (props) => {
       {props.title}
     </Typography>
     <List>
-    {props.data ? props.data.slice(0,3).map((item, index) => {
+    {props.data ? props.data.slice(0,3).filter(item => item.user !== null).map((item, index) => {
 
       const avatarSrc = props.type === "POST_VIEWS" || props.type === "LIKES" ?
         item.user.user_profile_pic : item.user_profile_pic
@@ -124,7 +124,7 @@ class TutorialMetrics extends React.Component {
   }
   render() {
     const { classes } = this.props;
-    const mapData = this.state.allViews ? this.state.allViews.map(item => {
+    const mapData = this.state.allViews ? this.state.allViews.filter(item => item.request_ip_info !== null).map(item => {
       return {
         city: item.request_ip_info.city,
         coordinates: [item.request_ip_info.longitude, item.request_ip_info.latitude]

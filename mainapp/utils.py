@@ -36,6 +36,8 @@ def get_ip_info(request):
 	return data
 
 def create_request_ip_info_object(data):
+	if not data:
+		return None
 	obj = RequestIpInfo.objects.create(
 		city=data.get('city'),
 		country_code=data.get('country_code'),
