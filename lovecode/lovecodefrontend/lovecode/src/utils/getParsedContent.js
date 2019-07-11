@@ -13,7 +13,7 @@ const getParsedContent = (text) => {
         return {data: [{title: "", content: text}]}
       }
       else {
-        return {data: result, msg: {text: "Some content are not within the [Page] tags", type: "error"}}
+        return {data: result, msg: {text: "Some content are not within the [Page] tags", type: "error", "errorCode": "INV_TAG"}}
       }
     }
 
