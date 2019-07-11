@@ -221,6 +221,7 @@ class CreateGetTutorial(APIView):
 
 	def post(self, request):
 		data = request.data
+
 		if data:
 			obj, created = lovecode_models.Tutorial.objects.get_or_create(
 				user=request.user,
