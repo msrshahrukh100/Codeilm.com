@@ -90,7 +90,7 @@ class GithubApiResponse(Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.user
+		return str(self.user)
 
 
 class TutorialLike(models.Model):
@@ -101,7 +101,7 @@ class TutorialLike(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return self.user
+		return str(self.user)
 
 	class Meta:
 		ordering = ["-id"]
