@@ -15,7 +15,7 @@ class App extends React.Component {
   }
 
   render() {
-    if(this.props.userId) {
+    if(this.props.userId !== "") {
       ReactGA.set({ userId: this.props.userId });
     }
     return (
@@ -39,7 +39,7 @@ class App extends React.Component {
 
 const matchStateToProps = state => {
   return {
-    userId: state.aReducer
+    userId: state.aReducer.user ? state.aReducer.user.id : ""
   }
 }
 
