@@ -6,10 +6,12 @@ import * as actionCreators from './store/actions/index'
 
 class App extends Component {
   componentDidMount() {
-    ReactGA.set({ userId: this.props.userId });
     this.props.auth()
   }
   render() {
+    if(this.props.userId !== "") {
+      ReactGA.set({ userId: this.props.userId });
+    }
     return (
       <Layout />
     )
