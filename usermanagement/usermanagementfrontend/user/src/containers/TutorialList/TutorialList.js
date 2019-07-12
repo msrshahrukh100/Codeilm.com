@@ -87,9 +87,9 @@ class TutorialList extends React.Component {
     this.setState({loading: true})
     let url = this.state.pageNumber ?
       this.state.q ?
-        `https://codeilm.com/api/v1/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
-        : `https://codeilm.com/api/v1/tutorials/?page=${this.state.pageNumber}`
-    : this.state.q ? `https://codeilm.com/api/v1/tutorials/?q=${this.state.q}` : "https://codeilm.com/api/v1/tutorials/?temp=asdf";
+        `/api/v1/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
+        : `/api/v1/tutorials/?page=${this.state.pageNumber}`
+    : this.state.q ? `/api/v1/tutorials/?q=${this.state.q}` : "/api/v1/tutorials/?temp=asdf";
 
     url += `&user_id=${this.state.userId}&profile_view=true`
     axios.get(url)
@@ -124,13 +124,13 @@ class TutorialList extends React.Component {
           loader={<PageLayout><ListPageSkeleton /></PageLayout>}
       >
       {this.state.tutorials.map((tutorial, index) => {
-        const editUrl = tutorial.repository_name ? `https://codeilm.com/create/${tutorial.repository_name}/${tutorial.id}/${tutorial.slug}/${tutorial.branch_name}`
-        : `https://codeilm.com/create/new/${tutorial.id}/${tutorial.slug}`
+        const editUrl = tutorial.repository_name ? `/create/${tutorial.repository_name}/${tutorial.id}/${tutorial.slug}/${tutorial.branch_name}`
+        : `/create/new/${tutorial.id}/${tutorial.slug}`
         const actionButtons = (
           <>
           <LikeButton tutorial={tutorial}/>
           <ViewsPanel tutorial={tutorial} />
-          <ShareButton url={'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
+          <ShareButton url={'/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
           {tutorial.owner_is_authenticated_user ?
             <>
             <Tooltip title="See Metrics" aria-label="See Metrics">
@@ -138,7 +138,7 @@ class TutorialList extends React.Component {
               size="small"
               color="primary"
               className={classes.metricsButton}
-              onClick={() => window.location = 'https://codeilm.com/metrics/' + tutorial.id + '/' + tutorial.slug }>
+              onClick={() => window.location = '/metrics/' + tutorial.id + '/' + tutorial.slug }>
               <MdTrendingUp className={classes.iconSmall} />
               </Button>
             </Tooltip>
@@ -156,7 +156,7 @@ class TutorialList extends React.Component {
           }
           </>
         )
-        const linkUrl = "https://codeilm.com/stories/?q="
+        const linkUrl = "/stories/?q="
         const content = (<>
           <div className={classes.chips}>
           {tutorial.tutorial_tags ? tutorial.tutorial_tags.map(tag => <Chips key={tag.id} link={linkUrl + tag.value} chipsData={{text: tag.label}} />) : null}
@@ -168,7 +168,7 @@ class TutorialList extends React.Component {
           headerVariant="h5"
           key={tutorial.id}
           content={content}
-          onClick={() => window.location = 'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug}
+          onClick={() => window.location = '/stories/' + tutorial.id + '/' + tutorial.slug}
           actionButtons={actionButtons}
           title={tutorial.title} />
       })}
