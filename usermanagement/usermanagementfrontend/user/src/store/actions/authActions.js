@@ -26,7 +26,7 @@ export const authLogout = () => {
 export const auth = () => {
   return dispatch => {
     dispatch(authStart());
-    axios.get('https://codeilm.com/api/v1/get-auth-status/')
+    axios.get('/api/v1/get-auth-status/')
       .then(response => {
 
         response && dispatch(authSuccess(response.data.authenticated ? "true" : "", response.data.user))
