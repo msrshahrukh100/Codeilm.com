@@ -38,6 +38,7 @@ class App extends React.Component {
 }
 
 const matchStateToProps = state => {
+  console.log(state);
   return {
     userId: state.aReducer.user ? state.aReducer.user.id : ""
   }
