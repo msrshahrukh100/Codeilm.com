@@ -14,9 +14,9 @@ def send_welcome_email(user):
 	context = {"base_url": settings.BASE_URL, "email": user.email, "template": "emails/welcome_email.html"}
 	context["get_params"] = get_params_from_context(context)
 	emailmanager_tasks.send_ses_email(
-		sender="Welcome to Allywith <towardslight52@gmail.com>",
+		sender="Welcome to Codeilm <shahrukh@codeilm.com>",
 		user_ids=[user.id],
-		subject="Sent with ❤️ from Allywith",
+		subject="Sent with ❤️ from Codeilm",
 		template_path="emails/welcome_email.html",
 		context=context,
 	)
@@ -25,7 +25,7 @@ def send_welcome_email(user):
 def send_info_mail_to_admins(context):
 	admins = settings.ADMINS
 	emailmanager_tasks.send_ses_email(
-		sender="Admin Info from Allywith <towardslight52@gmail.com>",
+		sender="Admin Info from Codeilm <shahrukh@codeilm.com>",
 		recipients=admins,
 		subject=context.get('subject'),
 		template_path="emails/send_info_to_admin.html",

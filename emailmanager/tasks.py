@@ -16,7 +16,7 @@ def ses_email_helper(email, sender, template_path, subject, context):
     AWS_REGION = "us-west-2"
     CHARSET = "UTF-8"
     BODY_HTML = render_to_string(template_path, context)
-    BODY_TEXT = ("Sent with love from Allywith\r\n"
+    BODY_TEXT = ("Sent with love from Codeilm\r\n"
                  "This email was sent with Amazon SES")
     print("making client pbje")
     client = boto3.client('ses', region_name=AWS_REGION)
