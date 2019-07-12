@@ -11,13 +11,13 @@ import ReactGA from 'react-ga';
 class App extends React.Component {
 
   componentDidMount() {
-    console.log(this.props);
-    console.log(this.props.userId);
-    ReactGA.set({ userId: this.props.userId });
     this.props.auth()
   }
 
   render() {
+    if(this.props.userId) {
+      ReactGA.set({ userId: this.props.userId });
+    }
     return (
       <>
       <SearchAppBar />
@@ -38,7 +38,6 @@ class App extends React.Component {
 }
 
 const matchStateToProps = state => {
-  console.log(state);
   return {
     userId: state.aReducer
   }
