@@ -11,6 +11,8 @@ import ReactGA from 'react-ga';
 class App extends React.Component {
 
   componentDidMount() {
+    console.log(this.props);
+    console.log(this.props.userId);
     ReactGA.set({ userId: this.props.userId });
     this.props.auth()
   }
