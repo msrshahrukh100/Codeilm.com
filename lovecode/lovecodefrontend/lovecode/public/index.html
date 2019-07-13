@@ -1,21 +1,6 @@
-{% load main_extras %}
-{% get_settings 'DEBUG' as DEBUG %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% if not DEBUG %}
-    <!-- Hotjar Tracking Code for https://codeilm.com -->
-    <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:1392028,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
-    {% endif %}
     <meta charset="utf-8" />
     <link rel="mask-icon" href="https://codeilm.com/static/images/logo/codeilmicon.png">
 		<link rel="shortcut icon" href="https://codeilm.com/static/images/logo/codeilmicon.png" />
@@ -61,5 +46,21 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+      if(!debug) {
+        let s = document.createElement('script');
+        let hotjar = `(function(h,o,t,j,a,r){
+          h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+          h._hjSettings={hjid:1392028,hjsv:6};
+          a=o.getElementsByTagName('head')[0];
+          r=o.createElement('script');r.async=1;
+          r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+          a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`
+        s.innerHTML = hotjar;
+        document.body.appendChild(s);
+      }
+    </script>
   </body>
 </html>
