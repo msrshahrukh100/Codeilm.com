@@ -76,17 +76,6 @@ class ProfilePage extends React.Component {
 
   componentDidMount() {
     this.fetchProfileData()
-    console.log(this.props);
-    if(this.props.user) {
-      console.log("setting user id before profile visit ", this.props.user.id);
-      ReactGA.set({ userId: this.props.user.id });
-    }
-    ReactGA.event({
-      category: 'User',
-      action: "Visited profile page",
-      label: 'VISITED_PROFILE_PAGE',
-    });
-    ReactGA.pageview(this.props.match.url);
   }
 
   handleIntroSave = () => {
@@ -120,6 +109,18 @@ class ProfilePage extends React.Component {
     if(prevUserId !== newUserId) {
       this.setState({userId: newUserId, tabIndex: "posts"}, () => this.fetchProfileData())
     }
+
+    if(this.props.user) {
+      console.log("setting user id before profile visit ", this.props.user.id);
+      ReactGA.set({ userId: this.props.user.id });
+    }
+    ReactGA.event({
+      category: 'User',
+      action: "Visited profile page",
+      label: 'VISITED_PROFILE_PAGE',
+    });
+    ReactGA.pageview(this.props.match.url);
+
   }
 
   setTabIndex = index => {
