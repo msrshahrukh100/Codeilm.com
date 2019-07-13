@@ -48,7 +48,7 @@ class FollowUnfollowUser(APIView):
 				following_id=following_user_id,
 				defaults={'active': active}
 			)
-			if active:
+			if created:
 				utils.add_user_following(user_id=request.user.id, following_id=following_user_id)
 			return Response(usermanagementserializers.ConnectionsSerializer(obj).data, status=status.HTTP_200_OK)
 		return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
