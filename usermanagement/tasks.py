@@ -14,7 +14,7 @@ from sorl.thumbnail import get_thumbnail
 def send_connection_notifications(user_id, following_id):
 	user = User.objects.get(id=user_id)
 	following = User.objects.get(id=following_id)
-	Connections.objects.create(user=user, following=following)
+	# Connections.objects.create(user=user, following=following)
 
 	verb = get_user_display_name(user) + " started following you"
 	notify.send(
@@ -29,17 +29,17 @@ def send_connection_notifications(user_id, following_id):
 		"template": "emails/connection_added_email.html",
 		"follower_image_url": user.user_profile.first().get_profile_pic_url(),
 		"follower_full_name": get_user_display_name(user),
-		"link_url": "",
+		"link_url": "/u/" + following_id + "/" + following.username,
 
 	}
 	context["get_params"] = emailmanager_utils.get_params_from_context(context)
 	emailmanager_tasks.send_ses_email(
-		"Allywith <shahrukh@allywith.com>",
+		"Codeilm <shahrukh@codeilm.com>",
 		"emails/connection_added_email.html",
 		context,
 		[following.id],
 		None,
-		"🤗 %s started following you on Allywith " % get_user_display_name(user),
+		"🤗 %s started following you on Codeilm " % get_user_display_name(user),
 	)
 
-	add_activity(user.id, 'started-following-' + get_user_display_name(following))
+	# add_activity(user.id, 'started-following-' + get_user_display_name(following))

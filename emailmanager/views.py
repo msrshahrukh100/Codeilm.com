@@ -29,4 +29,4 @@ def test_email(request):
 	# this view is for the purpose of testing emails with a sample context data
 	context = {"name": "Mohammad Shahrukh"}
 
-	return render(request, "emails/welcome_email.html", context)
+	return render(request, "emails/connection_added_email.html", context)
