@@ -149,7 +149,7 @@ class LearnEdit extends React.Component {
       return {
         editorContent: value,
         tutorialData: getParsedContent(value),
-        timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 5000))
+        timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 1200))
       }
     })
   }
