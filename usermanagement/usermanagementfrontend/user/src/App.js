@@ -14,10 +14,14 @@ class App extends React.Component {
     this.props.auth()
   }
 
-  render() {
-    if(this.props.userId !== "") {
+  componentDidUpdate(prevProps) {
+    if(this.props.userId) {
+      console.log(this.props.userId);
       ReactGA.set({ userId: this.props.userId });
     }
+  }
+
+  render() {
     return (
       <>
       <SearchAppBar />

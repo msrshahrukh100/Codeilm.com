@@ -111,7 +111,7 @@ class ProfilePage extends React.Component {
     }
 
     if(this.props.user) {
-      console.log("setting user id before profile visit ", this.props.user.id);
+      console.log(this.props.user.id);
       ReactGA.set({ userId: this.props.user.id });
     }
     ReactGA.event({
