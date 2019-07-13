@@ -85,11 +85,14 @@ class TutorialList extends React.Component {
 
   fetchTutorials = () => {
     this.setState({loading: true})
+    const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+
+    const baseUrl = debug ? 'https://codeilm.com/api/v1/tutorials/' : '/api/v1/tutorials/'
     let url = this.state.pageNumber ?
       this.state.q ?
-        `/api/v1/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
-        : `/api/v1/tutorials/?page=${this.state.pageNumber}`
-    : this.state.q ? `/api/v1/tutorials/?q=${this.state.q}` : "/api/v1/tutorials/?temp=asdf";
+        `${baseUrl}?page=${this.state.pageNumber}&q=${this.state.q}`
+        : `${baseUrl}?page=${this.state.pageNumber}`
+    : this.state.q ? `${baseUrl}?q=${this.state.q}` : `${baseUrl}?temp=asdf`;
 
     url += `&user_id=${this.state.userId}&profile_view=true`
     axios.get(url)
@@ -186,7 +189,12 @@ class TutorialList extends React.Component {
                   <strong style={{fontSize: 30}}> {this.state.q}</strong>
                   </p>
 
-                  : null}
+                  : this.props.myProfile ? (<>
+                    <h2 style={{color: 'grey'}}>The world is yet to read your awesome story</h2>
+                    <h4 style={{cursor: 'pointer'}} onClick={() => window.location = '/create'}>Create Now</h4>
+                    </>
+                ) : <h2 style={{color: 'grey'}}>The world is yet to read a story from {this.props.fullName}</h2>
+              }
             </>) : null
           }
           </Grid>

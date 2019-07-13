@@ -205,7 +205,7 @@ class ProfilePage extends React.Component {
                     <Grid item>
                       <Typography variant="subtitle1">
                       {this.state.profileData.tutorial_count != "0"
-                        ? <span><b>{this.state.profileData.tutorial_count}</b> post{this.state.profileData.tutorial_count != "1" ? "s" : ""}</span>
+                        ? <span><b>{this.state.profileData.tutorial_count}</b> {this.state.profileData.tutorial_count != "1" ? "stories" : "story"}</span>
                         : null}
                       </Typography>
                     </Grid>
@@ -251,12 +251,16 @@ class ProfilePage extends React.Component {
               this.setTabIndex(value);
             }}
           >
-            <Tab value="posts" label="Posts" icon={<MdGridOn />} />
+            <Tab value="posts" label="Stories" icon={<MdGridOn />} />
             <Tab value="following" label="Following" icon={<MdPersonAdd />} />
             <Tab value="followers" label="Followers" icon={<MdPeople />} />
           </Tabs>
           <div style={this.state.tabIndex == "posts" ? {display: 'block'} : {display: 'none'}}>
-            <TutorialList/>
+            <TutorialList myProfile={this.state.profileData ? this.state.profileData.my_profile: null } fullName={this.state.profileData ?
+              this.state.profileData.full_name ?
+              this.state.profileData.full_name :
+              this.state.profileData.username :
+              null} />
           </div>
           <div style={this.state.tabIndex == "followers" ? {display: 'block'} : {display: 'none'}}>
             {followersGrid}
