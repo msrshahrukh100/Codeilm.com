@@ -114,12 +114,15 @@ class ProfilePage extends React.Component {
       console.log(this.props.user.id);
       ReactGA.set({ userId: this.props.user.id });
     }
-    ReactGA.event({
-      category: 'User',
-      action: "Visited profile page",
-      label: 'VISITED_PROFILE_PAGE',
-    });
-    ReactGA.pageview(this.props.match.url);
+    if(this.props.user !== prevProps.user) {
+      console.log("profile visit");
+      ReactGA.event({
+        category: 'User',
+        action: "Visited profile page",
+        label: 'VISITED_PROFILE_PAGE',
+      });
+      ReactGA.pageview(this.props.match.url);
+    }
 
   }
 
