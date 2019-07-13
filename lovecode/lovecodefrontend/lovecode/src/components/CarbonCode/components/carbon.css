@@ -21,3 +21,10 @@
     font-size: 12px;
   }
 }
+
+
+@media only screen and (max-width: 320px) {
+  .container :global(.CodeMirror__container .CodeMirror) {
+    font-size: 10px;
+  }
+}
