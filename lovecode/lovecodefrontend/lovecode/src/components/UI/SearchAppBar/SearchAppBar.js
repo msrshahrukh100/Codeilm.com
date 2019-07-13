@@ -135,8 +135,8 @@ class SearchAppBar extends React.Component {
   search = (value) => {
     ReactGA.event({
       category: 'User',
-      action: `Performed Search ${value}`,
-      label: 'PERFORMED_SEARCH',
+      action: 'Performed Search',
+      label: `PERFORMED_SEARCH ${value}`,
     });
     this.props.history.push("/stories/?q=" + value)
   }
