@@ -183,7 +183,7 @@ class LearnEdit extends React.Component {
     this.setState((prevState, props) => {
       return {
         tags: value,
-        timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 5000))
+        timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 1200))
       }
     })
   }
