@@ -34,8 +34,8 @@ const styles = theme => ({
       width: theme.spacing(21),
     },
     [theme.breakpoints.down('xs')]: {
-      height: theme.spacing(13),
-      width: theme.spacing(13),
+      height: theme.spacing(11),
+      width: theme.spacing(11),
     },
   }
 });
