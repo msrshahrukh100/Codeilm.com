@@ -20,7 +20,10 @@ const styles = theme => ({
     margin: 3,
     width: 25,
      height: 25,
-     cursor: 'pointer'
+     cursor: 'pointer',
+     [theme.breakpoints.down('xs')]: {
+       display: 'none',
+     },
   },
   likeButton: {
     textTransform: 'none',
