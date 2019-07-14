@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios'
+import axios from '../../tutorial_axios'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
@@ -85,14 +85,12 @@ class TutorialList extends React.Component {
 
   fetchTutorials = () => {
     this.setState({loading: true})
-    const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
 
-    const baseUrl = debug ? 'https://codeilm.com/api/v1/tutorials/' : '/api/v1/tutorials/'
     let url = this.state.pageNumber ?
       this.state.q ?
-        `${baseUrl}?page=${this.state.pageNumber}&q=${this.state.q}`
-        : `${baseUrl}?page=${this.state.pageNumber}`
-    : this.state.q ? `${baseUrl}?q=${this.state.q}` : `${baseUrl}?temp=asdf`;
+        `?page=${this.state.pageNumber}&q=${this.state.q}`
+        : `?page=${this.state.pageNumber}`
+    : this.state.q ? `?q=${this.state.q}` : `?temp=asdf`;
 
     url += `&user_id=${this.state.userId}&profile_view=true`
     axios.get(url)
