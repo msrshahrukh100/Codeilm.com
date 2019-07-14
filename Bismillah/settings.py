@@ -249,36 +249,36 @@ else:
 
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
-
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'file': {
-#             'level': os.environ['LOG_LEVEL'],
-#             'class': 'logging.FileHandler',
-#             'filename': os.environ['LOG_FILE'],
-#         },
-#         'mail_admins': {
-#             'level': 'ERROR',
-#             'class': 'django.utils.log.AdminEmailHandler',
-#         },
-#         'null': {
-#             'class': 'logging.NullHandler',
-#         },
-#     },
-#     'loggers': {
-#         'django.security.DisallowedHost': {
-#             'handlers': ['null'],
-#             'propagate': False,
-#         },
-#         'django': {
-#             'handlers': ['file', 'mail_admins'],
-#             'level': os.environ['LOG_LEVEL'],
-#             'propagate': True,
-#         },
-#     },
-# }
+if not DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': os.environ['LOG_LEVEL'],
+                'class': 'logging.FileHandler',
+                'filename': os.environ['LOG_FILE'],
+            },
+            'mail_admins': {
+                'level': 'ERROR',
+                'class': 'django.utils.log.AdminEmailHandler',
+            },
+            'null': {
+                'class': 'logging.NullHandler',
+            },
+        },
+        'loggers': {
+            'django.security.DisallowedHost': {
+                'handlers': ['null'],
+                'propagate': False,
+            },
+            'django': {
+                'handlers': ['file', 'mail_admins'],
+                'level': os.environ['LOG_LEVEL'],
+                'propagate': True,
+            },
+        },
+    }
 
 ADMINS = [('shahrukh', 'msr.concordfly@gmail.com'), ('shahrukh', 'towardslight52@gmail.com')]
 SERVER_EMAIL = "towardslight52@gmail.com"
