@@ -10,7 +10,7 @@ import ListPageSkeleton from '../../components/UI/SkeletonLoaders/ListPageSkelet
 import { withStyles } from '@material-ui/core/styles';
 import LikeButton from '../LikeButton/LikeButton'
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
-import { MdTrendingUp, MdModeEdit } from "react-icons/md";
+import { MdModeEdit } from "react-icons/md";
 import Button from '@material-ui/core/Button';
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import ShareButton from '../ShareButton/ShareButton'

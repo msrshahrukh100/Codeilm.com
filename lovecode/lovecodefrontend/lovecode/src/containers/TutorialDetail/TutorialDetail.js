@@ -13,8 +13,6 @@ import getParsedContent from '../../utils/getParsedContent';
 import ShareButton from '../ShareButton/ShareButton'
 import LikeButton from '../LikeButton/LikeButton'
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
-import { MdTrendingUp } from "react-icons/md";
-import Button from '@material-ui/core/Button';
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
 import ReactGA from 'react-ga';
 
@@ -126,7 +124,6 @@ class TutorialDetail extends React.Component {
 
 
   render() {
-    const classes = this.props
     const steps = this.state.parsedTutorial ?
       this.state.parsedTutorial.data.map(tutorial => tutorial.title)
       : [];

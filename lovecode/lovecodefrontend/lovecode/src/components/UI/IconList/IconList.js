@@ -2,8 +2,6 @@ import React from 'react'
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import HomeIcon from '@material-ui/icons/Home';
 import FitnessCenterIcon from '@material-ui/icons/FitnessCenter';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -13,8 +11,6 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
-
-import { MdViewComfy } from "react-icons/md";
 
 
 const styles = {

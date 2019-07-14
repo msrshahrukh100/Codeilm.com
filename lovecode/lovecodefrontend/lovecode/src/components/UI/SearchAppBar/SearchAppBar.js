@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles, createMuiTheme } from '@material-ui/core/styles';
@@ -11,7 +10,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import SwipeableTemporaryDrawer from '../SwipeableTemporaryDrawer/SwipeableTemporaryDrawer'
 import { ThemeProvider } from '@material-ui/styles';
-import blueGrey from '@material-ui/core/colors/blueGrey'
 import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'

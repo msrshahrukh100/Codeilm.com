@@ -2,7 +2,6 @@ import React from 'react'
 import DetailPageLayout from '../../components/UI/DetailPageLayout/DetailPageLayout'
 import VerticalLinearStepper from '../../components/UI/VerticalLinearStepper/VerticalLinearStepper'
 import TutorialPage from '../../components/TutorialPage/TutorialPage'
-import getParsedContent from '../../utils/getParsedContent'
 import Snackbar from '../../components/UI/Snackbar/Snackbar'
 
 import Button from '@material-ui/core/Button';
