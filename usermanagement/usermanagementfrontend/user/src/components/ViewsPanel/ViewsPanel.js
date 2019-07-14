@@ -26,8 +26,8 @@ class LikeButton extends React.Component {
     const { tutorial } = this.props;
     const { ownerIsAuthenticatedUser } = this.props;
     const icon = ownerIsAuthenticatedUser ?
-      <IoLogoBuffer className={classes.iconSmall} /> :
-      <MdTrendingUp className={classes.iconSmall} />
+      <MdTrendingUp className={classes.iconSmall} /> :
+      <IoLogoBuffer className={classes.iconSmall} />
     return (
       <>
       {tutorial.view_data.views_count ?
