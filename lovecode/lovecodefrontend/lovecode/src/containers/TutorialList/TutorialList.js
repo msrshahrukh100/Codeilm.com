@@ -121,19 +121,13 @@ class TutorialList extends React.Component {
         const actionButtons = (
           <>
           <LikeButton tutorial={tutorial}/>
-          <ViewsPanel tutorial={tutorial} />
+          <ViewsPanel
+            tutorial={tutorial}
+            onClickHandler={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}
+            ownerIsAuthenticatedUser={tutorial.owner_is_authenticated_user} />
           <ShareButton url={'https://codeilm.com/stories/' + tutorial.id + '/' + tutorial.slug} title={tutorial.title} />
           {tutorial.owner_is_authenticated_user ?
             <>
-            <Tooltip title="See Metrics" aria-label="See Metrics">
-              <Button
-              size="small"
-              color="primary"
-              className={classes.metricsButton}
-              onClick={() => this.props.history.push('/metrics/' + tutorial.id + '/' + tutorial.slug )}>
-              <MdTrendingUp className={classes.iconSmall} />
-              </Button>
-            </Tooltip>
             <Tooltip title="Edit" aria-label="Edit">
               <Button
               size="small"
