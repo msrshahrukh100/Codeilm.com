@@ -89,7 +89,6 @@ const styles = theme => ({
     cursor: 'pointer',
     [theme.breakpoints.down('xs')]: {
       width: theme.spacing(14),
-      marginLeft: theme.spacing(-3),
       paddingRight: theme.spacing()
     },
   },
