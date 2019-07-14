@@ -133,7 +133,7 @@ class TutorialList extends React.Component {
           <ViewsPanel
             tutorial={tutorial}
             onClickHandler={() => window.location = '/metrics/' + tutorial.id + '/' + tutorial.slug }
-            ownerIsAuthenticatedUser={!tutorial.owner_is_authenticated_user} />
+            ownerIsAuthenticatedUser={tutorial.owner_is_authenticated_user} />
           {tutorial.owner_is_authenticated_user ?
             <>
             <Tooltip title="Edit" aria-label="Edit">
