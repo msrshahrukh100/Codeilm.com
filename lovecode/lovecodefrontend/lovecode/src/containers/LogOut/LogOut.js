@@ -42,4 +42,4 @@ const matchDispatchToProps = dispatch => {
   }
 }
 
-export default connect(matchStateToProps, matchDispatchToProps)(withRouter(withErrorHandler(LogOut, axios)));
+export default connect(matchStateToProps, matchDispatchToProps)(withRouter(withErrorHandler(LogOut, axios, 'circular')));
