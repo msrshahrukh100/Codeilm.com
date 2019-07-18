@@ -17,6 +17,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { FaEye } from "react-icons/fa";
+import { IconContext } from "react-icons";
+
 
 const styles = theme => ({
   textField: {
@@ -26,6 +29,15 @@ const styles = theme => ({
   button: {
     margin: theme.spacing(1),
     backgroundColor: 'red'
+  },
+  fab: {
+    zIndex: 100,
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
   },
   rightIcon: {
     marginLeft: theme.spacing(1),
@@ -78,7 +90,7 @@ const learnEditEditor = (props) => {
     action: function customFunction(editor){
       const pos = editor.codemirror.getCursor();
       editor.codemirror.setSelection(pos, pos);
-      editor.codemirror.replaceSelection('\n[Page "Title of the Page"]\n\nYour awesome content\n\n[Page]\n');
+      editor.codemirror.replaceSelection('\n[Page "Title of the Page"]\n\nYour awesome content\n\n[End]\n');
     },
     className: "fa fa-file-text",
     title: "Add Page",
@@ -113,6 +125,7 @@ const learnEditEditor = (props) => {
 
     <div className={classes.container}>
     <>
+
     <TextField
     id="outlined-read-only-input"
     label="Title"
@@ -227,6 +240,12 @@ const learnEditEditor = (props) => {
         </DialogActions>
       </Dialog>
       </>
+      <Fab color="primary" onClick={props.togglePreview} aria-label="Add" className={classes.fab}>
+        <IconContext.Provider value={{ size: '2em' }}>
+          <FaEye />
+        </IconContext.Provider>
+        </Fab>
+
       </div>
     </>
   )
