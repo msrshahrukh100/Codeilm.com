@@ -23,7 +23,7 @@ const renderers: ReactMarkdown.Renderers = {
       }
     },
     image: props => {
-      return <img {...props} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '100%'}} />
+      return <img {...props} className="tutorial-image" style={{marginLeft: 'auto', marginRight: 'auto', display: 'block'}} />
     },
     link: (props) => {
       if(props.children[0].props.value === "YOUTUBE") {
