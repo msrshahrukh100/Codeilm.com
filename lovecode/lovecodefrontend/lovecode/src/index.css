@@ -19,7 +19,5 @@ a {
 
 .paddedText {
   line-height: 1.7;
-  padding-left: 20px;
-  padding-right: 20px;
   text-align: justify;
 }

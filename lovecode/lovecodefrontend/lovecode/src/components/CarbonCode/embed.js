@@ -58,7 +58,7 @@ class Embed extends React.Component {
       squaredImage: false,
       theme: "seti",
       watermark: false,
-      widthAdjustment: true,
+      widthAdjustment: false,
       windowControls: true,
       windowTheme: "none"
     }

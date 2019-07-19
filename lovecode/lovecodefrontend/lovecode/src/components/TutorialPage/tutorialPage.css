@@ -16,12 +16,13 @@
 
 @media only screen and (min-width: 600px) {
 	.paddedText {
-		margin-left: 16px;
+		margin-left: 0px;
 	}
 }
 
 @media only screen and (max-width: 600px) {
 	.paddedText {
-		margin-left: 0px;
+		margin-left: 8px;
+		margin-right: 8px;
 	}
 }

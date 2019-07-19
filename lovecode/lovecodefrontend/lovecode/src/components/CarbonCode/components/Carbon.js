@@ -108,10 +108,9 @@ class Carbon extends React.PureComponent {
           {`
             .container {
               position: relative;
-              min-width: ${config.widthAdjustment ? '90px' : '680px'};
-              max-width: 1024px;
+              min-width: ${config.widthAdjustment ? '90px' : '100%'};
               text-align: left;
-              padding: ${config.paddingVertical} ${config.paddingHorizontal};
+              padding: ${config.paddingVertical} 0px;
             }
 
             .container :global(.watermark) {
@@ -168,7 +167,6 @@ class Carbon extends React.PureComponent {
             }
 
             .container :global(.CodeMirror__container) {
-              min-width: inherit;
               position: relative;
               z-index: 1;
               border-radius: 5px;
@@ -181,7 +179,6 @@ class Carbon extends React.PureComponent {
 
             .container :global(.CodeMirror__container .CodeMirror) {
               height: auto;
-              min-width: inherit;
               padding: 18px 18px;
               padding-left: 12px;
               ${config.lineNumbers ? 'padding-left: 12px;' : ''} border-radius: 5px;
@@ -222,6 +219,7 @@ class Carbon extends React.PureComponent {
           {`
             .section,
             .export-container {
+              width: 100%;
               height: 100%;
               display: flex;
               flex-direction: column;

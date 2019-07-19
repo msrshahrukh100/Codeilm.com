@@ -62,7 +62,13 @@ const tutorialPage = (props) => {
 
   const widthConstraint = isWidthDown('sm', props.width)
   const shownContent = content ? content : props.lastPage
-  const mainContent = props.stepsLength > 1 || widthConstraint ? shownContent :  <Container maxWidth="md">{shownContent}</Container>
+  let mainContent = null
+  if (widthConstraint) {
+    mainContent = shownContent
+  }
+  else {
+    mainContent = <Container maxWidth="md">{shownContent}</Container>
+  }
   return (
     <>
       <h2>{title}</h2>
