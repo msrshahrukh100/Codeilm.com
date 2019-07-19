@@ -42,6 +42,7 @@ urlpatterns = [
     path('api/usermanagement/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
     path('email/', include(('emailmanager.urls', 'emailmanager'), namespace="emailmanager")),
     path('api-auth/', include('rest_framework.urls')),
+    path('impersonate/', include('impersonate.urls')),
     # urls for different communities
 ]
 

@@ -16,6 +16,11 @@
 {% endblock %}
 {% block content %} <!-- blue lime -->
 {% include "mainapp/partials/simple-navbar.html" %}
+
+{% if request.user.is_impersonate %}
+	{{ request.impersonator.username }} is impersonating {{ request.user.username }}
+{% endif %}
+
 {% if messages %}
 	{% for message in messages %}
 		<div class="row">
