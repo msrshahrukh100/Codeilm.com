@@ -161,7 +161,7 @@ class TutorialDetail extends React.Component {
         // actionButtons={actionButtons}
         title={this.state.tutorial.title} />
         </div>
-        <TutorialPage lastPage={lastPage} page={currentPage} />
+        <TutorialPage lastPage={lastPage} page={currentPage} stepsLength={steps.length} />
       </>
       : null
     const right = steps.length > 1 ? (<VerticalLinearStepper
