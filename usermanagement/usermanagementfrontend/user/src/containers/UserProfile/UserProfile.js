@@ -20,7 +20,7 @@ import ReactGA from 'react-ga';
 import EditIntro from '../EditIntro/EditIntro'
 import BasicMetaTags from '../../components/MetaTags/BasicMetaTags'
 import { connect } from 'react-redux';
-
+import { getUserId } from '../../utils/commonutils'
 
 const { Avatar, Icon, Typography } = atoms;
 const { Tabs, Tab } = molecules;
@@ -47,7 +47,8 @@ class ProfilePage extends React.Component {
 
   constructor(props) {
     super(props)
-    const { userId } = this.props.match.params;
+    const { userNameId } = this.props.match.params;
+    const userId = getUserId(userNameId);
     this.state = {
       userId: userId,
       profileData: null,

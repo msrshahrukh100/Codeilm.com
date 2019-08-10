@@ -28,7 +28,7 @@ class App extends React.Component {
       <Switch>
         <Route
           exact
-          path="/u/:userId/:userName"
+          path="/u/:userNameId"
           component={UserProfile} />
         <Route
           exact

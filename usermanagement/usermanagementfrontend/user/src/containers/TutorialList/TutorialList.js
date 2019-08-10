@@ -17,6 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import Chips from '../../components/UI/Chips/Chips'
 import { Link } from 'react-router-dom'
 import Tooltip from '@material-ui/core/Tooltip';
+import { getUserId } from '../../utils/commonutils'
 
 const styles = theme => ({
   margin: {
@@ -50,7 +51,8 @@ class TutorialList extends React.Component {
     super(props)
 
     const params = new URLSearchParams(props.location.search);
-    const { userId } = props.match.params;
+    const { userNameId } = props.match.params;
+    const userId = getUserId(userNameId);
 
     const q = params.get('q');
     this.state = {

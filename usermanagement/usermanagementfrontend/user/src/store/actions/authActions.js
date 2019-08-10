@@ -1,6 +1,8 @@
 import * as actionTypes from './actionTypes'
 import axios from 'axios'
 
+const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+
 export const authStart = () => {
   return {
     type: actionTypes.AUTH_START
@@ -26,7 +28,7 @@ export const authLogout = () => {
 export const auth = () => {
   return dispatch => {
     dispatch(authStart());
-    axios.get('/api/v1/get-auth-status/')
+    axios.get(debug ? 'http://localhost:8000/api/v1/get-auth-status/' : '/api/v1/get-auth-status/')
       .then(response => {
 
         response && dispatch(authSuccess(response.data.authenticated ? "true" : "", response.data.user))
