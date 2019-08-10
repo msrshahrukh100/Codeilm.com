@@ -104,11 +104,11 @@ class ProfilePage extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const newUserId = this.props.match.params.userId;
-    const prevUserId = prevProps.match.params.userId;
+    const newUserNameId = this.props.match.params.userNameId;
+    const prevUserNameId = prevProps.match.params.userNameId;
 
-    if(prevUserId !== newUserId) {
-      this.setState({userId: newUserId, tabIndex: "posts"}, () => this.fetchProfileData())
+    if(prevUserNameId !== newUserNameId) {
+      this.setState({userId: getUserId(newUserNameId), tabIndex: "posts"}, () => this.fetchProfileData())
     }
 
     if(this.props.user) {
