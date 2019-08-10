@@ -35,7 +35,7 @@ class TutorialInfo extends React.Component {
 
   userClicked = event => {
     event.stopPropagation();
-    window.location = `/u/${this.props.user.id}/${this.props.user.username}`
+    window.location = `/u/${this.props.user.username}-${this.props.user.id}`
   }
 
   render() {
