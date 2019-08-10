@@ -47,7 +47,7 @@ class GroupCreationRequestAdmin(admin.ModelAdmin):
 			return obj.request_ip_info.region
 		return None
 
-admin.site.register(Community, CommunityAdmin)
+# admin.site.register(Community, CommunityAdmin)
 admin.site.register(RequestIpInfo, RequestIpInfoAdmin)
 admin.site.register(SiteConfiguration, SingletonModelAdmin)
 admin.site.register(GroupCreationRequest, GroupCreationRequestAdmin)

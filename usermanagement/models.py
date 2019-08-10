@@ -4,12 +4,38 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from sorl.thumbnail import ImageField
 from django.conf import settings
 from mainapp.utils import get_user_display_name
+from autoslug import AutoSlugField
 
 # Create your models here.
 
 
 def upload_location(instance, filename):
 	return "user_profile_images/%s/%s" % (get_user_display_name(instance.user), filename)
+
+
+def upload_community_image(instance, filename):
+	return "community_image/%s" % filename
+
+class Community(models.Model):
+	name = models.CharField(max_length=255)
+	slug = AutoSlugField(populate_from='name', always_update=True, unique_with=['id'])
+	description = models.TextField()
+	profile_image = ImageField(
+		upload_to=upload_community_image,
+		null=True,
+		blank=True,
+		width_field="width_field",
+		height_field="height_field", help_text="Image of the community")
+	height_field = models.IntegerField(null=True, blank=True)
+	width_field = models.IntegerField(null=True, blank=True)
+	admins = models.ManyToManyField(User, related_name="community_admins", blank=True)
+	members = models.ManyToManyField(User, related_name="community_members" ,blank=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return str(self.id)
+
 
 
 class UserProfile(models.Model):

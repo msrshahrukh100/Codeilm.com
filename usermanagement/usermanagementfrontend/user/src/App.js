@@ -16,7 +16,6 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps) {
     if(this.props.userId) {
-      console.log(this.props.userId);
       ReactGA.set({ userId: this.props.userId });
     }
   }

@@ -8,6 +8,7 @@ from mainapp import models as main_models
 from django.utils import timezone
 from django.conf import settings
 from datetime import datetime
+from usermanagement.models import Community
 
 # Create your models here.
 class GithubRepo(Model):
@@ -53,6 +54,7 @@ class Tutorial(Model):
 	view_data = JSONField(blank=True, default=get_view_data_default)
 	learn_md_content = models.TextField(null=True, blank=True)
 	tags = models.ManyToManyField(TutorialTags, blank=True)
+	community = models.ForeignKey(Community, help_text="Community this tutorial is part of", blank=True, null=True, on_delete=models.SET_NULL, related_name="tutorial_community")
 	read_time = models.CharField(max_length=20, null=True, blank=True)
 	is_published = models.BooleanField(default=False)
 	repository_name = models.CharField(max_length=200, null=True, blank=True)
