@@ -176,7 +176,7 @@ class SearchAppBar extends React.Component {
             alt={this.props.user.full_name}
             src={this.props.user.user_profile_pic}
             className={classes.avatar}
-            onClick={() => window.location = `/u/${this.props.user.id}/${this.props.user.username}`}
+            onClick={() => window.location = `/u/${this.props.user.username}-${this.props.user.id}`}
             />
           : null
         }
