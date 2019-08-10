@@ -167,7 +167,7 @@ class SearchAppBar extends React.Component {
 
         <div className={classes.grow} />
         {this.props.user ?
-          <Link to={`/u/${this.props.user.id}/${this.props.user.username}`}>
+          <Link to={`/u/${this.props.user.username}-${this.props.user.id}`}>
             <Avatar alt={this.props.user.full_name} src={this.props.user.user_profile_pic} className={classes.avatar} />
           </Link>
           : null
