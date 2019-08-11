@@ -6,7 +6,8 @@ import SearchAppBar from './containers/SearchAppBar/SearchAppBar'
 import { connect } from 'react-redux'
 import * as actionCreators from './store/actions/index'
 import ReactGA from 'react-ga';
-
+import CommunityPage from './containers/CommunityPage/CommunityPage'
+import 'typeface-roboto';
 
 class App extends React.Component {
 
@@ -25,6 +26,10 @@ class App extends React.Component {
       <>
       <SearchAppBar />
       <Switch>
+      <Route
+        exact
+        path="/c/:communitySlug"
+        component={CommunityPage} />
         <Route
           exact
           path="/u/:userNameId"

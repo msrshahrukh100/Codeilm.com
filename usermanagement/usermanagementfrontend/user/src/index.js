@@ -22,7 +22,7 @@ history.listen(function (location) {
   ReactGA.pageview(location.pathname + location.search)
 })
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   rdReducer: repoDataReducer,

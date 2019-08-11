@@ -52,7 +52,8 @@ class TutorialList extends React.Component {
 
     const params = new URLSearchParams(props.location.search);
     const { userNameId } = props.match.params;
-    const userId = getUserId(userNameId);
+    const { communitySlug } = props.match.params;
+    const userId = userNameId ? getUserId(userNameId) : null;
 
     const q = params.get('q');
     this.state = {
@@ -63,7 +64,8 @@ class TutorialList extends React.Component {
       count: 0,
       loading: true,
       q:q,
-      userId: userId
+      userId: userId,
+      communitySlug: communitySlug
     }
   }
 
@@ -94,7 +96,14 @@ class TutorialList extends React.Component {
         : `?page=${this.state.pageNumber}`
     : this.state.q ? `?q=${this.state.q}` : `?temp=asdf`;
 
-    url += `&user_id=${this.state.userId}&profile_view=true`
+    if(this.state.userId) {
+      url += `&user_id=${this.state.userId}&profile_view=true`
+    }
+    else {
+      url += `&community_slug=${this.state.communitySlug}`
+    }
+
+
     axios.get(url)
       .then(response => {
         this.setState(state => ({
