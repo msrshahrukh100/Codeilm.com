@@ -15,7 +15,7 @@ class UserSimpleSerializer(serializers.ModelSerializer):
 
 
 class CommunitySerializer(serializers.ModelSerializer):
-    id = serializers.CharField(default="")
+    id = serializers.CharField(default="", read_only=True)
     admins = UserSimpleSerializer(read_only=True, many=True)
     members = UserSimpleSerializer(read_only=True, many=True)
 
