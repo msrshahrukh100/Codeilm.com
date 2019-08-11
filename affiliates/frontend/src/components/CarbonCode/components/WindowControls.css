@@ -1,0 +1,44 @@
+button {
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: transparent;
+}
+
+button:active {
+  outline: none;
+}
+
+.window-controls {
+  margin-top: -24px;
+  position: relative;
+  top: 36px;
+  margin-left: 16px;
+  z-index: 2;
+}
+
+.window-title-container {
+  position: absolute;
+  margin: 0px;
+  top: -3px;
+  left: -9px;
+  width: 100%;
+  text-align: center;
+}
+
+input {
+  width: 250px;
+  background: none;
+  outline: none;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 14px;
+}
+
+.copy-button {
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  right: 16px;
+}
