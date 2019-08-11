@@ -25,6 +25,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 import re
 from django.db.models import Q
+from usermanagement import models as usermanagement_models
 
 # Create your views here.
 
@@ -78,6 +79,8 @@ class TutorialList(generics.ListAPIView):
 		branch_name = get_params.get('branch_name')
 		repo_create = get_params.get('repo_create')
 		profile_view = get_params.get('profile_view')
+		community_slug = get_params.get('community_slug')
+
 		try:
 			user_id = int(get_params.get('user_id')) if get_params.get('user_id') else None
 		except:
@@ -97,8 +100,14 @@ class TutorialList(generics.ListAPIView):
 
 		qs = lovecode_models.Tutorial.objects.all()
 
+		# if get query has a user id filter by it
 		if user_id:
 			qs = qs.filter(user__id=user_id)
+
+		# if get query has a community_slug, filter by it
+		if community_slug:
+			community = get_object_or_404(usermanagement_models.Community, slug=community_slug)
+			qs = qs.filter(community=community)
 
 		if profile_view and user.is_authenticated and (user_id == user.id):
 			pass
