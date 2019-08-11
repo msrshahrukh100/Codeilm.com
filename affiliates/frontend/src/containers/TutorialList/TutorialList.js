@@ -153,7 +153,7 @@ class TutorialList extends React.Component {
           headerVariant="h5"
           key={tutorial.id}
           content={content}
-          onClick={() => this.props.history.push('/stories/' + tutorial.id + '/' + tutorial.slug)}
+          onClick={() => this.props.history.push('/' + tutorial.id + '/' + tutorial.slug)}
           actionButtons={actionButtons}
           title={tutorial.title} />
       })}
