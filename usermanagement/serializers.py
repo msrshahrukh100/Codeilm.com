@@ -14,6 +14,16 @@ class UserSimpleSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'full_name', 'intro', 'user_profile_pic']
 
 
+class CommunitySerializer(serializers.ModelSerializer):
+    id = serializers.CharField(default="")
+    admins = UserSimpleSerializer(read_only=True, many=True)
+    members = UserSimpleSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = usermanagement_models.Community
+        fields = ('id', 'name', 'slug', 'description', 'profile_image', 'admins', 'members')
+
+
 class ConnectionsSerializer(serializers.ModelSerializer):
     user = UserSimpleSerializer()
     following = UserSimpleSerializer()

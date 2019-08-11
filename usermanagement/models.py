@@ -5,6 +5,7 @@ from sorl.thumbnail import ImageField
 from django.conf import settings
 from mainapp.utils import get_user_display_name
 from autoslug import AutoSlugField
+from hashid_field import HashidAutoField
 
 # Create your models here.
 
@@ -17,6 +18,7 @@ def upload_community_image(instance, filename):
 	return "community_image/%s" % filename
 
 class Community(models.Model):
+	id = HashidAutoField(primary_key=True)
 	name = models.CharField(max_length=255)
 	slug = AutoSlugField(populate_from='name', always_update=True, unique_with=['id'])
 	description = models.TextField()

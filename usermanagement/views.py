@@ -4,7 +4,7 @@ from rest_framework import generics, permissions
 from django.contrib.auth.models import User
 from . import serializers as usermanagementserializers
 from .paginators import UsersListPagination
-from .permissions import IsOwnerOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
 from . import models as usermanagementmodels
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -18,6 +18,13 @@ def add_user_following(request, user_id=None):
 			return HttpResponse(status=404)
 		utils.add_user_following(user_id=request.user.id, following_id=user_id)
 		return JsonResponse({"msg": "Following added"})
+
+
+class CommunityDetail(generics.RetrieveUpdateAPIView):
+	queryset = usermanagementmodels.Community.objects.all()
+	lookup_field = 'slug'
+	serializer_class = usermanagementserializers.CommunitySerializer
+	permission_classes = (IsAdminOrReadOnly, )
 
 
 class UserProfile(generics.RetrieveUpdateAPIView):
