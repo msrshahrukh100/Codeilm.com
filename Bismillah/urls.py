@@ -29,6 +29,7 @@ handler500 = 'mainapp.views.redirect_for_server_error'
 
 urlpatterns = [
     re_path(r'^u/', TemplateView.as_view(template_name='usermanagement.html')),
+    re_path(r'^c/', TemplateView.as_view(template_name='usermanagement.html')),
     path('feedback/', include(('feedback.urls', 'feedback'), namespace="feedback")),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
