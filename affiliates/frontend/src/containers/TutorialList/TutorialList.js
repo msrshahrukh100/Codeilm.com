@@ -78,12 +78,20 @@ class TutorialList extends React.Component {
 
   fetchTutorials = () => {
     this.setState({loading: true})
-    const url = this.state.pageNumber ?
+    let url = this.state.pageNumber ?
       this.state.q ?
         `/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
         : `/tutorials/?page=${this.state.pageNumber}`
-    : this.state.q ? `/tutorials/?q=${this.state.q}` : "/tutorials";
-    console.log(url);
+    : this.state.q ? `/tutorials/?q=${this.state.q}` : "/tutorials?temp=shahrukh";
+
+    const community_slug = sessionStorage.getItem("community_slug");
+    // if(this.state.userId) {
+    //   url += `&user_id=${this.state.userId}&profile_view=true`
+    // }
+    if(community_slug) {
+      url += `&community_slug=${community_slug}`
+    }
+
     axios.get(url)
       .then(response => {
         this.setState(state => ({

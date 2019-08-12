@@ -17,7 +17,6 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
     componentWillMount() {
       this.reqInterceptor = axios.interceptors.request.use(request => {
         this.setState({error: null, loading: true})
-        console.log(request);
         return request
       }, error => {
         this.setState({
@@ -28,7 +27,6 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
 
       this.resInterceptor = axios.interceptors.response.use(response => {
         this.setState({loading: false})
-        console.log(response);
         return response
       }, error => {
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
