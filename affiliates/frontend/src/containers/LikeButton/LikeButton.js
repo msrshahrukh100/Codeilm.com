@@ -8,7 +8,6 @@ import axios from '../../lovecodeaxios2'
 import getCookie from '../../utils/getCookie'
 import Avatar from '@material-ui/core/Avatar';
 import Tooltip from '@material-ui/core/Tooltip';
-import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import ReactGA from 'react-ga';
 
 const styles = theme => ({
@@ -117,4 +116,4 @@ class LikeButton extends React.Component {
   }
 }
 
-export default withStyles(styles)(withErrorHandler(LikeButton, axios))
+export default withStyles(styles)(LikeButton)

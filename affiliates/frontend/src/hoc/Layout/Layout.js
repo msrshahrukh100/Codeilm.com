@@ -17,10 +17,10 @@ class Layout extends React.Component {
     return (
       <>
       <Switch>
-        <Route path='/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
-        <Route path='/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
-        <Route path='/:tutorialId/:slug/' component={TutorialDetail} />
-        <Route component={TutorialList} />
+        <Route path='/stories/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
+        <Route path='/stories/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
+        <Route path='/stories/:tutorialId/:slug/' component={TutorialDetail} />
+        <Route path="/stories" exact component={TutorialList} />
       </Switch>
       </>
     )
