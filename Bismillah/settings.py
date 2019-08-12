@@ -29,10 +29,9 @@ DEBUG = bool(int(os.environ.get('SETTINGS_DEBUG')))
 
 ALLOWED_HOSTS = ['codeilm.com', 'www.codeilm.com', '54.218.212.69', '127.0.0.1', 'localhost']
 
-CORS_ORIGIN_WHITELIST = (
-    # remove it after all done
-    'localhost:3000'
-    )
+CORS_ORIGIN_WHITELIST = [
+    'https://robasquare.com'
+]
 
 # CORS_ORIGIN_ALLOW_ALL = True
 
