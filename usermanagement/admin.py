@@ -12,7 +12,7 @@ class ConnectionsAdmin(admin.ModelAdmin):
 
 
 class CommunityAdmin(admin.ModelAdmin):
-	list_display = ['name', 'slug']
+	list_display = ['id', 'name', 'slug']
 	raw_id_fields = ['admins', 'members']
 
 admin.site.register(UserProfile, UserProfileAdmin)
