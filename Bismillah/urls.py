@@ -41,6 +41,7 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('inbox/notifications/', include(notifications.urls, namespace='notifications')),
     path('api/usermanagement/', include(('usermanagement.urls', 'usermanagement'), namespace="usermanagement")),
+    path('api/affiliates/', include(('affiliates.urls', 'affiliates'), namespace="affiliates")),
     path('email/', include(('emailmanager.urls', 'emailmanager'), namespace="emailmanager")),
     path('api-auth/', include('rest_framework.urls')),
     path('impersonate/', include('impersonate.urls')),

@@ -83,6 +83,7 @@ class TutorialList extends React.Component {
         `/tutorials/?page=${this.state.pageNumber}&q=${this.state.q}`
         : `/tutorials/?page=${this.state.pageNumber}`
     : this.state.q ? `/tutorials/?q=${this.state.q}` : "/tutorials";
+
     axios.get(url)
       .then(response => {
         this.setState(state => ({

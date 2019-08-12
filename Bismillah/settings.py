@@ -79,6 +79,7 @@ INSTALLED_APPS = [
     'usermanagement',
     'emailmanager',
     'lovecode.lovecodebackend',
+    'affiliates',
 
     #android
     'androidapps.gymapp.gymappbackend',

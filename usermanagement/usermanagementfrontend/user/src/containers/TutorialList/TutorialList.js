@@ -103,7 +103,6 @@ class TutorialList extends React.Component {
       url += `&community_slug=${this.state.communitySlug}`
     }
 
-
     axios.get(url)
       .then(response => {
         this.setState(state => ({
