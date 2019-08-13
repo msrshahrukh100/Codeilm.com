@@ -55,7 +55,7 @@ module.exports = function(webpackEnv) {
   //   ? paths.servedPath
   //   : isEnvDevelopment && '/';
 
-  const publicPath = isEnvProduction ? "https://codeilm.com/" : "/"  
+  const publicPath = isEnvProduction ? "https://codeilm.com/" : "/"
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
   const shouldUseRelativeAssetPaths = publicPath === './';
@@ -155,7 +155,7 @@ module.exports = function(webpackEnv) {
       // There will be one main bundle, and one file per asynchronous chunk.
       // In development, it does not produce real files.
       filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
+        ? 'static/js/[name].[contenthash:8].affiliates.js'
         : isEnvDevelopment && 'static/js/bundle.js',
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
