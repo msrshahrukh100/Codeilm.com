@@ -22,14 +22,14 @@ class App extends React.Component {
   }
 
   render() {
+    // <Route
+    //   exact
+    //   path="/c/:communitySlug"
+    //   component={CommunityPage} />
     return (
       <>
       <SearchAppBar />
       <Switch>
-      <Route
-        exact
-        path="/c/:communitySlug"
-        component={CommunityPage} />
         <Route
           exact
           path="/u/:userNameId"
