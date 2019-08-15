@@ -33,6 +33,6 @@ class ExerciseAdmin(admin.ModelAdmin):
 	list_display = ['name']
 
 
-admin.site.register(gymapp_models.Exercise, ExerciseAdmin)
-admin.site.register(gymapp_models.Schedule, ScheduleAdmin)
-admin.site.register(gymapp_models.ScheduleExercise, ScheduleExerciseAdmin)
+# admin.site.register(gymapp_models.Exercise, ExerciseAdmin)
+# admin.site.register(gymapp_models.Schedule, ScheduleAdmin)
+# admin.site.register(gymapp_models.ScheduleExercise, ScheduleExerciseAdmin)

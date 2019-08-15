@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserActivity, FeedbackEvent, ClickResponse, FeedbackResponse
+from .models import UserActivity, FeedbackEvent, ClickResponse, FeedbackResponse, LeadCaptureEmail
 # Register your models here.
 
 
@@ -72,7 +72,10 @@ class FeedbackResponseAdmin(admin.ModelAdmin):
 		return None
 
 
-admin.site.register(UserActivity, UserActivityAdmin)
-admin.site.register(FeedbackEvent, FeedbackEventAdmin)
-admin.site.register(ClickResponse, ClickResponseAdmin)
-admin.site.register(FeedbackResponse, FeedbackResponseAdmin)
+# admin.site.register(UserActivity, UserActivityAdmin)
+# admin.site.register(FeedbackEvent, FeedbackEventAdmin)
+# admin.site.register(ClickResponse, ClickResponseAdmin)
+# admin.site.register(FeedbackResponse, FeedbackResponseAdmin)
+
+
+admin.site.register(LeadCaptureEmail)

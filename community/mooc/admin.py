@@ -79,9 +79,9 @@ class MoocUnitDescriptionAdmin(admin.ModelAdmin):
 	list_display = ['group', 'unit', 'unit_title']
 
 
-admin.site.register(mooc_models.MoocGroupUser, MoocGroupUserAdmin)
-admin.site.register(mooc_models.MoocStatusUpdate, MoocStatusUpdateAdmin)
-admin.site.register(mooc_models.MoocGroup, MoocGroupAdmin)
-admin.site.register(mooc_models.MoocUserProgress, MoocUserProgressAdmin)
-admin.site.register(mooc_models.MoocUnitDescription, MoocUnitDescriptionAdmin)
-admin.site.register(mooc_models.MoocGroupUserMotivation)
+# admin.site.register(mooc_models.MoocGroupUser, MoocGroupUserAdmin)
+# admin.site.register(mooc_models.MoocStatusUpdate, MoocStatusUpdateAdmin)
+# admin.site.register(mooc_models.MoocGroup, MoocGroupAdmin)
+# admin.site.register(mooc_models.MoocUserProgress, MoocUserProgressAdmin)
+# admin.site.register(mooc_models.MoocUnitDescription, MoocUnitDescriptionAdmin)
+# admin.site.register(mooc_models.MoocGroupUserMotivation)

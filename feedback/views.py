@@ -1,14 +1,26 @@
 from django.shortcuts import render
-from .models import FeedbackEvent
+from .models import FeedbackEvent, LeadCaptureEmail
 from django.shortcuts import get_object_or_404, redirect
 from django.template import Template, Context
 from . import utils
 import logging
 from django.contrib import messages
 from django.urls import reverse
+from django.http import JsonResponse
 # Create your views here.
 
 logger = logging.getLogger(__name__)
+
+
+def save_leadcapture_email(request):
+	email = request.POST.get("email")
+	if email:
+		obj, created = LeadCaptureEmail.objects.get_or_create(email=email)
+		if created:
+			return JsonResponse({"status":"success", "msg": "Thanks for your email. We'll notify with the latest relevant stories."})
+		return JsonResponse({"status":"success", "msg": "We already have your email!"})
+	return JsonResponse({"status":"error", "msg": "No email provided"})
+
 
 
 def feedback_page(request, id=None, slug=None):

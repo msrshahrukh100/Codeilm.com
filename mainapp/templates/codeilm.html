@@ -82,13 +82,15 @@
     <form class="col s12">
       <div class="row">
         <div class="input-field col s6">
-          <input id="email" type="email" class="validate">
-          <label for="email">Your Email</label>
+          <input id="subscribe-email" type="email" class="validate">
+          <label for="subscribe-email">Your Email</label>
         </div>
         <div class="col s6" style="margin-top: 1rem;">
-        	<a class="waves-effect waves-light btn" style="text-transform: none; background: linear-gradient(45deg, #FE6B8B 30%, #f20e02 90%);">Notify Me</a>
+        	<button id="submitEmail" type="submit" class="waves-effect waves-light btn" style="text-transform: none; background: linear-gradient(45deg, #FE6B8B 30%, #f20e02 90%);">Notify Me</button>
         </div>
       </div>
+        <p style="color: #4CAF50;" id="email-submit-status">
+        </p>
     </form>
   </div>
 
@@ -283,4 +285,29 @@
 {% endblock %}
 
 {% block scripts %}
+<script type="text/javascript">
+	$('#submitEmail').on('click', function(e) {
+		var emailValid = $('#subscribe-email')[0].checkValidity()
+		var data = {"email": $('#subscribe-email').val()}
+		if (emailValid) {
+			e.preventDefault();
+			$.ajax({
+            type: 'POST',
+            url: "{% url 'feedback:save_leadcapture_email' %}",
+            data: data,
+            success: function(data) {
+            	$('#email-submit-status').html(data["msg"])
+            },
+            fail: function() {
+                console.log("error")
+            },
+            beforeSend: function(xhr) {
+                var csrftoken = getCookie('csrftoken');
+                xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            },
+        });
+		}
+	})
+</script>
+
 {% endblock %}
