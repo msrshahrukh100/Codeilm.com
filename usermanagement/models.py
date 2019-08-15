@@ -22,6 +22,7 @@ class Community(models.Model):
 	name = models.CharField(max_length=255)
 	slug = AutoSlugField(populate_from='name', always_update=True, unique_with=['id'])
 	description = models.TextField()
+	is_company = models.BooleanField(default=False)
 	profile_image = ImageField(
 		upload_to=upload_community_image,
 		null=True,
