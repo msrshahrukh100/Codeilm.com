@@ -4,6 +4,12 @@ from . import models as usermanagement_models
 from lovecode.lovecodebackend import serializers as lovecode_serializers
 
 
+class CommunitySerializer(serializers.ModelSerializer):
+    id = serializers.CharField(read_only=True, default="")
+    class Meta:
+        model = usermanagement_models.Community
+        fields = ('id')
+
 class UserSimpleSerializer(serializers.ModelSerializer):
     user_profile_pic = serializers.CharField(read_only=True, source='user_profile.first.get_profile_pic_url')
     full_name = serializers.CharField(read_only=True, source='get_full_name')
