@@ -5,7 +5,7 @@ from rest_framework import generics, permissions
 # Create your views here.
 
 
-class ProjectDetail(generics.RetrieveDestroyAPIView):
+class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = projects_models.Project.objects.all()
 	serializer_class = projects_serializers.ProjectDetailSerializer
 	lookup_field = "id"
@@ -14,3 +14,4 @@ class ProjectDetail(generics.RetrieveDestroyAPIView):
 class ProjectList(generics.ListCreateAPIView):
 	queryset = projects_models.Project.objects.filter(is_private=False)
 	serializer_class = projects_serializers.ProjectListSerializer
+
