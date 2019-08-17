@@ -13,7 +13,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = projects_models.Project
-		fields = ('id', 'title', 'slug', 'description', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at')
+		fields = ('id', 'title', 'slug', 'description', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at', 'created_at')
 
 
 class ProjectListSerializer(serializers.ModelSerializer):
