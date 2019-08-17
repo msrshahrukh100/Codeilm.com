@@ -12,6 +12,20 @@ class ProjectDetail(generics.RetrieveDestroyAPIView):
 	lookup_field = "id"
 
 
+class ProjectCreate(generics.CreateAPIView):
+	queryset = projects_models.Project.objects.all()
+	serializer_class = projects_serializers.ProjectCreateSerializer
+	permission_classes = (permissions.IsAuthenticated, )
+
+	def perform_create(self, serializer):
+		user = None
+		if self.request and hasattr(self.request, "user"):
+			user = self.request.user
+			serializer.save(poster=user)
+
+
+
+
 class ProjectList(generics.ListCreateAPIView):
 	queryset = projects_models.Project.objects.filter(is_private=False)
 	serializer_class = projects_serializers.ProjectListSerializer

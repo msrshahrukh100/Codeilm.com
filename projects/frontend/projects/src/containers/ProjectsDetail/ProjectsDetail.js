@@ -50,7 +50,7 @@ class ProjectsDetail extends React.Component {
     axios.get(projectId)
       .then(response => {
         const data = response.data;
-
+        console.log(data);
         this.setState({
           title: data.title,
           description: data.description,
@@ -74,7 +74,7 @@ class ProjectsDetail extends React.Component {
   render() {
     const { classes } = this.props;
     const { poster } = this.state;
-
+    const name = poster ? poster.full_name ? poster.full_name : poster.username : null
     return (
 
       <Card className={classes.card}>
@@ -83,11 +83,11 @@ class ProjectsDetail extends React.Component {
       </Typography>
       <CardHeader
       avatar={
-        <Avatar alt={poster ? poster.full_name ? poster.full_name : poster.username : null} src={poster ? poster.user_profile_pic : null} className={classes.avatar}>
-        R
+        <Avatar alt={name} src={poster ? poster.user_profile_pic : null} className={classes.avatar}>
+          {name ? name[0] : ""}
         </Avatar>
       }
-      title={poster ? poster.full_name ? poster.full_name : poster.username : null}
+      title={name}
       subheader={this.state.createdAt}
       />
       <CardContent>

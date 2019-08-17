@@ -12,7 +12,7 @@
 		<a href="#" data-target="slide-out" class="sidenav-trigger black-text"><i class="material-icons">menu</i></a>
 		<ul class="right hide-on-med-and-down">
 			<li>
-				<a href="/u/{{ request.user.id }}/{{ request.user.username }}">
+				<a href="/u/{{ request.user.username }}-{{ request.user.id }}">
 					<div class="chip transparent" style="cursor: pointer;">
 						{% if request.user.is_authenticated %}
 						{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" crop="center" as im %}

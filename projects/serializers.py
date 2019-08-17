@@ -16,6 +16,14 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 		fields = ('id', 'title', 'slug', 'description', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at', 'created_at')
 
 
+class ProjectCreateSerializer(serializers.ModelSerializer):
+	id = serializers.CharField(read_only=True, default="")
+	class Meta:
+		model = projects_models.Project
+		fields = ('id', 'title', 'poster', 'description', 'company', 'is_private', 'deadline', 'payment_type')
+
+
+
 class ProjectListSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(read_only=True, default="")
 

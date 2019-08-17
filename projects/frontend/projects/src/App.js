@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import SearchAppBar from './containers/SearchAppBar/SearchAppBar'
 import ReactGA from 'react-ga';
 import ProjectsDetail from './containers/ProjectsDetail/ProjectsDetail'
+import CreateProject from './containers/CreateProject/CreateProject'
 import 'typeface-roboto';
 
 class App extends React.Component {
@@ -13,6 +14,10 @@ class App extends React.Component {
       <>
       <SearchAppBar />
       <Switch>
+      <Route
+        exact
+        path="/projects/create"
+        component={CreateProject} />
         <Route
           exact
           path="/p/:projectId"
