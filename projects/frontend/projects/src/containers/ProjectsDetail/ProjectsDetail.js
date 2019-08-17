@@ -10,10 +10,14 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import ShareIcon from '@material-ui/icons/Share';
 import withStyles from '@material-ui/core/styles/withStyles';
 import axios from '../../projects_axios';
 import { withRouter } from "react-router";
+import Chip from '@material-ui/core/Chip';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const styles = theme => ({
   card: {
@@ -26,8 +30,15 @@ const styles = theme => ({
       margin: theme.spacing(),
       fontSize: '5.5rem',
       [theme.breakpoints.down('sm')]: {
-        fontSize: '3rem'
+        fontSize: '2.5rem'
       },
+  },
+  chip: {
+      margin: theme.spacing(),
+  },
+  users: {
+      margin: theme.spacing(2),
+      marginBottom: theme.spacing(0)
   },
   avatar: {
     backgroundColor: red[500],
@@ -41,7 +52,8 @@ class ProjectsDetail extends React.Component {
     loading: false,
     title: null,
     poster: null,
-    description: null
+    description: null,
+    isPrivate: false
   }
 
   fetchProject = () => {
@@ -55,6 +67,8 @@ class ProjectsDetail extends React.Component {
           title: data.title,
           description: data.description,
           poster: data.poster,
+          isPrivate: data.is_private,
+          deadline: new Date(data.deadline).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
           createdAt: new Date(data.created_at).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
         })
       })
@@ -81,21 +95,47 @@ class ProjectsDetail extends React.Component {
       <Typography variant="h1" component="h1" className={classes.title} gutterBottom>
         {this.state.title}
       </Typography>
+
+      {this.state.isPrivate ?
+        <Tooltip title="This project is private" aria-label="add">
+          <Chip className={classes.chip} color="secondary" label="Private" />
+        </Tooltip>
+        : null}
+        <Tooltip title="Deadline for this project" aria-label="add">
+          <Chip variant="outlined" className={classes.chip} color="primary" label={this.state.deadline} icon={<CalendarTodayIcon />}/>
+        </Tooltip>
+      <CardContent>
+      <Typography variant="subtitle1" color="textPrimary" style={{whiteSpace: 'pre-line'}} component="p">
+        {this.state.description}
+      </Typography>
+      </CardContent>
+
+      <Typography variant="p" className={classes.users} component="p">
+        This project is created by
+      </Typography>
       <CardHeader
       avatar={
         <Avatar alt={name} src={poster ? poster.user_profile_pic : null} className={classes.avatar}>
-          {name ? name[0] : ""}
+        {name ? name[0] : ""}
         </Avatar>
       }
       title={name}
       subheader={this.state.createdAt}
       />
-      <CardContent>
-      <Typography variant="body2" color="textSecondary" component="p">
-      This impressive paella is a perfect party dish and a fun meal to cook together with your
-      guests. Add 1 cup of frozen peas along with the mussels, if you like.
+
+      <Typography variant="p" className={classes.users} component="p">
+        Developers working on this project
       </Typography>
-      </CardContent>
+      <CardHeader
+      avatar={
+        <Avatar alt={name} src={poster ? poster.user_profile_pic : null} className={classes.avatar}>
+        {name ? name[0] : ""}
+        </Avatar>
+      }
+      title={name}
+      subheader={this.state.createdAt}
+      />
+
       <CardActions disableSpacing>
       <IconButton aria-label="add to favorites">
       <FavoriteIcon />

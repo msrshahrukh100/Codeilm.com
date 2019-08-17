@@ -10,8 +10,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import {
   KeyboardDateTimePicker,
   MuiPickersUtilsProvider
-
 } from '@material-ui/pickers';
+import { withRouter } from 'react-router-dom'
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -21,28 +21,40 @@ import Badge from '@material-ui/core/Badge';
 import getCookie from '../../utils/getCookie'
 import axios from '../../projects_axios'
 
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
   },
   paper: {
     padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: '0px'
+    },
   },
   badgeContent: {
     fontSize: '1rem',
-    padding: theme.spacing()
+    padding: theme.spacing(),
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.75rem',
+      padding: '0px',
+      margin: '0px'
+    },
   },
   container: {
     padding: theme.spacing(2),
   },
   textField: {
-    width: '75%'
+    width: '75%',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%'
+    },
   },
   pagetitle: {
       margin: theme.spacing(),
       fontSize: '5.5rem',
       [theme.breakpoints.down('sm')]: {
-        fontSize: '3rem'
+        fontSize: '2.5rem'
       },
   },
   rightIcon: {
@@ -57,12 +69,13 @@ const styles = theme => ({
   },
   private: {
     paddingBottom: theme.spacing()
-  }
+  },
 });
 
 class FullWidthGrid extends React.Component {
 
   state = {
+    loading: false,
     title: "",
     description: "",
     deadline: new Date(),
@@ -93,6 +106,7 @@ class FullWidthGrid extends React.Component {
       alert("Please fill a title for the project")
       return
     }
+    this.setState({loading: true})
     const csrftoken = getCookie('csrftoken');
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     const postData = {
@@ -101,7 +115,8 @@ class FullWidthGrid extends React.Component {
     }
     axios.post("create/", postData)
     .then(response => {
-      console.log(response);
+      this.setState({loading: false})
+      this.props.history.push(`/p/${response.data.id}`)
     })
     .catch(error => {
       console.log(error);
@@ -131,7 +146,7 @@ class FullWidthGrid extends React.Component {
 
     return (
       <div className={classes.root}>
-      <Grid container spacing={3} className={classes.container}>
+      <Grid container className={classes.container}>
         <Grid item xs={12}>
 
           <Paper elevation={0} className={classes.paper}>
@@ -181,7 +196,7 @@ class FullWidthGrid extends React.Component {
               />
             </div>
 
-            <Button onClick={this.createProject} variant="contained" color="primary" className={classes.button}>
+            <Button disabled={this.state.loading} onClick={this.createProject} variant="contained" color="primary" className={classes.button}>
                Add Project
              <AddIcon className={classes.rightIcon} />
            </Button>
@@ -194,4 +209,4 @@ class FullWidthGrid extends React.Component {
 }
 
 
-export default withStyles(styles)(FullWidthGrid)
+export default withStyles(styles)(withRouter(FullWidthGrid))
