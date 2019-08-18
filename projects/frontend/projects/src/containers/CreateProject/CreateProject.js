@@ -17,10 +17,12 @@ import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import Badge from '@material-ui/core/Badge';
 import getCookie from '../../utils/getCookie'
 import axios from '../../projects_axios'
 import { connect } from 'react-redux'
+import Chip from '@material-ui/core/Chip';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 const styles = theme => ({
   root: {
@@ -55,6 +57,9 @@ const styles = theme => ({
       fontSize: '5.5rem',
       [theme.breakpoints.down('sm')]: {
         fontSize: '2.5rem'
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: '80%'
       },
   },
   rightIcon: {
@@ -183,27 +188,26 @@ class CreateProject extends React.Component {
       <p className={classes.badgeContent}>Private</p>
     )
 
-    const title = this.state.isPrivate ? (
-      <Badge className={classes.margin} badgeContent={badgeContent} color="secondary">
+    const title = (
         <Typography variant="h1" className={classes.pagetitle} component="h1" gutterBottom>
           {this.state.title ? this.state.title : "Add a New Project"}
         </Typography>
-      </Badge>
-    ) : (
-      <Typography variant="h1" className={classes.pagetitle} component="h1" gutterBottom>
-        {this.state.title ? this.state.title : "Add a New Project"}
-      </Typography>
     )
-
 
 
     return (
       <div className={classes.root}>
       <Grid container className={classes.container}>
         <Grid item xs={12}>
-
           <Paper elevation={0} className={classes.paper}>
           {title}
+          {this.state.isPrivate ?
+            <div style={{paddingBottom: 30}}>
+              <Tooltip title="This project is private" aria-label="add">
+                <Chip variant="outlined" className={classes.chip} color="primary" label="Private" />
+              </Tooltip>
+            </div>
+            : null}
           <TextField
             id="outlined-name"
             label="Title"

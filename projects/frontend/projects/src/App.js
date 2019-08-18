@@ -8,6 +8,7 @@ import 'typeface-roboto';
 import { connect } from 'react-redux'
 import * as actionCreators from './store/actions/index'
 import LoginPage from './containers/LoginPage/LoginPage'
+import Tasks from './containers/Tasks/Tasks'
 
 function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, ...rest }) {
   return (
@@ -49,10 +50,14 @@ class App extends React.Component {
         component={CreateProject}
         isAuthenticated={this.props.isAuthenticated}
        />
-       <Route
+       <PrivateRoute
          exact
          path="/p/:projectId/edit"
          component={CreateProject} />
+       <Route
+           exact
+           path="/p/:projectId/progress"
+           component={Tasks} />
         <Route
           exact
           path="/p/:projectId"

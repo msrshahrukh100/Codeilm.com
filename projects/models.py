@@ -29,6 +29,7 @@ class Task(models.Model):
 	id = HashidAutoField(primary_key=True)
 	project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
 	text = models.CharField(max_length=255)
+	order = models.IntegerField(default=0)
 	deadline = models.DateTimeField()
 
 	def __str__(self):

@@ -47,3 +47,8 @@ class ProjectTaskList(generics.ListCreateAPIView):
 
 		serializer = self.get_serializer(queryset, many=True)
 		return Response(serializer.data)
+
+	def perform_create(self, serializer):
+		data = self.request.data
+		project = projects_models.Project.objects.get(id=data.get('project_id'))
+		serializer.save(project=project)

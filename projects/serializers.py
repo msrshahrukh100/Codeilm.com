@@ -49,6 +49,7 @@ class TaskSerializer(serializers.ModelSerializer):
         pk_field=HashidSerializerCharField(source_field='projects.Project.id'),
         read_only=True)
 
+
 	class Meta:
 		model = projects_models.Task
-		fields = ('id', 'project', 'text', 'deadline')
+		fields = ('id', 'project', 'text', 'deadline', 'order')
