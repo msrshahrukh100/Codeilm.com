@@ -12,7 +12,7 @@ class Project(models.Model):
 	slug = AutoSlugField(populate_from='title', always_update=True)
 	description = models.TextField(blank=True, null=True)
 	poster = models.ForeignKey(User, related_name="postedprojects", null=True, on_delete=models.SET_NULL)
-	company = models.ForeignKey(usermanagement_models.Community, null=True, on_delete=models.SET_NULL)
+	company = models.ForeignKey(usermanagement_models.Community, blank=True, null=True, on_delete=models.SET_NULL)
 	developers = models.ManyToManyField(User, related_name="developerprojects", blank=True)
 	is_private = models.BooleanField(default=False)
 	deadline = models.DateTimeField()

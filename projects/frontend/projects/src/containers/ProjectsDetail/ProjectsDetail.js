@@ -6,17 +6,15 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import ShareIcon from '@material-ui/icons/Share';
 import withStyles from '@material-ui/core/styles/withStyles';
 import axios from '../../projects_axios';
 import { withRouter } from "react-router";
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
+import { red } from '@material-ui/core/colors';
+import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
@@ -43,6 +41,9 @@ const styles = theme => ({
   avatar: {
     backgroundColor: red[500],
   },
+  cardaction: {
+    margin: theme.spacing()
+  }
 });
 
 class ProjectsDetail extends React.Component {
@@ -53,7 +54,9 @@ class ProjectsDetail extends React.Component {
     title: null,
     poster: null,
     description: null,
-    isPrivate: false
+    isPrivate: false,
+    developers: [],
+    projectId: null
   }
 
   fetchProject = () => {
@@ -64,9 +67,11 @@ class ProjectsDetail extends React.Component {
         const data = response.data;
         console.log(data);
         this.setState({
+          projectId: data.id,
           title: data.title,
           description: data.description,
           poster: data.poster,
+          developers: data.developers,
           isPrivate: data.is_private,
           deadline: new Date(data.deadline).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
           createdAt: new Date(data.created_at).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
@@ -86,6 +91,7 @@ class ProjectsDetail extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     const { classes } = this.props;
     const { poster } = this.state;
     const name = poster ? poster.full_name ? poster.full_name : poster.username : null
@@ -98,7 +104,7 @@ class ProjectsDetail extends React.Component {
 
       {this.state.isPrivate ?
         <Tooltip title="This project is private" aria-label="add">
-          <Chip className={classes.chip} color="secondary" label="Private" />
+          <Chip variant="outlined" className={classes.chip} color="primary" label="Private" />
         </Tooltip>
         : null}
         <Tooltip title="Deadline for this project" aria-label="add">
@@ -110,7 +116,7 @@ class ProjectsDetail extends React.Component {
       </Typography>
       </CardContent>
 
-      <Typography variant="p" className={classes.users} component="p">
+      <Typography color="textSecondary" variant="subtitle2" className={classes.users} component="p">
         This project is created by
       </Typography>
       <CardHeader
@@ -123,26 +129,33 @@ class ProjectsDetail extends React.Component {
       subheader={this.state.createdAt}
       />
 
-      <Typography variant="p" className={classes.users} component="p">
+      <Typography color="textSecondary" variant="subtitle2" className={classes.users} component="p">
         Developers working on this project
       </Typography>
-      <CardHeader
-      avatar={
-        <Avatar alt={name} src={poster ? poster.user_profile_pic : null} className={classes.avatar}>
-        {name ? name[0] : ""}
-        </Avatar>
-      }
-      title={name}
-      subheader={this.state.createdAt}
-      />
 
-      <CardActions disableSpacing>
-      <IconButton aria-label="add to favorites">
-      <FavoriteIcon />
-      </IconButton>
-      <IconButton aria-label="share">
-      <ShareIcon />
-      </IconButton>
+      {this.state.developers.length !== 0 ?
+          this.state.developers.map((value, index) => (
+            <CardHeader
+              key={value.id}
+              avatar={
+                <Avatar alt={value.full_name ? value.full_name : value.username} src={value.user_profile_pic} className={classes.avatar}>
+                  {value.full_name ? value.full_name : value.username}
+                </Avatar>
+              }
+              title={value.full_name ? value.full_name : value.username}
+              subheader={value.intro}
+            />
+          ))
+        : (
+          <Typography color="textPrimary" variant="subtitle2" className={classes.users} component="p">
+            Currently no developers are working on this project
+          </Typography>
+        ) }
+
+      <CardActions className={classes.cardaction}>
+        <Button onClick={() => this.props.history.push(`/p/${this.state.projectId}/progress`)} variant="contained" size="large" color="primary" className={classes.margin}>
+         See Project Progress and Tasks
+       </Button>
       </CardActions>
       </Card>
     );
