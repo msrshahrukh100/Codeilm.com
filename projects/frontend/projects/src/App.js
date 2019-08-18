@@ -5,19 +5,52 @@ import ReactGA from 'react-ga';
 import ProjectsDetail from './containers/ProjectsDetail/ProjectsDetail'
 import CreateProject from './containers/CreateProject/CreateProject'
 import 'typeface-roboto';
+import { connect } from 'react-redux'
+import * as actionCreators from './store/actions/index'
+import LoginPage from './containers/LoginPage/LoginPage'
+
+function PrivateRoute({ component: Component, isAuthenticated: isAuthenticated, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props => {
+        return isAuthenticated ? (
+          <Component {...props} />
+        ) : (
+          <LoginPage {...props} />
+        )
+      }
+
+
+      }
+    />
+  );
+}
+
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.auth()
+  }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.userId) {
+      console.log(this.props.userId);
+      ReactGA.set({ userId: this.props.userId });
+    }
+  }
 
   render() {
     return (
       <>
       <SearchAppBar />
       <Switch>
-      <Route
+      <PrivateRoute
         exact
         path="/projects/create"
-        component={CreateProject} />
+        component={CreateProject}
+        isAuthenticated={this.props.isAuthenticated}
+       />
         <Route
           exact
           path="/p/:projectId"
@@ -29,4 +62,17 @@ class App extends React.Component {
   }
 }
 
-export default App;
+const matchStateToProps = state => {
+  return {
+    userId: state.aReducer.user ? state.aReducer.user.id : ""
+  }
+}
+
+const matchDispatchToProps = dispatch => {
+  return {
+    auth: () => dispatch(actionCreators.auth())
+  }
+}
+
+
+export default connect(matchStateToProps, matchDispatchToProps)(App);
