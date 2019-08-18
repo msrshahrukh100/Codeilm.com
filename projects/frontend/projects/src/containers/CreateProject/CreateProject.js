@@ -218,7 +218,7 @@ class CreateProject extends React.Component {
             id="outlined-multiline-flexible"
             label="Description"
             multiline
-            rows="4"
+            rows="10"
             value={this.state.description}
             onChange={this.handleChange}
             className={classes.textField}
@@ -249,10 +249,16 @@ class CreateProject extends React.Component {
               />
             </div>
 
+            <div>
+
             <Button disabled={this.state.loading} onClick={this.createProject} variant="contained" color="primary" className={classes.button}>
                {projectId ? "Update Project" : "Add Project"}
              <AddIcon className={classes.rightIcon} />
            </Button>
+           {projectId ?
+               <a style={{cursor: 'pointer', margin: 30, position: 'absolute'}} onClick={() => this.props.history.goBack()}>Cancel</a>
+              : null}
+              </div>
           </Paper>
         </Grid>
       </Grid>

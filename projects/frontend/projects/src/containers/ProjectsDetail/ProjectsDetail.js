@@ -52,6 +52,9 @@ const styles = theme => ({
   description: {
     whiteSpace: 'pre-line',
     marginTop: theme.spacing(5)
+  },
+  edit: {
+    paddingLeft: theme.spacing(2)
   }
 });
 
@@ -125,7 +128,7 @@ class ProjectsDetail extends React.Component {
               <Chip variant="outlined" className={classes.chip} color="primary" label={this.state.deadline} icon={<CalendarTodayIcon />}/>
             </Tooltip>
             {this.state.posterIsAuthenticatedUser ?
-              <Link to={`/p/${this.state.projectId}/edit`}>
+              <Link className={classes.edit} to={`/p/${this.state.projectId}/edit`}>
                 Edit
               </Link>
               : null}
