@@ -10,10 +10,20 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 	poster = UserSimpleSerializer(read_only=True)
 	developers = UserSimpleSerializer(read_only=True, many=True)
 	company = CommunitySerializer(required=False)
+	poster_is_authenticated_user = serializers.SerializerMethodField(required=False)
+
+	def get_poster_is_authenticated_user(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user == obj.poster:
+				return True
+		return False
 
 	class Meta:
 		model = projects_models.Project
-		fields = ('id', 'title', 'slug', 'description', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at', 'created_at')
+		fields = ('id', 'title', 'slug', 'description', 'poster_is_authenticated_user', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at', 'created_at')
 
 
 class ProjectCreateSerializer(serializers.ModelSerializer):

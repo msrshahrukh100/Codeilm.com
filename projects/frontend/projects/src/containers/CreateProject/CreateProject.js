@@ -20,7 +20,7 @@ import Switch from '@material-ui/core/Switch';
 import Badge from '@material-ui/core/Badge';
 import getCookie from '../../utils/getCookie'
 import axios from '../../projects_axios'
-
+import { connect } from 'react-redux'
 
 const styles = theme => ({
   root: {
@@ -72,7 +72,7 @@ const styles = theme => ({
   },
 });
 
-class FullWidthGrid extends React.Component {
+class CreateProject extends React.Component {
 
   state = {
     loading: false,
@@ -80,20 +80,28 @@ class FullWidthGrid extends React.Component {
     description: "",
     deadline: new Date(),
     isPrivate: false,
-    projectId: null
+    projectId: null,
+    posterIsAuthenticatedUser: false
   }
 
   fetchProject = projectId => {
     axios.get(projectId)
       .then(response => {
         const data = response.data;
-        this.setState({
-          projectId: data.id,
-          title: data.title,
-          description: data.description,
-          isPrivate: data.is_private,
-          deadline: new Date(data.deadline),
-        })
+        console.log(data);
+        if(!data.poster_is_authenticated_user) {
+          this.props.history.goBack();
+        }
+        else {
+          this.setState({
+            projectId: data.id,
+            title: data.title,
+            description: data.description,
+            isPrivate: data.is_private,
+            deadline: new Date(data.deadline),
+          })
+        }
+
       })
       .catch(error => {
         console.log(error)
@@ -254,4 +262,4 @@ class FullWidthGrid extends React.Component {
 }
 
 
-export default withStyles(styles)(withRouter(FullWidthGrid))
+export default withStyles(styles)(withRouter(CreateProject))

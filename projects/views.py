@@ -3,12 +3,14 @@ from . import serializers as projects_serializers
 from . import models as projects_models
 from rest_framework import generics, permissions
 from rest_framework.response import Response
+from .permissions import CanViewProject
 # Create your views here.
 
 
 class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = projects_models.Project.objects.all()
 	serializer_class = projects_serializers.ProjectDetailSerializer
+	permission_classes = (permissions.IsAuthenticated, CanViewProject)
 	lookup_field = "id"
 
 
@@ -22,8 +24,6 @@ class ProjectCreate(generics.CreateAPIView):
 		if self.request and hasattr(self.request, "user"):
 			user = self.request.user
 			serializer.save(poster=user)
-
-
 
 
 class ProjectList(generics.ListCreateAPIView):

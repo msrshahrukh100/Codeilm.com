@@ -16,7 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   card: {
@@ -65,7 +65,8 @@ class ProjectsDetail extends React.Component {
     description: null,
     isPrivate: false,
     developers: [],
-    projectId: null
+    projectId: null,
+    posterIsAuthenticatedUser: false
   }
 
   fetchProject = () => {
@@ -82,6 +83,7 @@ class ProjectsDetail extends React.Component {
           poster: data.poster,
           developers: data.developers,
           isPrivate: data.is_private,
+          posterIsAuthenticatedUser: data.poster_is_authenticated_user,
           deadline: new Date(data.deadline).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
           createdAt: new Date(data.created_at).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
         })
@@ -122,6 +124,11 @@ class ProjectsDetail extends React.Component {
             <Tooltip title="Deadline for this project" aria-label="add">
               <Chip variant="outlined" className={classes.chip} color="primary" label={this.state.deadline} icon={<CalendarTodayIcon />}/>
             </Tooltip>
+            {this.state.posterIsAuthenticatedUser ?
+              <Link to={`/p/${this.state.projectId}/edit`}>
+                Edit
+              </Link>
+              : null}
           <CardContent>
           <Typography variant="subtitle1" color="textPrimary" className={classes.description} component="p">
             {this.state.description}
