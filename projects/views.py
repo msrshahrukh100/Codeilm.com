@@ -6,7 +6,7 @@ from rest_framework.response import Response
 # Create your views here.
 
 
-class ProjectDetail(generics.RetrieveDestroyAPIView):
+class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
 	queryset = projects_models.Project.objects.all()
 	serializer_class = projects_serializers.ProjectDetailSerializer
 	lookup_field = "id"

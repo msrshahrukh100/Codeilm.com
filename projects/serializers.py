@@ -9,7 +9,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(read_only=True, default="")
 	poster = UserSimpleSerializer(read_only=True)
 	developers = UserSimpleSerializer(read_only=True, many=True)
-	company = CommunitySerializer()
+	company = CommunitySerializer(required=False)
 
 	class Meta:
 		model = projects_models.Project

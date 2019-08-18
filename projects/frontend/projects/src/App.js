@@ -49,6 +49,10 @@ class App extends React.Component {
         component={CreateProject}
         isAuthenticated={this.props.isAuthenticated}
        />
+       <Route
+         exact
+         path="/p/:projectId/edit"
+         component={CreateProject} />
         <Route
           exact
           path="/p/:projectId"

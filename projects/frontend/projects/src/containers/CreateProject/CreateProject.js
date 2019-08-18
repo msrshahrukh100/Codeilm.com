@@ -79,9 +79,37 @@ class FullWidthGrid extends React.Component {
     title: "",
     description: "",
     deadline: new Date(),
-    isPrivate: false
+    isPrivate: false,
+    projectId: null
   }
 
+  fetchProject = projectId => {
+    axios.get(projectId)
+      .then(response => {
+        const data = response.data;
+        this.setState({
+          projectId: data.id,
+          title: data.title,
+          description: data.description,
+          isPrivate: data.is_private,
+          deadline: new Date(data.deadline),
+        })
+      })
+      .catch(error => {
+        console.log(error)
+        this.setState({
+          error: error,
+          loading: false
+        })
+      })
+  }
+
+  componentDidMount() {
+    const { projectId } = this.props.match.params;
+    if(projectId) {
+      this.fetchProject(projectId)
+    }
+  }
 
   handleChange = event => {
     this.setState({
@@ -106,6 +134,7 @@ class FullWidthGrid extends React.Component {
       alert("Please fill a title for the project")
       return
     }
+
     this.setState({loading: true})
     const csrftoken = getCookie('csrftoken');
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
@@ -113,19 +142,35 @@ class FullWidthGrid extends React.Component {
       ...this.state,
       is_private: this.state.isPrivate
     }
-    axios.post("create/", postData)
-    .then(response => {
-      this.setState({loading: false})
-      this.props.history.push(`/p/${response.data.id}`)
-    })
-    .catch(error => {
-      console.log(error);
-    })
+    const { projectId } = this.props.match.params;
+
+    if(projectId) {
+      axios.put(`/${projectId}/`, postData)
+      .then(response => {
+        this.setState({loading: false})
+        this.props.history.push(`/p/${response.data.id}`)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+    else {
+      axios.post("create/", postData)
+      .then(response => {
+        this.setState({loading: false})
+        this.props.history.push(`/p/${response.data.id}`)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+
 
   }
 
   render() {
     const { classes } = this.props;
+    const { projectId } = this.props.match.params;
     const badgeContent = (
       <p className={classes.badgeContent}>Private</p>
     )
@@ -197,7 +242,7 @@ class FullWidthGrid extends React.Component {
             </div>
 
             <Button disabled={this.state.loading} onClick={this.createProject} variant="contained" color="primary" className={classes.button}>
-               Add Project
+               {projectId ? "Update Project" : "Add Project"}
              <AddIcon className={classes.rightIcon} />
            </Button>
           </Paper>
