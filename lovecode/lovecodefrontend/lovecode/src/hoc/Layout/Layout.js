@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchAppBar from '../../components/UI/SearchAppBar/SearchAppBar'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import asyncComponent from '../asyncComponent/asyncComponent';
 import LogOut from '../../containers/LogOut/LogOut'
@@ -66,10 +66,10 @@ class Layout extends React.Component {
 
       <Switch>
         <Route path='/login' component={LoginPage} />
-        <PrivateRoute
+        <Route
           exact
           path="/create/"
-          component={TutorialCreateDialog}
+          component={() => <Redirect to="/create/new" />}
           isAuthenticated={this.props.isAuthenticated} />
         <PrivateRoute
           exact

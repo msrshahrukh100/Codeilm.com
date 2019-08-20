@@ -6,7 +6,11 @@ import axios from 'axios'
 const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
 
 const instance = axios.create({
-  baseURL: debug ? 'https://codeilm.com/api/v1' : '/api/v1'
+  baseURL: debug ? 'http://localhost:8000/api/v1' : '/api/v1',
+  auth: debug ? {
+    username: 'msr.concordfly@gmail.com',
+    password: 'abcabc123'
+  } : null
 })
 
 export default instance

@@ -74,6 +74,7 @@ const learnEditEditor = (props) => {
   const { repoName } = props.match.params;
   const [open, setOpen] = React.useState(false);
 
+
   let toolbar = ["bold", "italic", "heading", "|",
   {
     name: "Add YouTube video",
@@ -105,7 +106,7 @@ const learnEditEditor = (props) => {
     title: "Preview",
   }
 ]
-  if (props.repoName != "") {
+  if (props.repoName != "" && props.repoName != undefined) {
     toolbar = toolbar.concat([
       "|",
       {
@@ -127,15 +128,13 @@ const learnEditEditor = (props) => {
     <>
 
     <TextField
-    id="outlined-read-only-input"
+    id="outlined-input"
     label="Title"
-    value={props.dbData ? props.dbData.title : ""}
+    value={props.title}
     className={classes.titleField}
     margin="normal"
-    InputProps={{
-      readOnly: true,
-    }}
     variant="outlined"
+    onChange={props.handleTitleChange}
     />
 
     {props.dbData ?

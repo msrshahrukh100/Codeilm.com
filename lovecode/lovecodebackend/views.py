@@ -232,7 +232,7 @@ class CreateGetTutorial(APIView):
 		data = request.data
 
 		if data:
-			obj, created = lovecode_models.Tutorial.objects.get_or_create(
+			obj = lovecode_models.Tutorial.objects.create(
 				user=request.user,
 				title=data.get("title", "").strip(),
 				repository_name=data.get("repo_name"),
@@ -240,7 +240,7 @@ class CreateGetTutorial(APIView):
 				branch_name=data.get("branch_name")
 			)
 			data = lovecode_serializers.TutorialDetailSerializer(obj)
-			return Response({"created": created, "tutorial_data": data.data}, status=status.HTTP_200_OK)
+			return Response({"created": True, "tutorial_data": data.data}, status=status.HTTP_200_OK)
 		else:
 			return Response({"msg": "Data not provided"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -254,11 +254,13 @@ class SaveLearnFileToDb(APIView):
 		if data:
 			tutorial_id = data.get('tutorial_id')
 			tutorial_tags = data.get('tags')
+			tutorial_title = data.get('title')
 			obj =  get_object_or_404(lovecode_models.Tutorial,
 				id=tutorial_id
 			)
 			obj.learn_md_content = data.get('content', "")
 			obj.tutorial_data = data.get('tutorial_data', {})
+			obj.title = tutorial_title
 			tags = [lovecode_models.TutorialTags.objects.get_or_create(value=tag.get('value', "").lower(), label=tag.get('label'))[0] for tag in tutorial_tags]
 			obj.tags.set(tags, clear=True)
 			obj.save()

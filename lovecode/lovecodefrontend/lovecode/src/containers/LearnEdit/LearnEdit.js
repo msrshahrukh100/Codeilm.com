@@ -65,7 +65,8 @@ class LearnEdit extends React.Component {
 			showPreview: false,
 			tutorialSlug: tutorialSlug,
       tutorialData: "",
-      tags: []
+      tags: [],
+      title: ""
     }
   }
 
@@ -80,6 +81,7 @@ class LearnEdit extends React.Component {
 
     const csrftoken = getCookie('csrftoken');
     const postData = {
+      title: this.state.title,
       tutorial_id: this.state.tutorialId,
       content: this.state.editorContent,
 			tutorial_slug: this.state.tutorialSlug,
@@ -104,6 +106,16 @@ class LearnEdit extends React.Component {
       })
     })
 
+  }
+
+  handleTitleChange = event => {
+    const value = event.target.value;
+    this.setState((prevState, props) => {
+      return {
+        title: value,
+        timeout: resetTimeout(prevState.timeout, setTimeout(this.saveLearnMd, 2000))
+      }
+    })
   }
 
   publishUnpublishTut = () => {
@@ -201,6 +213,7 @@ class LearnEdit extends React.Component {
         hasDefaultContent: response.data.db_data ? response.data.db_data.learn_md_content ? false : true : true,
         contentLoaded: true,
         dbData: response.data.db_data,
+        title: response.data.db_data.title,
         tags: response.data.db_data ? response.data.db_data.tutorial_tags : [],
 				tutorialTitle: response.data.db_data.title,
         isPublished: response.data.db_data ? response.data.db_data.is_published : false
@@ -252,6 +265,7 @@ class LearnEdit extends React.Component {
 				togglePreview={this.togglePreview}
         handleDeleteStory={this.handleDeleteStory}
         setTags={this.setTags}
+        handleTitleChange={this.handleTitleChange}
 				/>
 
 				</>
