@@ -38,7 +38,7 @@
 				<img class="lazyload" src="{% static 'images/user_background_image/user_background.jpg' %}">
 			</div>
 			{% if request.user.is_authenticated %}
-			<a href="/u/{{ request.user.id }}/{{ request.user.username }}" >
+			<a href="/u/{{ request.user.username }}-{{ request.user.id }}" >
 			{% thumbnail request.user.user_profile.first.get_profile_pic_url "100x100" crop="center" as im %}
 				<img class="circle lazyload" src="{{ im.url }}" alt="{{ request.user|user_display_name }}">
 			{% endthumbnail %}

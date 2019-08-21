@@ -29,7 +29,7 @@ def send_connection_notifications(user_id, following_id):
 		"template": "emails/connection_added_email.html",
 		"follower_image_url": user.user_profile.first().get_profile_pic_url(),
 		"follower_full_name": get_user_display_name(user),
-		"link_url": "/u/" + str(following_id) + "/" + following.username,
+		"link_url": "/u/" + following.username + "-" + str(following_id),
 
 	}
 	context["get_params"] = emailmanager_utils.get_params_from_context(context)
