@@ -16,7 +16,7 @@ const styles = theme => ({
     height: 50,
   },
   name: {
-    fontSize: 15
+    fontSize: 14
   },
   intro: {
     fontSize: 13,
