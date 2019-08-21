@@ -3,7 +3,7 @@ from . import serializers as projects_serializers
 from . import models as projects_models
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .permissions import CanViewProject
+from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask
 # Create your views here.
 
 
@@ -52,3 +52,10 @@ class ProjectTaskList(generics.ListCreateAPIView):
 		data = self.request.data
 		project = projects_models.Project.objects.get(id=data.get('project_id'))
 		serializer.save(project=project)
+
+
+class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+	queryset = projects_models.Task.objects.all()
+	serializer_class = projects_serializers.TaskSerializer
+	lookup_field = "id"
+	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
