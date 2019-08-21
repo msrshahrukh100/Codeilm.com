@@ -34,3 +34,15 @@ class Task(models.Model):
 
 	def __str__(self):
 		return self.text
+
+
+class Comment(models.Model):
+	id = HashidAutoField(primary_key=True)
+	user = models.ForeignKey(User, null=True, related_name="user_comment", on_delete=models.SET_NULL)
+	project = models.ForeignKey(Project, null=True, related_name="project_comment", on_delete=models.SET_NULL)
+	text = models.TextField()
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return str(self.id)

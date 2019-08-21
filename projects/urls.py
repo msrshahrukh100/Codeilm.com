@@ -8,4 +8,5 @@ urlpatterns = [
     path('<str:project_id>/tasks', projects_views.ProjectTaskList.as_view(), name="project_tasks"),
 
     path('tasks/<str:id>', projects_views.ProjectTaskRetrieveUpdateDestroy.as_view(), name="project_tasks_update"),
+    path('comments/<str:id>', projects_views.CommenTaskRetrieveUpdateDestroy.as_view(), name="project_comments_update"),
 ]

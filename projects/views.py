@@ -59,3 +59,10 @@ class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 	serializer_class = projects_serializers.TaskSerializer
 	lookup_field = "id"
 	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
+
+
+class CommenTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+	queryset = projects_models.Comment.objects.all()
+	serializer_class = projects_serializers.CommentSerializer
+	lookup_field = "id"
+	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
