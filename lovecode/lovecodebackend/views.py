@@ -80,11 +80,17 @@ class TutorialList(generics.ListAPIView):
 		repo_create = get_params.get('repo_create')
 		profile_view = get_params.get('profile_view')
 		community_slug = get_params.get('community_slug')
+		user_profile_id = get_params.get('user_profile_id')
+
 
 		try:
 			user_id = int(get_params.get('user_id')) if get_params.get('user_id') else None
 		except:
 			return []
+
+		if user_profile_id:
+			user_profile = get_object_or_404(usermanagement_models.UserProfile, id=user_profile_id)
+			user_id = user_profile.user.id
 
 		q = get_params.get('q')
 

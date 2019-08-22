@@ -42,6 +42,7 @@ class Community(models.Model):
 
 
 class UserProfile(models.Model):
+	id = HashidAutoField(primary_key=True)
 	user = models.ForeignKey(User, related_name="user_profile", on_delete=models.CASCADE)
 	gender = models.CharField(max_length=255, null=True, blank=True)
 	intro = models.CharField(max_length=100, null=True, blank=True)

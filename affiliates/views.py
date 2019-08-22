@@ -13,10 +13,17 @@ def get_static_files(request):
 
 
 def get_affiliate_js(request):
+	community = None
+	user = None
 	community_id = request.GET.get('community_id')
-	if not community_id:
-		raise Http404("File does not exists")
-	community = get_object_or_404(usermanagement_models.Community, id=community_id)
+	user_id = request.GET.get('user_id')
+
+	if community_id:
+		community = get_object_or_404(usermanagement_models.Community, id=community_id)
+
+	if user_id:
+		user = get_object_or_404(usermanagement_models.UserProfile, id=user_id)
+
 	context = {
 		'community_slug': community.slug
 	}
