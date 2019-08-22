@@ -61,7 +61,30 @@ class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
 
 
-class CommenTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+class ProjectCommentList(generics.ListCreateAPIView):
+	queryset = projects_models.Comment.objects.all()
+	serializer_class = projects_serializers.CommentSerializer
+
+
+	def get(self, request, project_id=None):
+		queryset = self.filter_queryset(self.get_queryset())
+		queryset = queryset.filter(project__id=project_id)
+
+		page = self.paginate_queryset(queryset)
+		if page is not None:
+			serializer = self.get_serializer(page, many=True)
+			return self.get_paginated_response(serializer.data)
+
+		serializer = self.get_serializer(queryset, many=True)
+		return Response(serializer.data)
+
+	def perform_create(self, serializer):
+		data = self.request.data
+		project = projects_models.Project.objects.get(id=data.get('project_id'))
+		serializer.save(project=project)
+
+
+class CommenTaskRetrieveUpdateDestroy(generics.RetrieveUpdateAPIView):
 	queryset = projects_models.Comment.objects.all()
 	serializer_class = projects_serializers.CommentSerializer
 	lookup_field = "id"

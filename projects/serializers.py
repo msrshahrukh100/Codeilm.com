@@ -57,6 +57,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(read_only=True, default="")
+	user = UserSimpleSerializer(read_only=True)
 	project = serializers.PrimaryKeyRelatedField(
         pk_field=HashidSerializerCharField(source_field='projects.Project.id'),
         read_only=True)
