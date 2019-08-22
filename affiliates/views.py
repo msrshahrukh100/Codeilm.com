@@ -16,15 +16,12 @@ def get_affiliate_js(request):
 	community = None
 	user = None
 	community_id = request.GET.get('community_id')
-	user_id = request.GET.get('user_id')
 
 	if community_id:
 		community = get_object_or_404(usermanagement_models.Community, id=community_id)
 
-	if user_id:
-		user = get_object_or_404(usermanagement_models.UserProfile, id=user_id)
-
 	context = {
-		'community_slug': community.slug
+		'community_slug': community.slug if community else None,
+		'user_id': request.GET.get('user_id') 
 	}
 	return render(request, 'affiliate.js', context)

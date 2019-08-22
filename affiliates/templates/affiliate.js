@@ -4,6 +4,7 @@
 
 if (typeof(Storage) !== "undefined") {
     sessionStorage.setItem("community_slug", "{{ community_slug }}");
+    sessionStorage.setItem("user_profile_id", "{{ user_id }}");
 } else {
   console.log("Local storage not available for your browser")
 }

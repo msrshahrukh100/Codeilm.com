@@ -85,11 +85,16 @@ class TutorialList extends React.Component {
     : this.state.q ? `/tutorials/?q=${this.state.q}` : "/tutorials?temp=shahrukh";
 
     const community_slug = sessionStorage.getItem("community_slug");
+    const user_profile_id = sessionStorage.getItem("user_profile_id");
     // if(this.state.userId) {
     //   url += `&user_id=${this.state.userId}&profile_view=true`
     // }
     if(community_slug) {
       url += `&community_slug=${community_slug}`
+    }
+
+    if(user_profile_id) {
+      url += `&user_profile_id=${user_profile_id}`
     }
 
     axios.get(url)
