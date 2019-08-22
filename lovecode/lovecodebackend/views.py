@@ -154,7 +154,7 @@ class TutorialDetail(generics.RetrieveDestroyAPIView):
 		return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
-	permission_classes = (permissions.IsAuthenticated, HasGithubAccount, IsOwner)
+	permission_classes = (permissions.IsAuthenticated, IsOwner)
 
 	queryset = lovecode_models.Tutorial.objects.all()
 	serializer_class = lovecode_serializers.TutorialUpdateSerializer
@@ -167,10 +167,10 @@ class PublishUnpublishTutorial(generics.RetrieveUpdateAPIView):
 # Utility API views
 
 class UserRepositoryLearnContent(APIView):
-	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
+	permission_classes = (permissions.IsAuthenticated,)
 
 	def get(self, request, tutorial_id=None):
-		github_api = GithubApi(request)
+		# github_api = GithubApi(request)
 		response = {}#github_api.get_learn_md_content(request, repo_name, branch_name)
 		data_from_api = response.get("data", {})
 		content_from_api = data_from_api.get("content", "")
@@ -215,7 +215,7 @@ class UserRepositories(APIView):
 
 
 class CreateUpdateCommitLearnFile(APIView):
-	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
+	permission_classes = (permissions.IsAuthenticated,)
 
 	def post(self, request):
 		github_api = GithubApi(request)
@@ -226,7 +226,7 @@ class CreateUpdateCommitLearnFile(APIView):
 
 
 class CreateGetTutorial(APIView):
-	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
+	permission_classes = (permissions.IsAuthenticated,)
 
 	def post(self, request):
 		data = request.data
@@ -247,7 +247,7 @@ class CreateGetTutorial(APIView):
 
 
 class SaveLearnFileToDb(APIView):
-	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
+	permission_classes = (permissions.IsAuthenticated,)
 
 	def post(self, request):
 		data = request.data
@@ -270,7 +270,7 @@ class SaveLearnFileToDb(APIView):
 
 
 class LikeUnlikeTutorial(APIView):
-	permission_classes = (permissions.IsAuthenticated, HasGithubAccount)
+	permission_classes = (permissions.IsAuthenticated,)
 
 	def post(self, request):
 		data = request.data
