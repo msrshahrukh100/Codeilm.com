@@ -107,7 +107,6 @@ class LoginPage extends React.Component {
 
       </form>
       </Paper>
-      <script type="text/javascript" src="/static/facebook/js/fbconnect.js"></script>
       </main>
     );
 

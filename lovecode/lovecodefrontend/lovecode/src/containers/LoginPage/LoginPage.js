@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Fab from '@material-ui/core/Fab';
 import { FaGithub } from 'react-icons/fa';
+import { FaGoogle } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import { connect } from 'react-redux'
 import * as actionCreators from '../../store/actions/index'
@@ -63,7 +64,9 @@ class LoginPage extends React.Component {
 
     const { classes } = this.props;
     const next = this.props.history.location.search
-    const loginUrl = "https://codeilm.com/accounts/github/login" + next;
+    const githubLoginUrl = "https://codeilm.com/accounts/github/login" + next;
+    const googleLoginUrl = "https://codeilm.com/accounts/google/login" + next;
+
     return (
       <main className={classes.main}>
       <CssBaseline />
@@ -79,13 +82,29 @@ class LoginPage extends React.Component {
       color="primary"
       aria-label="Add"
       className={classes.margin}
-      href={loginUrl}
+      href={githubLoginUrl}
       >
       <IconContext.Provider value={{ size: '2em' }}>
       <FaGithub className={classes.extendedIcon} />
       </IconContext.Provider>
       Continue with GitHub
       </Fab>
+
+
+      <Fab
+      variant="extended"
+      size="medium"
+      color="secondary"
+      aria-label="Add"
+      className={classes.margin}
+      href={googleLoginUrl}
+      >
+      <IconContext.Provider value={{ size: '1.5em' }}>
+      <FaGoogle className={classes.extendedIcon} />
+      </IconContext.Provider>
+      Continue with Google
+      </Fab>
+
       </form>
       </Paper>
       </main>
