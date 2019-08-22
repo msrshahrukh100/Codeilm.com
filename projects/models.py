@@ -30,7 +30,7 @@ class Task(models.Model):
 	project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
 	text = models.CharField(max_length=255)
 	order = models.IntegerField(default=0)
-	deadline = models.DateTimeField()
+	deadline = models.DateTimeField(blank=True, null=True)
 
 	def __str__(self):
 		return self.text
