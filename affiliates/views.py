@@ -24,4 +24,4 @@ def get_affiliate_js(request):
 		'community_slug': community.slug if community else None,
 		'user_id': request.GET.get('user_id') 
 	}
-	return render(request, 'affiliate.js', context)
+	return render(request, 'affiliate.js', context, content_type="application/javascript")
