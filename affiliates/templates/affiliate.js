@@ -1,7 +1,3 @@
-// should get the community id somehow
-// make a call to the get-static-files
-// embed the response to the head of the document
-
 if (typeof(Storage) !== "undefined") {
     sessionStorage.setItem("community_slug", "{{ community_slug }}");
     sessionStorage.setItem("user_profile_id", "{{ user_id }}");
@@ -14,17 +10,16 @@ if(!root){
 	alert("The document doesn't have an element with id root!")
 }
 
-var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-if (this.readyState == 4 && this.status == 200) {
-	  console.log(this.responseText);
-	  var affiliate = document.createElement('div');
-	  affiliate.id = 'affiliate';
-	  affiliate.innerHTML = this.responseText
-	  document.getElementsByTagName('body')[0].appendChild(affiliate)
-	}
-}; 
+var head = document.getElementsByTagName('HEAD')[0];
 
-xhttp.open("GET", "https://codeilm.com/api/affiliates/get-static-files/", true);
+var js_link = document.createElement('link');
+css_link.rel = 'stylesheet';
+css_link.type = 'text/css';
+css_link.href = '{{ css_file }}';
+head.appendChild(css_link);
 
-xhttp.send();
+
+var js_link = document.createElement('script');
+js_link.type = 'text/javascript';
+js_link.src = '{{ js_file }}';
+head.appendChild(js_link);
