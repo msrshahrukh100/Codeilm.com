@@ -44,9 +44,20 @@ class TutorialTags(models.Model):
 	def __str__(self):
 		return str(self.id)
 
+def upload_location(instance, filename):
+	return "tutorial_image/%s/%s" % (instance.name, filename)
+
 class Tutorial(Model):
 	id = HashidAutoField(primary_key=True)
 	user = models.ForeignKey(User, null=True, related_name="user_tutorials", on_delete=models.SET_NULL)
+	share_image = models.ImageField(
+		upload_to=upload_location,
+		null=True,
+		blank=True,
+		width_field="width_field",
+		height_field="height_field", help_text="A image representing the tutorial")
+	height_field = models.IntegerField(null=True, blank=True)
+	width_field = models.IntegerField(null=True, blank=True)
 	title = models.CharField(max_length=300, null=True, blank=True)
 	slug = AutoSlugField(populate_from='title', always_update=True)
 	tutorial_data = JSONField(null=True, blank=True)
