@@ -33,8 +33,13 @@ const styles = theme => ({
   float: {
     position: 'fixed',
     textTransform: 'none',
-    bottom: '20px',
-    right: '20px',
+    bottom: '30px',
+    right: '30px',
+    zIndex: 100,
+    [theme.breakpoints.down('xs')]: {
+      bottom: '10px',
+      right: '10px',
+    },
   }
 });
 
@@ -189,8 +194,8 @@ class TutorialDetail extends React.Component {
             />
           : null
         }
-        <Button variant="outlined" onClick={this.props.showTutorialList} color="secondary" className={classes.float}>
-          See all Stories
+        <Button variant="contained" onClick={this.props.showTutorialList} color="secondary" className={classes.float}>
+          All Stories
         </Button>
 
       </>
