@@ -4,6 +4,11 @@
 {% load thumbnail %}
 {% load main_extras %}
 {% block css %}
+<style type="text/css">
+	.addtocodeilm:hover {
+		background: #ffc107 ;
+	}
+</style>
 {% endblock %}
 {% block meta_tags %}
 	<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -35,6 +40,7 @@
 	{% endfor %}
 {% endif %}
 
+
 <div class="container">
 	<div class="row">
 		<div class="col l9 s12">
@@ -42,9 +48,14 @@
 		</div>
 		<div class="col l12 s12">
 			<a href="/stories"></a>
-			<button onclick="window.location = '/stories'" class="btn waves-effect btn-large waves-light" style="margin-top: 1.52rem; background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); font-size: 1.3rem; text-transform: none;" type="submit" name="action">Read Stories
+			<button onclick="window.location = '/stories'" class="btn waves-effect btn-large waves-light" style="margin-top: 1.52rem; background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); font-size: 1.3rem; text-transform: none;" name="action">Read Stories
 			    <img height="35" style="margin-bottom: -12px;" src="{% static 'images/logo/codeilmicon.png' %}" alt="Codeilm">
 			</button>
+
+			<button onclick="window.location = '/add-codeilm-to-your-site'" class="btn waves-effect btn-large waves-light btn-flat hide-on-med-and-down addtocodeilm" style="margin-top: 1.52rem; font-size: 1.3rem; text-transform: none;" name="action">Add Codeilm to your site
+			</button>
+
+
 		</div>
 	</div>
 
@@ -125,6 +136,26 @@
 		</div>
 	</div>
 </div>
+
+<div class="row container" style="padding-top: 40px;">
+  	<h5 style="padding-left: 0.75rem">Want all your posts on <b>Codeilm</b> to be displayed on your personal website? <br/>You can add them with <b>just one line of code</b> 😊
+  		<br/>
+  		Just let us know your mail, we'll help you setup <b>Codeilm</b> on your site.
+  	</h5>
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="subscribe-email" type="email" class="validate" required>
+          <label for="subscribe-email">Your Email</label>
+        </div>
+        <div class="col s6" style="margin-top: 1rem;">
+        	<button id="submitEmail" type="submit" class="waves-effect waves-light btn" style="text-transform: none; background: linear-gradient(45deg, #FE6B8B 30%, #f20e02 90%);">Setup Codeilm</button>
+        </div>
+      </div>
+        <p style="color: #4CAF50;" id="email-submit-status">
+        </p>
+    </form>
+  </div>
 	
 	<div class="row hide-on-small-only">
 		<div class="col s1"></div>
