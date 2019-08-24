@@ -5,7 +5,7 @@ if (typeof(Storage) !== "undefined") {
   console.log("Local storage not available for your browser")
 }
 
-var root = document.getElementById("root");
+var root = document.getElementById("codeilm");
 if(!root){
 	alert("The document doesn't have an element with id root!")
 }
