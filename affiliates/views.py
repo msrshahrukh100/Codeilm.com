@@ -26,4 +26,4 @@ def get_affiliate_js(request):
 		'js_file': request.build_absolute_uri(static('js/main.affiliates.js')),
 		'css_file': request.build_absolute_uri(static('css/main.affiliates.css'))
 	}
-	return render(request, 'affiliate.js', context, content_type="application/javascript")
+	return render(request, 'affiliate.min.js', context, content_type="application/javascript")

@@ -17,10 +17,6 @@ if(!x) {
 	meta.name = "viewport";
 	meta.content = "width=device-width, initial-scale=1.0";
 	head.appendChild(meta)
-	console.log("Added viewport")
-}
-else {
-	console.log("No need to add")
 }
 
 

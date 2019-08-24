@@ -29,7 +29,6 @@ class Layout extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const main = this.state.activeTutorial ? <TutorialDetail tutorialId={this.state.activeTutorial} showTutorialList={this.showTutorialList} /> : <TutorialList handleTutorialChange={this.setActiveTutorial} />
     return (
       main
