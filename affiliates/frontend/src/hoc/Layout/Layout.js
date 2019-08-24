@@ -12,17 +12,35 @@ const TutorialDetail = asyncComponent(() => {
 
 
 class Layout extends React.Component {
-  state = {}
+  state = {
+    activeTutorial: null
+  }
+
+  setActiveTutorial = tutorialId => {
+    this.setState({
+      activeTutorial: tutorialId
+    })
+  }
+
+  showTutorialList = () => {
+    this.setState({
+      activeTutorial: null
+    })
+  }
+
   render() {
+    console.log(this.state);
+    const main = this.state.activeTutorial ? <TutorialDetail tutorialId={this.state.activeTutorial} showTutorialList={this.showTutorialList} /> : <TutorialList handleTutorialChange={this.setActiveTutorial} />
     return (
-      <>
-      <Switch>
-        <Route path='/stories/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
-        <Route path='/stories/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
-        <Route path='/stories/:tutorialId/:slug/' component={TutorialDetail} />
-        <Route path="/stories" exact component={TutorialList} />
-      </Switch>
-      </>
+      main
+      // <>
+      // <Switch>
+      //   <Route path='/stories/:tutorialId/:slug/:activeStep/:stepSlug' component={TutorialDetail} />
+      //   <Route path='/stories/:tutorialId/:slug/:activeStep' component={TutorialDetail} />
+      //   <Route path='/stories/:tutorialId/:slug/' component={TutorialDetail} />
+      //   <Route path="/stories" exact component={TutorialList} />
+      // </Switch>
+      // </>
     )
   }
 }

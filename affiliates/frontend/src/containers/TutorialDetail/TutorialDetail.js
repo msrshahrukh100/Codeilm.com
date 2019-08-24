@@ -14,6 +14,7 @@ import LikeButton from '../LikeButton/LikeButton'
 import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
 import ReactGA from 'react-ga';
+import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
@@ -28,6 +29,12 @@ const styles = theme => ({
   iconSmall: {
     marginRight: theme.spacing(),
     fontSize: 20,
+  },
+  float: {
+    position: 'fixed',
+    textTransform: 'none',
+    bottom: '20px',
+    right: '20px',
   }
 });
 
@@ -36,12 +43,11 @@ class TutorialDetail extends React.Component {
   constructor(props) {
     super(props)
 
-    const { activeStep } = this.props.match.params;
     this.state = {
       tutorial: null,
       error: null,
       slugs:null,
-      activeStep: activeStep ? Number(activeStep) : 0
+      activeStep: 0
     }
   }
 
@@ -58,13 +64,13 @@ class TutorialDetail extends React.Component {
   }
 
   setStep = (step) => {
-    this.props.history.push('/stories/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + step + "/" + this.state.slugs[step])
+    this.setState({activeStep: step})
     scroll.scrollToTop();
   }
 
   handleNext = () => {
     const nextStep = this.state.activeStep + 1;
-    this.props.history.push('/stories/' + this.state.tutorial.id + '/' + this.state.tutorial.slug + "/" + nextStep + "/" + this.state.slugs[nextStep])
+    this.setState({activeStep: nextStep})
     scroll.scrollToTop();
 
     ReactGA.event({
@@ -76,7 +82,8 @@ class TutorialDetail extends React.Component {
   };
 
   handleBack = () => {
-    this.props.history.goBack()
+    const nextStep = this.state.activeStep - 1 >= 0 ? this.state.activeStep - 1 : 0;
+    this.setState({activeStep: nextStep})
     scroll.scrollToTop();
 
     ReactGA.event({
@@ -103,7 +110,7 @@ class TutorialDetail extends React.Component {
 
 
   componentDidMount() {
-    const { tutorialId } = this.props.match.params
+    const { tutorialId } = this.props;
 
     axios.get('/tutorials/' + tutorialId)
       .then(response => {
@@ -172,7 +179,8 @@ class TutorialDetail extends React.Component {
       steps={steps} />) : null;
 
     const postTitle = this.state.tutorial ? this.state.tutorial.title : null
-    return (
+    const { classes } = this.props;
+     return (
       <>
         {this.state.tutorial ?
           <DetailPageLayout
@@ -181,6 +189,10 @@ class TutorialDetail extends React.Component {
             />
           : null
         }
+        <Button variant="outlined" onClick={this.props.showTutorialList} color="secondary" className={classes.float}>
+          See all Stories
+        </Button>
+
       </>
     )
   }
