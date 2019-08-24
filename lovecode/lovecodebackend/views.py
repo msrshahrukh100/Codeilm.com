@@ -52,7 +52,8 @@ def get_context_from_url(url):
 			return {
 				"title": tutorial.title,
 				"description": tutorial.title + " by " + tutorial.user.get_full_name(),
-				"url": url
+				"url": url,
+				"og_image": tutorial.share_image if tutorial.share_image else "https://codeilm.com/static/images/logo/codeilm.png"
 			}
 
 	return {
