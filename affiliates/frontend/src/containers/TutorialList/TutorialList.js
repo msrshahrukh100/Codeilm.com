@@ -89,15 +89,15 @@ class TutorialList extends React.Component {
     // if(this.state.userId) {
     //   url += `&user_id=${this.state.userId}&profile_view=true`
     // }
-    if(community_slug !== null) {
+    if(community_slug !== null && community_slug !== "None") {
       url += `&community_slug=${community_slug}`
     }
 
-    if(user_profile_id !== null) {
+    if(user_profile_id !== null && user_profile_id !== "None") {
       url += `&user_profile_id=${user_profile_id}`
     }
 
-    if(user_profile_id === null && community_slug === null) {
+    if((user_profile_id === null && community_slug === null) || (user_profile_id === "None" && community_slug === "None")) {
       console.log("Please provide the credentials")
       return
     }
