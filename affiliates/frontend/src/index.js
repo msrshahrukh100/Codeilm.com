@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './reset.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import ReactGA from 'react-ga';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
@@ -23,6 +23,7 @@ ReactGA.pageview("/stories")
 
 const app = (
     <Router basename='/' history={history}>
+     <CssBaseline />
       <App/>
     </Router>
 )
