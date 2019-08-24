@@ -7,6 +7,7 @@ import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import ReactGA from 'react-ga';
 
+
 const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
 
 ReactGA.initialize('UA-142472289-1', {debug: debug});
@@ -20,9 +21,9 @@ ReactGA.pageview("/stories")
 
 
 const app = (
-  <Router basename='/' history={history}>
-    <App/>
-  </Router>
+    <Router basename='/' history={history}>
+      <App/>
+    </Router>
 )
 
 

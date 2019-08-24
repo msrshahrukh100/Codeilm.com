@@ -1,4 +1,4 @@
-@import-normalize;
+import * from 'normalize.css'
 
 body {
   margin: 0;
