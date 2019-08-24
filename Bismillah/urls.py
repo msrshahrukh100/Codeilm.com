@@ -28,6 +28,7 @@ handler404 = 'mainapp.views.redirect_to_page'
 handler500 = 'mainapp.views.redirect_for_server_error'
 
 urlpatterns = [
+    re_path(r'^add-codeilm-to-your-site/', TemplateView.as_view(template_name='mainapp/addtosite.html')),
     re_path(r'^projects/', TemplateView.as_view(template_name='projects.html')),
     re_path(r'^p/', TemplateView.as_view(template_name='projects.html')),
 

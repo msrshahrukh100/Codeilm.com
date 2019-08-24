@@ -14,8 +14,9 @@ logger = logging.getLogger(__name__)
 
 def save_leadcapture_email(request):
 	email = request.POST.get("email")
+	extra_data = request.POST.get("extra_data")
 	if email:
-		obj, created = LeadCaptureEmail.objects.get_or_create(email=email)
+		obj, created = LeadCaptureEmail.objects.get_or_create(email=email, extra_data=extra_data)
 		if created:
 			return JsonResponse({"status":"success", "msg": "Thanks for your email. We'll notify with the latest relevant stories."})
 		return JsonResponse({"status":"success", "msg": "We already have your email!"})

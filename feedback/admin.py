@@ -77,5 +77,7 @@ class FeedbackResponseAdmin(admin.ModelAdmin):
 # admin.site.register(ClickResponse, ClickResponseAdmin)
 # admin.site.register(FeedbackResponse, FeedbackResponseAdmin)
 
+class LeadCaptureEmailAdmin(admin.ModelAdmin):
+	list_display = ["email", "extra_data"]
 
-admin.site.register(LeadCaptureEmail)
+admin.site.register(LeadCaptureEmail, LeadCaptureEmailAdmin)
