@@ -12,7 +12,7 @@ if(!root){
 
 var head = document.getElementsByTagName('HEAD')[0];
 
-var js_link = document.createElement('link');
+var css_link = document.createElement('link');
 css_link.rel = 'stylesheet';
 css_link.type = 'text/css';
 css_link.href = '{{ css_file }}';
