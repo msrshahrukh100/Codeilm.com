@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from django.contrib.messages import constants as messages
+from . import affiliates
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,10 +30,7 @@ DEBUG = bool(int(os.environ.get('SETTINGS_DEBUG')))
 
 ALLOWED_HOSTS = ['codeilm.com', 'www.codeilm.com', '54.218.212.69', '127.0.0.1', 'localhost']
 
-CORS_ORIGIN_WHITELIST = [
-    'robasquare.com',
-    'localhost:3000'
-]
+CORS_ORIGIN_WHITELIST = affiliates.AFFILIATES
 
 # CORS_ORIGIN_ALLOW_ALL = True
 
