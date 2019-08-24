@@ -7,7 +7,7 @@ if (typeof(Storage) !== "undefined") {
 
 var root = document.getElementById("codeilm");
 if(!root){
-	alert("The document doesn't have an element with id root!")
+	alert("The document doesn't have an element with id codeilm!")
 }
 
 var head = document.getElementsByTagName('HEAD')[0];
