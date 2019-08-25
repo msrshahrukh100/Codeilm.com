@@ -78,7 +78,7 @@ def send_tutorial_liked_email(tutorial_like_id):
 		"person_profile_url": settings.BASE_URL + "/u/%s-%s" % (user.username, user.id),
 		"message": "%s liked your post '%s' on Codeilm " % (get_user_display_name(user), obj.tutorial.title),
 		"button_title": "See your post",
-		"button_url": settings.BASE_URL + obj.tutorial.get_absolute_url(),
+		"button_url": obj.tutorial.get_absolute_url(),
 	}
 	emailmanager_tasks.send_ses_email(
 		"Codeilm <shahrukh@codeilm.com>",
