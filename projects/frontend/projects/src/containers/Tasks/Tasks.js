@@ -59,13 +59,11 @@ class Tasks extends React.Component {
     if (!result.destination) {
       return;
     }
-    console.log(result.source.index, result.destination.index)
     const tasks = reorder(
       this.state.tasks,
       result.source.index,
       result.destination.index
     );
-    console.log(tasks);
     this.setState({
       tasks: tasks
     });
@@ -81,7 +79,6 @@ class Tasks extends React.Component {
     axios.get(`${projectId}/tasks`)
       .then(response => {
         const data = response.data;
-        console.log(data);
         this.setState({
           tasks: response.data
         })
@@ -105,7 +102,6 @@ class Tasks extends React.Component {
   render() {
     const { classes } = this.props;
     const { projectId } = this.props.match.params;
-    console.log(projectId)
     return (
       <Grid container>
           <Grid item xs={12}>

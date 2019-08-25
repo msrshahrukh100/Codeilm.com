@@ -12,6 +12,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import getCookie from '../../utils/getCookie'
+import axios from '../../projects_axios'
 
 
 const styles = theme => ({
@@ -30,7 +32,11 @@ const styles = theme => ({
     fontSize: theme.spacing(2.5),
   },
   textField: {
-    margin: theme.spacing(3.6)
+    margin: theme.spacing(3.6),
+    width: theme.spacing(75),
+    [theme.breakpoints.down('sm')]: {
+      width: theme.spacing(35)
+    },
   },
   margin: {
     margin: theme.spacing()
@@ -59,6 +65,35 @@ class TaskItem extends React.Component {
     }
   }
 
+  updateText = () => {
+    if(this.state.text !== this.state.previousText) {
+      if(this.state.text === "") {
+        alert("Please fill a title for the task")
+        return
+      }
+
+      this.setState({loading: true})
+      const csrftoken = getCookie('csrftoken');
+      axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+      const postData = {
+        text: this.state.text
+      }
+
+      axios.put(`/tasks/${this.state.taskId}`, postData)
+        .then(response => {
+          this.setState({
+            loading: false,
+            text: response.data.text,
+            updatedAt: response.data.updated_at
+          })
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    }
+    this.toggleEditPanel(false)
+  }
+
   toggleEditPanel = (value, cancel=false) => {
     if(value) {
       this.handleMenueClose()
@@ -82,7 +117,6 @@ class TaskItem extends React.Component {
   }
 
   handleTextChange = event => {
-    console.log("changeing");
     this.setState({text: event.target.value})
   }
 
@@ -117,9 +151,6 @@ class TaskItem extends React.Component {
             checkedIcon={<CheckCircleIcon className={classes.checkedIcon}/>}
           />
         </ListItemIcon>
-
-
-
 
         <ListItemText
           id={"labelId"}
@@ -167,6 +198,7 @@ class TaskItem extends React.Component {
             variant="contained"
             onClick={this.editTask}
             size="small"
+            onClick={this.updateText}
             color="primary"
             className={classes.margin}
             style={this.state.editPanelShown ?  null : {display: 'none'}}
