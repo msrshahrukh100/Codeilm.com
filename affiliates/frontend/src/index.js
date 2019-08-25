@@ -6,6 +6,11 @@ import * as serviceWorker from './serviceWorker';
 import { Router } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import ReactGA from 'react-ga';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
 
 const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
 
@@ -20,9 +25,12 @@ ReactGA.pageview("/stories")
 
 
 const app = (
-  <Router basename='/' history={history}>
-    <App/>
-  </Router>
+  <MuiThemeProvider theme={theme}>
+    <Router basename='/' history={history}>
+     <CssBaseline />
+      <App/>
+    </Router>
+  </MuiThemeProvider>
 )
 
 

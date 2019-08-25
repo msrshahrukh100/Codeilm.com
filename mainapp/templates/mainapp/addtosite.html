@@ -1,0 +1,140 @@
+
+{% extends "base_template.html" %}
+{% load static %}
+{% load thumbnail %}
+{% load main_extras %}
+{% block css %}
+{% endblock %}
+{% block meta_tags %}
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	
+
+	{% include "mainapp/partials/meta_tags_homepage.html" %}
+{% endblock %}
+{% block title %}
+	Codeilm - A storytelling site for developers
+{% endblock %}
+{% block content %} <!-- blue lime -->
+{% include "mainapp/partials/simple-navbar.html" %}
+
+{% if request.user.is_impersonate %}
+	{{ request.impersonator.username }} is impersonating {{ request.user.username }}
+{% endif %}
+
+{% if messages %}
+	{% for message in messages %}
+		<div class="row">
+			<div class="col s12 center">
+				<p class="center-align"></p>
+				<div class="chip {{ message.tags }}">
+					{{ message }}
+					<i class="close material-icons">close</i>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endif %}
+
+<div class="container">
+	<div class="row">
+		<div class="col l9 s12">
+			<h2>Bring the amazing experience🎉🎉<br/> of Codeilm to your site</h2>
+		</div>
+	</div>
+
+	<div class="row" style="padding-top: 40px;">
+  	<h5 style="padding-left: 0.75rem">Want all your posts on <b>Codeilm</b> to be displayed on your personal website? <br/>You can add them with <b>just one line of code</b> 😊
+  		<br/>
+  		Just let us know your mail, we'll help you setup <b>Codeilm</b> on your site.
+  	</h5>
+    <form class="col s12">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="subscribe-email" type="email" class="validate" required>
+          <label for="subscribe-email">Your Email</label>
+        </div>
+        <div class="col s6" style="margin-top: 1rem;">
+        	<button id="submitEmail" type="submit" class="waves-effect waves-light btn" style="text-transform: none; background: linear-gradient(45deg, #FE6B8B 30%, #f20e02 90%);">Setup Codeilm</button>
+        </div>
+      </div>
+        <p style="color: #4CAF50;" id="email-submit-status">
+        </p>
+    </form>
+  </div>
+
+	<img class="z-depth-2 show-on-large" style="display: none;" src="{% static 'images/websiteadd.svg' %}">
+	<img class="show-on-medium-and-down" style="display: none;" src="{% static 'images/mobileadd.svg' %}">
+
+
+  <div class="row">
+	<div class="col l12 s12 center">
+		<a href="/stories"></a>
+		<button onclick="window.location = '/stories'" class="btn waves-effect btn-large waves-light" style="margin-bottom: 3.52rem; margin-top: 3.52rem; background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%); font-size: 1.3rem; text-transform: none;" type="submit" name="action">Read Stories on Codeilm
+		    <img height="35" style="margin-bottom: -12px;" src="{% static 'images/logo/codeilmicon.png' %}" alt="Codeilm">
+		</button>
+	</div>
+  </div>
+
+</div>
+	
+
+
+
+<footer class="page-footer white z-depth-3">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="black-text">Codeilm</h5>
+        <p class="black-text text-lighten-4">A storytellling site for developers</p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Links</h5>
+        <ul>
+          <li><a class="black-text text-lighten-3" href="https://www.facebook.com/Codeilm-583644822460909">Facebook</a></li>
+          <li><a class="black-text text-lighten-3" href="https://www.linkedin.com/company/codeilm">LinkedIn</a></li>
+          <li><a class="black-text text-lighten-3" href="https://www.youtube.com/channel/UC9-UILXUR8gV4Fw8eQ4hZSQ">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright black-text">
+    <div class="container back-text">
+    © {% now "Y" %} Codeilm.com
+    </div>
+  </div>
+</footer>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+	$('#submitEmail').on('click', function(e) {
+		var emailValid = $('#subscribe-email')[0].checkValidity()
+		var data = {
+			"email": $('#subscribe-email').val(),
+			"extra_data": JSON.stringify({"purpose": "Contact for add to site"})
+		}
+		if (emailValid) {
+			e.preventDefault();
+			$.ajax({
+            type: 'POST',
+            url: "{% url 'feedback:save_leadcapture_email' %}",
+            data: data,
+            dataType: "json",
+            success: function(data) {
+            	$('#email-submit-status').html(data["msg"])
+            },
+            fail: function() {
+                console.log("error")
+            },
+            beforeSend: function(xhr) {
+            	console.log("posting data", data)
+                var csrftoken = getCookie('csrftoken');
+                xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            },
+        });
+		}
+	})
+</script>
+
+{% endblock %}

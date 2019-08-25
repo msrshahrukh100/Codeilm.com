@@ -5,6 +5,7 @@ from django.urls import reverse
 from mainapp.models import RequestIpInfo
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django_mysql.models import JSONField, Model
 
 # Create your models here.
 # Possible activities
@@ -88,10 +89,15 @@ class FeedbackResponse(models.Model):
 		return settings.BASE_URL + reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
 
 
-class LeadCaptureEmail(models.Model):
+class LeadCaptureEmail(Model):
 	email = models.EmailField()
+	extra_data = JSONField(blank=True, null=True)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return self.email
+
+	def get_admin_url(self):
+		content_type = ContentType.objects.get_for_model(self.__class__)
+		return settings.BASE_URL + reverse("admin:%s_%s_change" % (content_type.app_label, content_type.model), args=(self.id,))
