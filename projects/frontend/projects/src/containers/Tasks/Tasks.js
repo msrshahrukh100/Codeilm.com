@@ -95,6 +95,13 @@ class Tasks extends React.Component {
       })
   }
 
+
+  appendToTasks = task => {
+    this.setState(state => ({
+          tasks: state.tasks.concat(task),
+        }))
+  }
+
   render() {
     const { classes } = this.props;
     const { projectId } = this.props.match.params;
@@ -131,7 +138,7 @@ class Tasks extends React.Component {
               </Droppable>
           </DragDropContext>
 
-          <AddTask projectId={projectId} />
+          <AddTask projectId={projectId} onAddTask={this.appendToTasks} />
             </Paper>
           </Grid>
       </Grid>

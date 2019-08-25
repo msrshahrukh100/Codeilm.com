@@ -60,6 +60,8 @@ class AddTask extends React.Component {
       .then(response => {
         this.setState({loading: false})
         console.log(response.data);
+        this.props.onAddTask(response.data);
+        this.setState({text: ""})
       })
       .catch(error => {
         console.log(error);

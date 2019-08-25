@@ -6,10 +6,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import LaptopMacIcon from '@material-ui/icons/LaptopMac'
+import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 const styles = theme => ({
   primary: {
-    fontSize: '2rem'
+    fontSize: '2.5rem',
+    lineHeight: '3.9rem'
   },
   checkedIcon: {
     fontSize: theme.spacing(4),
@@ -18,6 +24,9 @@ const styles = theme => ({
   uncheckedIcon: {
     fontSize: theme.spacing(4),
   },
+  editicon: {
+    fontSize: theme.spacing(2.5),
+  }
 })
 
 
@@ -31,18 +40,31 @@ class TaskItem extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      done: props.done
+      done: props.done,
+      showEdit: false,
+      taskId: props.item.id,
+      anchorEl: null,
     }
   }
 
-  handleToggle = () => {
+  changeShowEdit = value => {
+    console.log(this.state.taskId);
+    this.setState({showEdit: value})
+  }
 
+  handleMenue = event => {
+    this.setState({anchorEl: event.currentTarget})
+  }
+
+  handleMenueClose = () => {
+    this.setState({anchorEl: null})
   }
 
   render() {
     const { classes } = this.props;
     const { provided } = this.props;
     const { snapshot } = this.props;
+    const { item } = this.props;
 
     return (
       <ListItem
@@ -55,6 +77,8 @@ class TaskItem extends React.Component {
           snapshot.isDragging,
           provided.draggableProps.style
         )}
+        onMouseEnter={() => this.changeShowEdit(true)}
+        onMouseLeave={() => this.changeShowEdit(false)}
         >
         <ListItemIcon>
           <Checkbox
@@ -68,9 +92,34 @@ class TaskItem extends React.Component {
           />
         </ListItemIcon>
         <ListItemText
-
           id={"labelId"}
-          primary={<span {...provided.dragHandleProps} className={classes.primary}>{this.props.item.text}</span>} secondary={<span className={classes.secondary}>Is cool</span>} />
+          primary={
+            <>
+            <span {...provided.dragHandleProps}
+            className={classes.primary}>
+              {item.text}
+            </span>
+            <IconButton edge="end" aria-label="delete"
+              style={this.state.showEdit ? null : {display: 'none'}}
+              onClick={this.handleMenue}
+            >
+              <EditIcon className={classes.editicon} />
+            </IconButton>
+
+            <Menu
+              id="simple-menu"
+              anchorEl={this.state.anchorEl}
+              keepMounted
+              open={Boolean(this.state.anchorEl)}
+              onClose={this.handleMenueClose}
+            >
+              <MenuItem onClick={this.handleMenueClose}>Profile</MenuItem>
+              <MenuItem onClick={this.handleMenueClose}>My account</MenuItem>
+              <MenuItem onClick={this.handleMenueClose}>Logout</MenuItem>
+            </Menu>
+            </>
+          }
+          secondary={<span className={classes.secondary}>{new Date(item.updated_at).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>} />
       </ListItem>
     )
   }
