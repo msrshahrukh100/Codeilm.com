@@ -1,12 +1,15 @@
 from background_task import background
 from django.contrib.auth.models import User
-from .models import GithubRepo, TutorialView, Tutorial
+from .models import GithubRepo, TutorialView, Tutorial, TutorialLike
 import requests
 import simplejson
 from allauth.socialaccount.models import SocialApp
 from django.db.models import Q
 from mainapp.utils import create_request_ip_info_object
 from django.conf import settings
+from emailmanager import tasks as emailmanager_tasks
+from mainapp.utils import get_user_display_name
+
 
 @background(schedule=20)
 def add_languages(githubrepo_id):
@@ -64,3 +67,24 @@ def save_tutorial_view(tutorial_id, ip, session, user_id, request_ip_info_data):
 			request_ip_info=create_request_ip_info_object(request_ip_info_data)
 		)
 
+
+
+@background(schedule=8)
+def send_tutorial_liked_email(tutorial_like_id):
+	obj = TutorialLike.objects.get(id=tutorial_like_id)
+	user = obj.user
+	context = {
+		"person_image_url": user.user_profile.first().get_profile_pic_url(),
+		"person_profile_url": settings.BASE_URL + "/u/%s-%s" % (user.username, user.id),
+		"message": "%s liked your post '%s' on Codeilm " % (get_user_display_name(user), obj.tutorial.title),
+		"button_title": "See your post",
+		"button_url": settings.BASE_URL + obj.tutorial.get_absolute_url(),
+	}
+	emailmanager_tasks.send_ses_email(
+		"Codeilm <shahrukh@codeilm.com>",
+		"emails/email_with_image.html",
+		context,
+		[obj.tutorial.user.id],
+		None,
+		"🤗 %s liked your post on Codeilm " % get_user_display_name(user),
+	)

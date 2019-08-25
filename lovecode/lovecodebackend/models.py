@@ -85,6 +85,8 @@ class Tutorial(Model):
 	# 	except Exception as e:
 	# 		self.tutorial_data = {"error": str(e)}
 	# 	super().save(*args, **kwargs)
+	def get_absolute_url(self):
+		return "/stories/%s/%s" % (self.id, self.slug)
 
 	class Meta:
 		ordering = ["-rank"]

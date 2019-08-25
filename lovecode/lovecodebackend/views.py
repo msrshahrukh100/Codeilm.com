@@ -297,6 +297,8 @@ class LikeUnlikeTutorial(APIView):
 				tutorial_id=tutorial_id,
 				defaults={'liked': liked}
 			)
+			if created:
+				tasks.send_tutorial_liked_email(obj.id)
 			data = {
 				"like_data": lovecode_serializers.TutorialLikeSerializer(obj).data,
 				"tutorial_like_data": obj.tutorial.like_data
