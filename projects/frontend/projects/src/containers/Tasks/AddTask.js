@@ -3,10 +3,29 @@ import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import getCookie from '../../utils/getCookie'
 import axios from '../../projects_axios'
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { withRouter } from "react-router";
 
 
 const styles = theme => ({
-
+  textField: {
+    margin: theme.spacing(5),
+    width: theme.spacing(75),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(),
+      width: theme.spacing(35)
+    },
+  },
+  margin: {
+    marginLeft: theme.spacing(2),
+    marginTop: theme.spacing(5),
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: theme.spacing(),
+      marginTop: theme.spacing(),
+      marginBottom: theme.spacing(2)
+    },
+  }
 })
 
 
@@ -22,7 +41,7 @@ class AddTask extends React.Component {
     })
   }
 
-  createProject = () => {
+  createTask = () => {
     if(this.state.text === "") {
       alert("Please fill a task title")
       return
@@ -34,45 +53,42 @@ class AddTask extends React.Component {
     const postData = {
       text: this.state.text,
     }
-    const { projectId } = this.props.projectId;
-
+    const { projectId } = this.props.match.params;
+    console.log(projectId);
     if(projectId) {
-      axios.put(`/${projectId}/tasks`, postData)
+      axios.post(`/${projectId}/tasks`, postData)
       .then(response => {
         this.setState({loading: false})
-        this.props.history.push(`/p/${response.data.id}`)
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
       })
     }
-    else {
-      axios.post("create/", postData)
-      .then(response => {
-        this.setState({loading: false})
-        this.props.history.push(`/p/${response.data.id}`)
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    }
-
-
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <TextField
-        id="standard-name"
-        label="Name"
-        className={classes.textField}
-        value={this.state.text}
-        onChange={this.handleChangeText}
-        margin="normal"
-      />
+      <Grid container>
+        <Grid item sm={6} xs={12}>
+          <TextField
+            id="standard-name"
+            label="Add a Task"
+            className={classes.textField}
+            value={this.state.text}
+            onChange={this.handleChangeText}
+            margin="normal"
+          />
+        </Grid>
+        <Grid item sm={6} xs={12}>
+          <Button variant="contained" onClick={this.createTask} size="small" color="primary" className={classes.margin}>
+          Add
+          </Button>
+        </Grid>
+      </Grid>
     )
   }
 }
 
-export default withStyles(styles)(AddTask);
+export default withStyles(styles)(withRouter(AddTask));

@@ -35,6 +35,9 @@ const styles = theme => ({
   },
   paper: {
     margin: theme.spacing(10),
+    [theme.breakpoints.down('sm')]: {
+      margin: '0px'
+    },
   },
   list: {
     paddingTop: 0,
@@ -95,9 +98,9 @@ class Tasks extends React.Component {
   render() {
     const { classes } = this.props;
     const { projectId } = this.props.match.params;
-
+    console.log(projectId)
     return (
-      <Grid container spacing={3}>
+      <Grid container>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
             <DragDropContext onDragEnd={this.onDragEnd}>
