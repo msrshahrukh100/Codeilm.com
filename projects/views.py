@@ -51,7 +51,8 @@ class ProjectTaskList(generics.ListCreateAPIView):
 	def perform_create(self, serializer):
 		data = self.kwargs
 		project = projects_models.Project.objects.get(id=data.get('project_id'))
-		serializer.save(project=project)
+		order = project.tasks.all().count()
+		serializer.save(project=project, order=order+1)
 
 
 class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):

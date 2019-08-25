@@ -52,7 +52,7 @@ class TaskSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = projects_models.Task
-		fields = ('id', 'project', 'text', 'deadline', 'order')
+		fields = ('id', 'project', 'text', 'deadline', 'done', 'order')
 
 
 class CommentSerializer(serializers.ModelSerializer):
