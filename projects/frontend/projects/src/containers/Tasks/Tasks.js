@@ -42,6 +42,9 @@ const styles = theme => ({
   list: {
     paddingTop: 0,
     paddingBottom: 0
+  },
+  margin: {
+    padding: theme.spacing(3)
   }
 });
 
@@ -106,6 +109,7 @@ class Tasks extends React.Component {
       <Grid container>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
+            {this.state.tasks.length === 0 ? <h2 className={classes.margin}>No tasks for project yet</h2> : null}
             <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="droppable">
                     {(provided, snapshot) => (
@@ -121,6 +125,8 @@ class Tasks extends React.Component {
                           <TaskItem
                             key={item.id}
                             item={item}
+                            done={item.done}
+                            refreshTasks={this.fetchTasks}
                             provided={provided}
                             snapshot={snapshot}
                           />

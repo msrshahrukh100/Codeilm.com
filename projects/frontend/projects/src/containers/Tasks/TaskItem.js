@@ -14,6 +14,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import getCookie from '../../utils/getCookie'
 import axios from '../../projects_axios'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+
 
 
 const styles = theme => ({
@@ -61,8 +66,19 @@ class TaskItem extends React.Component {
       editPanelShown: false,
       text: props.item.text,
       previousText: props.item.text,
-      updatedAt: props.item.updated_at
+      updatedAt: props.item.updated_at,
+      deleteDialogOpen: false
     }
+  }
+
+  deleteTask = () => {
+    axios.delete(`/tasks/${this.state.taskId}`)
+      .then(response => {
+        this.props.refreshTasks()
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   updateText = () => {
@@ -120,13 +136,21 @@ class TaskItem extends React.Component {
     this.setState({text: event.target.value})
   }
 
+  handleClickOpen = value => {
+    this.setState({deleteDialogOpen: value})
+  }
+
+  handleDone = (event, checked) => {
+    this.setState({done: checked})
+  }
+
   render() {
     const { classes } = this.props;
     const { provided } = this.props;
     const { snapshot } = this.props;
     const { item } = this.props;
 
-    return (
+    return (<>
       <ListItem
         role={undefined} dense
         className={classes.listitem} elevation={2}
@@ -144,6 +168,7 @@ class TaskItem extends React.Component {
           <Checkbox
             edge="start"
             checked={this.state.done}
+            onChange={this.handleDone}
             tabIndex={-1}
             disableRipple
             inputProps={{ 'aria-labelledby': "labelId" }}
@@ -177,7 +202,7 @@ class TaskItem extends React.Component {
               onClose={this.handleMenueClose}
             >
               <MenuItem onClick={() => this.toggleEditPanel(true)}>Edit</MenuItem>
-              <MenuItem onClick={this.handleMenueClose}>Delete</MenuItem>
+              <MenuItem onClick={() => this.handleClickOpen(true)}>Delete</MenuItem>
             </Menu>
             </>
           }
@@ -218,6 +243,25 @@ class TaskItem extends React.Component {
               </Button>
 
       </ListItem>
+
+      <Dialog
+        open={this.state.deleteDialogOpen}
+        onClose={() => this.handleClickOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Are you sure you want to delete the task "{this.state.text}"?</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => this.handleClickOpen(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={this.deleteTask} color="primary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      </>
     )
   }
 }
