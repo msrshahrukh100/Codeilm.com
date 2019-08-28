@@ -81,6 +81,25 @@ class TaskItem extends React.Component {
       })
   }
 
+  axiosUpdate = data => {
+    this.setState({loading: true})
+    const csrftoken = getCookie('csrftoken');
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+    axios.put(`/tasks/${this.state.taskId}`, data)
+    .then(response => {
+      this.setState({
+        loading: false,
+        text: response.data.text,
+        done: response.data.done,
+        updatedAt: response.data.updated_at
+      })
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
+  }
+
   updateText = () => {
     if(this.state.text !== this.state.previousText) {
       if(this.state.text === "") {
@@ -88,24 +107,11 @@ class TaskItem extends React.Component {
         return
       }
 
-      this.setState({loading: true})
-      const csrftoken = getCookie('csrftoken');
-      axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
       const postData = {
         text: this.state.text
       }
+      this.axiosUpdate(postData);
 
-      axios.put(`/tasks/${this.state.taskId}`, postData)
-        .then(response => {
-          this.setState({
-            loading: false,
-            text: response.data.text,
-            updatedAt: response.data.updated_at
-          })
-        })
-        .catch(error => {
-          console.log(error);
-        })
     }
     this.toggleEditPanel(false)
   }
@@ -141,7 +147,7 @@ class TaskItem extends React.Component {
   }
 
   handleDone = (event, checked) => {
-    this.setState({done: checked})
+    this.setState({done: checked}, () => this.axiosUpdate({text: this.state.text, done: checked}))
   }
 
   render() {
