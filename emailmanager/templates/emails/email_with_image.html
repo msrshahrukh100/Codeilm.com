@@ -1,8 +1,18 @@
 {% load static %}
 {% load main_extras %}
 {% load thumbnail %}
+
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	<!-- context = {
+		"name": "Mohammad Shahrukh",
+		"person_image_url": "https://avatars1.githubusercontent.com/u/13628270?s=460&v=4",
+		"person_profile_url": "https://codeilm.com/u/msrs-79",
+		"message": "Something",
+		"button_title": "See your post",
+		"button_url": "https://codeilm.com",
+	} -->
+
     <head>
     	<!-- NAME: GIFT GIVING -->
       <!--[if gte mso 15]>
@@ -16,7 +26,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Allywith</title>
+      <title>Codeilm</title>
       
     <style type="text/css">
 		p{
@@ -588,7 +598,7 @@
         
             
 
-            <img alt="" src="{{ 'images/logo/logo-square.png'|static_absolute_uri }}" width="150" class="mcnImage">
+            <img alt="" src="{{ 'images/logo/codeilmbanner.png'|static_absolute_uri }}" width="400" style="max-width:400px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnImage">
             
         
         </td>
@@ -648,8 +658,10 @@
         <td class="mcnCaptionBottomImageContent" align="center" valign="top" style="padding:0 9px 9px 9px;">
         
             
-
+        	<a href="{{ person_profile_url }}">
             <img alt="" src="{{ person_image_url }}" height="15%" width="15%" style="border-radius: 50%;" class="mcnImageMot">
+        		
+        	</a>
             
         
         </td>
@@ -661,7 +673,6 @@
             </p>
             <br>
             <br>
-            On Allywith you can send motivations to your friends and help them achieve the goal. Now achieve the goals along with your friends. Visit the group, update your status or motivate your friends.
         </td>
     </tr>
 </tbody></table>
@@ -718,10 +729,10 @@
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
-                            <em>Copyright © {% now 'Y' %} Allywith.com, All rights reserved.</em><br>
+                            <em>Copyright © {% now 'Y' %} Codeilm.com, All rights reserved.</em><br>
 <br>
 <strong>Our mailing address is:</strong><br>
-shahrukh@allywith.com<br>
+shahrukh@codeilm.com<br>
 <br>
 {% url 'emailmanager:unsubscribe_user' as unsubscribe_url %}
 Want to change how you receive these emails?<br>

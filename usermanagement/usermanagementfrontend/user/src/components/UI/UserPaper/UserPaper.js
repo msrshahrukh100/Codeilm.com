@@ -44,7 +44,7 @@ const styles = theme => ({
 class UserPaper extends React.Component {
 
   redirectToProfile = () => {
-    this.props.history.push(`/u/${this.props.userId}/${this.props.userName}`)
+    this.props.history.push(`/u/${this.props.userName}-${this.props.userId}`)
   }
 
   render() {
