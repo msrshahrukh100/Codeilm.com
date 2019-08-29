@@ -38,6 +38,9 @@ class Task(models.Model):
 	def __str__(self):
 		return self.text
 
+	class Meta:
+		ordering = ['order']
+
 
 class Comment(models.Model):
 	id = HashidAutoField(primary_key=True)

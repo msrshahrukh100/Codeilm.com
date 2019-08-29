@@ -17,8 +17,7 @@ import axios from '../../projects_axios'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-
+import clsx from 'clsx';
 
 
 const styles = theme => ({
@@ -45,7 +44,13 @@ const styles = theme => ({
   },
   margin: {
     margin: theme.spacing()
+  },
+  showHideEditIcon: {
+    [theme.breakpoints.up('sm')]: {
+      display: 'none',
+    }
   }
+
 })
 
 
@@ -155,6 +160,7 @@ class TaskItem extends React.Component {
     const { provided } = this.props;
     const { snapshot } = this.props;
     const { item } = this.props;
+    const showHideEditIcon = this.state.showEdit ? null : classes.showHideEditIcon
 
     return (<>
       <ListItem
@@ -193,9 +199,9 @@ class TaskItem extends React.Component {
               {this.state.text}
             </span>
             <IconButton edge="end" aria-label="delete"
-              style={this.state.showEdit ? null : {display: 'none'}}
+              // style={}
               onClick={this.handleMenue}
-              className={classes.iconbutton}
+              className={clsx(classes.iconbutton, showHideEditIcon)}
             >
               <EditIcon className={classes.editicon} />
             </IconButton>

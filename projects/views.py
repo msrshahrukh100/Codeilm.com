@@ -55,6 +55,14 @@ class ProjectTaskList(generics.ListCreateAPIView):
 		serializer.save(project=project, order=order+1)
 
 
+class ProjectTaskReorder(generics.UpdateAPIView):
+	queryset = projects_models.Task.objects.all()
+	serializer_class = projects_serializers.TaskSerializer
+
+	def update(self, *args, **kwargs):
+		print(self.request.data)
+		# TO DO
+
 class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 	queryset = projects_models.Task.objects.all()
 	serializer_class = projects_serializers.TaskSerializer

@@ -11,15 +11,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import axios from '../../projects_axios';
 import TaskItem from './TaskItem'
 import AddTask from './AddTask'
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
-
+import getCookie from '../../utils/getCookie'
 
 
 const getListStyle = isDraggingOver => ({
@@ -48,21 +40,60 @@ const styles = theme => ({
   }
 });
 
+const resetTimeout = (id, newID) => {
+	clearTimeout(id)
+	return newID
+}
+
 class Tasks extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       tasks: [],
+      timeout: null,
     };
     this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    result.map((value, index) => value.order = index);
+    this.setState((prevState, props) => {
+      return {
+        timeout: resetTimeout(prevState.timeout, setTimeout(this.updateTaskOrder, 3500))
+      }
+    })
+    return result;
+  };
+
+  updateTaskOrder = () => {
+    console.log("backend to update call");
+    const { projectId } = this.props.match.params;
+    const csrftoken = getCookie('csrftoken');
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+    axios.put(`${projectId}/tasks/order`, this.state.tasks)
+      .then(response => {
+        const data = response.data;
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error)
+        this.setState({
+          error: error,
+          loading: false
+        })
+      })
+
   }
 
   onDragEnd(result) {
     if (!result.destination) {
       return;
     }
-    const tasks = reorder(
+    const tasks = this.reorder(
       this.state.tasks,
       result.source.index,
       result.destination.index
