@@ -63,6 +63,6 @@ class CommentSerializer(serializers.ModelSerializer):
         read_only=True)
 
 	class Meta:
-		model = projects_models.Task
-		fields = ('id', 'project', 'text', 'user')
+		model = projects_models.Comment
+		fields = ('id', 'project', 'text', 'user', 'updated_at')
 

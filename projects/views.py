@@ -83,6 +83,7 @@ class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 class ProjectCommentList(generics.ListCreateAPIView):
 	queryset = projects_models.Comment.objects.all()
 	serializer_class = projects_serializers.CommentSerializer
+	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
 
 
 	def get(self, request, project_id=None):
@@ -100,7 +101,7 @@ class ProjectCommentList(generics.ListCreateAPIView):
 	def perform_create(self, serializer):
 		data = self.kwargs
 		project = projects_models.Project.objects.get(id=data.get('project_id'))
-		serializer.save(project=project)
+		serializer.save(project=project, user=self.request.user)
 
 
 class CommenTaskRetrieveUpdateDestroy(generics.RetrieveUpdateAPIView):

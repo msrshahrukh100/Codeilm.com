@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,6 +11,7 @@ import axios from '../../projects_axios';
 import TaskItem from './TaskItem'
 import AddTask from './AddTask'
 import getCookie from '../../utils/getCookie'
+import Comments from '../Comments/Comments'
 
 
 const getListStyle = isDraggingOver => ({
@@ -135,6 +135,7 @@ class Tasks extends React.Component {
     const { classes } = this.props;
     const { projectId } = this.props.match.params;
     return (
+      <>
       <Grid container>
           <Grid item xs={12}>
             <Paper className={classes.paper}>
@@ -173,6 +174,15 @@ class Tasks extends React.Component {
             </Paper>
           </Grid>
       </Grid>
+
+      <Grid container>
+          <Grid item xs={12}>
+            <Paper className={classes.paper} elevation={0}>
+              <Comments />
+            </Paper>
+          </Grid>
+        </Grid>
+      </>
     );
 
   }
