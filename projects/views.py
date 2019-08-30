@@ -4,6 +4,8 @@ from . import models as projects_models
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask
+from django.db import transaction
+
 # Create your views here.
 
 
@@ -60,8 +62,16 @@ class ProjectTaskReorder(generics.UpdateAPIView):
 	serializer_class = projects_serializers.TaskSerializer
 
 	def update(self, *args, **kwargs):
-		print(self.request.data)
-		# TO DO
+		data = self.request.data
+
+		try:
+			with transaction.atomic():
+				for task in data:
+					projects_models.Task.objects.filter(id=task.get("id")).update(order=task.get("order", 0))
+		except:
+			return Response({"status": False, "msg": "Failed to update order"})
+
+		return Response({"status": True, "msg": "Updated order"})
 
 class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 	queryset = projects_models.Task.objects.all()

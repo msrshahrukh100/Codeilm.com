@@ -15,7 +15,7 @@ import getCookie from '../../utils/getCookie'
 
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? "lightblue" : "white",
+  background: isDraggingOver ? "white" : "white",
 });
 
 const styles = theme => ({
@@ -63,21 +63,19 @@ class Tasks extends React.Component {
     result.map((value, index) => value.order = index);
     this.setState((prevState, props) => {
       return {
-        timeout: resetTimeout(prevState.timeout, setTimeout(this.updateTaskOrder, 3500))
+        timeout: resetTimeout(prevState.timeout, setTimeout(this.updateTaskOrder, 3000))
       }
     })
     return result;
   };
 
   updateTaskOrder = () => {
-    console.log("backend to update call");
     const { projectId } = this.props.match.params;
     const csrftoken = getCookie('csrftoken');
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
-    axios.put(`${projectId}/tasks/order`, this.state.tasks)
+    axios.put(`${projectId}/tasks/reorder`, this.state.tasks)
       .then(response => {
         const data = response.data;
-        console.log(data);
       })
       .catch(error => {
         console.log(error)

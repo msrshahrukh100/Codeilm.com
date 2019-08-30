@@ -11,17 +11,21 @@ import { withRouter } from "react-router";
 const styles = theme => ({
   textField: {
     margin: theme.spacing(5),
-    width: theme.spacing(75),
+    width: '75%',
     [theme.breakpoints.down('sm')]: {
       margin: theme.spacing(),
-      width: theme.spacing(35)
+      marginLeft: theme.spacing(5)
+    },
+    [theme.breakpoints.down('xs')]: {
+      margin: theme.spacing(),
+      marginLeft: theme.spacing(5)
     },
   },
   margin: {
     marginLeft: theme.spacing(2),
     marginTop: theme.spacing(5),
     [theme.breakpoints.down('sm')]: {
-      marginLeft: theme.spacing(),
+      marginLeft: theme.spacing(5),
       marginTop: theme.spacing(),
       marginBottom: theme.spacing(2)
     },
