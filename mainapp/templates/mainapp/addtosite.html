@@ -43,14 +43,14 @@
 	</div>
 
 	<div class="row" style="padding-top: 40px;">
-  	<h5 style="padding-left: 0.75rem">Want all your posts on <b>Codeilm</b> to be displayed on your personal website? <br/>You can add them with <b>just one line of code</b> 😊
+  	<h5 style="padding-left: 0.75rem">Want all your posts on <b>Codeilm</b> to be displayed on your personal website? <br/>You can add them with <b>just one line of code</b> 😊. <a href="https://codeilm.com/stories/wavglyb/how-to-add-codeilm-to-your-personal-site">Read how you can add it yourself.</a>
   		<br/>
-  		Just let us know your mail, we'll help you setup <b>Codeilm</b> on your site.
+  		Or let us know your mail, we'll help you setup <b>Codeilm</b> on your site.
   	</h5>
     <form class="col s12">
       <div class="row">
         <div class="input-field col s6">
-          <input id="subscribe-email" type="email" class="validate" required>
+          <input id="subscribe-email" type="email" class="validate" value="{{ request.user.email }}" required>
           <label for="subscribe-email">Your Email</label>
         </div>
         <div class="col s6" style="margin-top: 1rem;">
