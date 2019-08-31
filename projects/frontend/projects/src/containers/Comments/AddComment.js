@@ -3,13 +3,16 @@ import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import getCookie from '../../utils/getCookie'
 import axios from '../../projects_axios'
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { withRouter } from "react-router";
-
+import Avatar from '@material-ui/core/Avatar';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   textField: {
-    margin: theme.spacing(5),
+    margin: theme.spacing(2),
+    // marginTop: theme.spacing(10),
     width: '75%',
     [theme.breakpoints.down('sm')]: {
       margin: theme.spacing(),
@@ -20,6 +23,9 @@ const styles = theme => ({
       marginLeft: theme.spacing(5)
     },
   },
+  avatar: {
+    marginBottom: theme.spacing(),
+  },
   margin: {
     marginLeft: theme.spacing(2),
     marginTop: theme.spacing(5),
@@ -28,6 +34,9 @@ const styles = theme => ({
       marginTop: theme.spacing(),
       marginBottom: theme.spacing(2)
     },
+  },
+  container: {
+    marginLeft: theme.spacing(2)
   }
 })
 
@@ -46,13 +55,13 @@ class AddTask extends React.Component {
 
   handleEnterKey = event => {
     if(event.key == 'Enter') {
-      this.createTask()
+      this.createComment()
     }
   }
 
-  createTask = () => {
+  createComment = () => {
     if(this.state.text === "") {
-      alert("Please fill a task title")
+      alert("Please fill some content for the comment")
       return
     }
 
@@ -63,13 +72,11 @@ class AddTask extends React.Component {
       text: this.state.text,
     }
     const { projectId } = this.props.match.params;
-    console.log(projectId);
     if(projectId) {
-      axios.post(`/${projectId}/tasks`, postData)
+      axios.post(`/${projectId}/comments`, postData)
       .then(response => {
         this.setState({loading: false})
-        console.log(response.data);
-        this.props.onAddTask(response.data);
+        this.props.onCommentAdd();
         this.setState({text: ""})
       })
       .catch(error => {
@@ -81,16 +88,19 @@ class AddTask extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container>
+      <Grid container spacing={1} alignItems="flex-end" className={classes.container}>
+        <Grid item>
+          <Avatar alt="Remy Sharp" src={this.props.user ? this.props.user.user_profile_pic : null} className={classes.avatar} />
+        </Grid>
         <Grid item sm={6} xs={12}>
           <TextField
             id="standard-name"
-            label="Add a Task"
-            placeholder="Add a Task, press Enter to Add"
+            label="Add a Comment"
+            placeholder="Add a Comment, press Enter to Add"
             className={classes.textField}
             value={this.state.text}
-            onKeyDown={this.handleEnterKey}
             onChange={this.handleChangeText}
+            onKeyDown={this.handleEnterKey}
             margin="normal"
           />
         </Grid>
@@ -99,4 +109,10 @@ class AddTask extends React.Component {
   }
 }
 
-export default withStyles(styles)(withRouter(AddTask));
+const matchStateToProps = state => {
+  return {
+    user: state.aReducer.user
+  }
+}
+
+export default withStyles(styles)(withRouter(connect(matchStateToProps, null)(AddTask)));

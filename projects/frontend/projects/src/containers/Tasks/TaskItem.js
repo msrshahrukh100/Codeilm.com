@@ -23,7 +23,11 @@ import clsx from 'clsx';
 const styles = theme => ({
   primary: {
     fontSize: '2.5rem',
-    lineHeight: '3.9rem'
+    lineHeight: '3.9rem',
+    [theme.breakpoints.down('sm')]: {
+      lineHeight: '2rem',
+      fontSize: '2rem'
+    },
   },
   checkedIcon: {
     fontSize: theme.spacing(4),
