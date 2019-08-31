@@ -15,6 +15,7 @@ import { withRouter } from 'react-router-dom'
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import getCookie from '../../utils/getCookie'
@@ -22,7 +23,9 @@ import axios from '../../projects_axios'
 import { connect } from 'react-redux'
 import Chip from '@material-ui/core/Chip';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
   root: {
@@ -86,7 +89,8 @@ class CreateProject extends React.Component {
     deadline: new Date(),
     isPrivate: false,
     projectId: null,
-    posterIsAuthenticatedUser: false
+    posterIsAuthenticatedUser: false,
+    deleteDialogOpen: false,
   }
 
   fetchProject = projectId => {
@@ -114,6 +118,17 @@ class CreateProject extends React.Component {
           error: error,
           loading: false
         })
+      })
+  }
+
+  deleteProject = () => {
+    const { projectId } = this.props.match.params;
+    axios.delete(`/${projectId}`)
+      .then(response => {
+        this.props.history.goBack();
+      })
+      .catch(error => {
+        console.log(error);
       })
   }
 
@@ -179,6 +194,10 @@ class CreateProject extends React.Component {
     }
 
 
+  }
+
+  handleClickOpen = value => {
+    this.setState({deleteDialogOpen: value})
   }
 
   render() {
@@ -259,6 +278,19 @@ class CreateProject extends React.Component {
                {projectId ? "Update Project" : "Add Project"}
              <AddIcon className={classes.rightIcon} />
            </Button>
+          {projectId ? (
+            <Button
+              disabled={this.state.loading}
+              onClick={() => this.handleClickOpen(true)}
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              style={{marginLeft: 15}}>
+              Delete this project
+              <DeleteIcon className={classes.rightIcon} />
+            </Button>
+          )
+          : null}
            {projectId ?
                <a style={{cursor: 'pointer', margin: 30, position: 'absolute'}} onClick={() => this.props.history.goBack()}>Cancel</a>
               : null}
@@ -266,6 +298,24 @@ class CreateProject extends React.Component {
           </Paper>
         </Grid>
       </Grid>
+
+      <Dialog
+        open={this.state.deleteDialogOpen}
+        onClose={() => this.handleClickOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Are you sure you want to delete the project "{this.state.title}"?</DialogTitle>
+        <DialogActions>
+          <Button onClick={() => this.handleClickOpen(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={this.deleteProject} color="primary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       </div>
     );
   }
