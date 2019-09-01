@@ -89,7 +89,6 @@ class Comments extends React.Component {
   render() {
     const { classes } = this.props;
     const { comments } = this.state;
-    console.log(this.state);
     return (
       <React.Fragment>
       <Paper square className={classes.paper} elevation={0}>

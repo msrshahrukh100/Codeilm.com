@@ -3,7 +3,7 @@ from . import serializers as projects_serializers
 from . import models as projects_models
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask, CanRetrieveTask
+from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask, CanRetrieveTask, CanRetrieveUpdateDestroyComment
 from django.db import transaction
 
 # Create your views here.
@@ -112,4 +112,4 @@ class ProjectCommentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView)
 	queryset = projects_models.Comment.objects.all()
 	serializer_class = projects_serializers.CommentSerializer
 	lookup_field = "id"
-	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
+	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyComment)

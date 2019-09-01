@@ -98,7 +98,7 @@ class CreateProject extends React.Component {
       .then(response => {
         const data = response.data;
         console.log(data);
-        if(!data.poster_is_authenticated_user) {
+        if(!(data.auth_user_is_developer || data.auth_user_is_poster)) {
           this.props.history.goBack();
         }
         else {

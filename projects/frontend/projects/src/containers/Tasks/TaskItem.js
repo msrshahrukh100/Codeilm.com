@@ -89,7 +89,9 @@ class TaskItem extends React.Component {
       text: props.item.text,
       previousText: props.item.text,
       updatedAt: props.item.updated_at,
-      deleteDialogOpen: false
+      deleteDialogOpen: false,
+      isDeveloper: false,
+      isPoster: false,
     }
   }
 
@@ -113,7 +115,9 @@ class TaskItem extends React.Component {
         loading: false,
         text: response.data.text,
         done: response.data.done,
-        updatedAt: response.data.updated_at
+        updatedAt: response.data.updated_at,
+        isDeveloper: response.data.auth_user_is_developer,
+        isPoster: response.data.auth_user_is_poster,
       })
     })
     .catch(error => {
@@ -229,7 +233,9 @@ class TaskItem extends React.Component {
           }
           secondary={<span className={classes.secondary}>{new Date(this.state.updatedAt).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>}
           />
-          <TextField
+          {this.state.isDeveloper ?
+            <>
+            <TextField
             id="standard-name"
             label="Task Title"
             className={classes.textField}
@@ -238,55 +244,58 @@ class TaskItem extends React.Component {
             onKeyDown={this.handleEnterKey}
             margin="normal"
             style={this.state.editPanelShown ?  null : {display: 'none'}}
-          />
-              <IconButton
-                aria-label="delete"
-                className={classes.cancelbutton}
-                onClick={() => this.toggleEditPanel(false, true)}
-                style={this.state.editPanelShown ?  null : {display: 'none'}}
-                >
-                <CloseIcon fontSize="medium" />
-              </IconButton>
+            />
+            <IconButton
+            aria-label="delete"
+            className={classes.cancelbutton}
+            onClick={() => this.toggleEditPanel(false, true)}
+            style={this.state.editPanelShown ?  null : {display: 'none'}}
+            >
+            <CloseIcon />
+            </IconButton>
 
-          <IconButton edge="end" aria-label="delete"
+            <IconButton edge="end" aria-label="delete"
             onClick={this.handleMenue}
             className={clsx(classes.iconbutton, showHideEditIcon)}
             style={this.state.editPanelShown ? {display: 'none'} : null}
-          >
+            >
             <EditIcon className={classes.editicon} />
-          </IconButton>
+            </IconButton>
 
-          <Menu
+            <Menu
             id="simple-menu"
             anchorEl={this.state.anchorEl}
             keepMounted
             open={Boolean(this.state.anchorEl)}
             onClose={this.handleMenueClose}
-          >
+            >
             <MenuItem onClick={() => this.toggleEditPanel(true)}>Edit</MenuItem>
             <MenuItem onClick={() => this.handleClickOpen(true)}>Delete</MenuItem>
-          </Menu>
+            </Menu>
+            </>
+            : null}
 
 
 
       </ListItem>
-
-      <Dialog
+      {this.state.isDeveloper ?
+        <Dialog
         open={this.state.deleteDialogOpen}
         onClose={() => this.handleClickOpen(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-      >
+        >
         <DialogTitle id="alert-dialog-title">Are you sure you want to delete the task "{this.state.text}"?</DialogTitle>
         <DialogActions>
-          <Button onClick={() => this.handleClickOpen(false)} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={this.deleteTask} color="primary" autoFocus>
-            Yes
-          </Button>
+        <Button onClick={() => this.handleClickOpen(false)} color="primary">
+        Cancel
+        </Button>
+        <Button onClick={this.deleteTask} color="primary" autoFocus>
+        Yes
+        </Button>
         </DialogActions>
-      </Dialog>
+        </Dialog>
+        : null}
 
       </>
     )

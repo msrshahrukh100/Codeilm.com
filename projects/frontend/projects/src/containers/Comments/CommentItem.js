@@ -64,7 +64,8 @@ class CommentItem extends React.Component {
       text: props.value.text,
       previousText: props.value.text,
       updatedAt: props.value.updated_at,
-      deleteDialogOpen: false
+      deleteDialogOpen: false,
+      isOwner: props.value.is_owner,
     }
   }
 
@@ -185,7 +186,9 @@ class CommentItem extends React.Component {
         }
         secondary={text}
       />
-      <TextField
+      {this.state.isOwner ?
+        <>
+        <TextField
         id="standard-name"
         label="Comment"
         className={classes.textField}
@@ -194,55 +197,58 @@ class CommentItem extends React.Component {
         onKeyDown={this.handleEnterKey}
         margin="normal"
         style={this.state.editPanelShown ?  null : {display: 'none'}}
-      />
+        />
 
-      <IconButton
+        <IconButton
         aria-label="delete"
         className={classes.cancelbutton}
         onClick={() => this.toggleEditPanel(false, true)}
         style={this.state.editPanelShown ?  null : {display: 'none'}}
         >
-        <CloseIcon fontSize="medium" />
-      </IconButton>
+        <CloseIcon />
+        </IconButton>
 
-      <IconButton edge="end" aria-label="delete"
+        <IconButton edge="end" aria-label="delete"
         // style={}
         onClick={this.handleMenue}
         className={clsx(classes.iconbutton, showHideEditIcon)}
         style={this.state.editPanelShown ? {display: 'none'} : null}
-      >
+        >
         <EditIcon className={classes.editicon} />
-      </IconButton>
+        </IconButton>
 
-      <Menu
+        <Menu
         id="simple-menu"
         anchorEl={this.state.anchorEl}
         keepMounted
         open={Boolean(this.state.anchorEl)}
         onClose={this.handleMenueClose}
-      >
+        >
         <MenuItem onClick={() => this.toggleEditPanel(true)}>Edit</MenuItem>
         <MenuItem onClick={() => this.handleClickOpen(true)}>Delete</MenuItem>
-      </Menu>
+        </Menu>
+        </>
+        : null}
 
       </ListItem>
-
-      <Dialog
+      {this.state.isOwner ?
+        <Dialog
         open={this.state.deleteDialogOpen}
         onClose={() => this.handleClickOpen(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-      >
+        >
         <DialogTitle id="alert-dialog-title">Are you sure you want to delete this comment "{this.state.text}"?</DialogTitle>
         <DialogActions>
-          <Button onClick={() => this.handleClickOpen(false)} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={this.deleteComment} color="primary" autoFocus>
-            Yes
-          </Button>
+        <Button onClick={() => this.handleClickOpen(false)} color="primary">
+        Cancel
+        </Button>
+        <Button onClick={this.deleteComment} color="primary" autoFocus>
+        Yes
+        </Button>
         </DialogActions>
-      </Dialog>
+        </Dialog>
+        : null}
 
     </>
     )

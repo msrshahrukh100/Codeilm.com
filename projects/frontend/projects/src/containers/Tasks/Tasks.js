@@ -61,6 +61,9 @@ class Tasks extends React.Component {
     this.state = {
       tasks: [],
       timeout: null,
+      isDeveloper: false,
+      isPoster: false,
+      isPosterOrDeveloper: false,
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -121,7 +124,9 @@ class Tasks extends React.Component {
       .then(response => {
         const data = response.data;
         this.setState({
-          tasks: response.data
+          tasks: response.data,
+          isDeveloper: response.data[0] ? response.data[0].auth_user_is_developer : false,
+          isPoster: response.data[0] ? response.data[0].auth_user_is_poster : false,
         })
       })
       .catch(error => {
@@ -178,8 +183,9 @@ class Tasks extends React.Component {
 
               </Droppable>
           </DragDropContext>
-
-          <AddTask projectId={projectId} onAddTask={this.appendToTasks} />
+          {this.state.isDeveloper ?
+            <AddTask projectId={projectId} onAddTask={this.appendToTasks} />
+            : null}
 
           </Grid>
       </Grid>

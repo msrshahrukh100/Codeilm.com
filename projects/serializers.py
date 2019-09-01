@@ -10,9 +10,19 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 	poster = UserSimpleSerializer(read_only=True)
 	developers = UserSimpleSerializer(read_only=True, many=True)
 	company = CommunitySerializer(required=False, read_only=True)
-	poster_is_authenticated_user = serializers.SerializerMethodField(required=False)
+	auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
+	auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
 
-	def get_poster_is_authenticated_user(self, obj):
+	def get_auth_user_is_developer(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user in obj.developers.all():
+				return True
+		return False
+
+	def get_auth_user_is_poster(self, obj):
 		user = None
 		request = self.context.get("request")
 		if request and hasattr(request, "user"):
@@ -23,7 +33,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = projects_models.Project
-		fields = ('id', 'title', 'slug', 'description', 'poster_is_authenticated_user', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at', 'created_at')
+		fields = ('id', 'title', 'slug', 'description', 'auth_user_is_developer', 'auth_user_is_poster', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at', 'created_at')
 
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
@@ -48,11 +58,31 @@ class TaskSerializer(serializers.ModelSerializer):
 	project = serializers.PrimaryKeyRelatedField(
         pk_field=HashidSerializerCharField(source_field='projects.Project.id'),
         read_only=True)
+	auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
+	auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
+
+	def get_auth_user_is_developer(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user in obj.project.developers.all():
+				return True
+		return False
+
+	def get_auth_user_is_poster(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user == obj.project.poster:
+				return True
+		return False
 
 
 	class Meta:
 		model = projects_models.Task
-		fields = ('id', 'project', 'text', 'deadline', 'done', 'order', 'updated_at')
+		fields = ('id', 'project', 'text', 'deadline', 'done', 'auth_user_is_developer', 'auth_user_is_poster', 'order', 'updated_at')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -61,8 +91,39 @@ class CommentSerializer(serializers.ModelSerializer):
 	project = serializers.PrimaryKeyRelatedField(
         pk_field=HashidSerializerCharField(source_field='projects.Project.id'),
         read_only=True)
+	is_owner = serializers.SerializerMethodField(required=False, read_only=True)
+	auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
+	auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
+
+	def get_is_owner(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user == obj.user:
+				return True
+		return False
+
+	def get_auth_user_is_developer(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user in obj.project.developers.all():
+				return True
+		return False
+
+	def get_auth_user_is_poster(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user == obj.project.poster:
+				return True
+		return False
+
 
 	class Meta:
 		model = projects_models.Comment
-		fields = ('id', 'project', 'text', 'user', 'updated_at')
+		fields = ('id', 'project', 'text', 'user', 'is_owner', 'auth_user_is_poster', 'auth_user_is_developer', 'updated_at')
 

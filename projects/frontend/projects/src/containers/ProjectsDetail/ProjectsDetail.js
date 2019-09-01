@@ -69,7 +69,9 @@ class ProjectsDetail extends React.Component {
     isPrivate: false,
     developers: [],
     projectId: null,
-    posterIsAuthenticatedUser: false
+    isDeveloper: false,
+    isPoster: false,
+    isPosterOrDeveloper: false,
   }
 
   fetchProject = () => {
@@ -78,7 +80,6 @@ class ProjectsDetail extends React.Component {
     axios.get(projectId)
       .then(response => {
         const data = response.data;
-        console.log(data);
         this.setState({
           projectId: data.id,
           title: data.title,
@@ -86,7 +87,9 @@ class ProjectsDetail extends React.Component {
           poster: data.poster,
           developers: data.developers,
           isPrivate: data.is_private,
-          posterIsAuthenticatedUser: data.poster_is_authenticated_user,
+          isDeveloper: data.auth_user_is_developer,
+          isPoster: data.auth_user_is_poster,
+          isPosterOrDeveloper: data.auth_user_is_developer || data.auth_user_is_poster,
           deadline: new Date(data.deadline).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
           createdAt: new Date(data.created_at).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
         })
@@ -127,7 +130,7 @@ class ProjectsDetail extends React.Component {
             <Tooltip title="Deadline for this project" aria-label="add">
               <Chip variant="outlined" className={classes.chip} color="primary" label={this.state.deadline} icon={<CalendarTodayIcon />}/>
             </Tooltip>
-            {this.state.posterIsAuthenticatedUser ?
+            {this.state.isPoster ?
               <Link className={classes.edit} to={`/p/${this.state.projectId}/edit`}>
                 Edit
               </Link>
@@ -180,12 +183,14 @@ class ProjectsDetail extends React.Component {
             ) }
 
         </Grid>
+        {this.state.isPosterOrDeveloper ?
+          <CardActions className={classes.cardaction}>
+            <Button onClick={() => this.props.history.push(`/p/${this.state.projectId}/progress`)} variant="contained" size="large" color="primary" className={classes.margin}>
+            See Project Progress and Tasks
+            </Button>
+          </CardActions>
+          : null}
 
-        <CardActions className={classes.cardaction}>
-          <Button onClick={() => this.props.history.push(`/p/${this.state.projectId}/progress`)} variant="contained" size="large" color="primary" className={classes.margin}>
-           See Project Progress and Tasks
-         </Button>
-        </CardActions>
 
       </Grid>
 
