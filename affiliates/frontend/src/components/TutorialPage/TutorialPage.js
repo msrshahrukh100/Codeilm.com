@@ -6,7 +6,7 @@ import './tutorialPage.css'
 import Container from '@material-ui/core/Container';
 import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import { withStyles } from '@material-ui/core/styles';
-
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   mainContent : {
@@ -31,6 +31,9 @@ const renderers: ReactMarkdown.Renderers = {
     },
     image: props => {
       return <img {...props} className="tutorial-image" style={{marginLeft: 'auto', marginRight: 'auto', display: 'block', width: '100%'}} />
+    },
+    heading: props => {
+      return <Typography variant={"h"+props.level} component={"h"+props.level}>{props.children}</Typography>
     },
     link: (props) => {
       if(props.children[0].props.value === "YOUTUBE") {
@@ -76,7 +79,10 @@ const tutorialPage = (props) => {
   }
   return (
     <>
-      <h2>{title}</h2>
+      <Typography gutterBottom variant="h4" component="h4">
+      {title}
+      </Typography>
+
       <div className={classes.mainContent}>
         {mainContent}
       </div>
