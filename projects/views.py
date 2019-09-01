@@ -28,7 +28,7 @@ class ProjectCreate(generics.CreateAPIView):
 			serializer.save(poster=user)
 
 
-class ProjectList(generics.ListCreateAPIView):
+class ProjectList(generics.ListAPIView):
 	queryset = projects_models.Project.objects.filter(is_private=False)
 	serializer_class = projects_serializers.ProjectListSerializer
 
