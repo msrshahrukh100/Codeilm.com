@@ -15,6 +15,7 @@ import ViewsPanel from '../../components/ViewsPanel/ViewsPanel'
 import TutorialInfo from '../../components/TutorialInfo/TutorialInfo'
 import ReactGA from 'react-ga';
 import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 const styles = theme => ({
@@ -187,6 +188,7 @@ class TutorialDetail extends React.Component {
     const { classes } = this.props;
      return (
       <>
+      <CssBaseline />
         {this.state.tutorial ?
           <DetailPageLayout
             left={content}
