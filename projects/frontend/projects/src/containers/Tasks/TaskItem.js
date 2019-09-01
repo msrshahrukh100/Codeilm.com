@@ -136,6 +136,9 @@ class TaskItem extends React.Component {
   }
 
   changeShowEditButton = value => {
+    if(value && this.state.editPanelShown) {
+      return
+    }
     this.setState({showEdit: value})
   }
 
@@ -202,29 +205,12 @@ class TaskItem extends React.Component {
             className={classes.primary}>
               {this.state.text}
             </span>
-            <IconButton edge="end" aria-label="delete"
-              // style={}
-              onClick={this.handleMenue}
-              className={clsx(classes.iconbutton, showHideEditIcon)}
-            >
-              <EditIcon className={classes.editicon} />
-            </IconButton>
 
-            <Menu
-              id="simple-menu"
-              anchorEl={this.state.anchorEl}
-              keepMounted
-              open={Boolean(this.state.anchorEl)}
-              onClose={this.handleMenueClose}
-            >
-              <MenuItem onClick={() => this.toggleEditPanel(true)}>Edit</MenuItem>
-              <MenuItem onClick={() => this.handleClickOpen(true)}>Delete</MenuItem>
-            </Menu>
             </>
           }
           secondary={<span className={classes.secondary}>{new Date(this.state.updatedAt).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>}
           />
-
+          <div>
           <TextField
             id="standard-name"
             label="Task Title"
@@ -234,7 +220,9 @@ class TaskItem extends React.Component {
             margin="normal"
             style={this.state.editPanelShown ?  null : {display: 'none'}}
           />
-
+          </div>
+          <br/>
+          <div>
           <Button
             variant="contained"
             onClick={this.editTask}
@@ -257,6 +245,27 @@ class TaskItem extends React.Component {
               >
                 Cancel
               </Button>
+              </div>
+          <IconButton edge="end" aria-label="delete"
+            // style={}
+            onClick={this.handleMenue}
+            className={clsx(classes.iconbutton, showHideEditIcon)}
+          >
+            <EditIcon className={classes.editicon} />
+          </IconButton>
+
+          <Menu
+            id="simple-menu"
+            anchorEl={this.state.anchorEl}
+            keepMounted
+            open={Boolean(this.state.anchorEl)}
+            onClose={this.handleMenueClose}
+          >
+            <MenuItem onClick={() => this.toggleEditPanel(true)}>Edit</MenuItem>
+            <MenuItem onClick={() => this.handleClickOpen(true)}>Delete</MenuItem>
+          </Menu>
+
+
 
       </ListItem>
 

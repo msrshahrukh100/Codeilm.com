@@ -2,16 +2,12 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import Avatar from '@material-ui/core/Avatar';
 import withStyles from '@material-ui/core/styles/withStyles';
 import axios from '../../projects_axios';
 import { withRouter } from 'react-router-dom'
 import AddComment from './AddComment'
-
+import CommentItem from './CommentItem'
 
 const styles = theme => ({
   text: {
@@ -103,20 +99,8 @@ class Comments extends React.Component {
         <React.Fragment key={value+index}>
         <ListSubheader className={classes.subheader}>{value}</ListSubheader>
         {comments[value].map(value => {
-          const text = (<>
-            <span style={{color: 'black'}}>{value.text}</span>
-            <br/>
-            <span>{new Date(value.updated_at).toLocaleTimeString("en-us", {hour: "numeric", minute: "numeric"})}</span>
-            </>
-          )
-          return (
-            <ListItem key={value.id}>
-              <ListItemAvatar>
-                <Avatar alt={value.user.full_name} src={value.user.user_profile_pic} />
-              </ListItemAvatar>
-            <ListItemText primary={<b>{value.user.full_name || value.user.username}</b>} secondary={text} />
-            </ListItem>
-          )
+
+          return <CommentItem key={value.id} value={value} refreshComments={this.fetchComments} />
         })}
         </React.Fragment>
       ))}

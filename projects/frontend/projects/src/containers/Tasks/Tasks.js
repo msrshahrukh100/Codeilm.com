@@ -12,6 +12,7 @@ import TaskItem from './TaskItem'
 import AddTask from './AddTask'
 import getCookie from '../../utils/getCookie'
 import Comments from '../Comments/Comments'
+import Typography from '@material-ui/core/Typography';
 
 
 const getListStyle = isDraggingOver => ({
@@ -28,7 +29,7 @@ const styles = theme => ({
   paper: {
     margin: theme.spacing(10),
     [theme.breakpoints.down('sm')]: {
-      margin: '0px'
+      margin: theme.spacing(),
     },
   },
   list: {
@@ -37,6 +38,12 @@ const styles = theme => ({
   },
   margin: {
     padding: theme.spacing(3)
+  },
+  commentsgrid: {
+    margin: theme.spacing(5),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(1.75)
+    }
   }
 });
 
@@ -137,8 +144,8 @@ class Tasks extends React.Component {
     return (
       <>
       <Grid container>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
+          <Grid item xs={12}className={classes.commentsgrid}>
+
             {this.state.tasks.length === 0 ? <h2 className={classes.margin}>No tasks for project yet</h2> : null}
             <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable droppableId="droppable">
@@ -171,15 +178,16 @@ class Tasks extends React.Component {
           </DragDropContext>
 
           <AddTask projectId={projectId} onAddTask={this.appendToTasks} />
-            </Paper>
+
           </Grid>
       </Grid>
 
       <Grid container>
-          <Grid item xs={12}>
-            <Paper className={classes.paper} elevation={0}>
+          <Grid item xs={12} className={classes.commentsgrid}>
+            <Typography variant="h5" component="h5" className={classes.margin} gutterBottom>
+               Comments
+             </Typography>
               <Comments />
-            </Paper>
           </Grid>
         </Grid>
       </>

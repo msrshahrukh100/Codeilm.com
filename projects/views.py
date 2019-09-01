@@ -104,7 +104,7 @@ class ProjectCommentList(generics.ListCreateAPIView):
 		serializer.save(project=project, user=self.request.user)
 
 
-class CommenTaskRetrieveUpdateDestroy(generics.RetrieveUpdateAPIView):
+class ProjectCommentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 	queryset = projects_models.Comment.objects.all()
 	serializer_class = projects_serializers.CommentSerializer
 	lookup_field = "id"
