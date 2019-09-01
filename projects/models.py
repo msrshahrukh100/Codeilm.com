@@ -27,6 +27,7 @@ class Project(models.Model):
 
 class Task(models.Model):
 	id = HashidAutoField(primary_key=True)
+	user = models.ForeignKey(User, null=True, related_name="user_task", on_delete=models.SET_NULL)
 	project = models.ForeignKey(Project, related_name="tasks", on_delete=models.CASCADE)
 	text = models.CharField(max_length=255)
 	order = models.IntegerField(default=0, null=True, blank=True)

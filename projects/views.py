@@ -40,7 +40,6 @@ class ProjectTaskList(generics.ListCreateAPIView):
 
 
 	def get(self, request, project_id=None):
-
 		queryset = self.filter_queryset(self.get_queryset())
 		queryset = queryset.filter(project__id=project_id)
 		for obj in queryset:
@@ -57,7 +56,7 @@ class ProjectTaskList(generics.ListCreateAPIView):
 		data = self.kwargs
 		project = projects_models.Project.objects.get(id=data.get('project_id'))
 		order = project.tasks.all().count()
-		serializer.save(project=project, order=order+1)
+		serializer.save(project=project, order=order+1, user=self.request.user)
 
 
 class ProjectTaskReorder(generics.UpdateAPIView):
