@@ -40,9 +40,11 @@ class ProjectTaskList(generics.ListCreateAPIView):
 
 
 	def get(self, request, project_id=None):
+
 		queryset = self.filter_queryset(self.get_queryset())
 		queryset = queryset.filter(project__id=project_id)
-
+		for obj in queryset:
+			self.check_object_permissions(request, obj)
 		page = self.paginate_queryset(queryset)
 		if page is not None:
 			serializer = self.get_serializer(page, many=True)
@@ -91,7 +93,8 @@ class ProjectCommentList(generics.ListCreateAPIView):
 	def get(self, request, project_id=None):
 		queryset = self.filter_queryset(self.get_queryset())
 		queryset = queryset.filter(project__id=project_id)
-
+		for obj in queryset:
+			self.check_object_permissions(request, obj)
 		page = self.paginate_queryset(queryset)
 		if page is not None:
 			serializer = self.get_serializer(page, many=True)
