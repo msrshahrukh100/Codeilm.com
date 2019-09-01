@@ -9,7 +9,7 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(read_only=True, default="")
 	poster = UserSimpleSerializer(read_only=True)
 	developers = UserSimpleSerializer(read_only=True, many=True)
-	company = CommunitySerializer(required=False)
+	company = CommunitySerializer(required=False, read_only=True)
 	poster_is_authenticated_user = serializers.SerializerMethodField(required=False)
 
 	def get_poster_is_authenticated_user(self, obj):
