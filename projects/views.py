@@ -3,7 +3,7 @@ from . import serializers as projects_serializers
 from . import models as projects_models
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask
+from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask, CanRetrieveTask
 from django.db import transaction
 
 # Create your views here.
@@ -36,6 +36,7 @@ class ProjectList(generics.ListAPIView):
 class ProjectTaskList(generics.ListCreateAPIView):
 	queryset = projects_models.Task.objects.all()
 	serializer_class = projects_serializers.TaskSerializer
+	permission_classes = (permissions.IsAuthenticated, CanRetrieveTask)
 
 
 	def get(self, request, project_id=None):
@@ -60,6 +61,7 @@ class ProjectTaskList(generics.ListCreateAPIView):
 class ProjectTaskReorder(generics.UpdateAPIView):
 	queryset = projects_models.Task.objects.all()
 	serializer_class = projects_serializers.TaskSerializer
+	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
 
 	def update(self, *args, **kwargs):
 		data = self.request.data

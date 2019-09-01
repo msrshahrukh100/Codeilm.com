@@ -16,6 +16,15 @@ class CanViewProject(BasePermission):
 
 class CanRetrieveUpdateDestroyTask(BasePermission):
 	def has_object_permission(self, request, view, obj):
-		if (obj.project.poster == request.user) or (request.user in obj.project.developers.all()):
-			return True
+		if request.method in permissions.SAFE_METHODS:
+			if request.user in obj.project.developers.all():
+				return True
+		return False
+
+
+class CanRetrieveTask(BasePermission):
+	def has_object_permission(self, request, view, obj):
+		if request.method in permissions.SAFE_METHODS:
+			if (obj.project.poster == request.user) or (request.user in obj.project.developers.all()):
+				return True
 		return False
