@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Layout from './hoc/Layout/Layout'
 import ReactGA from 'react-ga';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 
 class App extends Component {
@@ -15,7 +14,6 @@ class App extends Component {
 
   render() {
     return (<>
-      <CssBaseline />
       <Layout />
       </>
     )
