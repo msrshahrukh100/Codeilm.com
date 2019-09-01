@@ -1,6 +1,8 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import asyncComponent from '../asyncComponent/asyncComponent';
+import { animateScroll as scroll } from 'react-scroll'
+
 
 const TutorialList = asyncComponent(() => {
   return import('../../containers/TutorialList/TutorialList');
@@ -23,6 +25,7 @@ class Layout extends React.Component {
   }
 
   showTutorialList = () => {
+    scroll.scrollTo(document.getElementById('codeilm'));
     this.setState({
       activeTutorial: null
     })
