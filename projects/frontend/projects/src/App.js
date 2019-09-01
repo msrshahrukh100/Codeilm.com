@@ -53,7 +53,9 @@ class App extends React.Component {
        <PrivateRoute
          exact
          path="/p/:projectId/edit"
-         component={CreateProject} />
+         component={CreateProject}
+         isAuthenticated={this.props.isAuthenticated}
+         />
        <Route
            exact
            path="/p/:projectId/progress"
