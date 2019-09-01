@@ -87,7 +87,7 @@ class ProjectTaskRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 class ProjectCommentList(generics.ListCreateAPIView):
 	queryset = projects_models.Comment.objects.all()
 	serializer_class = projects_serializers.CommentSerializer
-	permission_classes = (permissions.IsAuthenticated, CanRetrieveUpdateDestroyTask)
+	permission_classes = (permissions.IsAuthenticated, CanRetrieveTask)
 
 
 	def get(self, request, project_id=None):
