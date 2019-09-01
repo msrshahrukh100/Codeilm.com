@@ -88,11 +88,11 @@ class AddTask extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container spacing={1} alignItems="flex-end" className={classes.container}>
+      <Grid container alignItems="flex-end" className={classes.container}>
         <Grid item>
           <Avatar alt="Remy Sharp" src={this.props.user ? this.props.user.user_profile_pic : null} className={classes.avatar} />
         </Grid>
-        <Grid item sm={6} xs={12}>
+        <Grid item sm={6}>
           <TextField
             id="standard-name"
             label="Add a Comment"
