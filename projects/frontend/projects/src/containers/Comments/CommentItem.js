@@ -16,6 +16,7 @@ import axios from '../../projects_axios'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const styles = theme => ({
@@ -26,7 +27,9 @@ const styles = theme => ({
     margin: theme.spacing(3.6),
     width: theme.spacing(75),
     [theme.breakpoints.down('sm')]: {
-      width: theme.spacing(35)
+      width: theme.spacing(25),
+      marginLeft: 0,
+      marginRight: 0,
     },
   },
   margin: {
@@ -36,7 +39,16 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'none',
     }
-  }
+  },
+  cancelbutton: {
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: theme.spacing(0.1),
+    }
+  },
+  listitem: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
 })
 
 
@@ -137,7 +149,11 @@ class CommentItem extends React.Component {
     this.setState({done: checked}, () => this.axiosUpdate({text: this.state.text, done: checked}))
   }
 
-
+  handleEnterKey = event => {
+    if(event.key == 'Enter') {
+      this.updateText()
+    }
+  }
 
 
   render() {
@@ -154,6 +170,7 @@ class CommentItem extends React.Component {
     return (
       <>
       <ListItem
+        className={classes.listitem}
         onMouseEnter={() => this.changeShowEditButton(true)}
         onMouseLeave={() => this.changeShowEditButton(false)}
       >
@@ -161,51 +178,38 @@ class CommentItem extends React.Component {
           <Avatar alt={props.value.user.full_name} src={props.value.user.user_profile_pic} />
         </ListItemAvatar>
       <ListItemText
+        style={this.state.editPanelShown ?  {display: 'none'} : null}
         primary={<>
           <b>{props.value.user.full_name || props.value.user.username}</b>
           </>
         }
         secondary={text}
       />
-      <div>
       <TextField
         id="standard-name"
-        label="Task Title"
+        label="Comment"
         className={classes.textField}
         value={this.state.text}
         onChange={this.handleTextChange}
+        onKeyDown={this.handleEnterKey}
         margin="normal"
         style={this.state.editPanelShown ?  null : {display: 'none'}}
       />
-      </div>
-      <div>
-      <Button
-        variant="contained"
-        onClick={this.editTask}
-        size="small"
-        onClick={this.updateText}
-        color="primary"
-        className={classes.margin}
+
+      <IconButton
+        aria-label="delete"
+        className={classes.cancelbutton}
+        onClick={() => this.toggleEditPanel(false, true)}
         style={this.state.editPanelShown ?  null : {display: 'none'}}
         >
-          Save
-        </Button>
+        <CloseIcon fontSize="medium" />
+      </IconButton>
 
-        <Button
-          variant="contained"
-          onClick={() => this.toggleEditPanel(false, true)}
-          size="small"
-          color="secondary"
-          className={classes.margin}
-          style={this.state.editPanelShown ?  null : {display: 'none'}}
-          >
-            Cancel
-          </Button>
-          </div>
       <IconButton edge="end" aria-label="delete"
         // style={}
         onClick={this.handleMenue}
         className={clsx(classes.iconbutton, showHideEditIcon)}
+        style={this.state.editPanelShown ? {display: 'none'} : null}
       >
         <EditIcon className={classes.editicon} />
       </IconButton>

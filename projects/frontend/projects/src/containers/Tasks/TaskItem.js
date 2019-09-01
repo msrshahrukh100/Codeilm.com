@@ -18,6 +18,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import clsx from 'clsx';
+import CloseIcon from '@material-ui/icons/Close';
+
 
 
 const styles = theme => ({
@@ -43,7 +45,9 @@ const styles = theme => ({
     margin: theme.spacing(3.6),
     width: theme.spacing(75),
     [theme.breakpoints.down('sm')]: {
-      width: theme.spacing(35)
+      width: theme.spacing(25),
+      marginLeft: 0,
+      marginRight: 0,
     },
   },
   margin: {
@@ -52,6 +56,15 @@ const styles = theme => ({
   showHideEditIcon: {
     [theme.breakpoints.up('sm')]: {
       display: 'none',
+    }
+  },
+  listitem: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  cancelbutton: {
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: theme.spacing(0.5),
     }
   }
 
@@ -162,6 +175,12 @@ class TaskItem extends React.Component {
     this.setState({done: checked}, () => this.axiosUpdate({text: this.state.text, done: checked}))
   }
 
+  handleEnterKey = event => {
+    if(event.key == 'Enter') {
+      this.updateText()
+    }
+  }
+
   render() {
     const { classes } = this.props;
     const { provided } = this.props;
@@ -172,7 +191,7 @@ class TaskItem extends React.Component {
     return (<>
       <ListItem
         role={undefined} dense
-        className={classes.listitem} elevation={2}
+        className={classes.listitem}
         onClick={this.handleToggle}
         ref={provided.innerRef}
         {...provided.draggableProps}
@@ -210,46 +229,29 @@ class TaskItem extends React.Component {
           }
           secondary={<span className={classes.secondary}>{new Date(this.state.updatedAt).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>}
           />
-          <div>
           <TextField
             id="standard-name"
             label="Task Title"
             className={classes.textField}
             value={this.state.text}
             onChange={this.handleTextChange}
+            onKeyDown={this.handleEnterKey}
             margin="normal"
             style={this.state.editPanelShown ?  null : {display: 'none'}}
           />
-          </div>
-          <br/>
-          <div>
-          <Button
-            variant="contained"
-            onClick={this.editTask}
-            size="small"
-            onClick={this.updateText}
-            color="primary"
-            className={classes.margin}
-            style={this.state.editPanelShown ?  null : {display: 'none'}}
-            >
-              Save
-            </Button>
+              <IconButton
+                aria-label="delete"
+                className={classes.cancelbutton}
+                onClick={() => this.toggleEditPanel(false, true)}
+                style={this.state.editPanelShown ?  null : {display: 'none'}}
+                >
+                <CloseIcon fontSize="medium" />
+              </IconButton>
 
-            <Button
-              variant="contained"
-              onClick={() => this.toggleEditPanel(false, true)}
-              size="small"
-              color="secondary"
-              className={classes.margin}
-              style={this.state.editPanelShown ?  null : {display: 'none'}}
-              >
-                Cancel
-              </Button>
-              </div>
           <IconButton edge="end" aria-label="delete"
-            // style={}
             onClick={this.handleMenue}
             className={clsx(classes.iconbutton, showHideEditIcon)}
+            style={this.state.editPanelShown ? {display: 'none'} : null}
           >
             <EditIcon className={classes.editicon} />
           </IconButton>

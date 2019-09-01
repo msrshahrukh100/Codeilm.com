@@ -41,6 +41,8 @@ const styles = theme => ({
   },
   commentsgrid: {
     margin: theme.spacing(5),
+    marginLeft: theme.spacing(25),
+    marginRight: theme.spacing(25),
     [theme.breakpoints.down('sm')]: {
       margin: theme.spacing(1.75)
     }
