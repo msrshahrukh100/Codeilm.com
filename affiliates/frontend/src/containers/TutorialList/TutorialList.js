@@ -18,8 +18,6 @@ import CoolButton from '../../components/UI/CoolButton/CoolButton'
 import Chips from '../../components/UI/Chips/Chips'
 import { Link } from 'react-router-dom'
 import Tooltip from '@material-ui/core/Tooltip';
-import CssBaseline from '@material-ui/core/CssBaseline';
-
 
 const styles = theme => ({
   margin: {
@@ -181,7 +179,6 @@ class TutorialList extends React.Component {
     )
     return (
       <>
-      <CssBaseline />
         <Grid container spacing={0}>
           <Grid item xs={12} lg={9} sm={10}>
             {this.state.tutorials && this.state.tutorials.length != 0 ?

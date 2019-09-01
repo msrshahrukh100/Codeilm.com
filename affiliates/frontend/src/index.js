@@ -13,6 +13,9 @@ const theme = createMuiTheme();
 
 
 const debug = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+if(debug) {
+  sessionStorage.setItem("user_profile_id", "LNBZnN2")
+}
 
 ReactGA.initialize('UA-142472289-1', {debug: debug});
 
