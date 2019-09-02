@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import axios from '../../projects_axios'
 import MediaCard from '../../components/UI/MediaCard/MediaCard'
 import Grid from '@material-ui/core/Grid';
-
+import CoolButton from '../../components/UI/CoolButton/CoolButton'
 
 const styles = theme => ({
   root: {
@@ -86,6 +86,19 @@ class ProjectsList extends React.Component {
         </Grid>
       )
       )}
+      </Grid>
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        // style={{ minHeight: '100vh' }}
+      >
+        <Grid item xs={6}>
+          <CoolButton text="Add a new Project" link="/projects/create"/>
+        </Grid>
+
       </Grid>
       </>
     );
