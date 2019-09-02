@@ -70,13 +70,21 @@ class ProjectsList extends React.Component {
           <Tab onClick={() => this.changeTab(1)} label="All Projects" style={{textTransform: 'none'}} />
         </Tabs>
       </Paper>
-      <Grid style={this.state.activeTab == 0 ? null :  {display: 'none'}}>
-      {this.state.userProjects.map(value => <MediaCard key={value.id} title={value.title} onClick={() => this.props.history.push(`/p/${value.id}`)} />
+      <Grid container style={this.state.activeTab == 0 ? null :  {display: 'none'}}>
+      {this.state.userProjects.map(value => (
+        <Grid item sm={4}>
+          <MediaCard key={value.id} title={value.title} onClick={() => this.props.history.push(`/p/${value.id}`)} />
+        </Grid>
+      )
       )}
       </Grid>
 
-      <Grid style={this.state.activeTab == 1 ? null :  {display: 'none'}}>
-      {this.state.allProjects.map(value => <MediaCard key={value.id} title={value.title} onClick={() => this.props.history.push(`/p/${value.id}`)} />
+      <Grid container style={this.state.activeTab == 1 ? null :  {display: 'none'}}>
+      {this.state.allProjects.map(value => (
+        <Grid item sm={4}>
+          <MediaCard key={value.id} title={value.title} onClick={() => this.props.history.push(`/p/${value.id}`)} />
+        </Grid>
+      )
       )}
       </Grid>
       </>
