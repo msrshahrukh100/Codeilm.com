@@ -210,7 +210,7 @@ class TaskItem extends React.Component {
             onChange={this.handleDone}
             tabIndex={-1}
             disableRipple
-            disabled={this.props.isDeveloper}
+            disabled={!this.props.isDeveloper}
             inputProps={{ 'aria-labelledby': "labelId" }}
             icon={<LaptopMacIcon className={classes.uncheckedIcon} />}
             checkedIcon={<CheckCircleIcon className={classes.checkedIcon}/>}
