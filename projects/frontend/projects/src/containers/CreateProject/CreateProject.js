@@ -126,7 +126,7 @@ class CreateProject extends React.Component {
     const { projectId } = this.props.match.params;
     axios.delete(`/${projectId}`)
       .then(response => {
-        this.props.history.goBack();
+        this.props.history.push("/projects");
       })
       .catch(error => {
         console.log(error);

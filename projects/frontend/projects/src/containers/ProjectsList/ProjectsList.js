@@ -20,6 +20,7 @@ class ProjectsList extends React.Component {
   state = {
     userProjects: [],
     allProjects: [],
+    devProjects: [],
     activeTab: 0
   }
 
@@ -36,7 +37,8 @@ class ProjectsList extends React.Component {
         const data = response.data;
         this.setState({
           userProjects: data.user_projects,
-          allProjects: data.all_projects
+          allProjects: data.all_projects,
+          devProjects: data.dev_projects,
         })
       })
       .catch(error => {
@@ -67,7 +69,8 @@ class ProjectsList extends React.Component {
           elevation={0}
         >
           <Tab onClick={() => this.changeTab(0)} label="Your Projects" style={{textTransform: 'none'}} />
-          <Tab onClick={() => this.changeTab(1)} label="All Projects" style={{textTransform: 'none'}} />
+          <Tab onClick={() => this.changeTab(1)} label="Dev Projects" style={{textTransform: 'none'}} />
+          <Tab onClick={() => this.changeTab(2)} label="All Projects" style={{textTransform: 'none'}} />
         </Tabs>
       </Paper>
       <Grid container style={this.state.activeTab == 0 ? null :  {display: 'none'}}>
@@ -80,6 +83,15 @@ class ProjectsList extends React.Component {
       </Grid>
 
       <Grid container style={this.state.activeTab == 1 ? null :  {display: 'none'}}>
+      {this.state.devProjects.map(value => (
+        <Grid item sm={4}>
+          <MediaCard key={value.id} title={value.title} onClick={() => this.props.history.push(`/p/${value.id}`)} />
+        </Grid>
+      )
+      )}
+      </Grid>
+
+      <Grid container style={this.state.activeTab == 2 ? null :  {display: 'none'}}>
       {this.state.allProjects.map(value => (
         <Grid item sm={4}>
           <MediaCard key={value.id} title={value.title} onClick={() => this.props.history.push(`/p/${value.id}`)} />
@@ -87,6 +99,9 @@ class ProjectsList extends React.Component {
       )
       )}
       </Grid>
+
+
+
       <Grid
         container
         spacing={0}
