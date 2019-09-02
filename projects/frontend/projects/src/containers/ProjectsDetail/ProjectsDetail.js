@@ -145,16 +145,18 @@ class ProjectsDetail extends React.Component {
 
         <Grid item xs={12} sm={3} className={classes.persons}>
           <Typography color="textSecondary" variant="subtitle2" className={classes.users} component="p">
-            This project is created by
+            Created on {this.state.createdAt} by
           </Typography>
           <CardHeader
+          onClick={() => window.location = poster.profile_link}
+          style={{cursor: 'pointer'}}
           avatar={
             <Avatar alt={name} src={poster ? poster.user_profile_pic : null} className={classes.avatar}>
             {name ? name[0] : ""}
             </Avatar>
           }
           title={name}
-          subheader={this.state.createdAt}
+          subheader={poster ? poster.intro : null}
           />
 
           <Typography color="textSecondary" variant="subtitle2" className={classes.users} component="p">
@@ -164,6 +166,8 @@ class ProjectsDetail extends React.Component {
           {this.state.developers.length !== 0 ?
               this.state.developers.map((value, index) => (
                 <CardHeader
+                  style={{cursor: 'pointer'}}
+                  onClick={() => window.location = value.profile_link}
                   key={value.id}
                   avatar={
                     <Avatar alt={value.full_name ? value.full_name : value.username} src={value.user_profile_pic} className={classes.avatar}>
@@ -210,4 +214,4 @@ const matchStateToProps = state => {
   }
 }
 
-export default withStyles(styles)(withRouter(withErrorHandler(connect(matchStateToProps, matchDispatchToProps)(ProjectsDetail), axios)))
+export default withStyles(styles)(withRouter(withErrorHandler(connect(matchStateToProps, matchDispatchToProps)(ProjectsDetail), axios, "linear")))

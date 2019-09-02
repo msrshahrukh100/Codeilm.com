@@ -217,4 +217,4 @@ const matchStateToProps = state => {
   }
 }
 
-export default withStyles(styles)(withErrorHandler(connect(matchStateToProps, matchDispatchToProps)(Tasks), axios, "linear"))
+export default withStyles(styles)(withErrorHandler(connect(matchStateToProps, matchDispatchToProps)(Tasks), axios))

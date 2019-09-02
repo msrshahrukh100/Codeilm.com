@@ -26,6 +26,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+
 
 const styles = theme => ({
   root: {
@@ -321,4 +323,4 @@ class CreateProject extends React.Component {
 }
 
 
-export default withStyles(styles)(withRouter(CreateProject))
+export default withStyles(styles)(withRouter(withErrorHandler(CreateProject, axios, "linear")))

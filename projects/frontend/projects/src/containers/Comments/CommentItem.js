@@ -175,7 +175,10 @@ class CommentItem extends React.Component {
         onMouseEnter={() => this.changeShowEditButton(true)}
         onMouseLeave={() => this.changeShowEditButton(false)}
       >
-        <ListItemAvatar>
+        <ListItemAvatar
+        onClick={() => window.location = props.value.user.profile_link}
+        style={{cursor: 'pointer'}}
+        >
           <Avatar alt={props.value.user.full_name} src={props.value.user.user_profile_pic} />
         </ListItemAvatar>
       <ListItemText
