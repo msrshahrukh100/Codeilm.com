@@ -13,6 +13,7 @@ import AddTask from './AddTask'
 import getCookie from '../../utils/getCookie'
 import Comments from '../Comments/Comments'
 import Typography from '@material-ui/core/Typography';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 
 const getListStyle = isDraggingOver => ({
@@ -204,4 +205,4 @@ class Tasks extends React.Component {
   }
 }
 
-export default withStyles(styles)(Tasks)
+export default withStyles(styles)(withErrorHandler(Tasks, axios))

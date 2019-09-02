@@ -17,6 +17,7 @@ import { red } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 
 const styles = theme => ({
   card: {
@@ -200,4 +201,4 @@ class ProjectsDetail extends React.Component {
 
 }
 
-export default withStyles(styles)(withRouter(ProjectsDetail))
+export default withStyles(styles)(withRouter(withErrorHandler(ProjectsDetail, axios)))

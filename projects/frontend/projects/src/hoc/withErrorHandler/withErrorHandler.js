@@ -36,8 +36,12 @@ const withErrorHandler = (WrappedCompenent, axios, type) => {
         return {data: null}
       }, error => {
         if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-          this.props.onLogout()
-          this.props.history.push("/login/?next=" + this.props.match.url)
+          this.setState({
+            error: error,
+            loading: false
+          })
+          // this.props.onLogout()
+          // this.props.history.push("/login/?next=" + this.props.match.url)
         }
         else {
           this.setState({
