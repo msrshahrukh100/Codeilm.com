@@ -14,10 +14,14 @@ class UserSimpleSerializer(serializers.ModelSerializer):
     user_profile_pic = serializers.CharField(read_only=True, source='user_profile.first.get_profile_pic_url')
     full_name = serializers.CharField(read_only=True, source='get_full_name')
     intro = serializers.CharField(source='user_profile.first.intro')
+    profile_link = serializers.SerializerMethodField()
+
+    def get_profile_link(self, obj):
+        return "/u/%s-%s" % (obj.username, obj.id)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'full_name', 'intro', 'user_profile_pic']
+        fields = ['id', 'username', 'full_name', 'intro', 'user_profile_pic', 'profile_link']
 
 
 class CommunitySerializer(serializers.ModelSerializer):
