@@ -57,7 +57,7 @@ class ProjectsList extends React.Component {
 
     return (
       <>
-      <Paper elevation={0} className={classes.root}>
+      <Paper className={classes.root}>
         <Tabs
           value={this.state.activeTab}
           onChange={this.changeTab}
