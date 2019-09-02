@@ -162,7 +162,7 @@ class SearchAppBar extends React.Component {
       <ThemeProvider theme={theme}>
         <AppBar elevation={1} position="static">
         <Toolbar>
-        <img onClick={() => window.location = '/stories'} alt="Codeilm.com logo" className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
+        <img onClick={() => window.location = '/projects'} alt="Codeilm.com logo" className={classes.appbarlogo} src="https://codeilm.com/static/images/logo/codeilmlogo.png" width="165" />
 
         <div className={classes.grow} />
         {this.props.user ?

@@ -5,6 +5,16 @@ from usermanagement.serializers import UserSimpleSerializer
 from hashid_field.rest import HashidSerializerCharField
 from usermanagement.serializers import CommunitySerializer
 
+
+class ProjectListSerializer(serializers.ModelSerializer):
+	id = serializers.CharField(read_only=True, default="")
+	poster = UserSimpleSerializer(read_only=True)
+	developers = UserSimpleSerializer(read_only=True, many=True)
+
+	class Meta:
+		model = projects_models.Project
+		fields = ('id', 'title', 'poster', 'developers', 'created_at')
+
 class ProjectDetailSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(read_only=True, default="")
 	poster = UserSimpleSerializer(read_only=True)
@@ -70,16 +80,6 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = projects_models.Project
 		fields = ('id', 'title', 'poster', 'description', 'company', 'is_private', 'deadline', 'payment_type')
-
-
-
-class ProjectListSerializer(serializers.ModelSerializer):
-	id = serializers.CharField(read_only=True, default="")
-
-	class Meta:
-		model = projects_models.Project
-		fields = ('id', 'title', 'slug', 'description', 'is_private', 'deadline', 'created_at')
-
 
 
 class TaskSerializer(serializers.ModelSerializer):

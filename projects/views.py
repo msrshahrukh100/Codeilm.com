@@ -5,8 +5,21 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask, CanRetrieveTask, CanRetrieveUpdateDestroyComment
 from django.db import transaction
+from rest_framework.views import APIView
+from django.db.models import Q
+
 
 # Create your views here.
+class ProjectList(APIView):
+	def get(self, request):
+		all_projects = projects_models.Project.objects.filter(is_private=False)
+		user_projects = request.user.developerprojects.all()
+		return Response({
+			"all_projects": projects_serializers.ProjectListSerializer(all_projects, many=True).data,
+			"user_projects": projects_serializers.ProjectListSerializer(user_projects, many=True).data
+		})
+
+
 
 
 class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -34,11 +47,6 @@ class ProjectCreate(generics.CreateAPIView):
 		if self.request and hasattr(self.request, "user"):
 			user = self.request.user
 			serializer.save(poster=user)
-
-
-class ProjectList(generics.ListAPIView):
-	queryset = projects_models.Project.objects.filter(is_private=False)
-	serializer_class = projects_serializers.ProjectListSerializer
 
 
 class ProjectTaskList(generics.ListCreateAPIView):
