@@ -7,7 +7,7 @@ from .permissions import CanViewProject, CanRetrieveUpdateDestroyTask, CanRetrie
 from django.db import transaction
 from rest_framework.views import APIView
 from django.db.models import Q
-
+from .tasks import send_project_added_email
 
 # Create your views here.
 class ProjectList(APIView):
@@ -47,6 +47,8 @@ class ProjectCreate(generics.CreateAPIView):
 		if self.request and hasattr(self.request, "user"):
 			user = self.request.user
 			serializer.save(poster=user)
+			send_project_added_email(serializer.data)
+
 
 
 class ProjectTaskList(generics.ListCreateAPIView):

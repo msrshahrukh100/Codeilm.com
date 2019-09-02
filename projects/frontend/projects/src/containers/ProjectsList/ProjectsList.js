@@ -93,7 +93,7 @@ class ProjectsList extends React.Component {
         direction="column"
         alignItems="center"
         justify="center"
-        // style={{ minHeight: '100vh' }}
+        style={{ marginTop: 10 }}
       >
         <Grid item xs={6}>
           <CoolButton text="Add a new Project" link="/projects/create"/>

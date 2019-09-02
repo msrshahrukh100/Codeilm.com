@@ -29,7 +29,7 @@ def test_email(request):
 	# this view is for the purpose of testing emails with a sample context data
 	context = {
 		"name": "Mohammad Shahrukh",
-		"person_image_url": "https://avatars1.githubusercontent.com/u/13628270?s=460&v=4",
+		# "person_image_url": "https://avatars1.githubusercontent.com/u/13628270?s=460&v=4",
 		"person_profile_url": "https://codeilm.com/u/msrs-79",
 		"message": "Something",
 		"button_title": "See your post",
