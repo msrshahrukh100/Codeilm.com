@@ -107,7 +107,6 @@ class ProjectsDetail extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     const { classes } = this.props;
     const { poster } = this.state;
     const name = poster ? poster.full_name ? poster.full_name : poster.username : null

@@ -68,7 +68,6 @@ class AddTask extends React.Component {
       axios.post(`/${projectId}/tasks`, postData)
       .then(response => {
         this.setState({loading: false})
-        console.log(response.data);
         this.props.onAddTask(response.data);
         this.setState({text: ""})
       })
