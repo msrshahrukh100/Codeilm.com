@@ -124,6 +124,8 @@ class CreateProject extends React.Component {
 
   deleteProject = () => {
     const { projectId } = this.props.match.params;
+    const csrftoken = getCookie('csrftoken');
+    axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
     axios.delete(`/${projectId}`)
       .then(response => {
         this.props.history.push("/projects");
