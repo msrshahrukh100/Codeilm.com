@@ -16,6 +16,14 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
 	lookup_field = "id"
 
 
+class ProjectMeta(generics.RetrieveAPIView):
+	queryset = projects_models.Project.objects.all()
+	serializer_class = projects_serializers.ProjectMetaSerializer
+	permission_classes = (permissions.IsAuthenticated, CanViewProject)
+	lookup_field = "id"
+
+
+
 class ProjectCreate(generics.CreateAPIView):
 	queryset = projects_models.Project.objects.all()
 	serializer_class = projects_serializers.ProjectCreateSerializer

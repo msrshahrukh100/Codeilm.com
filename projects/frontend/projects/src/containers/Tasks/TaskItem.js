@@ -19,7 +19,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import clsx from 'clsx';
 import CloseIcon from '@material-ui/icons/Close';
-
+import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions/index'
 
 
 const styles = theme => ({
@@ -90,8 +91,6 @@ class TaskItem extends React.Component {
       previousText: props.item.text,
       updatedAt: props.item.updated_at,
       deleteDialogOpen: false,
-      isDeveloper: false,
-      isPoster: false,
     }
   }
 
@@ -116,8 +115,6 @@ class TaskItem extends React.Component {
         text: response.data.text,
         done: response.data.done,
         updatedAt: response.data.updated_at,
-        isDeveloper: response.data.auth_user_is_developer,
-        isPoster: response.data.auth_user_is_poster,
       })
     })
     .catch(error => {
@@ -233,7 +230,7 @@ class TaskItem extends React.Component {
           }
           secondary={<span className={classes.secondary}>{new Date(this.state.updatedAt).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>}
           />
-          {this.state.isDeveloper ?
+          {this.props.isDeveloper ?
             <>
             <TextField
             id="standard-name"
@@ -278,7 +275,7 @@ class TaskItem extends React.Component {
 
 
       </ListItem>
-      {this.state.isDeveloper ?
+      {this.props.isDeveloper ?
         <Dialog
         open={this.state.deleteDialogOpen}
         onClose={() => this.handleClickOpen(false)}
@@ -302,4 +299,16 @@ class TaskItem extends React.Component {
   }
 }
 
-export default withStyles(styles)(TaskItem)
+const matchDispatchToProps = dispatch => {
+  return {
+    getMeta: projectId => dispatch(actionCreators.getProjectMetaData(projectId))
+  }
+}
+
+const matchStateToProps = state => {
+  return {
+    ...state.pReducer
+  }
+}
+
+export default withStyles(styles)(connect(matchStateToProps, matchDispatchToProps)(TaskItem))

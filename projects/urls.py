@@ -5,6 +5,7 @@ urlpatterns = [
 	path('', projects_views.ProjectList.as_view(), name="project_list"),
 	path('create/', projects_views.ProjectCreate.as_view(), name="project_create"),
     path('<str:id>/', projects_views.ProjectDetail.as_view(), name="project_detail"),
+    path('<str:id>/meta-data', projects_views.ProjectMeta.as_view(), name="project_meta_data"),
     path('<str:project_id>/tasks', projects_views.ProjectTaskList.as_view(), name="project_tasks"),
     path('<str:project_id>/tasks/reorder', projects_views.ProjectTaskReorder.as_view(), name="project_tasks_reorder"),
     path('<str:project_id>/comments', projects_views.ProjectCommentList.as_view(), name="project_comments"),

@@ -1,4 +1,9 @@
 export {
   auth,
-  authLogout
+  authLogout,
 } from './authActions'
+
+
+export {
+  getProjectMetaData
+} from './projectActions'

@@ -7,6 +7,7 @@ import { Router } from 'react-router-dom'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux'
 import authReducer from './store/reducers/authReducer'
+import projectReducer from './store/reducers/projectReducer'
 import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history'
 import ReactGA from 'react-ga';
@@ -24,7 +25,8 @@ history.listen(function (location) {
 const composeEnhancers = debug && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  aReducer: authReducer
+  aReducer: authReducer,
+  pReducer: projectReducer
 })
 
 

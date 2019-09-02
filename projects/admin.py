@@ -9,6 +9,10 @@ class TaskAdmin(admin.ModelAdmin):
 	class Meta:
 		model = Task
 
-admin.site.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+	list_display = ["poster", "title", "deadline", "completed"]
+	raw_id_fields = ["developers"]
+
+admin.site.register(Project, ProjectAdmin)
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Comment)

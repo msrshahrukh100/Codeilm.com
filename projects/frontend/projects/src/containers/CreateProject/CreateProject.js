@@ -97,7 +97,6 @@ class CreateProject extends React.Component {
     axios.get(projectId)
       .then(response => {
         const data = response.data;
-        console.log(data);
         if(!(data.auth_user_is_developer || data.auth_user_is_poster)) {
           this.props.history.goBack();
         }

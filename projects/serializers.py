@@ -36,6 +36,35 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 		fields = ('id', 'title', 'slug', 'description', 'auth_user_is_developer', 'auth_user_is_poster', 'poster', 'company', 'developers', 'is_private', 'deadline', 'payment_type', 'created_at', 'updated_at', 'created_at')
 
 
+class ProjectMetaSerializer(serializers.ModelSerializer):
+	id = serializers.CharField(read_only=True, default="")
+	auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
+	auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
+
+	def get_auth_user_is_developer(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user in obj.developers.all():
+				return True
+		return False
+
+	def get_auth_user_is_poster(self, obj):
+		user = None
+		request = self.context.get("request")
+		if request and hasattr(request, "user"):
+			user = request.user
+			if user.is_authenticated and user == obj.poster:
+				return True
+		return False
+
+	class Meta:
+		model = projects_models.Project
+		fields = ('id', 'auth_user_is_developer', 'auth_user_is_poster',)
+
+
+
 class ProjectCreateSerializer(serializers.ModelSerializer):
 	id = serializers.CharField(read_only=True, default="")
 	class Meta:
@@ -58,31 +87,31 @@ class TaskSerializer(serializers.ModelSerializer):
 	project = serializers.PrimaryKeyRelatedField(
         pk_field=HashidSerializerCharField(source_field='projects.Project.id'),
         read_only=True)
-	auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
-	auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
+	# auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
+	# auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
 
-	def get_auth_user_is_developer(self, obj):
-		user = None
-		request = self.context.get("request")
-		if request and hasattr(request, "user"):
-			user = request.user
-			if user.is_authenticated and user in obj.project.developers.all():
-				return True
-		return False
+	# def get_auth_user_is_developer(self, obj):
+	# 	user = None
+	# 	request = self.context.get("request")
+	# 	if request and hasattr(request, "user"):
+	# 		user = request.user
+	# 		if user.is_authenticated and user in obj.project.developers.all():
+	# 			return True
+	# 	return False
 
-	def get_auth_user_is_poster(self, obj):
-		user = None
-		request = self.context.get("request")
-		if request and hasattr(request, "user"):
-			user = request.user
-			if user.is_authenticated and user == obj.project.poster:
-				return True
-		return False
+	# def get_auth_user_is_poster(self, obj):
+	# 	user = None
+	# 	request = self.context.get("request")
+	# 	if request and hasattr(request, "user"):
+	# 		user = request.user
+	# 		if user.is_authenticated and user == obj.project.poster:
+	# 			return True
+	# 	return False
 
 
 	class Meta:
 		model = projects_models.Task
-		fields = ('id', 'project', 'text', 'deadline', 'done', 'auth_user_is_developer', 'auth_user_is_poster', 'order', 'updated_at')
+		fields = ('id', 'project', 'text', 'deadline', 'done', 'order', 'updated_at')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -92,8 +121,8 @@ class CommentSerializer(serializers.ModelSerializer):
         pk_field=HashidSerializerCharField(source_field='projects.Project.id'),
         read_only=True)
 	is_owner = serializers.SerializerMethodField(required=False, read_only=True)
-	auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
-	auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
+	# auth_user_is_developer = serializers.SerializerMethodField(required=False, read_only=True)
+	# auth_user_is_poster = serializers.SerializerMethodField(required=False, read_only=True)
 
 	def get_is_owner(self, obj):
 		user = None
@@ -104,26 +133,26 @@ class CommentSerializer(serializers.ModelSerializer):
 				return True
 		return False
 
-	def get_auth_user_is_developer(self, obj):
-		user = None
-		request = self.context.get("request")
-		if request and hasattr(request, "user"):
-			user = request.user
-			if user.is_authenticated and user in obj.project.developers.all():
-				return True
-		return False
+	# def get_auth_user_is_developer(self, obj):
+	# 	user = None
+	# 	request = self.context.get("request")
+	# 	if request and hasattr(request, "user"):
+	# 		user = request.user
+	# 		if user.is_authenticated and user in obj.project.developers.all():
+	# 			return True
+	# 	return False
 
-	def get_auth_user_is_poster(self, obj):
-		user = None
-		request = self.context.get("request")
-		if request and hasattr(request, "user"):
-			user = request.user
-			if user.is_authenticated and user == obj.project.poster:
-				return True
-		return False
+	# def get_auth_user_is_poster(self, obj):
+	# 	user = None
+	# 	request = self.context.get("request")
+	# 	if request and hasattr(request, "user"):
+	# 		user = request.user
+	# 		if user.is_authenticated and user == obj.project.poster:
+	# 			return True
+	# 	return False
 
 
 	class Meta:
 		model = projects_models.Comment
-		fields = ('id', 'project', 'text', 'user', 'is_owner', 'auth_user_is_poster', 'auth_user_is_developer', 'updated_at')
+		fields = ('id', 'project', 'text', 'user', 'is_owner', 'updated_at')
 

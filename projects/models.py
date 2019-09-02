@@ -17,6 +17,7 @@ class Project(models.Model):
 	is_private = models.BooleanField(default=False)
 	deadline = models.DateTimeField()
 	payment_type = models.ForeignKey(payments_models.PaymentType, blank=True, null=True, on_delete=models.SET_NULL)
+	completed = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

@@ -14,7 +14,8 @@ import getCookie from '../../utils/getCookie'
 import Comments from '../Comments/Comments'
 import Typography from '@material-ui/core/Typography';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
-
+import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions/index'
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "white" : "white",
@@ -62,9 +63,6 @@ class Tasks extends React.Component {
     this.state = {
       tasks: [],
       timeout: null,
-      isDeveloper: false,
-      isPoster: false,
-      isPosterOrDeveloper: false,
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -115,7 +113,9 @@ class Tasks extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchTasks()
+    const { projectId } = this.props.match.params;
+    this.props.getMeta(projectId);
+    this.fetchTasks();
   }
 
   fetchTasks = () => {
@@ -123,11 +123,10 @@ class Tasks extends React.Component {
 
     axios.get(`${projectId}/tasks`)
       .then(response => {
+
         const data = response.data;
         this.setState({
           tasks: response.data,
-          isDeveloper: response.data[0] ? response.data[0].auth_user_is_developer : false,
-          isPoster: response.data[0] ? response.data[0].auth_user_is_poster : false,
         })
       })
       .catch(error => {
@@ -171,6 +170,7 @@ class Tasks extends React.Component {
                             key={item.id}
                             item={item}
                             done={item.done}
+                            isDeveloper={this.props.isDeveloper}
                             refreshTasks={this.fetchTasks}
                             provided={provided}
                             snapshot={snapshot}
@@ -184,7 +184,7 @@ class Tasks extends React.Component {
 
               </Droppable>
           </DragDropContext>
-          {this.state.isDeveloper ?
+          {this.props.isDeveloper ?
             <AddTask projectId={projectId} onAddTask={this.appendToTasks} />
             : null}
 
@@ -205,4 +205,16 @@ class Tasks extends React.Component {
   }
 }
 
-export default withStyles(styles)(withErrorHandler(Tasks, axios))
+const matchDispatchToProps = dispatch => {
+  return {
+    getMeta: projectId => dispatch(actionCreators.getProjectMetaData(projectId))
+  }
+}
+
+const matchStateToProps = state => {
+  return {
+    ...state.pReducer
+  }
+}
+
+export default withStyles(styles)(withErrorHandler(connect(matchStateToProps, matchDispatchToProps)(Tasks), axios, "linear"))

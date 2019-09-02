@@ -18,6 +18,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
+import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions/index'
 
 const styles = theme => ({
   card: {
@@ -70,9 +72,6 @@ class ProjectsDetail extends React.Component {
     isPrivate: false,
     developers: [],
     projectId: null,
-    isDeveloper: false,
-    isPoster: false,
-    isPosterOrDeveloper: false,
   }
 
   fetchProject = () => {
@@ -88,9 +87,6 @@ class ProjectsDetail extends React.Component {
           poster: data.poster,
           developers: data.developers,
           isPrivate: data.is_private,
-          isDeveloper: data.auth_user_is_developer,
-          isPoster: data.auth_user_is_poster,
-          isPosterOrDeveloper: data.auth_user_is_developer || data.auth_user_is_poster,
           deadline: new Date(data.deadline).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
           createdAt: new Date(data.created_at).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
         })
@@ -105,7 +101,9 @@ class ProjectsDetail extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchProject()
+    const { projectId } = this.props.match.params;
+    this.fetchProject();
+    this.props.getMeta(projectId);
   }
 
   render() {
@@ -131,7 +129,7 @@ class ProjectsDetail extends React.Component {
             <Tooltip title="Deadline for this project" aria-label="add">
               <Chip variant="outlined" className={classes.chip} color="primary" label={this.state.deadline} icon={<CalendarTodayIcon />}/>
             </Tooltip>
-            {this.state.isPoster ?
+            {this.props.isPoster ?
               <Link className={classes.edit} to={`/p/${this.state.projectId}/edit`}>
                 Edit
               </Link>
@@ -184,7 +182,7 @@ class ProjectsDetail extends React.Component {
             ) }
 
         </Grid>
-        {this.state.isPosterOrDeveloper ?
+        {this.props.isPosterOrDeveloper ?
           <CardActions className={classes.cardaction}>
             <Button onClick={() => this.props.history.push(`/p/${this.state.projectId}/progress`)} variant="contained" size="large" color="primary" className={classes.margin}>
             See Project Progress and Tasks
@@ -201,4 +199,16 @@ class ProjectsDetail extends React.Component {
 
 }
 
-export default withStyles(styles)(withRouter(withErrorHandler(ProjectsDetail, axios)))
+const matchDispatchToProps = dispatch => {
+  return {
+    getMeta: projectId => dispatch(actionCreators.getProjectMetaData(projectId))
+  }
+}
+
+const matchStateToProps = state => {
+  return {
+    ...state.pReducer
+  }
+}
+
+export default withStyles(styles)(withRouter(withErrorHandler(connect(matchStateToProps, matchDispatchToProps)(ProjectsDetail), axios)))
