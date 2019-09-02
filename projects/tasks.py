@@ -11,9 +11,9 @@ from mainapp.utils import get_user_display_name
 def send_project_added_email(kwargs):
 
 	context = {
-		"message": "You have successfully created the project '%s' on Codeilm. A developer will shortly start working on your project and you'll be updated on the progress of the project" % kwargs.get(""),
+		"message": "You have successfully created the project '%s' on Codeilm. A developer will shortly start working on your project and you'll be updated on the progress of the project" % kwargs.get("title"),
 		"button_title": "See your Project",
-		"button_url": "https://codeilm.com/p/%s" % kwargs.get("id"),
+		"button_url": "/p/%s" % kwargs.get("id"),
 	}
 
 	emailmanager_tasks.send_ses_email(
