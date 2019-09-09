@@ -13,8 +13,8 @@ from .tasks import send_project_added_email
 class ProjectList(APIView):
 	def get(self, request):
 		all_projects = projects_models.Project.objects.filter(is_private=False)
-		dev_projects = request.user.developerprojects.all()
-		user_projects = request.user.postedprojects.all()
+		dev_projects = request.user.developerprojects.all() if request.user.is_authenticated else []
+		user_projects = request.user.postedprojects.all() if request.user.is_authenticated else []
 		return Response({
 			"all_projects": projects_serializers.ProjectListSerializer(all_projects, many=True).data,
 			"user_projects": projects_serializers.ProjectListSerializer(user_projects, many=True).data,
