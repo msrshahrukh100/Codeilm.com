@@ -1,0 +1,1 @@
+DatabaseURI: user:password@/dbname?charset=utf8&parseTime=True&loc=Local
