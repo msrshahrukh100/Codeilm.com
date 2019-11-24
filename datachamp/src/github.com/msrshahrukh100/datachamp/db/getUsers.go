@@ -23,7 +23,7 @@ func GetUsers() {
 		accountRows.Scan(&accountId)
 		row := db.Table("socialaccount_socialtoken").Select("token").Where("account_id = ?", accountId).Row()
 		row.Scan(&token)
-		fmt.Println(accountId , " ---- ", token)
+		fmt.Println(accountId , " ----, tokenId ", token)
 	}
 
 	defer accountRows.Close()

@@ -32,3 +32,6 @@ yarn-error.log*
 vendor/
 pkg/
 
+bin/
+datachamp/src/github.com/*
+!datachamp/src/github.com/msrshahrukh100
