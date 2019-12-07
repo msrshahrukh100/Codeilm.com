@@ -16,7 +16,7 @@ var usersCmd = &cobra.Command{
 	Use:   "users",
 	Short: "Get the users from databse",
 	Run: func(cmd *cobra.Command, args []string) {
-		githubuser := db.GetGitHubTokens()
+		githubuser := db.GetSocialTokens("Github")
 		gu, _ := json.Marshal(githubuser)
 		fmt.Println(string(gu))
 	},
