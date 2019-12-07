@@ -1,8 +1,11 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
+	"encoding/json"
+	"fmt"
+
 	"github.com/msrshahrukh100/datachamp/db"
+	"github.com/spf13/cobra"
 )
 
 func init() {
@@ -13,7 +16,8 @@ var usersCmd = &cobra.Command{
 	Use:   "users",
 	Short: "Get the users from databse",
 	Run: func(cmd *cobra.Command, args []string) {
-		db.GetUsers()
+		githubuser := db.GetGitHubTokens()
+		gu, _ := json.Marshal(githubuser)
+		fmt.Println(string(gu))
 	},
 }
-
