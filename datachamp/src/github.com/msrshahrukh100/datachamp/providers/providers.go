@@ -1,11 +1,11 @@
 package providers
 
 import (
-	"encoding/json"
 	"fmt"
 	"strconv"
 
 	"github.com/msrshahrukh100/datachamp/db"
+	"github.com/msrshahrukh100/datachamp/providers/github"
 )
 
 func parseIntegers(s []string) ([]int, error) {
@@ -34,9 +34,16 @@ func Save(args []string) {
 			return
 		}
 	}
+	saveGithub(userIds...)
+}
 
-	githubuser := db.GetSocialTokens("Github", userIds...)
-	gu, _ := json.Marshal(githubuser)
-	fmt.Println(string(gu))
+func saveGithub(userIds ...int) {
+	githubusers, err := db.GetSocialTokens("Github", userIds...)
+	if err != nil {
+		panic(err)
+	}
+	for _, user := range githubusers.Users {
+		github.Datasetter(user)
+	}
 
 }
