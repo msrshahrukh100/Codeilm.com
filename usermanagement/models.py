@@ -46,6 +46,7 @@ class UserProfile(models.Model):
 	user = models.ForeignKey(User, related_name="user_profile", on_delete=models.CASCADE)
 	gender = models.CharField(max_length=255, null=True, blank=True)
 	intro = models.CharField(max_length=100, null=True, blank=True)
+	github_profile_data = models.TextField(null=True, blank=True)
 	profile_image = ImageField(
 		upload_to=upload_location,
 		null=True,
